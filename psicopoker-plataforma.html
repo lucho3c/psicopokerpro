@@ -529,22 +529,22 @@ function renderDash() {
     const p = unitProgress(u);
     const btnClass = p.pct===0 ? 'btn-uc-start' : p.pct===100 ? 'btn-uc-done' : 'btn-uc-cont';
     const btnTxt = p.pct===0 ? 'Empezar' : p.pct===100 ? '✓ Completada' : 'Continuar →';
-    return \`<div class="ucard" onclick="openUnit('\${u.id}')">
-      <div class="ucard-cover" style="background:linear-gradient(135deg, \${u.color}, #000);">
-        <span class="ubadge \${u.number ? 'ubadge-num' : 'ubadge-bv'}">\${u.badge}</span>
+    return `<div class="ucard" onclick="openUnit('${u.id}')">
+      <div class="ucard-cover" style="background:linear-gradient(135deg, ${u.color}, #000);">
+        <span class="ubadge ${u.number ? 'ubadge-num' : 'ubadge-bv'}">${u.badge}</span>
       </div>
       <div class="ucard-body">
-        <div class="uctitle">\${u.title}</div>
-        <div class="ucdesc">\${u.desc}</div>
+        <div class="uctitle">${u.title}</div>
+        <div class="ucdesc">${u.desc}</div>
         <div class="ucfoot">
           <div class="upwrap">
-            <div class="upbar"><div class="upfill" style="width:\${p.pct}%"></div></div>
-            <div class="uppct \${p.pct===100?'done':'prog'}">\${p.pct}% completado</div>
+            <div class="upbar"><div class="upfill" style="width:${p.pct}%"></div></div>
+            <div class="uppct ${p.pct===100?'done':'prog'}">${p.pct}% completado</div>
           </div>
-          <button class="btn-uc \${btnClass}">\${btnTxt}</button>
+          <button class="btn-uc ${btnClass}">${btnTxt}</button>
         </div>
       </div>
-    </div>\`;
+    </div>`;
   }).join('');
 }
 
@@ -582,7 +582,7 @@ function renderSidebar(unit) {
     html += lessonItem(l, done, active);
   });
   if (unit.extra && unit.extra.length) {
-    html += \`<div class="sseclabel">Material extra</div>\`;
+    html += `<div class="sseclabel">Material extra</div>`;
     unit.extra.forEach(l => {
       const done = isLessonDone(l.id);
       const active = l.id === state.lessonId;
@@ -593,14 +593,14 @@ function renderSidebar(unit) {
 }
 
 function lessonItem(l, done, active) {
-  return \`<div class="sitem \${active?'active':''}" onclick="openLesson('\${state.unitId}','\${l.id}')">
-    <div class="sck \${done?'done':''}">
+  return `<div class="sitem ${active?'active':''}" onclick="openLesson('${state.unitId}','${l.id}')">
+    <div class="sck ${done?'done':''}">
       <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
         <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
     </div>
-    <div class="stitle">\${l.title}</div>
-  </div>\`;
+    <div class="stitle">${l.title}</div>
+  </div>`;
 }
 
 function renderContent(unit, lid) {
@@ -619,59 +619,59 @@ function renderContent(unit, lid) {
   // Video
   if (lesson.videoId !== undefined) {
     if (lesson.videoId) {
-      body += \`<div class="vwrap"><div class="vembed">
-        <iframe src="https://www.youtube.com/embed/\${lesson.videoId}?rel=0&modestbranding=1" allowfullscreen></iframe>
-      </div></div>\`;
+      body += `<div class="vwrap"><div class="vembed">
+        <iframe src="https://www.youtube.com/embed/${lesson.videoId}?rel=0&modestbranding=1" allowfullscreen></iframe>
+      </div></div>`;
     } else {
-      body += \`<div class="vwrap"><div class="vph">
+      body += `<div class="vwrap"><div class="vph">
         <div class="vph-icon">▶</div>
         <p>Video próximamente</p>
         <small>El video de esta lección será cargado en breve. Podés marcarla como completada para continuar.</small>
-      </div></div>\`;
+      </div></div>`;
     }
   }
   
   // Note
   if (lesson.note) {
-    body += \`<div class="note"><p>\${lesson.note}</p></div>\`;
+    body += `<div class="note"><p>${lesson.note}</p></div>`;
   }
   
   // Resources
   if (lesson.resources && lesson.resources.length) {
-    body += \`<div class="rsec"><div class="rsec-title">Recursos</div>\`;
+    body += `<div class="rsec"><div class="rsec-title">Recursos</div>`;
     lesson.resources.forEach(r => {
-      body += \`<a href="\${r.url}" target="_blank" class="ritem">
-        <span class="ritem-icon">📎</span> \${r.name}
-      </a>\`;
+      body += `<a href="${r.url}" target="_blank" class="ritem">
+        <span class="ritem-icon">📎</span> ${r.name}
+      </a>`;
     });
-    body += \`</div>\`;
+    body += `</div>`;
   }
   
   // Session
   if (lesson.type === 'session') {
-    body += \`<div class="sbox">
+    body += `<div class="sbox">
       <h3>Sesión 1 a 1 con tu psicólogo</h3>
       <p>Agendá tu sesión personalizada. Hacé clic en el botón para ver la disponibilidad y reservar tu espacio.</p>
       <a href="https://calendly.com/lucho-torres8/30min" target="_blank" class="btn-ses">
         📅 Agendar mi sesión
       </a>
-    </div>\`;
+    </div>`;
   }
   
   // Complete row
-  body += \`<div class="crow">
-    <button class="btn-cmp \${isDone?'done':''}" id="btn-cmp" onclick="markDone('\${lid}')">
-      \${isDone
-        ? \`<svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5L4.5 8.5L12 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg> Completada\`
-        : \`<svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5L4.5 8.5L12 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg> Marcar como completada\`
+  body += `<div class="crow">
+    <button class="btn-cmp ${isDone?'done':''}" id="btn-cmp" onclick="markDone('${lid}')">
+      ${isDone
+        ? `<svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5L4.5 8.5L12 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg> Completada`
+        : `<svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5L4.5 8.5L12 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg> Marcar como completada`
       }
     </button>
-    \${next ? \`<button class="btn-nxt" onclick="openLesson('\${state.unitId}','\${next.id}')">
-      Siguiente: \${next.title.length>35 ? next.title.substring(0,35)+'...' : next.title} →
-    </button>\` : \`<button class="btn-nxt" onclick="showDash()">
+    ${next ? `<button class="btn-nxt" onclick="openLesson('${state.unitId}','${next.id}')">
+      Siguiente: ${next.title.length>35 ? next.title.substring(0,35)+'...' : next.title} →
+    </button>` : `<button class="btn-nxt" onclick="showDash()">
       ← Volver al programa
-    </button>\`}
-  </div>\`;
+    </button>`}
+  </div>`;
   
   document.getElementById('m-body').innerHTML = body;
   document.getElementById('mcontent').scrollTop = 0;
