@@ -325,7 +325,7 @@ const CURRICULUM = [
     desc: 'Antes de empezar, mirá estos dos videos introductorios del programa.',
     color: '#1A1A2E',
     lessons: [
-      { id: 'bv1', title: 'Video de bienvenida', videoId: '' },
+      { id: 'bv1', title: 'Video de bienvenida', driveId: '1YZFeE1fB70ul_ZDE3ZQDRb_QWnDry0Z9' },
       { id: 'bv2', title: 'Sobre los ejercicios', videoId: '' }
     ]
   },
@@ -335,11 +335,11 @@ const CURRICULUM = [
     desc: 'Diagnosticar no es juzgar, es animarte a ver con claridad dónde estás hoy.',
     color: '#1A1428',
     lessons: [
-      { id: 'u1l1', title: 'Registro una semana', videoId: '', resources: [{name:'Registro mi semana', url:'#'}] },
-      { id: 'u1l2', title: 'Los 2 Desafíos', videoId: '' },
-      { id: 'u1l3', title: 'Póker Mindset Test', videoId: '', resources: [{name:'Mindset test', url:'#'}] },
-      { id: 'u1l4', title: 'Inventario Psicológico de Ejecución Deportiva', videoId: '', resources: [{name:'Cuestionario IPED', url:'#'}] },
-      { id: 'u1l5', title: 'Task and Ego Orientation in Sport Questionnaire', videoId: '', resources: [{name:'Cuestionario TEOSQ', url:'#'}] },
+      { id: 'u1l1', title: 'Registro una semana', driveId: '1m6A32xyvHp_rlCidxyP-Oi44O4vISflQ', resources: [{name:'Registro mi semana', url:'#'}] },
+      { id: 'u1l2', title: 'Los 2 Desafíos', driveId: '1FBh8vIHDuwcYMaAhRlgg6V5R-3xZ77Sk' },
+      { id: 'u1l3', title: 'Póker Mindset Test', driveId: '1FzCP7Tt9d54eqrmkKkenltP3tbhgheuy', resources: [{name:'Mindset test', url:'#'}] },
+      { id: 'u1l4', title: 'Inventario Psicológico de Ejecución Deportiva', driveId: '1-3QE03f6XHNdn4Kt13TnTMrCZ0UQK0qY', resources: [{name:'Cuestionario IPED', url:'#'}] },
+      { id: 'u1l5', title: 'Task and Ego Orientation in Sport Questionnaire', driveId: '10KJXOs20u_OLfV35EoLr5ZEzbWLUn6UL', resources: [{name:'Cuestionario TEOSQ', url:'#'}] },
       { id: 'u1l6', title: 'Primera Sesión 1 a 1', type: 'session' }
     ]
   },
@@ -617,8 +617,13 @@ function renderContent(unit, lid) {
   let body = '';
   
   // Video
-  if (lesson.videoId !== undefined) {
-    if (lesson.videoId) {
+  if (lesson.videoId !== undefined || lesson.driveId !== undefined) {
+    if (lesson.driveId) {
+      const embedUrl = 'https://drive.google.com/file/d/' + lesson.driveId + '/preview';
+      body += `<div class="vwrap"><div class="vembed">
+        <iframe src="${embedUrl}" allow="autoplay" allowfullscreen></iframe>
+      </div></div>`;
+    } else if (lesson.videoId) {
       body += `<div class="vwrap"><div class="vembed">
         <iframe src="https://www.youtube.com/embed/${lesson.videoId}?rel=0&modestbranding=1" allowfullscreen></iframe>
       </div></div>`;
