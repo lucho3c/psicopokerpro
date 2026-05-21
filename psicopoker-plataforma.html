@@ -1051,8 +1051,11 @@ function buildAdminData(subs){
 }
 function showAdminEx(idx){
   activeExIdx=idx;
-  buildAdminData(getLocalSubs());
   if(!adminData||!adminData[idx])return;
+  // Update sidebar highlight only
+  document.querySelectorAll('.admin-ex-item').forEach(function(el,i){
+    el.classList.toggle('on', i===idx);
+  });
   var ex=adminData[idx],registros=ex.registros||[],h='';
   h+='<div style="margin-bottom:1.5rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.35rem;">'+ex.ejercicio+'</div>';
   h+='<div style="font-size:1.1rem;font-weight:800;">'+registros.length+' respuesta'+(registros.length!==1?'s':'')+'</div></div>';
