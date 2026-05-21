@@ -324,22 +324,29 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     </div>
     <div style="display:flex;align-items:center;gap:.5rem;">
       <span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.25rem .65rem;border-radius:3px;">Panel Admin</span>
-      <button onclick="fetchAdminData()" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">&#8635; Actualizar</button>
+      <button onclick="loadAdminPanel()" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">&#8635; Actualizar</button>
     </div>
     <div class="tnav-r"><div class="uav" id="nav-av3"></div><button class="btn-sm" onclick="doLogout()">Salir</button></div>
   </div>
   <div style="display:flex;flex:1;overflow:hidden;">
     <div id="admin-sidebar" style="width:260px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:.75rem 0;">
-      <div style="padding:.5rem 1.1rem .75rem;font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);">Ejercicios</div>
-      <div id="admin-ex-list"><div style="padding:1rem 1.1rem;font-size:.75rem;color:var(--dim);">Sin respuestas aun</div></div>
-    </div>
-    <div style="flex:1;overflow-y:auto;background:var(--bg);">
-      <div id="admin-content" style="padding:1.75rem 2rem;max-width:900px;">
-        <div style="text-align:center;padding:4rem 2rem;">
-          <div style="font-size:2rem;opacity:.15;margin-bottom:1rem;">&#128203;</div>
-          <p style="font-size:.85rem;color:var(--muted);">Selecciona un ejercicio para ver las respuestas</p>
+      <div style="padding:.85rem 1rem .6rem;">
+        <div style="position:relative;">
+          <input id="admin-search" type="text" placeholder="Buscar paciente..."
+            oninput="renderPatientList(this.value)"
+            style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.55rem .85rem .55rem 2.1rem;border-radius:4px;outline:none;transition:border-color .2s;"
+            onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
+          <svg style="position:absolute;left:.65rem;top:50%;transform:translateY(-50%);opacity:.35;pointer-events:none;" width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M9 9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
         </div>
       </div>
+      <div style="padding:.2rem 1rem .4rem;font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);">Pacientes</div>
+      <div id="admin-patient-list"></div>
+    </div>
+    <div style="flex:1;overflow-y:auto;background:var(--bg);">
+      <div id="admin-content" style="overflow-y:auto;flex:1;"></div>
     </div>
   </div>
 </div>
@@ -1391,76 +1398,190 @@ function showToast(msg) {
 }
 
 
-var adminData=null,activeExIdx=-1;
-function showAdmin(){var usr=USERS[S.user];document.getElementById('nav-av3').textContent=usr.name[0].toUpperCase();showView('vadmin');fetchAdminData();}
-function fetchAdminData(){
-  var subs=getLocalSubs();
-  buildAdminData(subs);
-  fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
-  .then(function(r){return r.json();})
-  .then(function(resp){
-    if(!resp.records||!resp.records.length)return;
-    var local=getLocalSubs(),keys={};
-    local.forEach(function(s){keys[(s.jugador||'')+'|'+(s.fecha||'')]=1;});
-    resp.records.forEach(function(rec){
-      var f=rec.fields,key=(f.Jugador||'')+'|'+(f.Fecha||'');
-      if(!keys[key]){
-        var resps=(f.Respuestas||'').split('\n\n---\n\n').map(function(b){var nl=b.indexOf('\n');return{pregunta:nl>-1?b.substring(0,nl):b,respuesta:nl>-1?b.substring(nl+1):''};});
-        local.push({ts:0,fecha:f.Fecha||'',jugador:f.Jugador||'',usuario:f.Usuario||'',unidad:f.Unidad||'',ejercicio:f.Ejercicio||'',respuestas:resps});
+
+var adminData    = null;
+var activePatient = null;
+
+function showAdmin() {
+  document.getElementById('nav-av3').textContent = USERS[S.user].name[0].toUpperCase();
+  showView('vadmin');
+  loadAdminPanel();
+}
+
+function loadAdminPanel() {
+  var subs = getLocalSubs();
+  renderAdminPanel(subs);
+  // Try Airtable in background
+  fetch(AIRTABLE_URL + '?pageSize=100', {
+    headers: { 'Authorization': 'Bearer ' + AIRTABLE_TOKEN }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(resp) {
+    if (!resp.records || !resp.records.length) return;
+    var local = getLocalSubs(), keys = {};
+    local.forEach(function(s) { keys[(s.jugador||'')+'|'+(s.fecha||'')] = 1; });
+    resp.records.forEach(function(rec) {
+      var f = rec.fields, key = (f.Jugador||'')+'|'+(f.Fecha||'');
+      if (!keys[key]) {
+        var resps = (f.Respuestas||'').split('\n\n---\n\n').map(function(b) {
+          var nl = b.indexOf('\n');
+          return { pregunta: nl>-1?b.substring(0,nl):b, respuesta: nl>-1?b.substring(nl+1):'' };
+        });
+        local.push({ ts:0, fecha:f.Fecha||'', jugador:f.Jugador||'',
+          usuario:f.Usuario||'', unidad:f.Unidad||'', ejercicio:f.Ejercicio||'', respuestas:resps });
       }
     });
-    localStorage.setItem('pp_submissions',JSON.stringify(local));
-    buildAdminData(local);
-  }).catch(function(){});
+    localStorage.setItem('pp_submissions', JSON.stringify(local));
+    renderAdminPanel(local);
+  }).catch(function() {});
 }
-function buildAdminData(subs){
-  var groups={};
-  subs.forEach(function(s){var k=(s.unidad||'')+' - '+(s.ejercicio||'');if(!groups[k])groups[k]={ejercicio:k,registros:[]};groups[k].registros.push(s);});
-  adminData=Object.values(groups);
-  if(!adminData.length){
-    document.getElementById('admin-ex-list').innerHTML='<div style="padding:1rem 1.1rem;font-size:.75rem;color:var(--dim);">Sin respuestas aun</div>';
-    document.getElementById('admin-content').innerHTML='<div style="text-align:center;padding:4rem 2rem;"><div style="font-size:2rem;opacity:.15;margin-bottom:1rem;">&#128203;</div><p style="font-size:.85rem;color:var(--muted);">Cuando los jugadores completen ejercicios apareceran aca.</p></div>';
+
+function renderAdminPanel(subs) {
+  // Group by patient, sorted by most recent activity
+  var patients = {};
+  subs.forEach(function(s) {
+    var key = s.usuario || s.jugador || '?';
+    if (!patients[key]) patients[key] = { nombre: s.jugador||key, usuario:key, ejercicios:[], lastTs:0 };
+    patients[key].ejercicios.push(s);
+    if ((s.ts||0) > patients[key].lastTs) patients[key].lastTs = s.ts||0;
+  });
+  // Sort by most recent first, then alphabetical
+  adminData = Object.values(patients).sort(function(a, b) {
+    if (b.lastTs !== a.lastTs) return b.lastTs - a.lastTs;
+    return a.nombre.localeCompare(b.nombre, 'es', { sensitivity:'base' });
+  });
+
+  renderPatientList('');
+  if (!activePatient && adminData.length > 0) showPatient(adminData[0].usuario);
+  else if (activePatient) showPatient(activePatient);
+}
+
+function renderPatientList(filter) {
+  var f = (filter||'').toLowerCase().trim();
+  var filtered = adminData.filter(function(p) {
+    return !f || p.nombre.toLowerCase().includes(f) || p.usuario.toLowerCase().includes(f);
+  });
+  if (!adminData.length) {
+    document.getElementById('admin-patient-list').innerHTML =
+      '<div style="padding:1.25rem 1.1rem;font-size:.78rem;color:var(--dim);line-height:1.65;">Cuando un jugador complete un ejercicio y haga clic en "Enviar a Mauro", aparecera aca.</div>';
+    document.getElementById('admin-content').innerHTML = adminEmpty();
     return;
   }
-  var h='';
-  adminData.forEach(function(ex,i){
-    var n=(ex.registros||[]).length,active=i===activeExIdx;
-    h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showAdminEx('+i+')">';
-    h+='<div class="aei-name">'+ex.ejercicio+'</div>';
-    h+='<div class="aei-count">'+n+' respuesta'+(n!==1?'s':'')+'</div></div>';
-  });
-  document.getElementById('admin-ex-list').innerHTML=h;
-  if(activeExIdx<0||activeExIdx>=adminData.length)showAdminEx(0);
-  else showAdminEx(activeExIdx);
-}
-function showAdminEx(idx){
-  activeExIdx=idx;
-  buildAdminData(getLocalSubs());
-  if(!adminData||!adminData[idx])return;
-  var ex=adminData[idx],registros=ex.registros||[],h='';
-  h+='<div style="margin-bottom:1.5rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.35rem;">'+ex.ejercicio+'</div>';
-  h+='<div style="font-size:1.1rem;font-weight:800;">'+registros.length+' respuesta'+(registros.length!==1?'s':'')+'</div></div>';
-  if(!registros.length){h+='<p style="color:var(--muted)">Sin respuestas aun.</p>';}
-  else{
-    var jugadores={};registros.forEach(function(r){jugadores[r.usuario||'?']=1;});
-    h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.75rem;">';
-    h+=sc('Respuestas',registros.length)+sc('Ultimo envio',(registros[0].fecha||'-').substring(0,16))+sc('Jugadores',Object.keys(jugadores).length);
-    h+='</div>';
-    registros.forEach(function(rec){
-      var nombre=rec.jugador||'?',usuario=rec.usuario||'',fecha=rec.fecha||'',resps=rec.respuestas||[];
-      h+='<div class="sub-card"><div class="sub-card-hdr">';
-      h+='<div class="sub-av">'+(nombre[0]||'?').toUpperCase()+'</div>';
-      h+='<div><div class="sub-name">'+nombre+'</div><div class="sub-meta">@'+usuario+' &middot; '+fecha+'</div></div>';
-      h+='<button class="sub-toggle" onclick="toggleSub(this)">Ver &#9660;</button>';
-      h+='</div><div class="sub-body" style="display:none;">';
-      resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()){h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';}});
-      h+='</div></div>';
-    });
+  if (!filtered.length) {
+    document.getElementById('admin-patient-list').innerHTML =
+      '<div style="padding:1.1rem;font-size:.75rem;color:var(--dim);">Ningun paciente coincide con la busqueda.</div>';
+    return;
   }
-  document.getElementById('admin-content').innerHTML=h;
+  var h = '';
+  filtered.forEach(function(p) {
+    var n = p.ejercicios.length;
+    var active = p.usuario === activePatient;
+    h += '<div class="admin-ex-item'+(active?' on':'')+'" onclick="showPatient(\''+p.usuario+'\')">';
+    h += '<div style="display:flex;align-items:center;gap:.65rem;">';
+    h += '<div style="width:28px;height:28px;border-radius:50%;background:'+(active?'var(--red)':'var(--card2)')+';display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:'+(active?'#fff':'var(--muted)')+';flex-shrink:0;">'+(p.nombre[0]||'?').toUpperCase()+'</div>';
+    h += '<div><div class="aei-name">'+p.nombre+'</div>';
+    h += '<div class="aei-count">'+n+' ejercicio'+(n!==1?'s':'')+' completado'+(n!==1?'s':'')+'</div></div>';
+    h += '</div></div>';
+  });
+  document.getElementById('admin-patient-list').innerHTML = h;
 }
-function sc(label,val){return'<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;"><div style="font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">'+label+'</div><div style="font-size:1.3rem;font-weight:800;">'+val+'</div></div>';}
-function toggleSub(btn){var b=btn.closest('.sub-card').querySelector('.sub-body');var open=b.style.display!=='none';b.style.display=open?'none':'block';btn.innerHTML=open?'Ver &#9660;':'Ocultar &#9650;';}
+
+function showPatient(usuario) {
+  activePatient = usuario;
+  renderPatientList(document.getElementById('admin-search') ? document.getElementById('admin-search').value : '');
+  var patient = adminData.find(function(p) { return p.usuario === usuario; });
+  if (!patient) return;
+
+  var UNIT_ORDER = ['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  function unitIdx(u) {
+    var i = UNIT_ORDER.findIndex(function(x) { return u && u.toLowerCase().includes(x.toLowerCase()); });
+    return i === -1 ? 99 : i;
+  }
+
+  var byUnit = {};
+  patient.ejercicios.forEach(function(e) {
+    var u = e.unidad || 'Sin unidad';
+    if (!byUnit[u]) byUnit[u] = [];
+    byUnit[u].push(e);
+  });
+  var sortedUnits = Object.keys(byUnit).sort(function(a,b){ return unitIdx(a)-unitIdx(b); });
+
+  var h = '';
+
+  // Header
+  h += '<div class="admin-patient-hdr">';
+  h += '<div style="width:48px;height:48px;border-radius:50%;background:var(--red-dim);border:1px solid var(--border-r);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:var(--red);flex-shrink:0;">'+(patient.nombre[0]||'?').toUpperCase()+'</div>';
+  h += '<div><div style="font-size:1.15rem;font-weight:800;">'+patient.nombre+'</div>';
+  h += '<div style="font-size:.75rem;color:var(--muted);">@'+patient.usuario+'</div></div>';
+  h += '</div>';
+
+  // Stats
+  h += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);">';
+  h += psc('Ejercicios', patient.ejercicios.length);
+  h += psc('Unidades', sortedUnits.length);
+  var last = patient.ejercicios.reduce(function(a,b){ return (a.ts||0)>(b.ts||0)?a:b; });
+  h += psc('Ultimo envio', (last.fecha||'-').substring(0,10));
+  h += '</div>';
+
+  h += '<div style="padding:1.5rem 1.75rem;">';
+  sortedUnits.forEach(function(unit) {
+    h += '<div style="margin-bottom:2rem;">';
+    h += '<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem;">';
+    h += '<div style="font-size:.62rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.2rem .65rem;border-radius:3px;">'+unit+'</div>';
+    h += '<div style="flex:1;height:1px;background:var(--border);"></div>';
+    h += '</div>';
+    var exs = byUnit[unit].sort(function(a,b){ return (a.ejercicio||'').localeCompare(b.ejercicio||'','es'); });
+    exs.forEach(function(ej, idx) {
+      var eid = 'ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
+      h += '<div class="sub-card">';
+      h += '<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
+      h += '<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div>';
+      h += '<div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
+      h += '<button class="sub-toggle">Ver respuestas &#9660;</button>';
+      h += '</div>';
+      h += '<div id="'+eid+'" style="display:none;padding:.5rem 1.25rem 1.25rem;border-top:1px solid var(--border);">';
+      var resps = ej.respuestas || [];
+      var has = resps.some(function(r){ return r.respuesta&&r.respuesta.trim(); });
+      if (has) {
+        resps.forEach(function(r) {
+          if (r.respuesta&&r.respuesta.trim()) {
+            h += '<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div>';
+            h += '<div class="sub-ans">'+r.respuesta+'</div></div>';
+          }
+        });
+      } else {
+        h += '<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado.</p>';
+      }
+      h += '</div></div>';
+    });
+    h += '</div>';
+  });
+  h += '</div>';
+
+  document.getElementById('admin-content').innerHTML = h;
+}
+
+function psc(label, val) {
+  return '<div style="text-align:center;background:var(--bg3);border-radius:5px;padding:.75rem 1rem;">' +
+    '<div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem;">'+label+'</div>' +
+    '<div style="font-size:1.4rem;font-weight:800;">'+val+'</div></div>';
+}
+
+function adminEmpty() {
+  return '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:4rem 2rem;">' +
+    '<div style="font-size:3rem;opacity:.08;margin-bottom:1rem;">&#128101;</div>' +
+    '<p style="font-size:.9rem;font-weight:700;margin-bottom:.4rem;">Sin pacientes todavia</p>' +
+    '<p style="font-size:.8rem;color:var(--muted);">Las respuestas apareceran aca cuando los jugadores completen ejercicios.</p></div>';
+}
+
+function toggleEj(eid, hdr) {
+  var body = document.getElementById(eid);
+  if (!body) return;
+  var open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  var btn = hdr.querySelector('.sub-toggle');
+  if (btn) btn.innerHTML = open ? 'Ver respuestas &#9660;' : 'Ocultar &#9650;';
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('ip').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
