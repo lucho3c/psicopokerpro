@@ -1007,79 +1007,168 @@ function showToast(msg) {
 }
 
 
-var adminData=null,activeExIdx=-1;
-function showAdmin(){var usr=USERS[S.user];document.getElementById('nav-av3').textContent=usr.name[0].toUpperCase();showView('vadmin');fetchAdminData();}
-function fetchAdminData(){
-  var subs=getLocalSubs();
-  buildAdminData(subs);
-  fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
-  .then(function(r){return r.json();})
-  .then(function(resp){
-    if(!resp.records||!resp.records.length)return;
-    var local=getLocalSubs(),keys={};
-    local.forEach(function(s){keys[(s.jugador||'')+'|'+(s.fecha||'')]=1;});
-    resp.records.forEach(function(rec){
-      var f=rec.fields,key=(f.Jugador||'')+'|'+(f.Fecha||'');
-      if(!keys[key]){
-        var resps=(f.Respuestas||'').split('\n\n---\n\n').map(function(b){var nl=b.indexOf('\n');return{pregunta:nl>-1?b.substring(0,nl):b,respuesta:nl>-1?b.substring(nl+1):''};});
-        local.push({ts:0,fecha:f.Fecha||'',jugador:f.Jugador||'',usuario:f.Usuario||'',unidad:f.Unidad||'',ejercicio:f.Ejercicio||'',respuestas:resps});
+
+var adminData = null;
+var activePatient = null;
+
+function showAdmin() {
+  var usr = USERS[S.user];
+  document.getElementById('nav-av3').textContent = usr.name[0].toUpperCase();
+  showView('vadmin');
+  loadAdminPanel();
+}
+
+function loadAdminPanel() {
+  var subs = getLocalSubs();
+  renderAdminPanel(subs);
+  // Try Airtable in background for multi-device data
+  fetch(AIRTABLE_URL + '?pageSize=100', {
+    headers: { 'Authorization': 'Bearer ' + AIRTABLE_TOKEN }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(resp) {
+    if (!resp.records || !resp.records.length) return;
+    var local = getLocalSubs();
+    var keys = {};
+    local.forEach(function(s) { keys[(s.jugador||'') + '|' + (s.fecha||'')] = 1; });
+    resp.records.forEach(function(rec) {
+      var f = rec.fields;
+      var key = (f.Jugador||'') + '|' + (f.Fecha||'');
+      if (!keys[key]) {
+        var resps = (f.Respuestas||'').split('\n\n---\n\n').map(function(b) {
+          var nl = b.indexOf('\n');
+          return { pregunta: nl > -1 ? b.substring(0, nl) : b, respuesta: nl > -1 ? b.substring(nl+1) : '' };
+        });
+        local.push({ ts:0, fecha:f.Fecha||'', jugador:f.Jugador||'', usuario:f.Usuario||'',
+          unidad:f.Unidad||'', ejercicio:f.Ejercicio||'', respuestas:resps });
       }
     });
-    localStorage.setItem('pp_submissions',JSON.stringify(local));
-    buildAdminData(local);
-  }).catch(function(){});
+    localStorage.setItem('pp_submissions', JSON.stringify(local));
+    renderAdminPanel(local);
+  })
+  .catch(function() {});
 }
-function buildAdminData(subs){
-  var groups={};
-  subs.forEach(function(s){var k=(s.unidad||'')+' - '+(s.ejercicio||'');if(!groups[k])groups[k]={ejercicio:k,registros:[]};groups[k].registros.push(s);});
-  adminData=Object.values(groups);
-  if(!adminData.length){
-    document.getElementById('admin-ex-list').innerHTML='<div style="padding:1rem 1.1rem;font-size:.75rem;color:var(--dim);">Sin respuestas aun</div>';
-    document.getElementById('admin-content').innerHTML='<div style="text-align:center;padding:4rem 2rem;"><div style="font-size:2rem;opacity:.15;margin-bottom:1rem;">&#128203;</div><p style="font-size:.85rem;color:var(--muted);">Cuando los jugadores completen ejercicios apareceran aca.</p></div>';
+
+function renderAdminPanel(subs) {
+  // Group by patient
+  var patients = {};
+  subs.forEach(function(s) {
+    var key = s.usuario || s.jugador || '?';
+    if (!patients[key]) patients[key] = { nombre: s.jugador || key, usuario: key, ejercicios: [] };
+    patients[key].ejercicios.push(s);
+  });
+  adminData = Object.values(patients);
+
+  // Render sidebar
+  if (!adminData.length) {
+    document.getElementById('admin-ex-list').innerHTML =
+      '<div style="padding:1.5rem 1.1rem;font-size:.78rem;color:var(--dim);line-height:1.6;">Sin respuestas todavia.<br><br>Cuando un jugador complete un ejercicio y haga clic en "Enviar a Mauro", aparecera aca.</div>';
+    document.getElementById('admin-content').innerHTML =
+      '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:4rem 2rem;text-align:center;">' +
+      '<div style="font-size:3rem;opacity:.1;margin-bottom:1rem;">&#128101;</div>' +
+      '<p style="font-size:.9rem;font-weight:700;margin-bottom:.4rem;">Sin pacientes todavia</p>' +
+      '<p style="font-size:.8rem;color:var(--muted);">Las respuestas de los ejercicios apareceran aca una vez que los jugadores los completen.</p></div>';
     return;
   }
-  var h='';
-  adminData.forEach(function(ex,i){
-    var n=(ex.registros||[]).length,active=i===activeExIdx;
-    h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showAdminEx('+i+')">';
-    h+='<div class="aei-name">'+ex.ejercicio+'</div>';
-    h+='<div class="aei-count">'+n+' respuesta'+(n!==1?'s':'')+'</div></div>';
+
+  var h = '';
+  adminData.forEach(function(p, i) {
+    var n = p.ejercicios.length;
+    var active = p.usuario === activePatient;
+    h += '<div class="admin-ex-item' + (active ? ' on' : '') + '" onclick="showPatient(\'' + p.usuario + '\')">';
+    h += '<div class="aei-name">' + p.nombre + '</div>';
+    h += '<div class="aei-count">' + n + ' ejercicio' + (n !== 1 ? 's' : '') + ' completado' + (n !== 1 ? 's' : '') + '</div>';
+    h += '</div>';
   });
-  document.getElementById('admin-ex-list').innerHTML=h;
-  if(activeExIdx<0||activeExIdx>=adminData.length)showAdminEx(0);
-  else showAdminEx(activeExIdx);
+  document.getElementById('admin-ex-list').innerHTML = h;
+
+  // Show first patient if none selected
+  if (!activePatient && adminData.length > 0) showPatient(adminData[0].usuario);
+  else if (activePatient) showPatient(activePatient);
 }
-function showAdminEx(idx){
-  activeExIdx=idx;
-  if(!adminData||!adminData[idx])return;
-  // Update sidebar highlight only
-  document.querySelectorAll('.admin-ex-item').forEach(function(el,i){
-    el.classList.toggle('on', i===idx);
+
+function showPatient(usuario) {
+  activePatient = usuario;
+
+  // Update sidebar highlight
+  document.querySelectorAll('.admin-ex-item').forEach(function(el, i) {
+    el.classList.toggle('on', adminData[i] && adminData[i].usuario === usuario);
   });
-  var ex=adminData[idx],registros=ex.registros||[],h='';
-  h+='<div style="margin-bottom:1.5rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.35rem;">'+ex.ejercicio+'</div>';
-  h+='<div style="font-size:1.1rem;font-weight:800;">'+registros.length+' respuesta'+(registros.length!==1?'s':'')+'</div></div>';
-  if(!registros.length){h+='<p style="color:var(--muted)">Sin respuestas aun.</p>';}
-  else{
-    var jugadores={};registros.forEach(function(r){jugadores[r.usuario||'?']=1;});
-    h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.75rem;">';
-    h+=sc('Respuestas',registros.length)+sc('Ultimo envio',(registros[0].fecha||'-').substring(0,16))+sc('Jugadores',Object.keys(jugadores).length);
-    h+='</div>';
-    registros.forEach(function(rec){
-      var nombre=rec.jugador||'?',usuario=rec.usuario||'',fecha=rec.fecha||'',resps=rec.respuestas||[];
-      h+='<div class="sub-card"><div class="sub-card-hdr">';
-      h+='<div class="sub-av">'+(nombre[0]||'?').toUpperCase()+'</div>';
-      h+='<div><div class="sub-name">'+nombre+'</div><div class="sub-meta">@'+usuario+' &middot; '+fecha+'</div></div>';
-      h+='<button class="sub-toggle" onclick="toggleSub(this)">Ver &#9660;</button>';
-      h+='</div><div class="sub-body" style="display:none;">';
-      resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()){h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';}});
-      h+='</div></div>';
+
+  var patient = adminData.find(function(p) { return p.usuario === usuario; });
+  if (!patient) return;
+
+  var h = '';
+  // Patient header
+  h += '<div style="background:var(--bg2);border-bottom:1px solid var(--border);padding:1.25rem 2rem;margin:-1.75rem -2rem 1.75rem;">';
+  h += '<div style="display:flex;align-items:center;gap:1rem;">';
+  h += '<div style="width:44px;height:44px;border-radius:50%;background:var(--red-dim);border:1px solid var(--border-r);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:var(--red);">' + (patient.nombre[0]||'?').toUpperCase() + '</div>';
+  h += '<div><div style="font-size:1.1rem;font-weight:800;">' + patient.nombre + '</div>';
+  h += '<div style="font-size:.75rem;color:var(--muted);">@' + patient.usuario + ' &middot; ' + patient.ejercicios.length + ' ejercicio' + (patient.ejercicios.length !== 1 ? 's' : '') + ' completado' + (patient.ejercicios.length !== 1 ? 's' : '') + '</div></div>';
+  h += '</div></div>';
+
+  // Stats
+  h += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.75rem;">';
+  h += adminStatCard('Ejercicios', patient.ejercicios.length);
+  var units = {};
+  patient.ejercicios.forEach(function(e) { units[e.unidad] = 1; });
+  h += adminStatCard('Unidades', Object.keys(units).length);
+  var last = patient.ejercicios[patient.ejercicios.length-1];
+  h += adminStatCard('Ultimo envio', (last.fecha||'-').substring(0,10));
+  h += '</div>';
+
+  // Exercises sorted by unit
+  var byUnit = {};
+  patient.ejercicios.forEach(function(e) {
+    var u = e.unidad || 'Sin unidad';
+    if (!byUnit[u]) byUnit[u] = [];
+    byUnit[u].push(e);
+  });
+
+  Object.keys(byUnit).forEach(function(unit) {
+    h += '<div style="margin-bottom:.5rem;font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);">' + unit + '</div>';
+    byUnit[unit].forEach(function(ej, idx) {
+      var eid = 'ej_' + usuario.replace(/\W/g,'') + '_' + idx;
+      h += '<div class="sub-card" style="margin-bottom:.85rem;">';
+      h += '<div class="sub-card-hdr">';
+      h += '<div style="flex:1;"><div class="sub-name">' + ej.ejercicio + '</div>';
+      h += '<div class="sub-meta">' + (ej.fecha||'') + '</div></div>';
+      h += '<button class="sub-toggle" onclick="toggleEj(this,\'' + eid + '\')">Ver respuestas &#9660;</button>';
+      h += '</div>';
+      h += '<div id="' + eid + '" style="display:none;padding:.5rem 1.25rem 1.25rem;border-top:1px solid var(--border);">';
+      var resps = ej.respuestas || [];
+      var hasContent = false;
+      resps.forEach(function(r) {
+        if (r.respuesta && r.respuesta.trim()) {
+          hasContent = true;
+          h += '<div class="sub-q">';
+          h += '<div class="sub-ql">' + (r.pregunta||'') + '</div>';
+          h += '<div class="sub-ans">' + r.respuesta + '</div>';
+          h += '</div>';
+        }
+      });
+      if (!hasContent) h += '<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Las respuestas de la grilla no se guardaron como texto. El ejercicio fue completado.</p>';
+      h += '</div></div>';
     });
-  }
-  document.getElementById('admin-content').innerHTML=h;
+    h += '<div style="height:1rem;"></div>';
+  });
+
+  document.getElementById('admin-content').innerHTML = h;
 }
-function sc(label,val){return'<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;"><div style="font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">'+label+'</div><div style="font-size:1.3rem;font-weight:800;">'+val+'</div></div>';}
-function toggleSub(btn){var b=btn.closest('.sub-card').querySelector('.sub-body');var open=b.style.display!=='none';b.style.display=open?'none':'block';btn.innerHTML=open?'Ver &#9660;':'Ocultar &#9650;';}
+
+function adminStatCard(label, val) {
+  return '<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;">' +
+    '<div style="font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">' + label + '</div>' +
+    '<div style="font-size:1.3rem;font-weight:800;">' + val + '</div></div>';
+}
+
+function toggleEj(btn, eid) {
+  var body = document.getElementById(eid);
+  if (!body) return;
+  var open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  btn.innerHTML = open ? 'Ver respuestas &#9660;' : 'Ocultar &#9650;';
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('ip').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
