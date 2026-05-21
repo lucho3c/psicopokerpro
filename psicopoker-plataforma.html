@@ -324,6 +324,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     </div>
     <div style="display:flex;align-items:center;gap:.5rem;">
       <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.25rem .65rem;border-radius:3px;">Panel Admin</div>
+      <button onclick="fetchAdminData()" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='var(--red)'" onmouseout="this.style.borderColor='var(--border)'">&#8635; Actualizar</button>
     </div>
     <div class="tnav-r">
       <div class="uav" id="nav-av3"></div>
@@ -570,7 +571,7 @@ function submitToSheets(lessonId, unitName, exName, questions, onDone) {
   };
   fetch(SHEETS_URL, {
     method: 'POST', mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify(payload)
   }).then(function() { onDone(true); }).catch(function() { onDone(true); });
 }
@@ -1037,26 +1038,38 @@ function showAdmin() {
 }
 
 function fetchAdminData() {
-  document.getElementById('admin-ex-list').innerHTML = '<div style="padding:1rem 1.1rem;font-size:.75rem;color:var(--dim);">Cargando datos...</div>';
+  document.getElementById('admin-ex-list').innerHTML = '<div style="padding:1rem 1.1rem;font-size:.75rem;color:var(--dim);">Cargando...</div>';
+  document.getElementById('admin-content').innerHTML = loadingHtml();
   fetch(SHEETS_URL + '?t=' + Date.now())
     .then(function(r) { return r.json(); })
     .then(function(resp) {
-      if (resp.ok && resp.data) {
+      if (resp.ok && resp.data && resp.data.length > 0) {
         adminData = resp.data;
         renderAdminSidebar();
-        if (resp.data.length > 0) showAdminEx(0);
-        else {
-          document.getElementById('admin-content').innerHTML = noDataHtml();
-        }
-      } else {
-        document.getElementById('admin-ex-list').innerHTML = errorHtml('No hay datos aun');
+        showAdminEx(0);
+      } else if (resp.ok) {
+        adminData = [];
+        document.getElementById('admin-ex-list').innerHTML = '<div style="padding:1rem 1.1rem;font-size:.75rem;color:var(--dim);">Sin ejercicios aun</div>';
         document.getElementById('admin-content').innerHTML = noDataHtml();
+      } else {
+        document.getElementById('admin-ex-list').innerHTML = errorHtml('Error al leer datos');
+        document.getElementById('admin-content').innerHTML = errorHtml('El Apps Script respondio con error: ' + (resp.error || 'desconocido'));
       }
     })
     .catch(function(err) {
-      document.getElementById('admin-ex-list').innerHTML = errorHtml('Error de conexion');
-      document.getElementById('admin-content').innerHTML = errorHtml('No se pudo conectar con la planilla. Verifica que el Apps Script este bien configurado.');
+      document.getElementById('admin-ex-list').innerHTML = '<div style="padding:1rem 1.1rem;font-size:.75rem;color:rgba(232,49,42,.7);">Error de conexion</div>';
+      document.getElementById('admin-content').innerHTML = '<div style="padding:1.75rem 2rem;">' +
+        '<div style="background:rgba(232,49,42,.08);border:1px solid rgba(232,49,42,.25);border-radius:6px;padding:1.25rem 1.5rem;margin-bottom:1rem;">' +
+        '<p style="font-size:.82rem;font-weight:700;color:rgba(232,49,42,.9);margin-bottom:.4rem;">No se pudo conectar con Google Sheets</p>' +
+        '<p style="font-size:.78rem;color:var(--muted);">Probable causa: los jugadores aun no enviaron ningun ejercicio, o el Apps Script no esta bien configurado.</p></div>' +
+        '<p style="font-size:.75rem;color:var(--dim);">Detalle tecnico: ' + err.message + '</p>' +
+        '<button onclick="fetchAdminData()" style="margin-top:1rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.5rem 1rem;border-radius:3px;cursor:pointer;">Reintentar</button>' +
+        '</div>';
     });
+}
+function loadingHtml() {
+  return '<div style="padding:3rem 2rem;text-align:center;">' +
+    '<div style="font-size:.82rem;color:var(--dim);">Conectando con Google Sheets...</div></div>';
 }
 
 function noDataHtml() {
