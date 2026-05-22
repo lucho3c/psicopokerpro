@@ -1180,12 +1180,29 @@ function doSubmit(lid){
   if(btn){btn.disabled=true;btn.textContent='Guardando...';}
   collectAndSave(lid);
   var user=USERS[S.user];
-  var questions=def.type==='grid'?def.reflexion:(window['_exQ_'+lid]||[]);
+  var questions=def.type==='grid'?[]:(window['_exQ_'+lid]||[]);
   var answers=[];
-  questions.forEach(function(q){
-    var el=document.querySelector('[data-fid="'+q.fid+'"]');
-    answers.push({fid:q.fid, pregunta:q.label, respuesta:el?el.value.trim():''});
-  });
+  if (def.type === 'grid') {
+    // Reflexion questions first
+    (def.reflexion||[]).forEach(function(q){
+      var el=document.querySelector('[data-fid="'+q.fid+'"]');
+      answers.push({fid:q.fid, pregunta:q.label, respuesta:el?el.value.trim():''});
+    });
+    // All non-empty grid cells
+    (def.hours||[]).forEach(function(hr){
+      (def.days||[]).forEach(function(day,di){
+        var fid='g_'+hr.replace(':','')+'_'+di;
+        var el=document.querySelector('[data-fid="'+fid+'"]');
+        var val=el?el.value.trim():'';
+        if(val) answers.push({fid:fid, pregunta:hr+' — '+day, respuesta:val});
+      });
+    });
+  } else {
+    questions.forEach(function(q){
+      var el=document.querySelector('[data-fid="'+q.fid+'"]');
+      answers.push({fid:q.fid, pregunta:q.label, respuesta:el?el.value.trim():''});
+    });
+  }
   var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,
     usuario:S.user,unidad:def.unit,ejercicio:def.name,lid:lid,respuestas:answers};
   // Update or insert in localStorage
@@ -1437,10 +1454,16 @@ function renderContent(unit, lid) {
   }
   if (lesson.ex && EX_DEFS[lid] && EX_DEFS[lid].type === 'grid') {
     restoreDraft(lid);
-    // Re-color cells that have values
-    document.querySelectorAll('.gcell').forEach(function(el) {
-      if (el.value) el.style.background = '#E8312A22';
-    });
+    // Re-color cells that have values after restore
+    setTimeout(function() {
+      document.querySelectorAll('.gcell').forEach(function(el) {
+        if (el.value && el.value.trim()) {
+          el.style.background = activeCatColor + '22';
+          el.style.color = activeCatColor;
+          el.style.borderColor = activeCatColor + '55';
+        }
+      });
+    }, 50);
   }
 }
 
@@ -1624,12 +1647,26 @@ function showPatient(usuario) {
       var resps = ej.respuestas || [];
       var has = resps.some(function(r){ return r.respuesta&&r.respuesta.trim(); });
       if (has) {
-        resps.forEach(function(r) {
+        // Separate grid cells from reflection questions
+        var gridCells = resps.filter(function(r){ return r.fid&&r.fid.match(/^g_\d+_\d+$/); });
+        var reflCells = resps.filter(function(r){ return !r.fid||!r.fid.match(/^g_\d+_\d+$/); });
+        // Reflection questions first
+        reflCells.forEach(function(r) {
           if (r.respuesta&&r.respuesta.trim()) {
             h += '<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div>';
             h += '<div class="sub-ans">'+r.respuesta+'</div></div>';
           }
         });
+        // Grid cells as compact table
+        if (gridCells.length > 0) {
+          h += '<div class="sub-q"><div class="sub-ql">Planilla completada ('+gridCells.length+' celdas)</div>';
+          h += '<div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem;">';
+          gridCells.forEach(function(r) {
+            h += '<div style="background:rgba(232,49,42,.1);border:1px solid rgba(232,49,42,.2);border-radius:3px;padding:.25rem .6rem;font-size:.72rem;">';
+            h += '<span style="color:var(--muted);">'+r.pregunta+':</span> <strong>'+r.respuesta+'</strong></div>';
+          });
+          h += '</div></div>';
+        }
       } else {
         h += '<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado.</p>';
       }
