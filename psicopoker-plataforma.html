@@ -1233,15 +1233,19 @@ function updateAirtable(airtableId,rec){
 function doLogin() {
   USERS = getAllUsers();
   var u = document.getElementById('iu').value.trim().toLowerCase();
-  var p = document.getElementById('ip').value;
+  var p = document.getElementById('ip').value.trim();
   var usr = USERS[u];
   if (!usr || usr.pass !== p) {
     document.getElementById('lerr').classList.add('show');
     document.getElementById('ip').value = '';
     return;
   }
-  S.user = u; localStorage.setItem('pp_s', u);
-  restoreFromAirtable(u, function() { showDash(); });
+  S.user = u;
+  localStorage.setItem('pp_s', u);
+  showDash(); // Inmediato — no espera Airtable
+  restoreFromAirtable(u, function() {
+    if (S.user === u) renderDash(); // Refresca en background si sigue logueado
+  });
 }
 function doLogout() {
   S = { user: null, unitId: null, lessonId: null };
@@ -1252,10 +1256,14 @@ function doLogout() {
   document.getElementById('lerr').classList.remove('show');
 }
 function autoLogin() {
+  USERS = getAllUsers();
   var u = localStorage.getItem('pp_s');
   if (u && USERS[u]) {
     S.user = u;
-    restoreFromAirtable(u, function() { showDash(); });
+    showDash();
+    restoreFromAirtable(u, function() {
+      if (S.user === u) renderDash();
+    });
   }
 }
 
