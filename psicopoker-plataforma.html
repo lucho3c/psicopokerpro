@@ -324,6 +324,8 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     </div>
     <div style="display:flex;align-items:center;gap:.5rem;">
       <span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.25rem .65rem;border-radius:3px;">Panel Admin</span>
+      <button id="btn-tab-pacientes" onclick="adminTab('pacientes')" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Ejercicios</button>
+      <button id="btn-tab-usuarios" onclick="adminTab('usuarios')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Pacientes</button>
       <button onclick="loadAdminPanel()" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">&#8635; Actualizar</button>
     </div>
     <div class="tnav-r"><div class="uav" id="nav-av3"></div><button class="btn-sm" onclick="doLogout()">Salir</button></div>
@@ -351,17 +353,29 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
   </div>
 </div>
 </div>
+<div id="admin-view-usuarios" style="display:none;overflow-y:auto;flex:1;"></div>
+</div>
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 <div class="toast" id="toast"></div>
 <script>
 /* ═══════════════════════════════════════════════
    USUARIOS — editá para agregar jugadores
    ═══════════════════════════════════════════════ */
-var USERS = {
+var USERS_BASE = {
   mauro:  { pass: 'psico2025', name: 'Mauro Garcia Acacio', role: 'admin' },
   arturo: { pass: 'psico2025', name: 'Arturo Tomaselli', role: 'admin' },
   demo:   { pass: 'demo123',   name: 'Player Demo' }
 };
+function getExtraUsers() {
+  try { return JSON.parse(localStorage.getItem('pp_extra_users') || '{}'); } catch(e) { return {}; }
+}
+function getAllUsers() {
+  var all = Object.assign({}, USERS_BASE);
+  var extra = getExtraUsers();
+  Object.keys(extra).forEach(function(k) { all[k] = extra[k]; });
+  return all;
+}
+var USERS = getAllUsers();
 
 /* ═══════════════════════════════════════════════
    GOOGLE SHEETS — no tocar
@@ -544,14 +558,30 @@ function collectAndSave(lessonId) {
   if (Object.keys(data).length > 0) saveDraft(lessonId, data);
 }
 function restoreDraft(lessonId) {
+  // 1. Try draft (most recent edits)
   var draft = loadDraft(lessonId);
-  if (!draft) return false;
-  document.querySelectorAll('[data-fid]').forEach(function(el) {
-    var key = el.getAttribute('data-fid');
-    if (draft[key] !== undefined) el.value = draft[key];
-  });
-  updateSaveStatus('Borrador restaurado', '#22C55E');
-  return true;
+  if (draft) {
+    document.querySelectorAll('[data-fid]').forEach(function(el) {
+      var key = el.getAttribute('data-fid');
+      if (draft[key] !== undefined) el.value = draft[key];
+    });
+    updateSaveStatus('Borrador guardado', '#22C55E');
+    return true;
+  }
+  // 2. Try last submission (keep answers visible after submit)
+  var subs = getLocalSubs();
+  var sub = subs.find(function(s) { return s.usuario === S.user && s.lid === lessonId; });
+  if (sub && sub.respuestas) {
+    sub.respuestas.forEach(function(r) {
+      if (r.fid) {
+        var el = document.querySelector('[data-fid="' + r.fid + '"]');
+        if (el) el.value = r.respuesta || '';
+      }
+    });
+    updateSaveStatus('Respuestas guardadas', '#22C55E');
+    return true;
+  }
+  return false;
 }
 
 /* ═══════════════════════════════════════════════
@@ -559,12 +589,7 @@ function restoreDraft(lessonId) {
    ═══════════════════════════════════════════════ */
 function getLocalSubs(){try{return JSON.parse(localStorage.getItem('pp_submissions')||'[]');}catch(e){return[];}}
 function saveLocalSub(rec){var s=getLocalSubs();s.push(rec);localStorage.setItem('pp_submissions',JSON.stringify(s));}
-function tryAirtable(rec){
-  var lines=(rec.respuestas||[]).map(function(r){return(r.pregunta||'')+'\n'+(r.respuesta||'');}).join('\n\n---\n\n');
-  fetch(AIRTABLE_URL,{method:'POST',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN,'Content-Type':'application/json'},
-    body:JSON.stringify({fields:{Jugador:rec.jugador,Usuario:rec.usuario,Unidad:rec.unidad,Ejercicio:rec.ejercicio,Fecha:rec.fecha,Respuestas:lines}})
-  }).catch(function(){});
-}
+/* tryAirtable replaced by createAirtable/updateAirtable */
 
 /* ═══════════════════════════════════════════════
    EXERCISE DEFINITIONS
@@ -1157,22 +1182,56 @@ function doSubmit(lid){
   var user=USERS[S.user];
   var questions=def.type==='grid'?def.reflexion:(window['_exQ_'+lid]||[]);
   var answers=[];
-  questions.forEach(function(q){var el=document.querySelector('[data-fid="'+q.fid+'"]');answers.push({pregunta:q.label,respuesta:el?el.value.trim():''});});
-  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,usuario:S.user,unidad:def.unit,ejercicio:def.name,respuestas:answers};
-  saveLocalSub(rec);
-  markDoneL(lid);clearDraft(lid);
-  updateSaveStatus('Completado','#22C55E');
-  if(btn){btn.textContent='Completado';btn.style.background='#22C55E';}
-  showToast('Ejercicio completado!');
+  questions.forEach(function(q){
+    var el=document.querySelector('[data-fid="'+q.fid+'"]');
+    answers.push({fid:q.fid, pregunta:q.label, respuesta:el?el.value.trim():''});
+  });
+  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,
+    usuario:S.user,unidad:def.unit,ejercicio:def.name,lid:lid,respuestas:answers};
+  // Update or insert in localStorage
+  var saved=getLocalSubs();
+  var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});
+  if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}
+  else{saved.push(rec);}
+  localStorage.setItem('pp_submissions',JSON.stringify(saved));
+  markDoneL(lid);
+  // KEEP draft so answers stay visible — no clearDraft
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  var isUpdate=idx>=0;
+  if(btn){btn.textContent=isUpdate?'Actualizar envio':'Enviar a Mauro';btn.style.background='#22C55E';btn.disabled=false;}
+  showToast(isUpdate?'Respuestas actualizadas!':'Ejercicio enviado a Mauro!');
   var unit=C.find(function(u){return u.id===S.unitId;});
-  if(unit){renderSidebar(unit);renderContent(unit,lid);}
-  tryAirtable(rec);
+  if(unit){renderSidebar(unit);}
+  // Airtable: update or create
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){
+    if(id){
+      var s2=getLocalSubs();
+      var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});
+      if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}
+    }
+  });}
+}
+
+function createAirtable(rec,cb){
+  var lines=(rec.respuestas||[]).map(function(r){return(r.pregunta||'')+'\n'+(r.respuesta||'');}).join('\n\n---\n\n');
+  fetch(AIRTABLE_URL,{method:'POST',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN,'Content-Type':'application/json'},
+    body:JSON.stringify({fields:{Jugador:rec.jugador,Usuario:rec.usuario,Unidad:rec.unidad,Ejercicio:rec.ejercicio,Fecha:rec.fecha,Respuestas:lines}})
+  }).then(function(r){return r.json();}).then(function(d){cb&&cb(d.id||null);}).catch(function(){cb&&cb(null);});
+}
+
+function updateAirtable(airtableId,rec){
+  var lines=(rec.respuestas||[]).map(function(r){return(r.pregunta||'')+'\n'+(r.respuesta||'');}).join('\n\n---\n\n');
+  fetch(AIRTABLE_URL+'/'+airtableId,{method:'PATCH',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN,'Content-Type':'application/json'},
+    body:JSON.stringify({fields:{Fecha:rec.fecha,Respuestas:lines}})
+  }).catch(function(){});
 }
 
 /* ═══════════════════════════════════════════════
    AUTH
    ═══════════════════════════════════════════════ */
 function doLogin() {
+  USERS = getAllUsers();
   var u = document.getElementById('iu').value.trim().toLowerCase();
   var p = document.getElementById('ip').value;
   var usr = USERS[u];
@@ -1403,9 +1462,12 @@ var adminData    = null;
 var activePatient = null;
 
 function showAdmin() {
+  USERS = getAllUsers();
   document.getElementById('nav-av3').textContent = USERS[S.user].name[0].toUpperCase();
   showView('vadmin');
+  adminTab('pacientes');
   loadAdminPanel();
+  renderUserTab();
 }
 
 function loadAdminPanel() {
@@ -1581,6 +1643,91 @@ function toggleEj(eid, hdr) {
   body.style.display = open ? 'none' : 'block';
   var btn = hdr.querySelector('.sub-toggle');
   if (btn) btn.innerHTML = open ? 'Ver respuestas &#9660;' : 'Ocultar &#9650;';
+}
+
+
+function adminTab(tab) {
+  var btns = { pacientes:'btn-tab-pacientes', usuarios:'btn-tab-usuarios' };
+  Object.keys(btns).forEach(function(k) {
+    var el = document.getElementById(btns[k]);
+    if (el) { el.style.background = k===tab?'var(--red)':'transparent'; el.style.color = k===tab?'#fff':'var(--muted)'; el.style.border = k===tab?'none':'1px solid var(--border)'; }
+  });
+  document.getElementById('admin-view-pacientes').style.display = tab==='pacientes'?'flex':'none';
+  document.getElementById('admin-view-usuarios').style.display = tab==='usuarios'?'block':'none';
+}
+
+function renderUserTab() {
+  var extra = getExtraUsers();
+  var all = Object.assign({}, USERS_BASE, extra);
+  var h = '<div style="padding:1.75rem 2rem;max-width:700px;">';
+  h += '<h2 style="font-size:1.1rem;font-weight:800;margin-bottom:.35rem;">Pacientes del Programa</h2>';
+  h += '<p style="font-size:.8rem;color:var(--muted);margin-bottom:1.75rem;">Agrega nuevos pacientes aca. Sus datos de acceso se guardan en este navegador y en la plataforma.</p>';
+
+  // Add new patient form
+  h += '<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1.75rem;">';
+  h += '<p style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Nuevo Paciente</p>';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:.9rem;">';
+  h += '<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Nombre completo</label>';
+  h += '<input id="nu-name" type="text" placeholder="Carlos Rodriguez" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;" onfocus="this.style.borderColor=\'var(--red)\'" onblur="this.style.borderColor=\'var(--border)\'"></div>';
+  h += '<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Usuario (sin espacios)</label>';
+  h += '<input id="nu-user" type="text" placeholder="carlos_r" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;" onfocus="this.style.borderColor=\'var(--red)\'" onblur="this.style.borderColor=\'var(--border)\'"></div>';
+  h += '<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Contrasena</label>';
+  h += '<input id="nu-pass" type="text" placeholder="poker2025" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;" onfocus="this.style.borderColor=\'var(--red)\'" onblur="this.style.borderColor=\'var(--border)\'"></div>';
+  h += '</div>';
+  h += '<button onclick="addPatient()" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;cursor:pointer;">+ Agregar Paciente</button>';
+  h += '<span id="nu-msg" style="font-size:.75rem;margin-left:1rem;color:var(--green);display:none;">Guardado!</span>';
+  h += '</div>';
+
+  // Patient list
+  h += '<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;">';
+  h += '<div style="padding:.75rem 1.25rem;background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:grid;grid-template-columns:1fr 120px 150px 80px;gap:.5rem;">';
+  h += '<span>Nombre</span><span>Usuario</span><span>Contrasena</span><span>Acciones</span></div>';
+  Object.keys(all).forEach(function(u) {
+    var p = all[u];
+    if (p.role === 'admin') return;
+    var isExtra = !!extra[u];
+    h += '<div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 120px 150px 80px;gap:.5rem;align-items:center;">';
+    h += '<span style="font-size:.82rem;font-weight:600;">' + p.name + '</span>';
+    h += '<span style="font-size:.78rem;color:var(--muted);">@' + u + '</span>';
+    h += '<span style="font-size:.78rem;color:var(--muted);font-family:monospace;">' + p.pass + '</span>';
+    if (isExtra) {
+      h += '<button onclick="removePatient(\'' + u + '\')" style="background:transparent;border:1px solid rgba(232,49,42,.3);color:rgba(232,49,42,.7);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;padding:.3rem .6rem;border-radius:3px;cursor:pointer;">Eliminar</button>';
+    } else {
+      h += '<span style="font-size:.65rem;color:var(--dim);">fijo</span>';
+    }
+    h += '</div>';
+  });
+  h += '</div>';
+  h += '<p style="font-size:.72rem;color:var(--dim);margin-top:1rem;line-height:1.65;">Los pacientes agregados aca pueden iniciar sesion en la plataforma desde cualquier dispositivo. Si necesitas que funcione en un dispositivo nuevo, pedi a Lucho que actualice el archivo HTML.</p>';
+  h += '</div>';
+  document.getElementById('admin-view-usuarios').innerHTML = h;
+}
+
+function addPatient() {
+  var name = document.getElementById('nu-name').value.trim();
+  var user = document.getElementById('nu-user').value.trim().toLowerCase().replace(/\s+/g,'_');
+  var pass = document.getElementById('nu-pass').value.trim();
+  if (!name || !user || !pass) { alert('Completa todos los campos'); return; }
+  var extra = getExtraUsers();
+  extra[user] = { name: name, pass: pass };
+  localStorage.setItem('pp_extra_users', JSON.stringify(extra));
+  USERS = getAllUsers();
+  document.getElementById('nu-name').value = '';
+  document.getElementById('nu-user').value = '';
+  document.getElementById('nu-pass').value = '';
+  var msg = document.getElementById('nu-msg');
+  msg.style.display = 'inline';
+  setTimeout(function() { msg.style.display = 'none'; }, 2500);
+  renderUserTab();
+}
+
+function removePatient(u) {
+  if (!confirm('Eliminar a @' + u + '?')) return;
+  var extra = getExtraUsers();
+  delete extra[u];
+  localStorage.setItem('pp_extra_users', JSON.stringify(extra));
+  USERS = getAllUsers();
+  renderUserTab();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
