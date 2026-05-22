@@ -1216,7 +1216,7 @@ function doSubmit(lid){
 function createAirtable(rec,cb){
   var lines=(rec.respuestas||[]).map(function(r){return(r.pregunta||'')+'\n'+(r.respuesta||'');}).join('\n\n---\n\n');
   fetch(AIRTABLE_URL,{method:'POST',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN,'Content-Type':'application/json'},
-    body:JSON.stringify({fields:{Jugador:rec.jugador,Usuario:rec.usuario,Unidad:rec.unidad,Ejercicio:rec.ejercicio,Fecha:rec.fecha,Respuestas:lines}})
+    body:JSON.stringify({fields:{Jugador:rec.jugador,Usuario:rec.usuario,Unidad:rec.unidad,Ejercicio:rec.ejercicio,Fecha:rec.fecha,Lid:rec.lid||'',Respuestas:lines}})
   }).then(function(r){return r.json();}).then(function(d){cb&&cb(d.id||null);}).catch(function(){cb&&cb(null);});
 }
 
@@ -1240,7 +1240,8 @@ function doLogin() {
     document.getElementById('ip').value = '';
     return;
   }
-  S.user = u; localStorage.setItem('pp_s', u); showDash();
+  S.user = u; localStorage.setItem('pp_s', u);
+  restoreFromAirtable(u, function() { showDash(); });
 }
 function doLogout() {
   S = { user: null, unitId: null, lessonId: null };
@@ -1252,7 +1253,10 @@ function doLogout() {
 }
 function autoLogin() {
   var u = localStorage.getItem('pp_s');
-  if (u && USERS[u]) { S.user = u; showDash(); }
+  if (u && USERS[u]) {
+    S.user = u;
+    restoreFromAirtable(u, function() { showDash(); });
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -1728,6 +1732,52 @@ function removePatient(u) {
   localStorage.setItem('pp_extra_users', JSON.stringify(extra));
   USERS = getAllUsers();
   renderUserTab();
+}
+
+
+function restoreFromAirtable(usuario, cb) {
+  // If user already has progress locally, skip restore
+  var existing = {};
+  try { existing = JSON.parse(localStorage.getItem('pp_p_' + usuario) || '{}'); } catch(e) {}
+  if (Object.keys(existing).length > 0) { cb(); return; }
+
+  var filter = encodeURIComponent('({Usuario}="' + usuario + '")');
+  fetch(AIRTABLE_URL + '?filterByFormula=' + filter + '&pageSize=100', {
+    headers: { 'Authorization': 'Bearer ' + AIRTABLE_TOKEN }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(resp) {
+    if (!resp.records || !resp.records.length) { cb(); return; }
+    var progress = {};
+    var subs = getLocalSubs();
+    var existingLids = {};
+    subs.forEach(function(s) { if(s.usuario===usuario&&s.lid) existingLids[s.lid]=1; });
+
+    resp.records.forEach(function(rec) {
+      var f = rec.fields;
+      var lid = f.Lid || '';
+      if (lid) {
+        progress[lid] = true;
+        if (!existingLids[lid]) {
+          // Restore answers from Airtable respuestas
+          var resps = (f.Respuestas||'').split('\n\n---\n\n').map(function(b) {
+            var nl = b.indexOf('\n');
+            return { fid:'', pregunta: nl>-1?b.substring(0,nl):b, respuesta: nl>-1?b.substring(nl+1):'' };
+          });
+          subs.push({ ts:0, fecha:f.Fecha||'', jugador:f.Jugador||'',
+            usuario:usuario, unidad:f.Unidad||'', ejercicio:f.Ejercicio||'',
+            lid:lid, airtableId:rec.id, respuestas:resps });
+          existingLids[lid] = 1;
+        }
+      }
+    });
+
+    localStorage.setItem('pp_p_' + usuario, JSON.stringify(progress));
+    localStorage.setItem('pp_submissions', JSON.stringify(subs));
+    showToast('Progreso restaurado desde la nube');
+    cb();
+  })
+  .catch(function() { cb(); });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
