@@ -353,7 +353,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
   </div>
 </div>
 </div>
-<div id="admin-view-usuarios" style="display:none;overflow-y:auto;flex:1;"></div>
+<div id="admin-view-usuarios" style="display:none;flex:1;flex-direction:column;overflow-y:auto;min-height:0;"></div>
 </div>
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 <div class="toast" id="toast"></div>
@@ -1471,7 +1471,6 @@ function showAdmin() {
   showView('vadmin');
   adminTab('pacientes');
   loadAdminPanel();
-  renderUserTab();
 }
 
 function loadAdminPanel() {
@@ -1503,9 +1502,17 @@ function loadAdminPanel() {
 }
 
 function renderAdminPanel(subs) {
+  // Deduplicate: keep only latest submission per user+lid
+  var latest = {};
+  subs.forEach(function(s) {
+    var key = (s.usuario||'?') + '|' + (s.lid || s.ejercicio || '?');
+    if (!latest[key] || (s.ts||0) > (latest[key].ts||0)) latest[key] = s;
+  });
+  var dedupedSubs = Object.values(latest);
+
   // Group by patient, sorted by most recent activity
   var patients = {};
-  subs.forEach(function(s) {
+  dedupedSubs.forEach(function(s) {
     var key = s.usuario || s.jugador || '?';
     if (!patients[key]) patients[key] = { nombre: s.jugador||key, usuario:key, ejercicios:[], lastTs:0 };
     patients[key].ejercicios.push(s);
@@ -1654,16 +1661,25 @@ function adminTab(tab) {
   var btns = { pacientes:'btn-tab-pacientes', usuarios:'btn-tab-usuarios' };
   Object.keys(btns).forEach(function(k) {
     var el = document.getElementById(btns[k]);
-    if (el) { el.style.background = k===tab?'var(--red)':'transparent'; el.style.color = k===tab?'#fff':'var(--muted)'; el.style.border = k===tab?'none':'1px solid var(--border)'; }
+    if (el) {
+      el.style.background = k===tab ? 'var(--red)' : 'transparent';
+      el.style.color      = k===tab ? '#fff' : 'var(--muted)';
+      el.style.border     = k===tab ? 'none' : '1px solid var(--border)';
+    }
   });
-  document.getElementById('admin-view-pacientes').style.display = tab==='pacientes'?'flex':'none';
-  document.getElementById('admin-view-usuarios').style.display = tab==='usuarios'?'block':'none';
+  var vp = document.getElementById('admin-view-pacientes');
+  var vu = document.getElementById('admin-view-usuarios');
+  if (vp) vp.style.display = tab==='pacientes' ? 'flex' : 'none';
+  if (vu) {
+    vu.style.display = tab==='usuarios' ? 'flex' : 'none';
+    if (tab==='usuarios') renderUserTab();
+  }
 }
 
 function renderUserTab() {
   var extra = getExtraUsers();
   var all = Object.assign({}, USERS_BASE, extra);
-  var h = '<div style="padding:1.75rem 2rem;max-width:700px;">';
+  var h = '<div style="padding:1.75rem 2rem;max-width:740px;width:100%;">';
   h += '<h2 style="font-size:1.1rem;font-weight:800;margin-bottom:.35rem;">Pacientes del Programa</h2>';
   h += '<p style="font-size:.8rem;color:var(--muted);margin-bottom:1.75rem;">Agrega nuevos pacientes aca. Sus datos de acceso se guardan en este navegador y en la plataforma.</p>';
 
