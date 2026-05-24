@@ -613,6 +613,8 @@ function restoreDraft(lessonId) {
    GOOGLE SHEETS SUBMIT
    ═══════════════════════════════════════════════ */
 function getLocalSubs(){try{return JSON.parse(localStorage.getItem('pp_submissions')||'[]');}catch(e){return[];}}
+function createAirtable(rec,cb){var lines=(rec.respuestas||[]).map(function(r){return(r.pregunta||'')+'\n'+(r.respuesta||'');}).join('\n\n---\n\n');fetch(AIRTABLE_URL,{method:'POST',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({fields:{Jugador:rec.jugador,Usuario:rec.usuario,Unidad:rec.unidad,Ejercicio:rec.ejercicio,Fecha:rec.fecha,Lid:rec.lid||'',Respuestas:lines}})}).then(function(r){return r.json();}).then(function(d){cb&&cb(d.id||null);}).catch(function(){cb&&cb(null);});}
+function updateAirtable(id,rec){var lines=(rec.respuestas||[]).map(function(r){return(r.pregunta||'')+'\n'+(r.respuesta||'');}).join('\n\n---\n\n');fetch(AIRTABLE_URL+'/'+id,{method:'PATCH',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({fields:{Fecha:rec.fecha,Respuestas:lines}})}).catch(function(){});}
 function saveLocalSub(rec){var s=getLocalSubs();s.push(rec);localStorage.setItem('pp_submissions',JSON.stringify(s));}
 function tryAirtable(rec){
   var lines=(rec.respuestas||[]).map(function(r){return(r.pregunta||'')+'\n'+(r.respuesta||'');}).join('\n\n---\n\n');
