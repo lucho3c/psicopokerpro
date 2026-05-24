@@ -1649,7 +1649,9 @@ function renderPatientList(filter) {
   document.getElementById('admin-patient-list').innerHTML = h;
 }
 
+var teosqAdminQueue=[];
 function showPatient(usuario) {
+  teosqAdminQueue=[];
   activePatient = usuario;
   renderPatientList(document.getElementById('admin-search') ? document.getElementById('admin-search').value : '');
   var patient = adminData.find(function(p) { return p.usuario === usuario; });
@@ -1696,46 +1698,68 @@ function showPatient(usuario) {
     var exs = byUnit[unit].sort(function(a,b){ return (a.ejercicio||'').localeCompare(b.ejercicio||'','es'); });
     exs.forEach(function(ej, idx) {
       var eid = 'ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
+      var isTeosq = ej.lid==='u1l5' || (ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf('teosq')!==-1);
       h += '<div class="sub-card">';
-      h += '<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
-      h += '<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div>';
-      h += '<div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
-      h += '<button class="sub-toggle">Ver respuestas &#9660;</button>';
-      h += '</div>';
-      h += '<div id="'+eid+'" style="display:none;padding:.5rem 1.25rem 1.25rem;border-top:1px solid var(--border);">';
-      var resps = ej.respuestas || [];
-      var has = resps.some(function(r){ return r.respuesta&&r.respuesta.trim(); });
-      if (has) {
-        // Separate grid cells from reflection questions
+
+      if (isTeosq) {
+        // TEOSQ: special expandable view
+        h += '<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
+        h += '<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div>';
+        h += '<div class="sub-meta">'+(ej.fecha||'')+'&nbsp;&nbsp;<span style="color:var(--red);font-size:.65rem;font-weight:700;">TEOSQ — ver detalle completo</span></div></div>';
+        h += '<button class="sub-toggle">Ver detalle &#9660;</button></div>';
+        h += '<div id="'+eid+'" style="display:none;border-top:1px solid var(--border);"></div>';
+        h += '</div>';
+        teosqAdminQueue.push({eid:eid, ej:ej});
+      } else {
+        // Standard exercise
+        h += '<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
+        h += '<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div>';
+        h += '<div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
+        h += '<button class="sub-toggle">Ver respuestas &#9660;</button></div>';
+        h += '<div id="'+eid+'" style="display:none;padding:.5rem 1.25rem 1.25rem;border-top:1px solid var(--border);">';
+        var resps = ej.respuestas || [];
         var gridCells = resps.filter(function(r){ return r.fid&&r.fid.match(/^g_\d+_\d+$/); });
         var reflCells = resps.filter(function(r){ return !r.fid||!r.fid.match(/^g_\d+_\d+$/); });
-        // Reflection questions first
-        reflCells.forEach(function(r) {
-          if (r.respuesta&&r.respuesta.trim()) {
-            h += '<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div>';
-            h += '<div class="sub-ans">'+r.respuesta+'</div></div>';
-          }
-        });
-        // Grid cells as compact table
-        if (gridCells.length > 0) {
-          h += '<div class="sub-q"><div class="sub-ql">Planilla completada ('+gridCells.length+' celdas)</div>';
-          h += '<div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem;">';
-          gridCells.forEach(function(r) {
-            h += '<div style="background:rgba(232,49,42,.1);border:1px solid rgba(232,49,42,.2);border-radius:3px;padding:.25rem .6rem;font-size:.72rem;">';
-            h += '<span style="color:var(--muted);">'+r.pregunta+':</span> <strong>'+r.respuesta+'</strong></div>';
+        var has = resps.some(function(r){ return r.respuesta&&r.respuesta.trim(); });
+        if (has) {
+          reflCells.forEach(function(r) {
+            if (r.respuesta&&r.respuesta.trim()) {
+              h += '<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div>';
+              h += '<div class="sub-ans">'+r.respuesta+'</div></div>';
+            }
           });
-          h += '</div></div>';
+          if (gridCells.length > 0) {
+            h += '<div class="sub-q"><div class="sub-ql">Planilla completada ('+gridCells.length+' celdas)</div>';
+            h += '<div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem;">';
+            gridCells.forEach(function(r) {
+              h += '<div style="background:rgba(232,49,42,.1);border:1px solid rgba(232,49,42,.2);border-radius:3px;padding:.25rem .6rem;font-size:.72rem;">';
+              h += '<span style="color:var(--muted);">'+r.pregunta+':</span> <strong>'+r.respuesta+'</strong></div>';
+            });
+            h += '</div></div>';
+          }
+        } else {
+          h += '<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado.</p>';
         }
-      } else {
-        h += '<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado.</p>';
+        h += '</div></div>';
       }
-      h += '</div></div>';
     });
     h += '</div>';
   });
   h += '</div>';
 
   document.getElementById('admin-content').innerHTML = h;
+
+  // Render TEOSQ admin views after DOM insertion
+  teosqAdminQueue.forEach(function(item) {
+    renderTEOSQAdminView(item.ej, item.eid);
+  });
+  teosqAdminQueue = [];
+
+  // Render TEOSQ admin views after DOM insertion
+  teosqAdminQueue.forEach(function(item) {
+    renderTEOSQAdminView(item.ej, item.eid);
+  });
+  teosqAdminQueue = [];
 }
 
 function psc(label, val) {
@@ -1757,7 +1781,20 @@ function toggleEj(eid, hdr) {
   var open = body.style.display !== 'none';
   body.style.display = open ? 'none' : 'block';
   var btn = hdr.querySelector('.sub-toggle');
-  if (btn) btn.innerHTML = open ? 'Ver respuestas &#9660;' : 'Ocultar &#9650;';
+  if (btn) btn.innerHTML = open ? (btn.textContent.indexOf('detalle')!==-1?'Ver detalle &#9660;':'Ver respuestas &#9660;') : 'Ocultar &#9650;';
+  // If TEOSQ and newly opened, draw chart
+  if (!open) {
+    var chartEl = body.querySelector('[id^="admchart_"]');
+    if (chartEl && chartEl.innerHTML.trim()==='') {
+      var uid = chartEl.id.replace('admchart_','');
+      // find scores from rendered content
+      var valEls = body.querySelectorAll('.teosq-sc-val');
+      if (valEls.length >= 2) {
+        var e=parseFloat(valEls[0].textContent), t=parseFloat(valEls[1].textContent);
+        if(!isNaN(e)&&!isNaN(t)) chartEl.innerHTML = buildTEOSQChartSVG(e,t);
+      }
+    }
+  }
 }
 
 
@@ -2219,6 +2256,155 @@ function tqDrawChart(ego, tar) {
   leg+='<text x="'+(W-mr-86)+'" y="'+(mt+33)+'" fill="rgba(238,239,243,.55)" font-family="Montserrat,sans-serif" font-size="8">Tarea</text>';
 
   svg.innerHTML = '<rect width="'+W+'" height="'+H+'" fill="transparent"/>'+yTitle+lines+axes+bars+leg;
+}
+
+
+function renderTEOSQAdminView(ej, containerId) {
+  // Extract answers from submission respuestas
+  var ans = {};
+  var egoScore = null, tarScore = null, perfil = null;
+  (ej.respuestas || []).forEach(function(r) {
+    if (!r.fid) return;
+    if (r.fid === 'teosq_ego') { egoScore = parseFloat(r.respuesta); return; }
+    if (r.fid === 'teosq_tar') { tarScore = parseFloat(r.respuesta); return; }
+    if (r.fid === 'teosq_perfil') { perfil = r.respuesta; return; }
+    var m = r.fid.match(/^teosq_(\d+)$/);
+    if (m) ans[parseInt(m[1])] = parseInt(r.respuesta) || 0;
+  });
+
+  var uid = containerId.replace(/[^a-z0-9]/gi, '_');
+  var h = '<div style="border:1px solid var(--border-r);border-top:2px solid var(--red);border-radius:0 0 5px 5px;overflow:hidden;">';
+
+  // Tabs
+  h += '<div style="display:flex;border-bottom:1px solid var(--border);background:var(--bg3);">';
+  h += '<div class="teosq-tab on" id="at0_'+uid+'" onclick="admTqTab(\''+uid+'\',0)" style="font-size:.65rem;">1. Cuestionario</div>';
+  h += '<div class="teosq-tab" id="at1_'+uid+'" onclick="admTqTab(\''+uid+'\',1)" style="font-size:.65rem;">2. Resultados</div>';
+  h += '<div class="teosq-tab" id="at2_'+uid+'" onclick="admTqTab(\''+uid+'\',2)" style="font-size:.65rem;">3. Interpretacion</div>';
+  h += '</div>';
+
+  // Pane 1: Questionnaire with answers highlighted
+  h += '<div class="teosq-pane on" id="ap0_'+uid+'" style="padding:1rem;">';
+  h += '<div class="teosq-intro" style="margin-bottom:.85rem;">Yo me siento con mas exito en el poker cuando...</div>';
+  TEOSQ_ITEMS.forEach(function(item) {
+    var v = ans[item.n] || 0;
+    h += '<div class="tq-item'+(v?' done':'')+'" style="margin-bottom:.5rem;">';
+    h += '<div class="tq-num">Item '+item.n+(item.cat==='E'?' · Ego':' · Tarea')+'</div>';
+    h += '<div class="tq-text">'+item.t+'</div>';
+    h += '<div class="tq-scale">';
+    for (var i=1;i<=5;i++) {
+      h += '<div class="tq-btn'+(v===i?' on':'')+'" style="pointer-events:none;flex:1;padding:.4rem .1rem;font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;text-align:center;border:1.5px solid var(--border);border-radius:3px;'+(v===i?'background:var(--red);border-color:var(--red);color:#fff;':'background:var(--bg3);color:var(--muted);')+'">'+(v===i?'<strong>'+i+'</strong>':i)+'</div>';
+    }
+    h += '</div>';
+    if (!v) h += '<div style="font-size:.65rem;color:var(--dim);margin-top:.25rem;">Sin respuesta</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+
+  // Pane 2: Results with chart
+  h += '<div class="teosq-pane" id="ap1_'+uid+'" style="padding:1rem;">';
+  if (egoScore !== null && tarScore !== null) {
+    function lvl(s){if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',cls:'tlvl-low'};if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',cls:'tlvl-mid'};return{lbl:'Alta ('+s.toFixed(2)+')',cls:'tlvl-hi'};}
+    var el=lvl(egoScore), tl=lvl(tarScore);
+    h += '<div class="teosq-scores">';
+    h += '<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion al Ego</div>';
+    h += '<div class="teosq-sc-val">'+egoScore.toFixed(2)+'</div>';
+    h += '<div class="teosq-sc-lvl '+el.cls+'">'+el.lbl+'</div>';
+    h += '<div class="teosq-sc-bar"><div class="teosq-sc-fill" style="width:'+(egoScore/5*100)+'%;background:#E8312A"></div></div></div>';
+    h += '<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion a la Tarea</div>';
+    h += '<div class="teosq-sc-val">'+tarScore.toFixed(2)+'</div>';
+    h += '<div class="teosq-sc-lvl '+tl.cls+'">'+tl.lbl+'</div>';
+    h += '<div class="teosq-sc-bar"><div class="teosq-sc-fill" style="width:'+(tarScore/5*100)+'%;background:#22C55E"></div></div></div>';
+    h += '</div>';
+    // Chart container - will be drawn after insertion
+    h += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:1rem;margin-top:.85rem;">';
+    h += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;">Grafico de resultados</div>';
+    h += '<svg id="admchart_'+uid+'" viewBox="0 0 380 220" style="width:100%;max-width:400px;display:block;margin:0 auto;"></svg>';
+    h += '</div>';
+  } else {
+    h += '<p style="font-size:.8rem;color:var(--dim);padding:.5rem 0;">No se encontraron scores calculados en este envio.</p>';
+  }
+  h += '</div>';
+
+  // Pane 3: Interpretation
+  h += '<div class="teosq-pane" id="ap2_'+uid+'" style="padding:1rem;">';
+  if (perfil) {
+    h += '<div style="background:var(--bg2);border-radius:5px;padding:.9rem 1rem;margin-bottom:.85rem;">';
+    h += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">Perfil del paciente</div>';
+    h += '<div style="font-size:1rem;font-weight:800;">'+perfil+'</div></div>';
+  }
+  h += '<div class="teosq-profiles">';
+  var profiles=[
+    {id:'tp1',icon:'🟢',name:'Tarea alta / Ego baja',desc:'Motivacion solida y autonoma.',traits:['✅ Ideal para resistir la varianza.','✅ Alta capacidad de adaptacion.','⚠ Puede faltarle intensidad competitiva.'],tag:'tptag-ok',tagLbl:'Perfil favorable'},
+    {id:'tp2',icon:'🔥',name:'Ego alta / Tarea baja',desc:'Busca demostrar valor y validarse.',traits:['⚠ Riesgo de frustracion ante errores.','⚠ Vulnerabilidad frente a comparacion social.','✖ Necesita redefinir que es exito.'],tag:'tptag-r',tagLbl:'Incompatible con Mindset Ganador'},
+    {id:'tp3',icon:'🧨',name:'Ego alta / Tarea alta',desc:'Fuerte ambicion combinada con compromiso.',traits:['✅ Ideal para carrera profesional seria.','⚠ Riesgo de burnout.','⚠ Necesita ordenar prioridades.'],tag:'tptag-w',tagLbl:'Perfil complejo'},
+    {id:'tp4',icon:'💤',name:'Ego baja / Tarea baja',desc:'Motivacion difusa o fragil.',traits:['⚠ Riesgo de desmotivacion.','⚠ Posibles problemas en vida personal.','✖ Requiere proceso psicoterapeutico.'],tag:'tptag-r',tagLbl:'Requiere atencion urgente'},
+  ];
+  profiles.forEach(function(p) {
+    var isActive = perfil && perfil.indexOf(p.name) !== -1;
+    h += '<div class="tp-card '+(isActive?p.id+' on':'')+'"><div class="tp-icon">'+p.icon+'</div>';
+    h += '<div class="tp-name">'+p.name+'</div>';
+    h += '<div class="tp-desc">'+p.desc+'</div>';
+    h += '<ul class="tp-traits">';
+    p.traits.forEach(function(t){h+='<li>'+t+'</li>';});
+    h += '</ul>';
+    h += '<div class="tp-tag '+p.tag+'">'+p.tagLbl+'</div></div>';
+  });
+  h += '</div></div>';
+  h += '</div>';
+
+  document.getElementById(containerId).innerHTML = h;
+
+  // Draw chart if scores exist
+  if (egoScore !== null && tarScore !== null) {
+    setTimeout(function() {
+      var chartEl = document.getElementById('admchart_'+uid);
+      if (chartEl) {
+        // Build a temp svg via tqDrawChart logic
+        var svgContent = buildTEOSQChartSVG(egoScore, tarScore);
+        chartEl.innerHTML = svgContent;
+      }
+    }, 50);
+  }
+}
+
+function buildTEOSQChartSVG(ego, tar) {
+  var W=380,H=220,ml=55,mr=20,mt=15,mb=65,ch=H-mt-mb,cw=W-ml-mr;
+  function yPx(v){return mt+ch-(v/5)*ch;}
+  function scoreColor(v){if(v<=2.9)return'#3B82F6';if(v<=4.2)return'#F59E0B';return'#22C55E';}
+  var cx1=ml+cw/4, cx2=ml+cw*3/4, bw=70;
+  var s='';
+  for(var i=0;i<=5;i++){var y=yPx(i);s+='<line x1="'+ml+'" y1="'+y+'" x2="'+(W-mr)+'" y2="'+y+'" stroke="rgba(255,255,255,.07)" stroke-width="1"/>';s+='<text x="'+(ml-6)+'" y="'+(y+4)+'" text-anchor="end" fill="rgba(238,239,243,.4)" font-family="Montserrat,sans-serif" font-size="9">'+i+'.00</text>';}
+  s+='<line x1="'+ml+'" y1="'+mt+'" x2="'+ml+'" y2="'+(H-mb)+'" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>';
+  s+='<line x1="'+ml+'" y1="'+(H-mb)+'" x2="'+(W-mr)+'" y2="'+(H-mb)+'" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>';
+  function bar(cx,val,color,label){
+    var bh=(val/5)*ch,bx=cx-bw/2,by=yPx(val);
+    var r='<rect x="'+bx+'" y="'+by+'" width="'+bw+'" height="'+bh+'" rx="3" fill="'+color+'" opacity="0.85"/>';
+    r+='<text x="'+cx+'" y="'+(by-6)+'" text-anchor="middle" fill="rgba(238,239,243,.9)" font-family="Montserrat,sans-serif" font-size="11" font-weight="700">'+val.toFixed(2)+'</text>';
+    var ws=label.split(' '),l1=ws.slice(0,2).join(' '),l2=ws.slice(2).join(' ');
+    r+='<text x="'+cx+'" y="'+(H-mb+16)+'" text-anchor="middle" fill="rgba(238,239,243,.6)" font-family="Montserrat,sans-serif" font-size="9" font-weight="700">'+l1+'</text>';
+    if(l2)r+='<text x="'+cx+'" y="'+(H-mb+27)+'" text-anchor="middle" fill="rgba(238,239,243,.6)" font-family="Montserrat,sans-serif" font-size="9" font-weight="700">'+l2+'</text>';
+    return r;
+  }
+  s+=bar(cx1,ego,scoreColor(ego),'ORIENTACION AL EGO');
+  s+=bar(cx2,tar,scoreColor(tar),'ORIENTACION A LA TAREA');
+  return s;
+}
+
+function admTqTab(uid, idx) {
+  for(var i=0;i<3;i++){
+    var t=document.getElementById('at'+i+'_'+uid);
+    var p=document.getElementById('ap'+i+'_'+uid);
+    if(t)t.classList.toggle('on',i===idx);
+    if(p)p.classList.toggle('on',i===idx);
+  }
+  if(idx===1){
+    setTimeout(function(){
+      var chartEl=document.getElementById('admchart_'+uid);
+      if(chartEl&&chartEl.innerHTML.trim()===''){
+        // chart not drawn yet, won't reach here normally
+      }
+    },50);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
