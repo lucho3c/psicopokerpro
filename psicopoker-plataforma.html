@@ -230,58 +230,26 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .sub-ql{font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:.25rem;}
 .sub-ans{font-size:.82rem;color:var(--text);line-height:1.65;white-space:pre-wrap;}
 .ex-select{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.8rem;padding:.6rem .85rem;border-radius:4px;outline:none;cursor:pointer;transition:border-color .2s;}.ex-select:focus{border-color:var(--red);}
+.ex-select{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.8rem;padding:.6rem .85rem;border-radius:4px;outline:none;cursor:pointer;transition:border-color .2s;}.ex-select:focus{border-color:var(--red);}
 
-/* ── TEOSQ ── */
-.teosq-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:0;}
-.teosq-tab{padding:.65rem 1.1rem;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);margin-bottom:-1px;transition:all .2s;}
-.teosq-tab:hover{color:var(--text);}
-.teosq-tab.on{color:var(--text);border-bottom-color:var(--red);}
-.teosq-pane{display:none;padding:1.25rem;}
-.teosq-pane.on{display:block;}
-.teosq-prog{display:flex;align-items:center;gap:.75rem;background:var(--bg3);border-radius:4px;padding:.75rem 1rem;margin-bottom:1.1rem;}
-.teosq-prog-bar{flex:1;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
-.teosq-prog-fill{height:100%;background:var(--red);border-radius:2px;transition:width .3s;}
-.teosq-prog-lbl{font-size:.68rem;font-weight:700;color:var(--muted);white-space:nowrap;}
-.teosq-intro{background:rgba(232,49,42,.05);border-left:2px solid var(--red);padding:.7rem 1rem;border-radius:0 4px 4px 0;margin-bottom:1rem;font-size:.8rem;font-weight:600;}
-.tq-item{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem 1rem;margin-bottom:.65rem;transition:border-color .2s;}
-.tq-item.done{border-color:rgba(34,197,94,.25);}
-.tq-num{font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;}
-.tq-text{font-size:.82rem;font-weight:600;margin-bottom:.7rem;line-height:1.5;}
-.tq-scale{display:flex;gap:.3rem;}
-.tq-btn{flex:1;padding:.45rem .15rem;font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:700;text-align:center;border:1.5px solid var(--border);border-radius:3px;cursor:pointer;background:var(--bg3);color:var(--muted);transition:all .15s;min-width:0;}
-.tq-btn:hover{border-color:rgba(232,49,42,.35);color:var(--text);}
-.tq-btn.on{background:var(--red);border-color:var(--red);color:#fff;}
-.tq-lbl-row{display:flex;justify-content:space-between;margin-top:.3rem;padding:0 .05rem;}
-.tq-lbl-row span{font-size:.56rem;color:var(--dim);flex:1;text-align:center;}
-.tq-lbl-row span:first-child{text-align:left;}
-.tq-lbl-row span:last-child{text-align:right;}
-.teosq-scores{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.1rem;}
-.teosq-sc{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.1rem;}
-.teosq-sc-lbl{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
-.teosq-sc-val{font-size:1.9rem;font-weight:800;margin-bottom:.35rem;}
-.teosq-sc-lvl{display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;border-radius:20px;}
-.teosq-sc-bar{height:5px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-top:.6rem;}
-.teosq-sc-fill{height:100%;border-radius:2px;transition:width .5s;}
-.tlvl-low{background:rgba(59,130,246,.15);color:#60A5FA;}
-.tlvl-mid{background:rgba(245,158,11,.15);color:#FCD34D;}
-.tlvl-hi{background:rgba(34,197,94,.15);color:#4ADE80;}
-.teosq-profiles{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1rem;}
-.tp-card{background:var(--bg2);border:2px solid var(--border);border-radius:6px;padding:1rem;opacity:.45;transition:all .25s;}
-.tp-card.on{opacity:1;transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.3);}
-.tp-card.on.tp1{border-color:#22C55E;background:rgba(34,197,94,.06);}
-.tp-card.on.tp2{border-color:#E8312A;background:rgba(232,49,42,.06);}
-.tp-card.on.tp3{border-color:#F59E0B;background:rgba(245,158,11,.06);}
-.tp-card.on.tp4{border-color:#6B7280;background:rgba(107,114,128,.06);}
-.tp-icon{font-size:.95rem;margin-bottom:.35rem;}
-.tp-name{font-size:.78rem;font-weight:800;margin-bottom:.4rem;}
-.tp-desc{font-size:.7rem;color:var(--muted);line-height:1.55;margin-bottom:.5rem;}
-.tp-traits{list-style:none;padding:0;}
-.tp-traits li{font-size:.68rem;color:var(--muted);padding:.18rem 0;line-height:1.5;}
-.tp-tag{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.18rem .55rem;border-radius:3px;margin-top:.45rem;}
-.tptag-ok{background:rgba(34,197,94,.15);color:#4ADE80;}
-.tptag-w{background:rgba(245,158,11,.15);color:#FCD34D;}
-.tptag-r{background:rgba(232,49,42,.15);color:#FF8080;}
-.teosq-warn{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.22);border-radius:5px;padding:.8rem 1rem;font-size:.77rem;color:#FCD34D;margin-bottom:1rem;}
+.admin-ex-item{padding:.65rem 1.1rem;cursor:pointer;transition:background .15s;border-left:2px solid transparent;}
+.admin-ex-item:hover{background:rgba(255,255,255,.03);}
+.admin-ex-item.on{background:rgba(232,49,42,.08);border-left-color:var(--red);}
+.aei-name{font-size:.78rem;font-weight:600;line-height:1.35;margin-bottom:.15rem;}
+.aei-count{font-size:.65rem;color:var(--muted);}
+.admin-patient-hdr{display:flex;align-items:center;gap:1rem;padding:1.5rem 1.75rem;border-bottom:1px solid var(--border);background:var(--bg2);}
+.sub-card{background:var(--card);border:1px solid var(--border);border-radius:6px;margin-bottom:1rem;overflow:hidden;}
+.sub-card-hdr{display:flex;align-items:center;gap:.85rem;padding:1rem 1.25rem;}
+.sub-av{width:32px;height:32px;border-radius:50%;background:var(--red-dim);border:1px solid var(--border-r);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:var(--red);flex-shrink:0;}
+.sub-name{font-size:.88rem;font-weight:700;}
+.sub-meta{font-size:.7rem;color:var(--muted);}
+.sub-toggle{margin-left:auto;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;padding:.35rem .85rem;border-radius:3px;cursor:pointer;flex-shrink:0;transition:all .2s;}
+.sub-toggle:hover{border-color:var(--red);color:var(--text);}
+.sub-body{padding:.5rem 1.25rem 1.25rem;border-top:1px solid var(--border);}
+.sub-q{padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.sub-q:last-child{border-bottom:none;}
+.sub-ql{font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:.25rem;}
+.sub-ans{font-size:.82rem;color:var(--text);line-height:1.65;white-space:pre-wrap;}
 
 </style>
 </head>
@@ -308,6 +276,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     <div class="tnav-r">
       <div class="uav" id="nav-av"></div>
       <span class="uname" id="nav-nm"></span>
+      <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Mauro</button>
       <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Mauro</button>
       <button class="btn-sm" onclick="doLogout()">Salir</button>
     </div>
@@ -377,6 +346,37 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     </div>
     <div style="display:flex;align-items:center;gap:.5rem;">
       <span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.25rem .65rem;border-radius:3px;">Panel Admin</span>
+      <button onclick="fetchAdminData()" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">&#8635; Actualizar</button>
+    </div>
+    <div class="tnav-r"><div class="uav" id="nav-av3"></div><button class="btn-sm" onclick="doLogout()">Salir</button></div>
+  </div>
+  <div style="display:flex;flex:1;overflow:hidden;">
+    <div id="admin-sidebar" style="width:260px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:.75rem 0;">
+      <div style="padding:.5rem 1.1rem .75rem;font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);">Ejercicios</div>
+      <div id="admin-ex-list"><div style="padding:1rem 1.1rem;font-size:.75rem;color:var(--dim);">Sin respuestas aun</div></div>
+    </div>
+    <div style="flex:1;overflow-y:auto;background:var(--bg);">
+      <div id="admin-content" style="padding:1.75rem 2rem;max-width:900px;">
+        <div style="text-align:center;padding:4rem 2rem;">
+          <div style="font-size:2rem;opacity:.15;margin-bottom:1rem;">&#128203;</div>
+          <p style="font-size:.85rem;color:var(--muted);">Selecciona un ejercicio para ver las respuestas</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="vadmin" class="view">
+  <div class="tnav">
+    <div style="display:flex;align-items:center;gap:.75rem;">
+      <button class="btn-back" onclick="showDash()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Volver
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;">
+      <span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.25rem .65rem;border-radius:3px;">Panel Admin</span>
       <button id="btn-tab-pacientes" onclick="adminTab('pacientes')" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Ejercicios</button>
       <button id="btn-tab-usuarios" onclick="adminTab('usuarios')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Pacientes</button>
       <button onclick="loadAdminPanel()" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">&#8635; Actualizar</button>
@@ -384,22 +384,18 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     </div>
     <div class="tnav-r"><div class="uav" id="nav-av3"></div><button class="btn-sm" onclick="doLogout()">Salir</button></div>
   </div>
-  <div style="display:flex;flex:1;overflow:hidden;">
-    <div id="admin-sidebar" style="width:260px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:.75rem 0;">
+  <div id="admin-view-pacientes" style="display:flex;flex:1;overflow:hidden;">
+    <div id="admin-sidebar" style="width:260px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;">
       <div style="padding:.85rem 1rem .6rem;">
         <div style="position:relative;">
-          <input id="admin-search" type="text" placeholder="Buscar paciente..."
-            oninput="renderPatientList(this.value)"
-            style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.55rem .85rem .55rem 2.1rem;border-radius:4px;outline:none;transition:border-color .2s;"
+          <input id="admin-search" type="text" placeholder="Buscar paciente..." oninput="renderPatientList(this.value)"
+            style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.55rem .85rem .55rem 2.1rem;border-radius:4px;outline:none;"
             onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
-          <svg style="position:absolute;left:.65rem;top:50%;transform:translateY(-50%);opacity:.35;pointer-events:none;" width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M9 9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
+          <svg style="position:absolute;left:.65rem;top:50%;transform:translateY(-50%);opacity:.35;" width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M9 9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
       </div>
       <div style="padding:.2rem 1rem .4rem;font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);">Pacientes</div>
-      <div id="admin-patient-list"></div>
+      <div id="admin-patient-list" style="flex:1;overflow-y:auto;"></div>
     </div>
     <div style="flex:1;overflow-y:auto;background:var(--bg);">
       <div id="admin-content" style="overflow-y:auto;flex:1;"></div>
@@ -407,7 +403,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
   </div>
   <div id="admin-view-usuarios" style="display:none;flex:1;flex-direction:column;overflow-y:auto;min-height:0;"></div>
 </div>
-</div>
+
 </div>
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 <div class="toast" id="toast"></div>
@@ -420,16 +416,6 @@ var USERS_BASE = {
   arturo: { pass: 'psico2025', name: 'Arturo Tomaselli', role: 'admin' },
   demo:   { pass: 'demo123',   name: 'Player Demo' }
 };
-function getExtraUsers() {
-  try { return JSON.parse(localStorage.getItem('pp_extra_users') || '{}'); } catch(e) { return {}; }
-}
-function getAllUsers() {
-  var all = Object.assign({}, USERS_BASE);
-  var extra = getExtraUsers();
-  Object.keys(extra).forEach(function(k) { all[k] = extra[k]; });
-  return all;
-}
-var USERS = getAllUsers();
 
 /* ═══════════════════════════════════════════════
    GOOGLE SHEETS — no tocar
@@ -612,29 +598,11 @@ function collectAndSave(lessonId) {
   if (Object.keys(data).length > 0) saveDraft(lessonId, data);
 }
 function restoreDraft(lessonId) {
-  // 1. Try draft (most recent edits)
-  var draft = loadDraft(lessonId);
-  if (draft) {
-    document.querySelectorAll('[data-fid]').forEach(function(el) {
-      var key = el.getAttribute('data-fid');
-      if (draft[key] !== undefined) el.value = draft[key];
-    });
-    updateSaveStatus('Borrador guardado', '#22C55E');
-    return true;
-  }
-  // 2. Try last submission (keep answers visible after submit)
-  var subs = getLocalSubs();
-  var sub = subs.find(function(s) { return s.usuario === S.user && s.lid === lessonId; });
-  if (sub && sub.respuestas) {
-    sub.respuestas.forEach(function(r) {
-      if (r.fid) {
-        var el = document.querySelector('[data-fid="' + r.fid + '"]');
-        if (el) el.value = r.respuesta || '';
-      }
-    });
-    updateSaveStatus('Respuestas guardadas', '#22C55E');
-    return true;
-  }
+  var draft=loadDraft(lessonId);
+  if(draft){document.querySelectorAll('[data-fid]').forEach(function(el){var k=el.getAttribute('data-fid');if(draft[k]!==undefined)el.value=draft[k];});updateSaveStatus('Borrador guardado','#22C55E');return true;}
+  var subs=getLocalSubs();
+  var sub=subs.find(function(s){return s.usuario===S.user&&s.lid===lessonId;});
+  if(sub&&sub.respuestas){sub.respuestas.forEach(function(r){if(r.fid){var el=document.querySelector('[data-fid="'+r.fid+'"]');if(el)el.value=r.respuesta||'';}});updateSaveStatus('Respuestas guardadas','#22C55E');return true;}
   return false;
 }
 
@@ -643,7 +611,12 @@ function restoreDraft(lessonId) {
    ═══════════════════════════════════════════════ */
 function getLocalSubs(){try{return JSON.parse(localStorage.getItem('pp_submissions')||'[]');}catch(e){return[];}}
 function saveLocalSub(rec){var s=getLocalSubs();s.push(rec);localStorage.setItem('pp_submissions',JSON.stringify(s));}
-/* tryAirtable replaced by createAirtable/updateAirtable */
+function tryAirtable(rec){
+  var lines=(rec.respuestas||[]).map(function(r){return(r.pregunta||'')+'\n'+(r.respuesta||'');}).join('\n\n---\n\n');
+  fetch(AIRTABLE_URL,{method:'POST',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN,'Content-Type':'application/json'},
+    body:JSON.stringify({fields:{Jugador:rec.jugador,Usuario:rec.usuario,Unidad:rec.unidad,Ejercicio:rec.ejercicio,Fecha:rec.fecha,Respuestas:lines}})
+  }).catch(function(){});
+}
 
 /* ═══════════════════════════════════════════════
    EXERCISE DEFINITIONS
@@ -705,7 +678,7 @@ var EX_DEFS = {
 ,
 
   'u1l4':{ type:'form', unit:'Unidad 1', name:'IPED - Inventario Psicologico', sections:[{ title:'Items 1-11', questions:[{ fid:'u1l4_1', type:'scale', label:'1. Me veo mas como un perdedor que como un ganador durante la competencia.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_2', type:'scale', label:'2. Me enojo y me frustro durante las partidas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_3', type:'scale', label:'3. Me distraigo y pierdo mi concentracion durante las partidas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_4', type:'scale', label:'4. Antes de jugar me imagino ejecutando mis acciones y rindiendo perfectamente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_5', type:'scale', label:'5. Estoy muy motivado/a para dar lo mejor de mi en cada sesion.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_6', type:'scale', label:'6. Puedo mantener emociones positivas durante las partidas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_7', type:'scale', label:'7. Durante las partidas pienso positivamente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_8', type:'scale', label:'8. Creo en mi mismo/a como jugador.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_9', type:'scale', label:'9. Me pongo demasiado nervioso/a durante las sesiones.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_10', type:'scale', label:'10. En los momentos criticos siento que mi cabeza va demasiado rapido.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_11', type:'scale', label:'11. Practico mentalmente mis habilidades.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] }]},{ title:'Items 12-22', questions:[{ fid:'u1l4_12', type:'scale', label:'12. Trabajo y estudio duro gracias a los objetivos que me fije.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_13', type:'scale', label:'13. Disfruto durante las sesiones aunque me encuentre con dificultades.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_14', type:'scale', label:'14. Durante las partidas mantengo dialogos internos negativos.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_15', type:'scale', label:'15. Pierdo mi confianza facilmente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_16', type:'scale', label:'16. Los errores me hacen sentir y pensar negativamente sobre mi mismo.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_17', type:'scale', label:'17. Puedo controlar rapidamente mis emociones y recuperar la concentracion.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_18', type:'scale', label:'18. Para mi es facil pensar en imagenes acerca del poker.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_19', type:'scale', label:'19. No necesito que me empujen a estudiar duro. Yo soy mi mejor motivador.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_20', type:'scale', label:'20. Cuando las cosas se vuelven contra mi, tiendo a bajonearme emocionalmente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_21', type:'scale', label:'21. Pongo todo mi esfuerzo durante las sesiones, pase lo que pase.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_22', type:'scale', label:'22. Puedo rendir por encima de mi talento y mis habilidades.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] }]},{ title:'Items 23-32', questions:[{ fid:'u1l4_23', type:'scale', label:'23. Durante las sesiones siento tension fisica que me afecta.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_24', type:'scale', label:'24. Tengo momentos de desconcentracion durante las partidas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_25', type:'scale', label:'25. Antes de jugar me visualizo superando situaciones dificiles.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_26', type:'scale', label:'26. Daria lo que fuera por desarrollar todo mi potencial como jugador.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_27', type:'scale', label:'27. Estudio con una intensidad alta y positiva.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_28', type:'scale', label:'28. Controlando mi pensamiento puedo transformar estados negativos en positivos.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_29', type:'scale', label:'29. Soy un jugador fuerte mentalmente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_30', type:'scale', label:'30. Las situaciones incontrolables (bad beats, varianza) me hacen derrumbar.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_31', type:'scale', label:'31. Durante las sesiones pienso en errores pasados u oportunidades perdidas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_32', type:'scale', label:'32. Durante las sesiones utilizo imagenes mentales que me ayudan a rendir mejor.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] }]},{ title:'Items 33-42', questions:[{ fid:'u1l4_33', type:'scale', label:'33. Estoy aburrido/a y quemado/a con respecto al poker.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_34', type:'scale', label:'34. Las situaciones dificiles me suponen un desafio y me inspiran.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_35', type:'scale', label:'35. Mi coach diria de mi que tengo una buena actitud.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_36', type:'scale', label:'36. La imagen que proyecto es la de ser un luchador.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_37', type:'scale', label:'37. Puedo permanecer tranquilo/a durante las sesiones aunque aparezcan problemas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_38', type:'scale', label:'38. Mi concentracion se rompe facilmente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_39', type:'scale', label:'39. Cuando me visualizo jugando puedo ver y sentir las cosas de forma muy real.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_40', type:'scale', label:'40. Al despertar me siento entusiasmado/a con el estudio y la competencia.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_41', type:'scale', label:'41. Jugar al poker me aporta un sentido genuino de disfrute y realizacion.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_42', type:'scale', label:'42. Yo puedo convertir una crisis en una oportunidad.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] }]}] },
-  'u1l5':{ type:'teosq', unit:'Unidad 1', name:'TEOSQ', sections:[{ title:'Las 13 afirmaciones', questions:[{ fid:'u1l5_1', type:'scale', label:'1. Yo me siento con mas exito en el poker cuando: ...soy el/la unico/a que puede hacer la jugada o habilidad en cuestion.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_2', type:'scale', label:'2. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad y me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_3', type:'scale', label:'3. Yo me siento con mas exito en el poker cuando: ...yo puedo hacerlo mejor que mis companeros/as.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_4', type:'scale', label:'4. Yo me siento con mas exito en el poker cuando: ...los otros no pueden hacerlo tan bien como yo.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_5', type:'scale', label:'5. Yo me siento con mas exito en el poker cuando: ...aprendo algo que es divertido.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_6', type:'scale', label:'6. Yo me siento con mas exito en el poker cuando: ...otros fallan y yo no.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_7', type:'scale', label:'7. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad esforzandome mucho.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_8', type:'scale', label:'8. Yo me siento con mas exito en el poker cuando: ...trabajo realmente duro.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_9', type:'scale', label:'9. Yo me siento con mas exito en el poker cuando: ...consigo mas resultados que todos.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_10', type:'scale', label:'10. Yo me siento con mas exito en el poker cuando: ...algo que aprendi me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_11', type:'scale', label:'11. Yo me siento con mas exito en el poker cuando: ...soy el/la mejor.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_12', type:'scale', label:'12. Yo me siento con mas exito en el poker cuando: ...noto que una habilidad que aprendi funciona.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_13', type:'scale', label:'13. Yo me siento con mas exito en el poker cuando: ...pongo todo lo que esta de mi parte.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] }]}] },
+  'u1l5':{ type:'form', unit:'Unidad 1', name:'TEOSQ - Orientacion al Ego y la Tarea', sections:[{ title:'Las 13 afirmaciones', questions:[{ fid:'u1l5_1', type:'scale', label:'1. Yo me siento con mas exito en el poker cuando: ...soy el/la unico/a que puede hacer la jugada o habilidad en cuestion.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_2', type:'scale', label:'2. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad y me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_3', type:'scale', label:'3. Yo me siento con mas exito en el poker cuando: ...yo puedo hacerlo mejor que mis companeros/as.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_4', type:'scale', label:'4. Yo me siento con mas exito en el poker cuando: ...los otros no pueden hacerlo tan bien como yo.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_5', type:'scale', label:'5. Yo me siento con mas exito en el poker cuando: ...aprendo algo que es divertido.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_6', type:'scale', label:'6. Yo me siento con mas exito en el poker cuando: ...otros fallan y yo no.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_7', type:'scale', label:'7. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad esforzandome mucho.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_8', type:'scale', label:'8. Yo me siento con mas exito en el poker cuando: ...trabajo realmente duro.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_9', type:'scale', label:'9. Yo me siento con mas exito en el poker cuando: ...consigo mas resultados que todos.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_10', type:'scale', label:'10. Yo me siento con mas exito en el poker cuando: ...algo que aprendi me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_11', type:'scale', label:'11. Yo me siento con mas exito en el poker cuando: ...soy el/la mejor.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_12', type:'scale', label:'12. Yo me siento con mas exito en el poker cuando: ...noto que una habilidad que aprendi funciona.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_13', type:'scale', label:'13. Yo me siento con mas exito en el poker cuando: ...pongo todo lo que esta de mi parte.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] }]}] },
   'u3l5':{ type:'form', unit:'Unidad 3', name:'GPS de Objetivos', sections:[
     { title:'Tu ruta de objetivos', questions:[
       { fid:'u3l5_1', label:'SUENO VISUALIZADO (5 anos): objetivo especifico y medible, tipo, deadline, punto intermedio' },
@@ -784,6 +757,8 @@ var EX_DEFS = {
       { fid:'u8l4_5', label:'Que todavia cuesta: aspectos que no pudiste modificar o pudiste en menor medida' }
     ]}
   ]},
+
+,
 
   'u1l3':{ type:'form', unit:'Unidad 1', name:'Poker Mindset Test', sections:[
     { title:'1. Tomar buenas decisiones (nota del 1 al 10)', questions:[
@@ -1083,62 +1058,10 @@ var EX_DEFS = {
    ═══════════════════════════════════════════════ */
 function renderGridExercise(lid, def) {
   var draft = loadDraft(lid);
-  // Load saved hour config or use defaults
-  var startH = (draft && draft.startHour) ? parseInt(draft.startHour) : 7;
-  var endH   = (draft && draft.endHour)   ? parseInt(draft.endHour)   : 23;
-
-  function buildHours(s, e) {
-    var hrs = [];
-    for (var h = s; h <= e; h++) hrs.push(h + ':00');
-    return hrs;
-  }
-  var hours = buildHours(startH, endH);
-  var days  = def.days || ['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
-
-  function buildRows(hrs, dr) {
-    var r = '';
-    hrs.forEach(function(hr) {
-      r += '<tr><td class="hour-cell">' + hr + '</td>';
-      days.forEach(function(d, di) {
-        var fid = 'g_' + hr.replace(':', '') + '_' + di;
-        var saved = dr && dr[fid] ? dr[fid] : '';
-        r += '<td><input class="gcell" type="text" data-fid="' + fid + '" value="' + saved.replace(/"/g,'&quot;') + '" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\'' + lid + '\')" onfocus="colorCell(this)"></td>';
-      });
-      r += '</tr>';
-    });
-    return r;
-  }
-
-  // Hour options
-  function hrOpts(selected, min, max) {
-    var s = '';
-    for (var h = min; h <= max; h++) {
-      s += '<option value="' + h + '"' + (h === selected ? ' selected' : '') + '>' + h + ':00</option>';
-    }
-    return s;
-  }
-
   var h = '<div class="ex-wrap">';
-  h += '<div class="ex-header"><div class="ex-badge">Ejercicio interactivo — Planilla semanal</div>';
-  h += '<p class="ex-desc">Completá cada celda con lo que hacés en ese horario durante la semana.</p></div>';
+  h += '<div class="ex-header"><div class="ex-badge">Ejercicio interactivo</div>';
+  h += '<p class="ex-desc">Complete cada celda con la actividad que realizas en ese horario. El borrador se guarda automaticamente.</p></div>';
 
-  // Hour range config
-  h += '<div style="display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;">';
-  h += '<span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Franja horaria:</span>';
-  h += '<div style="display:flex;align-items:center;gap:.5rem;">';
-  h += '<label style="font-size:.72rem;color:var(--muted);">Desde</label>';
-  h += '<select id="grid-start-hr_' + lid + '" onchange="updateGridRows(\'' + lid + '\')" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.35rem .6rem;border-radius:4px;outline:none;cursor:pointer;">';
-  h += hrOpts(startH, 0, 22);
-  h += '</select>';
-  h += '<label style="font-size:.72rem;color:var(--muted);">hasta</label>';
-  h += '<select id="grid-end-hr_' + lid + '" onchange="updateGridRows(\'' + lid + '\')" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.35rem .6rem;border-radius:4px;outline:none;cursor:pointer;">';
-  h += hrOpts(endH, 1, 23);
-  h += '</select>';
-  h += '</div>';
-  h += '<span style="font-size:.68rem;color:var(--dim);">Podés ajustarlo a tu rutina personal</span>';
-  h += '</div>';
-
-  // Categories
   h += '<div class="cat-row">';
   var cats = [['#E8312A','Poker'],['#3B82F6','Estudio'],['#22C55E','Familia'],['#F59E0B','Ocio'],['#8B5CF6','Trabajo'],['#EC4899','Descanso'],['#6B7280','Otro']];
   cats.forEach(function(c) {
@@ -1147,66 +1070,42 @@ function renderGridExercise(lid, def) {
   });
   h += '</div>';
 
-  // Grid table
   h += '<div class="grid-scroll"><table class="week-table"><thead><tr><th>Hora</th>';
-  days.forEach(function(d) { h += '<th>' + d + '</th>'; });
-  h += '</tr></thead><tbody id="grid-tbody-' + lid + '">';
-  h += buildRows(hours, draft);
+  def.days.forEach(function(d) { h += '<th>' + d + '</th>'; });
+  h += '</tr></thead><tbody>';
+  def.hours.forEach(function(hr) {
+    h += '<tr><td class="hour-cell">' + hr + '</td>';
+    def.days.forEach(function(d, di) {
+      var fid = 'g_' + hr.replace(':','') + '_' + di;
+      var saved = draft && draft[fid] ? draft[fid] : '';
+      h += '<td><input class="gcell" type="text" data-fid="' + fid + '" value="' + saved + '" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\'' + lid + '\')" onfocus="colorCell(this)"></td>';
+    });
+    h += '</tr>';
+  });
   h += '</tbody></table></div>';
 
-  // Reflexion
   h += '<div class="ex-reflex"><p class="ex-reflex-title">Reflexion sobre la semana</p>';
-  (def.reflexion || []).forEach(function(r) {
+  def.reflexion.forEach(function(r) {
     var saved = draft && draft[r.fid] ? draft[r.fid] : '';
     h += '<div class="ex-q"><p class="ex-ql">' + r.label + '</p>';
     h += '<textarea class="ex-ta" data-fid="' + r.fid + '" oninput="triggerAutoSave(\'' + lid + '\')" placeholder="Escribi tu respuesta...">' + saved + '</textarea></div>';
   });
   h += '</div>';
 
+  var allQ = def.reflexion.concat([]);
+  def.hours.forEach(function(hr) {
+    def.days.forEach(function(d, di) {
+      allQ.push({ fid: 'g_' + hr.replace(':','') + '_' + di, label: hr + ' - ' + d });
+    });
+  });
+
   h += '<div class="ex-submit-row">';
   h += '<button class="btn-ex-send" id="btn-ex-' + lid + '" onclick="doSubmit(\'' + lid + '\')">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   h += ' Enviar a Mauro</button>';
-  h += '<p class="ex-submit-note">Se enviara a Mauro con tu planilla completa</p>';
+  h += '<p class="ex-submit-note">Se enviara a la planilla de seguimiento de Mauro</p>';
   h += '</div></div>';
   return h;
-}
-
-function updateGridRows(lid) {
-  var def = EX_DEFS[lid];
-  if (!def) return;
-  var startSel = document.getElementById('grid-start-hr_' + lid);
-  var endSel   = document.getElementById('grid-end-hr_' + lid);
-  if (!startSel || !endSel) return;
-  var startH = parseInt(startSel.value);
-  var endH   = parseInt(endSel.value);
-  if (startH >= endH) { endSel.value = startH + 1; endH = startH + 1; }
-
-  // Save current values first
-  collectAndSave(lid);
-  var draft = loadDraft(lid) || {};
-  draft.startHour = startH;
-  draft.endHour   = endH;
-  saveDraft(lid, draft);
-
-  var days = def.days || ['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
-  var hours = [];
-  for (var hh = startH; hh <= endH; hh++) hours.push(hh + ':00');
-
-  var tbody = document.getElementById('grid-tbody-' + lid);
-  if (!tbody) return;
-  var rows = '';
-  hours.forEach(function(hr) {
-    rows += '<tr><td class="hour-cell">' + hr + '</td>';
-    days.forEach(function(d, di) {
-      var fid = 'g_' + hr.replace(':', '') + '_' + di;
-      var saved = draft[fid] ? draft[fid].replace(/"/g,'&quot;') : '';
-      rows += '<td><input class="gcell" type="text" data-fid="' + fid + '" value="' + saved + '" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\'' + lid + '\')" onfocus="colorCell(this)"'+(saved?' style="background:'+activeCatColor+'22;color:'+activeCatColor+';"':'')+' ></td>';
-    });
-    rows += '</tr>';
-  });
-  tbody.innerHTML = rows;
-  updateSaveStatus('Horario actualizado', '#22C55E');
 }
 
 function renderFormExercise(lid, def) {
@@ -1310,89 +1209,36 @@ function doSubmit(lid){
   if(btn){btn.disabled=true;btn.textContent='Guardando...';}
   collectAndSave(lid);
   var user=USERS[S.user];
-  var questions=def.type==='grid'?[]:(window['_exQ_'+lid]||[]);
+  var questions=def.type==='grid'?def.reflexion:(window['_exQ_'+lid]||[]);
   var answers=[];
-  if (def.type === 'grid') {
-    // Reflexion questions first
-    (def.reflexion||[]).forEach(function(q){
-      var el=document.querySelector('[data-fid="'+q.fid+'"]');
-      answers.push({fid:q.fid, pregunta:q.label, respuesta:el?el.value.trim():''});
-    });
-    // All non-empty grid cells
-    (def.hours||[]).forEach(function(hr){
-      (def.days||[]).forEach(function(day,di){
-        var fid='g_'+hr.replace(':','')+'_'+di;
-        var el=document.querySelector('[data-fid="'+fid+'"]');
-        var val=el?el.value.trim():'';
-        if(val) answers.push({fid:fid, pregunta:hr+' — '+day, respuesta:val});
-      });
-    });
-  } else {
-    questions.forEach(function(q){
-      var el=document.querySelector('[data-fid="'+q.fid+'"]');
-      answers.push({fid:q.fid, pregunta:q.label, respuesta:el?el.value.trim():''});
-    });
-  }
-  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,
-    usuario:S.user,unidad:def.unit,ejercicio:def.name,lid:lid,respuestas:answers};
-  // Update or insert in localStorage
-  var saved=getLocalSubs();
-  var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});
-  if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}
-  else{saved.push(rec);}
-  localStorage.setItem('pp_submissions',JSON.stringify(saved));
-  markDoneL(lid);
-  // KEEP draft so answers stay visible — no clearDraft
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  var isUpdate=idx>=0;
-  if(btn){btn.textContent=isUpdate?'Actualizar envio':'Enviar a Mauro';btn.style.background='#22C55E';btn.disabled=false;}
-  showToast(isUpdate?'Respuestas actualizadas!':'Ejercicio enviado a Mauro!');
+  questions.forEach(function(q){var el=document.querySelector('[data-fid="'+q.fid+'"]');answers.push({pregunta:q.label,respuesta:el?el.value.trim():''});});
+  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,usuario:S.user,unidad:def.unit,ejercicio:def.name,respuestas:answers};
+  saveLocalSub(rec);
+  markDoneL(lid);clearDraft(lid);
+  updateSaveStatus('Completado','#22C55E');
+  if(btn){btn.textContent='Completado';btn.style.background='#22C55E';}
+  showToast('Ejercicio completado!');
   var unit=C.find(function(u){return u.id===S.unitId;});
-  if(unit){renderSidebar(unit);}
-  // Airtable: update or create
-  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
-  else{createAirtable(rec,function(id){
-    if(id){
-      var s2=getLocalSubs();
-      var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});
-      if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}
-    }
-  });}
-}
-
-function createAirtable(rec,cb){
-  var lines=(rec.respuestas||[]).map(function(r){return(r.pregunta||'')+'\n'+(r.respuesta||'');}).join('\n\n---\n\n');
-  fetch(AIRTABLE_URL,{method:'POST',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN,'Content-Type':'application/json'},
-    body:JSON.stringify({fields:{Jugador:rec.jugador,Usuario:rec.usuario,Unidad:rec.unidad,Ejercicio:rec.ejercicio,Fecha:rec.fecha,Lid:rec.lid||'',Respuestas:lines}})
-  }).then(function(r){return r.json();}).then(function(d){cb&&cb(d.id||null);}).catch(function(){cb&&cb(null);});
-}
-
-function updateAirtable(airtableId,rec){
-  var lines=(rec.respuestas||[]).map(function(r){return(r.pregunta||'')+'\n'+(r.respuesta||'');}).join('\n\n---\n\n');
-  fetch(AIRTABLE_URL+'/'+airtableId,{method:'PATCH',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN,'Content-Type':'application/json'},
-    body:JSON.stringify({fields:{Fecha:rec.fecha,Respuestas:lines}})
-  }).catch(function(){});
+  if(unit){renderSidebar(unit);renderContent(unit,lid);}
+  tryAirtable(rec);
 }
 
 /* ═══════════════════════════════════════════════
    AUTH
    ═══════════════════════════════════════════════ */
 function doLogin() {
-  USERS = getAllUsers();
-  var u = document.getElementById('iu').value.trim().toLowerCase();
-  var p = document.getElementById('ip').value.trim();
-  var usr = USERS[u];
+  USERS=getAllUsers();
+  var u=document.getElementById('iu').value.trim().toLowerCase();
+  var p=document.getElementById('ip').value.trim();
+  var usr=USERS[u];
   if (!usr || usr.pass !== p) {
     document.getElementById('lerr').classList.add('show');
     document.getElementById('ip').value = '';
     return;
   }
-  S.user = u;
-  localStorage.setItem('pp_s', u);
-  showDash(); // Inmediato — no espera Airtable
-  restoreFromAirtable(u, function() {
-    if (S.user === u) renderDash(); // Refresca en background si sigue logueado
-  });
+  S.user=u;localStorage.setItem('pp_s',u);
+  showDash();
+  restoreFromAirtable(u,function(){if(S.user===u)renderDash();});
 }
 function doLogout() {
   S = { user: null, unitId: null, lessonId: null };
@@ -1403,15 +1249,9 @@ function doLogout() {
   document.getElementById('lerr').classList.remove('show');
 }
 function autoLogin() {
-  USERS = getAllUsers();
-  var u = localStorage.getItem('pp_s');
-  if (u && USERS[u]) {
-    S.user = u;
-    showDash();
-    restoreFromAirtable(u, function() {
-      if (S.user === u) renderDash();
-    });
-  }
+  USERS=getAllUsers();
+  var u=localStorage.getItem('pp_s');
+  if(u&&USERS[u]){S.user=u;showDash();restoreFromAirtable(u,function(){if(S.user===u)renderDash();});}
 }
 
 /* ═══════════════════════════════════════════════
@@ -1590,16 +1430,10 @@ function renderContent(unit, lid) {
   }
   if (lesson.ex && EX_DEFS[lid] && EX_DEFS[lid].type === 'grid') {
     restoreDraft(lid);
-    // Re-color cells that have values after restore
-    setTimeout(function() {
-      document.querySelectorAll('.gcell').forEach(function(el) {
-        if (el.value && el.value.trim()) {
-          el.style.background = activeCatColor + '22';
-          el.style.color = activeCatColor;
-          el.style.borderColor = activeCatColor + '55';
-        }
-      });
-    }, 50);
+    // Re-color cells that have values
+    document.querySelectorAll('.gcell').forEach(function(el) {
+      if (el.value) el.style.background = '#E8312A22';
+    });
   }
 }
 
@@ -1628,403 +1462,453 @@ function showToast(msg) {
 }
 
 
-
-var adminData    = null;
-var activePatient = null;
-
-function showAdmin() {
-  USERS = getAllUsers();
-  document.getElementById('nav-av3').textContent = USERS[S.user].name[0].toUpperCase();
-  showView('vadmin');
-  adminTab('pacientes');
-  loadAdminPanel();
-}
-
-function loadAdminPanel() {
-  var subs = getLocalSubs();
-  renderAdminPanel(subs);
-  // Try Airtable in background
-  fetch(AIRTABLE_URL + '?pageSize=100', {
-    headers: { 'Authorization': 'Bearer ' + AIRTABLE_TOKEN }
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(resp) {
-    if (!resp.records || !resp.records.length) return;
-    var local = getLocalSubs(), keys = {};
-    local.forEach(function(s) { keys[(s.jugador||'')+'|'+(s.fecha||'')] = 1; });
-    resp.records.forEach(function(rec) {
-      var f = rec.fields, key = (f.Jugador||'')+'|'+(f.Fecha||'');
-      if (!keys[key]) {
-        var resps = (f.Respuestas||'').split('\n\n---\n\n').map(function(b) {
-          var nl = b.indexOf('\n');
-          return { pregunta: nl>-1?b.substring(0,nl):b, respuesta: nl>-1?b.substring(nl+1):'' };
-        });
-        local.push({ ts:0, fecha:f.Fecha||'', jugador:f.Jugador||'',
-          usuario:f.Usuario||'', unidad:f.Unidad||'', ejercicio:f.Ejercicio||'', respuestas:resps });
+var adminData=null,activeExIdx=-1;
+function showAdmin(){var usr=USERS[S.user];document.getElementById('nav-av3').textContent=usr.name[0].toUpperCase();showView('vadmin');fetchAdminData();}
+function fetchAdminData(){
+  var subs=getLocalSubs();
+  buildAdminData(subs);
+  fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
+  .then(function(r){return r.json();})
+  .then(function(resp){
+    if(!resp.records||!resp.records.length)return;
+    var local=getLocalSubs(),keys={};
+    local.forEach(function(s){keys[(s.jugador||'')+'|'+(s.fecha||'')]=1;});
+    resp.records.forEach(function(rec){
+      var f=rec.fields,key=(f.Jugador||'')+'|'+(f.Fecha||'');
+      if(!keys[key]){
+        var resps=(f.Respuestas||'').split('\n\n---\n\n').map(function(b){var nl=b.indexOf('\n');return{pregunta:nl>-1?b.substring(0,nl):b,respuesta:nl>-1?b.substring(nl+1):''};});
+        local.push({ts:0,fecha:f.Fecha||'',jugador:f.Jugador||'',usuario:f.Usuario||'',unidad:f.Unidad||'',ejercicio:f.Ejercicio||'',respuestas:resps});
       }
     });
-    localStorage.setItem('pp_submissions', JSON.stringify(local));
+    localStorage.setItem('pp_submissions',JSON.stringify(local));
+    buildAdminData(local);
+  }).catch(function(){});
+}
+function buildAdminData(subs){
+  var groups={};
+  subs.forEach(function(s){var k=(s.unidad||'')+' - '+(s.ejercicio||'');if(!groups[k])groups[k]={ejercicio:k,registros:[]};groups[k].registros.push(s);});
+  adminData=Object.values(groups);
+  if(!adminData.length){
+    document.getElementById('admin-ex-list').innerHTML='<div style="padding:1rem 1.1rem;font-size:.75rem;color:var(--dim);">Sin respuestas aun</div>';
+    document.getElementById('admin-content').innerHTML='<div style="text-align:center;padding:4rem 2rem;"><div style="font-size:2rem;opacity:.15;margin-bottom:1rem;">&#128203;</div><p style="font-size:.85rem;color:var(--muted);">Cuando los jugadores completen ejercicios apareceran aca.</p></div>';
+    return;
+  }
+  var h='';
+  adminData.forEach(function(ex,i){
+    var n=(ex.registros||[]).length,active=i===activeExIdx;
+    h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showAdminEx('+i+')">';
+    h+='<div class="aei-name">'+ex.ejercicio+'</div>';
+    h+='<div class="aei-count">'+n+' respuesta'+(n!==1?'s':'')+'</div></div>';
+  });
+  document.getElementById('admin-ex-list').innerHTML=h;
+  if(activeExIdx<0||activeExIdx>=adminData.length)showAdminEx(0);
+  else showAdminEx(activeExIdx);
+}
+function showAdminEx(idx){
+  activeExIdx=idx;
+  buildAdminData(getLocalSubs());
+  if(!adminData||!adminData[idx])return;
+  var ex=adminData[idx],registros=ex.registros||[],h='';
+  h+='<div style="margin-bottom:1.5rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.35rem;">'+ex.ejercicio+'</div>';
+  h+='<div style="font-size:1.1rem;font-weight:800;">'+registros.length+' respuesta'+(registros.length!==1?'s':'')+'</div></div>';
+  if(!registros.length){h+='<p style="color:var(--muted)">Sin respuestas aun.</p>';}
+  else{
+    var jugadores={};registros.forEach(function(r){jugadores[r.usuario||'?']=1;});
+    h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.75rem;">';
+    h+=sc('Respuestas',registros.length)+sc('Ultimo envio',(registros[0].fecha||'-').substring(0,16))+sc('Jugadores',Object.keys(jugadores).length);
+    h+='</div>';
+    registros.forEach(function(rec){
+      var nombre=rec.jugador||'?',usuario=rec.usuario||'',fecha=rec.fecha||'',resps=rec.respuestas||[];
+      h+='<div class="sub-card"><div class="sub-card-hdr">';
+      h+='<div class="sub-av">'+(nombre[0]||'?').toUpperCase()+'</div>';
+      h+='<div><div class="sub-name">'+nombre+'</div><div class="sub-meta">@'+usuario+' &middot; '+fecha+'</div></div>';
+      h+='<button class="sub-toggle" onclick="toggleSub(this)">Ver &#9660;</button>';
+      h+='</div><div class="sub-body" style="display:none;">';
+      resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()){h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';}});
+      h+='</div></div>';
+    });
+  }
+  document.getElementById('admin-content').innerHTML=h;
+}
+function sc(label,val){return'<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;"><div style="font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">'+label+'</div><div style="font-size:1.3rem;font-weight:800;">'+val+'</div></div>';}
+function toggleSub(btn){var b=btn.closest('.sub-card').querySelector('.sub-body');var open=b.style.display!=='none';b.style.display=open?'none':'block';btn.innerHTML=open?'Ver &#9660;':'Ocultar &#9650;';}
+
+
+function restoreFromAirtable(usuario,cb){
+  var existing={};try{existing=JSON.parse(localStorage.getItem('pp_p_'+usuario)||'{}');}catch(e){}
+  if(Object.keys(existing).length>0){cb();return;}
+  var filter=encodeURIComponent('({Usuario}="'+usuario+'")');
+  fetch(AIRTABLE_URL+'?filterByFormula='+filter+'&pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
+  .then(function(r){return r.json();})
+  .then(function(resp){
+    if(!resp.records||!resp.records.length){cb();return;}
+    var progress={},subs=getLocalSubs(),keys={};
+    subs.forEach(function(s){if(s.usuario===usuario&&s.lid)keys[s.lid]=1;});
+    resp.records.forEach(function(rec){
+      var f=rec.fields,lid=f.Lid||'';
+      if(lid){progress[lid]=true;if(!keys[lid]){
+        var resps=(f.Respuestas||'').split('\n\n---\n\n').map(function(b){var nl=b.indexOf('\n');return{fid:'',pregunta:nl>-1?b.substring(0,nl):b,respuesta:nl>-1?b.substring(nl+1):''};});
+        subs.push({ts:0,fecha:f.Fecha||'',jugador:f.Jugador||'',usuario:usuario,unidad:f.Unidad||'',ejercicio:f.Ejercicio||'',lid:lid,airtableId:rec.id,respuestas:resps});keys[lid]=1;
+      }}
+    });
+    localStorage.setItem('pp_p_'+usuario,JSON.stringify(progress));
+    localStorage.setItem('pp_submissions',JSON.stringify(subs));
+    showToast('Progreso restaurado desde la nube');cb();
+  }).catch(function(){cb();});
+}
+
+
+/* ════ ADMIN PANEL ════ */
+var adminData=null,activePatient=null;
+
+function isAdmin(){return S.user&&USERS[S.user]&&USERS[S.user].role==='admin';}
+
+function showAdmin(){
+  USERS=getAllUsers();
+  document.getElementById('nav-av3').textContent=USERS[S.user].name[0].toUpperCase();
+  showView('vadmin');adminTab('pacientes');loadAdminPanel();
+}
+
+function adminTab(tab){
+  var btns={pacientes:'btn-tab-pacientes',usuarios:'btn-tab-usuarios'};
+  Object.keys(btns).forEach(function(k){var el=document.getElementById(btns[k]);if(el){el.style.background=k===tab?'var(--red)':'transparent';el.style.color=k===tab?'#fff':'var(--muted)';el.style.border=k===tab?'none':'1px solid var(--border)';}});
+  var vp=document.getElementById('admin-view-pacientes');
+  var vu=document.getElementById('admin-view-usuarios');
+  if(vp)vp.style.display=tab==='pacientes'?'flex':'none';
+  if(vu){vu.style.display=tab==='usuarios'?'flex':'none';if(tab==='usuarios')renderUserTab();}
+}
+
+function loadAdminPanel(){
+  renderAdminPanel(getLocalSubs());
+  fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
+  .then(function(r){return r.json();})
+  .then(function(resp){
+    if(!resp.records||!resp.records.length)return;
+    var local=getLocalSubs(),keys={};
+    local.forEach(function(s){keys[(s.jugador||'')+'|'+(s.fecha||'')]=1;});
+    resp.records.forEach(function(rec){
+      var f=rec.fields,key=(f.Jugador||'')+'|'+(f.Fecha||'');
+      if(!keys[key]){
+        var resps=(f.Respuestas||'').split('\n\n---\n\n').map(function(b){var nl=b.indexOf('\n');return{fid:'',pregunta:nl>-1?b.substring(0,nl):b,respuesta:nl>-1?b.substring(nl+1):''};});
+        local.push({ts:0,fecha:f.Fecha||'',jugador:f.Jugador||'',usuario:f.Usuario||'',unidad:f.Unidad||'',ejercicio:f.Ejercicio||'',lid:f.Lid||'',airtableId:rec.id,respuestas:resps});
+      }
+    });
+    localStorage.setItem('pp_submissions',JSON.stringify(local));
     renderAdminPanel(local);
-  }).catch(function() {});
+  }).catch(function(){});
 }
 
-function renderAdminPanel(subs) {
-  // Deduplicate: keep only latest submission per user+lid
-  var latest = {};
-  subs.forEach(function(s) {
-    var key = (s.usuario||'?') + '|' + (s.lid || s.ejercicio || '?');
-    if (!latest[key] || (s.ts||0) > (latest[key].ts||0)) latest[key] = s;
-  });
-  var dedupedSubs = Object.values(latest);
-
-  // Group by patient, sorted by most recent activity
-  var patients = {};
-  dedupedSubs.forEach(function(s) {
-    var key = s.usuario || s.jugador || '?';
-    if (!patients[key]) patients[key] = { nombre: s.jugador||key, usuario:key, ejercicios:[], lastTs:0 };
-    patients[key].ejercicios.push(s);
-    if ((s.ts||0) > patients[key].lastTs) patients[key].lastTs = s.ts||0;
-  });
-  // Sort by most recent first, then alphabetical
-  adminData = Object.values(patients).sort(function(a, b) {
-    if (b.lastTs !== a.lastTs) return b.lastTs - a.lastTs;
-    return a.nombre.localeCompare(b.nombre, 'es', { sensitivity:'base' });
-  });
-
+function renderAdminPanel(subs){
+  var latest={};
+  subs.forEach(function(s){var key=(s.usuario||'?')+'|'+(s.lid||s.ejercicio||'?');if(!latest[key]||(s.ts||0)>(latest[key].ts||0))latest[key]=s;});
+  var patients={};
+  Object.values(latest).forEach(function(s){var k=s.usuario||s.jugador||'?';if(!patients[k])patients[k]={nombre:s.jugador||k,usuario:k,ejercicios:[],lastTs:0};patients[k].ejercicios.push(s);if((s.ts||0)>patients[k].lastTs)patients[k].lastTs=s.ts||0;});
+  adminData=Object.values(patients).sort(function(a,b){if(b.lastTs!==a.lastTs)return b.lastTs-a.lastTs;return a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'});});
   renderPatientList('');
-  if (!activePatient && adminData.length > 0) showPatient(adminData[0].usuario);
-  else if (activePatient) showPatient(activePatient);
+  if(!activePatient&&adminData.length>0)showPatient(adminData[0].usuario);
+  else if(activePatient)showPatient(activePatient);
 }
 
-function renderPatientList(filter) {
-  var f = (filter||'').toLowerCase().trim();
-  var filtered = adminData.filter(function(p) {
-    return !f || p.nombre.toLowerCase().includes(f) || p.usuario.toLowerCase().includes(f);
-  });
-  if (!adminData.length) {
-    document.getElementById('admin-patient-list').innerHTML =
-      '<div style="padding:1.25rem 1.1rem;font-size:.78rem;color:var(--dim);line-height:1.65;">Cuando un jugador complete un ejercicio y haga clic en "Enviar a Mauro", aparecera aca.</div>';
-    document.getElementById('admin-content').innerHTML = adminEmpty();
-    return;
-  }
-  if (!filtered.length) {
-    document.getElementById('admin-patient-list').innerHTML =
-      '<div style="padding:1.1rem;font-size:.75rem;color:var(--dim);">Ningun paciente coincide con la busqueda.</div>';
-    return;
-  }
-  var h = '';
-  filtered.forEach(function(p) {
-    var n = p.ejercicios.length;
-    var active = p.usuario === activePatient;
-    h += '<div class="admin-ex-item'+(active?' on':'')+'" onclick="showPatient(\''+p.usuario+'\')">';
-    h += '<div style="display:flex;align-items:center;gap:.65rem;">';
-    h += '<div style="width:28px;height:28px;border-radius:50%;background:'+(active?'var(--red)':'var(--card2)')+';display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:'+(active?'#fff':'var(--muted)')+';flex-shrink:0;">'+(p.nombre[0]||'?').toUpperCase()+'</div>';
-    h += '<div><div class="aei-name">'+p.nombre+'</div>';
-    h += '<div class="aei-count">'+n+' ejercicio'+(n!==1?'s':'')+' completado'+(n!==1?'s':'')+'</div></div>';
-    h += '</div></div>';
-  });
-  document.getElementById('admin-patient-list').innerHTML = h;
+function renderPatientList(filter){
+  var f=(filter||'').toLowerCase().trim();
+  var filtered=adminData.filter(function(p){return!f||p.nombre.toLowerCase().includes(f)||p.usuario.toLowerCase().includes(f);});
+  var plist=document.getElementById('admin-patient-list');
+  if(!adminData.length){if(plist)plist.innerHTML='<div style="padding:1.25rem 1.1rem;font-size:.78rem;color:var(--dim);">Sin respuestas todavia.</div>';var ac=document.getElementById('admin-content');if(ac)ac.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:4rem 2rem;"><div style="font-size:3rem;opacity:.08;margin-bottom:1rem;">&#128101;</div><p style="font-size:.9rem;font-weight:700;margin-bottom:.4rem;">Sin pacientes todavia</p></div>';return;}
+  if(!filtered.length){if(plist)plist.innerHTML='<div style="padding:1.1rem;font-size:.75rem;color:var(--dim);">Ningun resultado.</div>';return;}
+  var h='';
+  filtered.forEach(function(p){var n=p.ejercicios.length,active=p.usuario===activePatient;h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showPatient(\''+p.usuario+'\')">';h+='<div style="display:flex;align-items:center;gap:.65rem;"><div style="width:28px;height:28px;border-radius:50%;background:'+(active?'var(--red)':'var(--card2)')+';display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:'+(active?'#fff':'var(--muted)')+';flex-shrink:0;">'+(p.nombre[0]||'?').toUpperCase()+'</div>';h+='<div><div class="aei-name">'+p.nombre+'</div><div class="aei-count">'+n+' ejercicio'+(n!==1?'s':'')+' completado'+(n!==1?'s':'')+'</div></div></div></div>';});
+  if(plist)plist.innerHTML=h;
 }
 
-var teosqAdminQueue=[];
-function showPatient(usuario) {
-  teosqAdminQueue=[];
-  activePatient = usuario;
-  renderPatientList(document.getElementById('admin-search') ? document.getElementById('admin-search').value : '');
-  var patient = adminData.find(function(p) { return p.usuario === usuario; });
-  if (!patient) return;
-
-  var UNIT_ORDER = ['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
-  function unitIdx(u) {
-    var i = UNIT_ORDER.findIndex(function(x) { return u && u.toLowerCase().includes(x.toLowerCase()); });
-    return i === -1 ? 99 : i;
-  }
-
-  var byUnit = {};
-  patient.ejercicios.forEach(function(e) {
-    var u = e.unidad || 'Sin unidad';
-    if (!byUnit[u]) byUnit[u] = [];
-    byUnit[u].push(e);
-  });
-  var sortedUnits = Object.keys(byUnit).sort(function(a,b){ return unitIdx(a)-unitIdx(b); });
-
-  var h = '';
-
-  // Header
-  h += '<div class="admin-patient-hdr">';
-  h += '<div style="width:48px;height:48px;border-radius:50%;background:var(--red-dim);border:1px solid var(--border-r);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:var(--red);flex-shrink:0;">'+(patient.nombre[0]||'?').toUpperCase()+'</div>';
-  h += '<div style="flex:1;"><div style="font-size:1.15rem;font-weight:800;">'+patient.nombre+'</div>';
-  h += '<div style="font-size:.75rem;color:var(--muted);">@'+patient.usuario+'</div></div>';
-  h += '<button onclick="generatePatientPDF(''+patient.usuario+'')" style="display:flex;align-items:center;gap:.45rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1rem;border-radius:4px;cursor:pointer;transition:all .2s;flex-shrink:0;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">';
-  h += '<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
-  h += 'Descargar PDF</button>';
-  h += '<button onclick="generatePatientPDF(\''+patient.usuario+'\')" style="display:flex;align-items:center;gap:.45rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1rem;border-radius:4px;cursor:pointer;flex-shrink:0;">';
-h += '<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
-h += ' Descargar PDF</button>';
-h += '</div>';
-
+function showPatient(usuario){
+  activePatient=usuario;
+  renderPatientList(document.getElementById('admin-search')?document.getElementById('admin-search').value:'');
+  var patient=adminData.find(function(p){return p.usuario===usuario;});
+  if(!patient)return;
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
+  var byUnit={};
+  patient.ejercicios.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
+  var sortedUnits=Object.keys(byUnit).sort(function(a,b){return unitIdx(a)-unitIdx(b);});
+  var h='';
+  // Patient header
+  h+='<div class="admin-patient-hdr">';
+  h+='<div style="width:48px;height:48px;border-radius:50%;background:var(--red-dim);border:1px solid var(--border-r);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:var(--red);flex-shrink:0;">'+(patient.nombre[0]||'?').toUpperCase()+'</div>';
+  h+='<div style="flex:1;"><div style="font-size:1.15rem;font-weight:800;">'+patient.nombre+'</div><div style="font-size:.75rem;color:var(--muted);">@'+patient.usuario+'</div></div>';
+  h+='<button onclick="generatePatientPDF(\''+patient.usuario+'\')" style="display:flex;align-items:center;gap:.45rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1rem;border-radius:4px;cursor:pointer;flex-shrink:0;" onmouseover="this.style.borderColor=\'var(--red)\';this.style.color=\'var(--text)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--muted)\'">';
+  h+='<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Descargar PDF</button>';
+  h+='</div>';
   // Stats
-  h += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);">';
-  h += psc('Ejercicios', patient.ejercicios.length);
-  h += psc('Unidades', sortedUnits.length);
-  var last = patient.ejercicios.reduce(function(a,b){ return (a.ts||0)>(b.ts||0)?a:b; });
-  h += psc('Ultimo envio', (last.fecha||'-').substring(0,10));
-  h += '</div>';
-
-  h += '<div style="padding:1.5rem 1.75rem;">';
-  sortedUnits.forEach(function(unit) {
-    h += '<div style="margin-bottom:2rem;">';
-    h += '<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem;">';
-    h += '<div style="font-size:.62rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.2rem .65rem;border-radius:3px;">'+unit+'</div>';
-    h += '<div style="flex:1;height:1px;background:var(--border);"></div>';
-    h += '</div>';
-    var exs = byUnit[unit].sort(function(a,b){ return (a.ejercicio||'').localeCompare(b.ejercicio||'','es'); });
-    exs.forEach(function(ej, idx) {
-      var eid = 'ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
-      var isTeosq = ej.lid==='u1l5' || (ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf('teosq')!==-1);
-      var isGrid  = ej.lid==='u1l1' || ej.lid==='u3l6' || (ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&r.fid.match(/^g_\d+_\d+$/);}));
-      h += '<div class="sub-card">';
-
-      if (isTeosq) {
-        // TEOSQ: special expandable view
-        h += '<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
-        h += '<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div>';
-        h += '<div class="sub-meta">'+(ej.fecha||'')+'&nbsp;&nbsp;<span style="color:var(--red);font-size:.65rem;font-weight:700;">TEOSQ — ver detalle completo</span></div></div>';
-        h += '<button class="sub-toggle">Ver detalle &#9660;</button></div>';
-        h += '<div id="'+eid+'" style="display:none;border-top:1px solid var(--border);"></div>';
-        h += '</div>';
-        teosqAdminQueue.push({eid:eid, ej:ej});
-      } else {
-        // Standard exercise
-        h += '<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
-        h += '<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div>';
-        h += '<div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
-        h += '<button class="sub-toggle">Ver respuestas &#9660;</button></div>';
-        h += '<div id="'+eid+'" style="display:none;padding:.5rem 1.25rem 1.25rem;border-top:1px solid var(--border);">';
-        var resps = ej.respuestas || [];
-        var gridCells = resps.filter(function(r){ return r.fid&&r.fid.match(/^g_\d+_\d+$/); });
-        var reflCells = resps.filter(function(r){ return !r.fid||!r.fid.match(/^g_\d+_\d+$/); });
-        var has = resps.some(function(r){ return r.respuesta&&r.respuesta.trim(); });
-        if (has) {
-          reflCells.forEach(function(r) {
-            if (r.respuesta&&r.respuesta.trim()) {
-              h += '<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div>';
-              h += '<div class="sub-ans">'+r.respuesta+'</div></div>';
-            }
-          });
-          if (gridCells.length > 0) {
-            h += '<div class="sub-q"><div class="sub-ql">Planilla completada ('+gridCells.length+' celdas)</div>';
-            h += '<div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem;">';
-            gridCells.forEach(function(r) {
-              h += '<div style="background:rgba(232,49,42,.1);border:1px solid rgba(232,49,42,.2);border-radius:3px;padding:.25rem .6rem;font-size:.72rem;">';
-              h += '<span style="color:var(--muted);">'+r.pregunta+':</span> <strong>'+r.respuesta+'</strong></div>';
-            });
-            h += '</div></div>';
-          }
-        } else {
-          h += '<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado.</p>';
-        }
-        h += '</div></div>';
-      }
+  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);">';
+  h+=psc('Ejercicios',patient.ejercicios.length)+psc('Unidades',sortedUnits.length);
+  var last=patient.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;});
+  h+=psc('Ultimo envio',(last.fecha||'-').substring(0,10));
+  h+='</div>';
+  // Content
+  h+='<div style="padding:1.5rem 1.75rem;">';
+  var teosqQueue=[];
+  sortedUnits.forEach(function(unit){
+    // Unit download button
+    h+='<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem;">';
+    h+='<div style="font-size:.62rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.2rem .65rem;border-radius:3px;">'+unit+'</div>';
+    h+='<div style="flex:1;height:1px;background:var(--border);"></div>';
+    h+='<button onclick="generateUnitPDF(\''+usuario+'\',\''+unit+'\')" style="display:flex;align-items:center;gap:.35rem;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor=\'var(--red)\';this.style.color=\'var(--muted)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--dim)\'">';
+    h+='<svg width="10" height="10" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>PDF</button>';
+    h+='</div>';
+    var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
+    exs.forEach(function(ej,idx){
+      var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
+      var isTeosq=ej.lid==='u1l5'||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf('teosq')!==-1);
+      var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
+      h+='<div class="sub-card">';
+      var btnLabel=isTeosq?'Ver detalle &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
+      h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
+      h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
+      h+='<button class="sub-toggle">'+btnLabel+'</button></div>';
+      h+='<div id="'+eid+'" style="display:none;border-top:1px solid var(--border);"></div>';
+      h+='</div>';
+      if(isTeosq)teosqQueue.push({type:'teosq',eid:eid,ej:ej});
+      else if(isGrid)teosqQueue.push({type:'grid',eid:eid,ej:ej});
+      else teosqQueue.push({type:'form',eid:eid,ej:ej});
     });
-    h += '</div>';
+    h+='<div style="height:1rem;"></div>';
   });
-  h += '</div>';
-
-  document.getElementById('admin-content').innerHTML = h;
-
-  // Render TEOSQ admin views after DOM insertion
-  teosqAdminQueue.forEach(function(item) {
-    if (item.type === 'teosq') renderTEOSQAdminView(item.ej, item.eid);
-    else if (item.type === 'grid') renderGridAdminView(item.ej, item.eid);
+  h+='</div>';
+  document.getElementById('admin-content').innerHTML=h;
+  teosqQueue.forEach(function(item){
+    if(item.type==='teosq')renderTEOSQAdminView(item.ej,item.eid);
+    else if(item.type==='grid')renderGridAdminView(item.ej,item.eid);
+    else renderFormAdminView(item.ej,item.eid);
   });
-  teosqAdminQueue = [];
-
-  // Render TEOSQ admin views after DOM insertion
-  teosqAdminQueue.forEach(function(item) {
-    if (item.type === 'teosq') renderTEOSQAdminView(item.ej, item.eid);
-    else if (item.type === 'grid') renderGridAdminView(item.ej, item.eid);
-  });
-  teosqAdminQueue = [];
 }
 
-function psc(label, val) {
-  return '<div style="text-align:center;background:var(--bg3);border-radius:5px;padding:.75rem 1rem;">' +
-    '<div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem;">'+label+'</div>' +
-    '<div style="font-size:1.4rem;font-weight:800;">'+val+'</div></div>';
+function psc(label,val){return'<div style="text-align:center;background:var(--bg3);border-radius:5px;padding:.75rem 1rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem;">'+label+'</div><div style="font-size:1.4rem;font-weight:800;">'+val+'</div></div>';}
+
+function toggleEj(eid,hdr){
+  var body=document.getElementById(eid);if(!body)return;
+  var open=body.style.display!=='none';
+  body.style.display=open?'none':'block';
+  var btn=hdr.querySelector('.sub-toggle');
+  if(btn)btn.innerHTML=open?btn.innerHTML.replace('&#9650;','&#9660;').replace('Ocultar','Ver'):btn.innerHTML.replace('&#9660;','&#9650;').replace('Ver','Ocultar');
 }
 
-function adminEmpty() {
-  return '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:4rem 2rem;">' +
-    '<div style="font-size:3rem;opacity:.08;margin-bottom:1rem;">&#128101;</div>' +
-    '<p style="font-size:.9rem;font-weight:700;margin-bottom:.4rem;">Sin pacientes todavia</p>' +
-    '<p style="font-size:.8rem;color:var(--muted);">Las respuestas apareceran aca cuando los jugadores completen ejercicios.</p></div>';
+function renderFormAdminView(ej,cid){
+  var resps=ej.respuestas||[],h='<div style="padding:.5rem 1.25rem 1.25rem;">';
+  var has=resps.some(function(r){return r.respuesta&&r.respuesta.trim();});
+  if(has){resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()){h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';}});}
+  else{h+='<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado.</p>';}
+  h+='</div>';
+  var el=document.getElementById(cid);if(el)el.innerHTML=h;
 }
 
-function toggleEj(eid, hdr) {
-  var body = document.getElementById(eid);
-  if (!body) return;
-  var open = body.style.display !== 'none';
-  body.style.display = open ? 'none' : 'block';
-  var btn = hdr.querySelector('.sub-toggle');
-  if (btn) btn.innerHTML = open ? (btn.textContent.indexOf('detalle')!==-1?'Ver detalle &#9660;':'Ver respuestas &#9660;') : 'Ocultar &#9650;';
-  // If TEOSQ and newly opened, draw chart
-  if (!open) {
-    var chartEl = body.querySelector('[id^="admchart_"]');
-    if (chartEl && chartEl.innerHTML.trim()==='') {
-      var uid = chartEl.id.replace('admchart_','');
-      // find scores from rendered content
-      var valEls = body.querySelectorAll('.teosq-sc-val');
-      if (valEls.length >= 2) {
-        var e=parseFloat(valEls[0].textContent), t=parseFloat(valEls[1].textContent);
-        if(!isNaN(e)&&!isNaN(t)) chartEl.innerHTML = buildTEOSQChartSVG(e,t);
-      }
-    }
-  }
-}
-
-
-function adminTab(tab) {
-  var btns = { pacientes:'btn-tab-pacientes', usuarios:'btn-tab-usuarios' };
-  Object.keys(btns).forEach(function(k) {
-    var el = document.getElementById(btns[k]);
-    if (el) {
-      el.style.background = k===tab ? 'var(--red)' : 'transparent';
-      el.style.color      = k===tab ? '#fff' : 'var(--muted)';
-      el.style.border     = k===tab ? 'none' : '1px solid var(--border)';
-    }
-  });
-  var vp = document.getElementById('admin-view-pacientes');
-  var vu = document.getElementById('admin-view-usuarios');
-  if (vp) vp.style.display = tab==='pacientes' ? 'flex' : 'none';
-  if (vu) {
-    vu.style.display = tab==='usuarios' ? 'flex' : 'none';
-    if (tab==='usuarios') renderUserTab();
-  }
-}
-
-function renderUserTab() {
-  var extra = getExtraUsers();
-  var all = Object.assign({}, USERS_BASE, extra);
-  var h = '<div style="padding:1.75rem 2rem;max-width:740px;width:100%;">';
-  h += '<h2 style="font-size:1.1rem;font-weight:800;margin-bottom:.35rem;">Pacientes del Programa</h2>';
-  h += '<p style="font-size:.8rem;color:var(--muted);margin-bottom:1.75rem;">Agrega nuevos pacientes aca. Sus datos de acceso se guardan en este navegador y en la plataforma.</p>';
-
-  // Add new patient form
-  h += '<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1.75rem;">';
-  h += '<p style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Nuevo Paciente</p>';
-  h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:.9rem;">';
-  h += '<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Nombre completo</label>';
-  h += '<input id="nu-name" type="text" placeholder="Carlos Rodriguez" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;" onfocus="this.style.borderColor=\'var(--red)\'" onblur="this.style.borderColor=\'var(--border)\'"></div>';
-  h += '<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Usuario (sin espacios)</label>';
-  h += '<input id="nu-user" type="text" placeholder="carlos_r" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;" onfocus="this.style.borderColor=\'var(--red)\'" onblur="this.style.borderColor=\'var(--border)\'"></div>';
-  h += '<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Contrasena</label>';
-  h += '<input id="nu-pass" type="text" placeholder="poker2025" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;" onfocus="this.style.borderColor=\'var(--red)\'" onblur="this.style.borderColor=\'var(--border)\'"></div>';
-  h += '</div>';
-  h += '<button onclick="addPatient()" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;cursor:pointer;">+ Agregar Paciente</button>';
-  h += '<span id="nu-msg" style="font-size:.75rem;margin-left:1rem;color:var(--green);display:none;">Guardado!</span>';
-  h += '</div>';
-
-  // Patient list
-  h += '<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;">';
-  h += '<div style="padding:.75rem 1.25rem;background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:grid;grid-template-columns:1fr 120px 150px 80px;gap:.5rem;">';
-  h += '<span>Nombre</span><span>Usuario</span><span>Contrasena</span><span>Acciones</span></div>';
-  Object.keys(all).forEach(function(u) {
-    var p = all[u];
-    if (p.role === 'admin') return;
-    var isExtra = !!extra[u];
-    h += '<div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 120px 150px 80px;gap:.5rem;align-items:center;">';
-    h += '<span style="font-size:.82rem;font-weight:600;">' + p.name + '</span>';
-    h += '<span style="font-size:.78rem;color:var(--muted);">@' + u + '</span>';
-    h += '<span style="font-size:.78rem;color:var(--muted);font-family:monospace;">' + p.pass + '</span>';
-    if (isExtra) {
-      h += '<button onclick="removePatient(\'' + u + '\')" style="background:transparent;border:1px solid rgba(232,49,42,.3);color:rgba(232,49,42,.7);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;padding:.3rem .6rem;border-radius:3px;cursor:pointer;">Eliminar</button>';
-    } else {
-      h += '<span style="font-size:.65rem;color:var(--dim);">fijo</span>';
-    }
-    h += '</div>';
-  });
-  h += '</div>';
-  h += '<p style="font-size:.72rem;color:var(--dim);margin-top:1rem;line-height:1.65;">Los pacientes agregados aca pueden iniciar sesion en la plataforma desde cualquier dispositivo. Si necesitas que funcione en un dispositivo nuevo, pedi a Lucho que actualice el archivo HTML.</p>';
-  h += '</div>';
-  document.getElementById('admin-view-usuarios').innerHTML = h;
-}
-
-function addPatient() {
-  var name = document.getElementById('nu-name').value.trim();
-  var user = document.getElementById('nu-user').value.trim().toLowerCase().replace(/\s+/g,'_');
-  var pass = document.getElementById('nu-pass').value.trim();
-  if (!name || !user || !pass) { alert('Completa todos los campos'); return; }
-  var extra = getExtraUsers();
-  extra[user] = { name: name, pass: pass };
-  localStorage.setItem('pp_extra_users', JSON.stringify(extra));
-  USERS = getAllUsers();
-  document.getElementById('nu-name').value = '';
-  document.getElementById('nu-user').value = '';
-  document.getElementById('nu-pass').value = '';
-  var msg = document.getElementById('nu-msg');
-  msg.style.display = 'inline';
-  setTimeout(function() { msg.style.display = 'none'; }, 2500);
-  renderUserTab();
-}
-
-function removePatient(u) {
-  if (!confirm('Eliminar a @' + u + '?')) return;
-  var extra = getExtraUsers();
-  delete extra[u];
-  localStorage.setItem('pp_extra_users', JSON.stringify(extra));
-  USERS = getAllUsers();
-  renderUserTab();
-}
-
-
-function restoreFromAirtable(usuario, cb) {
-  // If user already has progress locally, skip restore
-  var existing = {};
-  try { existing = JSON.parse(localStorage.getItem('pp_p_' + usuario) || '{}'); } catch(e) {}
-  if (Object.keys(existing).length > 0) { cb(); return; }
-
-  var filter = encodeURIComponent('({Usuario}="' + usuario + '")');
-  fetch(AIRTABLE_URL + '?filterByFormula=' + filter + '&pageSize=100', {
-    headers: { 'Authorization': 'Bearer ' + AIRTABLE_TOKEN }
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(resp) {
-    if (!resp.records || !resp.records.length) { cb(); return; }
-    var progress = {};
-    var subs = getLocalSubs();
-    var existingLids = {};
-    subs.forEach(function(s) { if(s.usuario===usuario&&s.lid) existingLids[s.lid]=1; });
-
-    resp.records.forEach(function(rec) {
-      var f = rec.fields;
-      var lid = f.Lid || '';
-      if (lid) {
-        progress[lid] = true;
-        if (!existingLids[lid]) {
-          // Restore answers from Airtable respuestas
-          var resps = (f.Respuestas||'').split('\n\n---\n\n').map(function(b) {
-            var nl = b.indexOf('\n');
-            return { fid:'', pregunta: nl>-1?b.substring(0,nl):b, respuesta: nl>-1?b.substring(nl+1):'' };
-          });
-          subs.push({ ts:0, fecha:f.Fecha||'', jugador:f.Jugador||'',
-            usuario:usuario, unidad:f.Unidad||'', ejercicio:f.Ejercicio||'',
-            lid:lid, airtableId:rec.id, respuestas:resps });
-          existingLids[lid] = 1;
-        }
-      }
+/* ════ GRID ADMIN VIEW ════ */
+function renderGridAdminView(ej,cid){
+  var resps=ej.respuestas||[];
+  var days=['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
+  var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
+  var reflCells=resps.filter(function(r){return!r.fid||!/^g_\d+_\d+$/.test(r.fid);});
+  var sched={};
+  gridCells.forEach(function(r){var m=r.fid.match(/^g_(\d+)_(\d+)$/);if(!m)return;var hr=m[1].length===3?m[1][0]+':00':m[1].substring(0,2)+':00';var di=parseInt(m[2]);if(!sched[hr])sched[hr]={};sched[hr][di]=r.respuesta||'';});
+  var hours=Object.keys(sched).sort(function(a,b){return parseInt(a)-parseInt(b);});
+  var h='<div style="padding:.5rem;">';
+  if(hours.length>0){
+    h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;">Planilla semanal ('+hours.length+' franjas)</div>';
+    h+='<div style="overflow-x:auto;margin-bottom:1rem;"><table style="width:100%;border-collapse:collapse;min-width:500px;">';
+    h+='<thead><tr><th style="background:var(--bg3);font-size:.6rem;font-weight:700;padding:.5rem .5rem .5rem .85rem;text-align:left;color:var(--muted);border-bottom:1px solid var(--border);width:52px;">Hora</th>';
+    days.forEach(function(d){h+='<th style="background:var(--bg3);font-size:.6rem;font-weight:700;padding:.5rem .35rem;text-align:center;color:var(--muted);border-bottom:1px solid var(--border);">'+d+'</th>';});
+    h+='</tr></thead><tbody>';
+    hours.forEach(function(hr,hi){
+      h+='<tr style="'+(hi%2===0?'background:rgba(255,255,255,.01);':'')+'"><td style="font-size:.68rem;font-weight:700;color:var(--dim);padding:.35rem .5rem .35rem .85rem;border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap;">'+hr+'</td>';
+      days.forEach(function(d,di){var v=(sched[hr]&&sched[hr][di])||'';h+='<td style="border-bottom:1px solid rgba(255,255,255,.04);border-left:1px solid rgba(255,255,255,.04);padding:.3rem .35rem;text-align:center;">'+(v?'<span style="font-size:.7rem;font-weight:600;color:var(--text);background:rgba(232,49,42,.12);border:1px solid rgba(232,49,42,.2);border-radius:3px;padding:.15rem .4rem;display:inline-block;">'+v+'</span>':'')+'</td>';});
+      h+='</tr>';
     });
-
-    localStorage.setItem('pp_p_' + usuario, JSON.stringify(progress));
-    localStorage.setItem('pp_submissions', JSON.stringify(subs));
-    showToast('Progreso restaurado desde la nube');
-    cb();
-  })
-  .catch(function() { cb(); });
+    h+='</tbody></table></div>';
+  }
+  var hasRefl=reflCells.some(function(r){return r.respuesta&&r.respuesta.trim();});
+  if(hasRefl){reflCells.forEach(function(r){if(r.respuesta&&r.respuesta.trim()){h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';}});}
+  h+='</div>';
+  var el=document.getElementById(cid);if(el)el.innerHTML=h;
 }
 
+/* ════ TEOSQ ADMIN VIEW ════ */
+function renderTEOSQAdminView(ej,cid){
+  var resps=ej.respuestas||[],ans={},egoScore=null,tarScore=null,perfil=null;
+  resps.forEach(function(r){
+    if(!r.fid)return;
+    if(r.fid==='teosq_ego'){egoScore=parseFloat(r.respuesta);return;}
+    if(r.fid==='teosq_tar'){tarScore=parseFloat(r.respuesta);return;}
+    if(r.fid==='teosq_perfil'){perfil=r.respuesta;return;}
+    var m=r.fid.match(/^teosq_(\d+)$/);if(m)ans[parseInt(m[1])]=parseInt(r.respuesta)||0;
+  });
+  var uid=cid.replace(/[^a-z0-9]/gi,'_');
+  var h='<div style="border-top:none;">';
+  h+='<div style="display:flex;border-bottom:1px solid var(--border);background:var(--bg3);">';
+  for(var i=0;i<3;i++){h+='<div class="teosq-tab'+(i===0?' on':'')+'" id="at'+i+'_'+uid+'" onclick="admTqTab(\''+uid+'\','+i+')" style="font-size:.65rem;">'+['1. Cuestionario','2. Resultados','3. Interpretacion'][i]+'</div>';}
+  h+='</div>';
+  // Pane 0 — questions
+  h+='<div class="teosq-pane on" id="ap0_'+uid+'" style="padding:1rem;">';
+  h+='<div class="teosq-intro" style="margin-bottom:.85rem;">Yo me siento con mas exito en el poker cuando...</div>';
+  TEOSQ_ITEMS.forEach(function(item){
+    var v=ans[item.n]||0;
+    h+='<div class="tq-item'+(v?' done':'')+'" style="margin-bottom:.5rem;">';
+    h+='<div class="tq-num">Item '+item.n+(item.cat==='E'?' · Ego':' · Tarea')+'</div>';
+    h+='<div class="tq-text">'+item.t+'</div><div class="tq-scale">';
+    for(var i=1;i<=5;i++){h+='<div class="tq-btn'+(v===i?' on':'')+'" style="pointer-events:none;flex:1;padding:.4rem .1rem;font-size:.65rem;font-weight:700;text-align:center;border:1.5px solid var(--border);border-radius:3px;'+(v===i?'background:var(--red);border-color:var(--red);color:#fff;':'background:var(--bg3);color:var(--muted);')+'">'+(v===i?'<strong>'+i+'</strong>':i)+'</div>';}
+    h+='</div></div>';
+  });
+  h+='</div>';
+  // Pane 1 — results
+  h+='<div class="teosq-pane" id="ap1_'+uid+'" style="padding:1rem;">';
+  if(egoScore!==null&&tarScore!==null){
+    function lvl(s){if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',cls:'tlvl-low'};if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',cls:'tlvl-mid'};return{lbl:'Alta ('+s.toFixed(2)+')',cls:'tlvl-hi'};}
+    var el2=lvl(egoScore),tl=lvl(tarScore);
+    h+='<div class="teosq-scores"><div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion al Ego</div><div class="teosq-sc-val">'+egoScore.toFixed(2)+'</div><div class="teosq-sc-lvl '+el2.cls+'">'+el2.lbl+'</div><div class="teosq-sc-bar"><div class="teosq-sc-fill" style="width:'+(egoScore/5*100)+'%;background:#E8312A"></div></div></div>';
+    h+='<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion a la Tarea</div><div class="teosq-sc-val">'+tarScore.toFixed(2)+'</div><div class="teosq-sc-lvl '+tl.cls+'">'+tl.lbl+'</div><div class="teosq-sc-bar"><div class="teosq-sc-fill" style="width:'+(tarScore/5*100)+'%;background:#22C55E"></div></div></div></div>';
+    h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:1rem;margin-top:.85rem;">';
+    h+='<svg id="admchart_'+uid+'" viewBox="0 0 380 220" style="width:100%;max-width:400px;display:block;margin:0 auto;">';
+    h+=buildTEOSQChartSVG(egoScore,tarScore);
+    h+='</svg></div>';
+  }
+  h+='</div>';
+  // Pane 2 — profile
+  h+='<div class="teosq-pane" id="ap2_'+uid+'" style="padding:1rem;">';
+  if(perfil){h+='<div style="background:var(--bg2);border-radius:5px;padding:.9rem 1rem;margin-bottom:.85rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">Perfil</div><div style="font-size:1rem;font-weight:800;">'+perfil+'</div></div>';}
+  var profiles=[{id:'tp1',icon:'🟢',name:'Tarea alta / Ego baja',traits:['Ideal para resistir la varianza.','Alta capacidad de adaptacion.','Puede faltarle intensidad competitiva.'],tag:'tptag-ok',tagLbl:'Perfil favorable'},{id:'tp2',icon:'🔥',name:'Ego alta / Tarea baja',traits:['Riesgo de frustracion ante errores.','Vulnerabilidad frente a comparacion social.','Necesita redefinir que es exito.'],tag:'tptag-r',tagLbl:'Incompatible con Mindset Ganador'},{id:'tp3',icon:'🧨',name:'Ego alta / Tarea alta',traits:['Ideal para carrera profesional seria.','Riesgo de burnout.','Necesita ordenar prioridades.'],tag:'tptag-w',tagLbl:'Perfil complejo'},{id:'tp4',icon:'💤',name:'Ego baja / Tarea baja',traits:['Riesgo de desmotivacion.','Posibles problemas en vida personal.','Requiere proceso psicoterapeutico.'],tag:'tptag-r',tagLbl:'Requiere atencion urgente'}];
+  h+='<div class="teosq-profiles">';
+  profiles.forEach(function(p){var isActive=perfil&&perfil.indexOf(p.name)!==-1;h+='<div class="tp-card '+(isActive?p.id+' on':'')+'"><div class="tp-icon">'+p.icon+'</div><div class="tp-name">'+p.name+'</div><ul class="tp-traits">';p.traits.forEach(function(t){h+='<li>'+t+'</li>';});h+='</ul><div class="tp-tag '+p.tag+'">'+p.tagLbl+'</div></div>';});
+  h+='</div></div></div>';
+  var cont=document.getElementById(cid);if(cont)cont.innerHTML=h;
+}
 
-/* ════ TEOSQ ════ */
+function admTqTab(uid,idx){
+  for(var i=0;i<3;i++){var t=document.getElementById('at'+i+'_'+uid);var p=document.getElementById('ap'+i+'_'+uid);if(t)t.classList.toggle('on',i===idx);if(p)p.classList.toggle('on',i===idx);}
+}
+
+/* ════ USER MANAGEMENT ════ */
+function renderUserTab(){
+  var extra=getExtraUsers(),all=Object.assign({},USERS_BASE,extra);
+  var h='<div style="padding:1.75rem 2rem;max-width:740px;width:100%;">';
+  h+='<h2 style="font-size:1.1rem;font-weight:800;margin-bottom:.35rem;">Pacientes del Programa</h2>';
+  h+='<p style="font-size:.8rem;color:var(--muted);margin-bottom:1.75rem;">Agrega nuevos pacientes aca.</p>';
+  h+='<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1.75rem;">';
+  h+='<p style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Nuevo Paciente</p>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:.9rem;">';
+  h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Nombre completo</label><input id="nu-name" type="text" placeholder="Carlos Rodriguez" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
+  h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Usuario</label><input id="nu-user" type="text" placeholder="carlos_r" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
+  h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Contrasena</label><input id="nu-pass" type="text" placeholder="poker2025" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
+  h+='</div>';
+  h+='<button onclick="addPatient()" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;cursor:pointer;">+ Agregar Paciente</button>';
+  h+='<span id="nu-msg" style="font-size:.75rem;margin-left:1rem;color:var(--green);display:none;">Guardado!</span></div>';
+  h+='<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;">';
+  h+='<div style="padding:.75rem 1.25rem;background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:grid;grid-template-columns:1fr 120px 150px 80px;gap:.5rem;"><span>Nombre</span><span>Usuario</span><span>Contrasena</span><span>Accion</span></div>';
+  Object.keys(all).forEach(function(u){var p=all[u];if(p.role==='admin')return;var isExtra=!!extra[u];h+='<div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 120px 150px 80px;gap:.5rem;align-items:center;"><span style="font-size:.82rem;font-weight:600;">'+p.name+'</span><span style="font-size:.78rem;color:var(--muted);">@'+u+'</span><span style="font-size:.78rem;color:var(--muted);font-family:monospace;">'+p.pass+'</span>'+(isExtra?'<button onclick="removePatient(\''+u+'\')" style="background:transparent;border:1px solid rgba(232,49,42,.3);color:rgba(232,49,42,.7);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;padding:.3rem .6rem;border-radius:3px;cursor:pointer;">Eliminar</button>':'<span style="font-size:.65rem;color:var(--dim);">fijo</span>')+'</div>';});
+  h+='</div></div>';
+  var vu=document.getElementById('admin-view-usuarios');if(vu)vu.innerHTML=h;
+}
+
+function addPatient(){var name=document.getElementById('nu-name').value.trim();var user=document.getElementById('nu-user').value.trim().toLowerCase().replace(/\s+/g,'_');var pass=document.getElementById('nu-pass').value.trim();if(!name||!user||!pass){alert('Completa todos los campos');return;}var extra=getExtraUsers();extra[user]={name:name,pass:pass};localStorage.setItem('pp_extra_users',JSON.stringify(extra));USERS=getAllUsers();document.getElementById('nu-name').value='';document.getElementById('nu-user').value='';document.getElementById('nu-pass').value='';var msg=document.getElementById('nu-msg');msg.style.display='inline';setTimeout(function(){msg.style.display='none';},2500);renderUserTab();}
+function removePatient(u){if(!confirm('Eliminar a @'+u+'?'))return;var extra=getExtraUsers();delete extra[u];localStorage.setItem('pp_extra_users',JSON.stringify(extra));USERS=getAllUsers();renderUserTab();}
+
+/* ════ PDF GENERATION ════ */
+function pdfStyles(){return'@import url(\'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Montserrat\',Arial,sans-serif;font-size:11px;color:#1a1a2e;background:#fff;padding:0;line-height:1.6;}.page{max-width:760px;margin:0 auto;padding:32px 36px;}.hdr{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:16px;border-bottom:3px solid #E8312A;margin-bottom:24px;}.brand{display:flex;align-items:center;gap:10px;}.dot{width:18px;height:18px;border-radius:50%;background:#E8312A;flex-shrink:0;}.brand-name{font-size:16px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;}.brand-sub{font-size:9px;color:#666;letter-spacing:.1em;text-transform:uppercase;margin-top:1px;}.hdr-info{text-align:right;}.hdr-lbl{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.1em;}.hdr-val{font-size:13px;font-weight:700;}.hdr-date{font-size:10px;color:#666;margin-top:2px;}.sec-title{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#E8312A;padding:6px 10px;background:#fff5f5;border-left:3px solid #E8312A;margin:20px 0 12px;}.ex-block{margin-bottom:18px;border:1px solid #e8e8e8;border-radius:5px;overflow:hidden;}.ex-ttl{font-size:11px;font-weight:700;padding:8px 12px;background:#f8f8f8;border-bottom:1px solid #e8e8e8;display:flex;justify-content:space-between;}.ex-dt{font-size:9px;color:#999;font-weight:400;}.qa-row{padding:7px 12px;border-bottom:1px solid #f0f0f0;}.qa-row:last-child{border-bottom:none;}.qa-q{font-size:9px;font-weight:700;color:#666;margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em;}.qa-a{font-size:11px;color:#1a1a2e;line-height:1.55;}.gtable{width:100%;border-collapse:collapse;font-size:9px;margin:8px 12px;width:calc(100% - 24px);}.gtable th{background:#f0f0f0;padding:4px 5px;text-align:center;font-weight:700;border:1px solid #ddd;}.gtable td{padding:3px 5px;text-align:center;border:1px solid #ddd;}.gtable .hcol{font-weight:700;color:#666;text-align:left;background:#fafafa;}.gval{background:#fff0ee;border-radius:2px;padding:1px 4px;display:inline-block;font-weight:600;color:#c0392b;}.tscores{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 12px;}.tscore-box{border:1px solid #e8e8e8;border-radius:4px;padding:10px 12px;text-align:center;}.tscore-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:4px;}.tscore-val{font-size:22px;font-weight:800;color:#E8312A;}.tscore-lvl{font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;margin-top:4px;}.lvl-l{background:#e8f4ff;color:#2980b9;}.lvl-m{background:#fef9e7;color:#d68910;}.lvl-h{background:#eafaf1;color:#1e8449;}.profile-box{margin:8px 12px;padding:10px 12px;border-radius:4px;border-left:3px solid #E8312A;background:#fff5f5;}.profile-name{font-size:12px;font-weight:800;margin-bottom:4px;}.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}.stat-box{border:1px solid #eee;border-radius:4px;padding:10px 12px;text-align:center;}.stat-lbl{font-size:9px;color:#999;text-transform:uppercase;font-weight:700;margin-bottom:4px;}.stat-val{font-size:20px;font-weight:800;color:#E8312A;}.sumtable{width:100%;border-collapse:collapse;font-size:10px;margin-top:12px;}.sumtable th{background:#E8312A;color:#fff;padding:6px 10px;text-align:left;font-weight:700;}.sumtable td{padding:6px 10px;border-bottom:1px solid #eee;}.sumtable tr:nth-child(even) td{background:#fafafa;}.footer{margin-top:32px;padding-top:12px;border-top:1px solid #eee;font-size:9px;color:#aaa;text-align:center;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.page{padding:20px 24px;}.no-print{display:none;}}.print-btn{position:fixed;top:16px;right:16px;background:#E8312A;color:#fff;border:none;font-family:Montserrat,sans-serif;font-size:12px;font-weight:700;padding:10px 20px;border-radius:5px;cursor:pointer;z-index:999;box-shadow:0 2px 8px rgba(0,0,0,.2);}';}
+
+function pdfLvlCls(v){if(!v)return'';if(v<=2.9)return'lvl-l';if(v<=4.2)return'lvl-m';return'lvl-h';}
+function pdfLvlLbl(v){if(!v)return'';if(v<=2.9)return'Baja';if(v<=4.2)return'Media';return'Alta';}
+
+function buildExPDF(ej){
+  var resps=ej.respuestas||[];
+  var isTeosq=ej.lid==='u1l5'||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf('teosq')!==-1);
+  var isGrid=resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
+  var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
+  if(isTeosq){
+    var ego=null,tar=null,perf=null;
+    resps.forEach(function(r){if(r.fid==='teosq_ego')ego=parseFloat(r.respuesta);if(r.fid==='teosq_tar')tar=parseFloat(r.respuesta);if(r.fid==='teosq_perfil')perf=r.respuesta;});
+    if(ego!==null&&tar!==null){h+='<div class="tscores"><div class="tscore-box"><div class="tscore-lbl">Orientacion al Ego</div><div class="tscore-val">'+ego.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(ego)+'">'+pdfLvlLbl(ego)+'</div></div><div class="tscore-box"><div class="tscore-lbl">Orientacion a la Tarea</div><div class="tscore-val">'+tar.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(tar)+'">'+pdfLvlLbl(tar)+'</div></div></div>';}
+    if(perf)h+='<div class="profile-box"><div class="profile-name">Perfil: '+perf+'</div></div>';
+    resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';});
+  }else if(isGrid){
+    var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
+    var reflCells=resps.filter(function(r){return!r.fid||!/^g_\d+_\d+$/.test(r.fid);});
+    var days=['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
+    var sc={};gridCells.forEach(function(r){var m=r.fid.match(/^g_(\d+)_(\d+)$/);if(!m)return;var hr=m[1].length===3?m[1][0]+':00':m[1].substring(0,2)+':00';var di=parseInt(m[2]);if(!sc[hr])sc[hr]={};sc[hr][di]=r.respuesta||'';});
+    var hrs=Object.keys(sc).sort(function(a,b){return parseInt(a)-parseInt(b);});
+    if(hrs.length>0){h+='<table class="gtable"><thead><tr><th>Hora</th>';days.forEach(function(d){h+='<th>'+d+'</th>';});h+='</tr></thead><tbody>';hrs.forEach(function(hr){h+='<tr><td class="hcol">'+hr+'</td>';days.forEach(function(d,di){var v=(sc[hr]&&sc[hr][di])||'';h+='<td>'+(v?'<span class="gval">'+v+'</span>':'')+'</td>';});h+='</tr>';});h+='</tbody></table>';}
+    reflCells.forEach(function(r){if(r.respuesta&&r.respuesta.trim())h+='<div class="qa-row"><div class="qa-q">'+r.pregunta+'</div><div class="qa-a">'+r.respuesta+'</div></div>';});
+  }else{
+    resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()&&r.fid&&!/^teosq_/.test(r.fid))h+='<div class="qa-row"><div class="qa-q">'+(r.pregunta||'')+'</div><div class="qa-a">'+r.respuesta+'</div></div>';});
+  }
+  h+='</div>';return h;
+}
+
+function openPDF(title,bodyHtml){
+  var doc='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>'+title+'</title><style>'+pdfStyles()+'</style></head><body>';
+  doc+='<button class="print-btn no-print" onclick="window.print()">&#128424; Guardar como PDF</button>';
+  doc+=bodyHtml;
+  doc+='</body></html>';
+  var blob=new Blob([doc],{type:'text/html;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  window.open(url,'_blank');
+  setTimeout(function(){URL.revokeObjectURL(url);},10000);
+}
+
+function pdfPatientHeader(patient,sortedUnits){
+  var last=patient.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;}).fecha||'—';
+  var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
+  h+='<div class="hdr-info"><div class="hdr-lbl">Informe del paciente</div><div class="hdr-val">'+patient.nombre+'</div><div class="hdr-date">@'+patient.usuario+' &nbsp;·&nbsp; '+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
+  h+='<div class="stats-grid"><div class="stat-box"><div class="stat-lbl">Ejercicios</div><div class="stat-val">'+patient.ejercicios.length+'</div></div><div class="stat-box"><div class="stat-lbl">Unidades</div><div class="stat-val">'+sortedUnits.length+'</div></div><div class="stat-box"><div class="stat-lbl">Ultimo envio</div><div class="stat-val" style="font-size:12px;padding-top:4px;">'+last.substring(0,10)+'</div></div></div>';
+  return h;
+}
+
+function generatePatientPDF(usuario){
+  var patient=adminData.find(function(p){return p.usuario===usuario;});if(!patient)return;
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
+  var byUnit={};patient.ejercicios.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
+  var sortedUnits=Object.keys(byUnit).sort(function(a,b){return unitIdx(a)-unitIdx(b);});
+  var h=pdfPatientHeader(patient,sortedUnits);
+  sortedUnits.forEach(function(unit){h+='<div class="sec-title">'+unit+'</div>';byUnit[unit].forEach(function(ej){h+=buildExPDF(ej);});});
+  h+='<div class="footer">Psicopoker · Informe generado el '+new Date().toLocaleString('es-AR')+'</div></div>';
+  openPDF('Informe — '+patient.nombre, h);
+}
+
+function generateUnitPDF(usuario,unit){
+  var patient=adminData.find(function(p){return p.usuario===usuario;});if(!patient)return;
+  var exs=patient.ejercicios.filter(function(e){return e.unidad===unit;});
+  if(!exs.length){showToast('Sin ejercicios en '+unit);return;}
+  var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
+  h+='<div class="hdr-info"><div class="hdr-lbl">'+unit+'</div><div class="hdr-val">'+patient.nombre+'</div><div class="hdr-date">'+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
+  h+='<div class="sec-title">'+unit+'</div>';
+  exs.forEach(function(ej){h+=buildExPDF(ej);});
+  h+='<div class="footer">Psicopoker · Informe generado el '+new Date().toLocaleString('es-AR')+'</div></div>';
+  openPDF('Informe '+unit+' — '+patient.nombre, h);
+}
+
+function generateGeneralReport(){
+  if(!adminData||!adminData.length){showToast('Sin datos para el informe');return;}
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
+  var totalEjs=0;adminData.forEach(function(p){totalEjs+=p.ejercicios.length;});
+  var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
+  h+='<div class="hdr-info"><div class="hdr-lbl">Informe General</div><div class="hdr-val">Todos los Pacientes</div><div class="hdr-date">'+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
+  h+='<div class="stats-grid"><div class="stat-box"><div class="stat-lbl">Pacientes</div><div class="stat-val">'+adminData.length+'</div></div><div class="stat-box"><div class="stat-lbl">Ejercicios totales</div><div class="stat-val">'+totalEjs+'</div></div><div class="stat-box"><div class="stat-lbl">Promedio</div><div class="stat-val">'+(totalEjs/adminData.length).toFixed(1)+'</div></div></div>';
+  h+='<div class="sec-title">Resumen por paciente</div>';
+  h+='<table class="sumtable"><thead><tr><th>Paciente</th><th>Usuario</th><th>Ejercicios</th><th>Ultimo envio</th></tr></thead><tbody>';
+  var sorted=adminData.slice().sort(function(a,b){return a.nombre.localeCompare(b.nombre,'es');});
+  sorted.forEach(function(p){var last=p.ejercicios.length?p.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;}).fecha||'—':'—';h+='<tr><td><strong>'+p.nombre+'</strong></td><td>@'+p.usuario+'</td><td>'+p.ejercicios.length+' completados</td><td>'+last.substring(0,10)+'</td></tr>';});
+  h+='</tbody></table>';
+  sorted.forEach(function(patient){
+    var byUnit={};patient.ejercicios.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
+    var sortedUnits=Object.keys(byUnit).sort(function(a,b){return unitIdx(a)-unitIdx(b);});
+    h+='<div style="margin-top:28px;padding-top:20px;border-top:2px solid #E8312A;"><div style="font-size:14px;font-weight:800;margin-bottom:4px;">'+patient.nombre+'</div><div style="font-size:10px;color:#999;margin-bottom:14px;">@'+patient.usuario+' · '+patient.ejercicios.length+' ejercicios</div>';
+    sortedUnits.forEach(function(unit){h+='<div class="sec-title">'+unit+'</div>';byUnit[unit].forEach(function(ej){h+=buildExPDF(ej);});});
+    h+='</div>';
+  });
+  h+='<div class="footer">Psicopoker · Informe generado el '+new Date().toLocaleString('es-AR')+'</div></div>';
+  openPDF('Informe General Psicopoker', h);
+}
+
+/* ════ TEOSQ CSS + JS ════ */
+
 var TEOSQ_ITEMS=[
   {n:1,t:'...soy el/la unico/a que puede hacer la jugada o habilidad en cuestion.',cat:'E'},
   {n:2,t:'....aprendo una nueva habilidad y me impulsa a practicar mas.',cat:'R'},
@@ -2040,425 +1924,13 @@ var TEOSQ_ITEMS=[
   {n:12,t:'...noto que una habilidad que he aprendido funciona.',cat:'R'},
   {n:13,t:'...pongo todo lo que esta de mi parte.',cat:'R'}
 ];
-var teosqAns={};
-var teosqLid=null;
+var teosqAns={},teosqLid=null;
 
-function renderTEOSQExercise(lid){
-  teosqLid=lid;
-  teosqAns={};
-  // Restore from draft or submission
-  var draft=loadDraft(lid);
-  var subs=getLocalSubs();
-  var sub=subs.find(function(s){return s.usuario===S.user&&s.lid===lid;});
-  if(draft){
-    TEOSQ_ITEMS.forEach(function(item){
-      var v=draft['teosq_'+item.n];
-      if(v)teosqAns[item.n]=parseInt(v)||0;
-    });
-  } else if(sub&&sub.respuestas){
-    sub.respuestas.forEach(function(r){
-      if(r.fid&&r.fid.indexOf('teosq_')===0){
-        var n=parseInt(r.fid.replace('teosq_',''));
-        if(!isNaN(n))teosqAns[n]=parseInt(r.respuesta)||0;
-      }
-    });
-  }
-  var alreadyDone=isDone(lid);
-  var h='<div class="ex-wrap">';
-  h+='<div class="teosq-tabs">';
-  h+='<div class="teosq-tab on" id="ttab0" onclick="tqTab(0)">1. Cuestionario</div>';
-  h+='<div class="teosq-tab" id="ttab1" onclick="tqTab(1)">2. Resultados</div>';
-  h+='<div class="teosq-tab" id="ttab2" onclick="tqTab(2)">3. Interpretacion</div>';
-  h+='</div>';
-  // Pane 1
-  h+='<div class="teosq-pane on" id="tpane0">';
-  h+='<div class="teosq-prog"><div class="teosq-prog-bar"><div class="teosq-prog-fill" id="tq-prog-fill" style="width:0%"></div></div>';
-  h+='<div class="teosq-prog-lbl"><span id="tq-prog-n">0</span> / 13 respondidas</div></div>';
-  h+='<div class="teosq-intro">Yo me siento con mas exito en el poker cuando...</div>';
-  TEOSQ_ITEMS.forEach(function(item){
-    var v=teosqAns[item.n]||0;
-    h+='<div class="tq-item'+(v?' done':'')+'" id="tqi'+item.n+'">';
-    h+='<div class="tq-num">Item '+item.n+(item.cat==='E'?' · Ego':' · Tarea')+'</div>';
-    h+='<div class="tq-text">'+item.t+'</div>';
-    h+='<div class="tq-scale">';
-    for(var i=1;i<=5;i++){
-      h+='<button class="tq-btn'+(v===i?' on':'')+'" onclick="tqSelect('+item.n+','+i+')" id="tqb'+item.n+'_'+i+'">'+i+'</button>';
-    }
-    h+='</div>';
-    h+='<div class="tq-lbl-row"><span>Totalmente en<br>Desacuerdo</span><span></span><span></span><span></span><span>Totalmente<br>de Acuerdo</span></div>';
-    h+='</div>';
-  });
-  var btnDone=alreadyDone?'Actualizar envio':'Enviar a Mauro';
-  h+='<div class="ex-submit-row">';
-  h+='<button class="btn-ex-send" id="tq-send-btn" onclick="tqSubmit()" '+(Object.keys(teosqAns).length<13?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+btnDone+'</button>';
-  h+='<p class="ex-submit-note" id="tq-send-note">'+(Object.keys(teosqAns).length<13?'Respondé las '+(13-Object.keys(teosqAns).length)+' preguntas restantes':'Tus respuestas seran enviadas a Mauro')+'</p>';
-  h+='</div></div>';
-  // Pane 2
-  h+='<div class="teosq-pane" id="tpane1"><div class="teosq-scores">';
-  h+='<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion al Ego</div>';
-  h+='<div class="teosq-sc-val" id="tq-ego-val">—</div>';
-  h+='<div class="teosq-sc-lvl" id="tq-ego-lvl">—</div>';
-  h+='<div class="teosq-sc-bar"><div class="teosq-sc-fill" id="tq-ego-bar" style="width:0%;background:#E8312A"></div></div>';
-  h+='<div style="font-size:.67rem;color:var(--dim);margin-top:.6rem;">Items 1,3,4,6,9,11 (promedio de 6)</div></div>';
-  h+='<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion a la Tarea</div>';
-  h+='<div class="teosq-sc-val" id="tq-tar-val">—</div>';
-  h+='<div class="teosq-sc-lvl" id="tq-tar-lvl">—</div>';
-  h+='<div class="teosq-sc-bar"><div class="teosq-sc-fill" id="tq-tar-bar" style="width:0%;background:#22C55E"></div></div>';
-  h+='<div style="font-size:.67rem;color:var(--dim);margin-top:.6rem;">Items 2,5,7,8,10,12,13 (promedio de 7)</div></div>';
-  h+='</div>';
-  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem 1rem;margin-bottom:1rem;">';
-  h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;">Escala de referencia</div>';
-  h+='<div style="display:flex;flex-wrap:wrap;gap:1rem;">';
-  h+='<span style="font-size:.72rem;color:var(--muted);">1.0–2.9 → <strong style="color:#60A5FA">Baja</strong></span>';
-  h+='<span style="font-size:.72rem;color:var(--muted);">3.0–4.2 → <strong style="color:#FCD34D">Media</strong></span>';
-  h+='<span style="font-size:.72rem;color:var(--muted);">4.3–5.0 → <strong style="color:#4ADE80">Alta</strong></span>';
-  h+='</div></div>';
-  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:1rem;">';
-  h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;">Grafico de resultados</div>';
-  h+='<svg id="tq-chart" viewBox="0 0 380 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;display:block;margin:0 auto;">';
-  h+='<text x="190" y="110" text-anchor="middle" fill="rgba(238,239,243,.2)" font-family="Montserrat,sans-serif" font-size="11">Completa el cuestionario</text>';
-  h+='</svg></div></div>';
-  // Pane 3
-  h+='<div class="teosq-pane" id="tpane2">';
-  h+='<div style="margin-bottom:1rem;padding:.9rem 1.25rem;background:var(--bg2);border-radius:5px;">';
-  h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">Tu perfil</div>';
-  h+='<div id="tq-perfil" style="font-size:.97rem;font-weight:800;">— Completá el cuestionario —</div></div>';
-  h+='<div class="teosq-profiles">';
-  h+='<div class="tp-card tp1" id="tp1"><div class="tp-icon">🟢</div><div class="tp-name">Tarea alta / Ego baja</div>';
-  h+='<div class="tp-desc">Motivacion solida y autonoma. Se enfoca en mejorar, aprender y sostener su rendimiento a largo plazo.</div>';
-  h+='<ul class="tp-traits"><li>✅ Ideal para resistir la varianza y disfrutar del proceso.</li>';
-  h+='<li>✅ Alta capacidad de adaptacion ante adversidad.</li>';
-  h+='<li>⚠ Puede faltarle intensidad competitiva si no se trabaja.</li></ul>';
-  h+='<div class="tp-tag tptag-ok">Perfil favorable</div></div>';
-  h+='<div class="tp-card tp2" id="tp2"><div class="tp-icon">🔥</div><div class="tp-name">Ego alta / Tarea baja</div>';
-  h+='<div class="tp-desc">Busca demostrar valor, destacar y validarse. Puede tener gran impulso competitivo.</div>';
-  h+='<ul class="tp-traits"><li>⚠ Riesgo de frustracion ante errores o cuando no gana.</li>';
-  h+='<li>⚠ Vulnerabilidad frente a la comparacion social.</li>';
-  h+='<li>✖ Necesita redefinir que es exito y desarrollar mentalidad de proceso.</li></ul>';
-  h+='<div class="tp-tag tptag-r">Incompatible con Mindset Ganador</div></div>';
-  h+='<div class="tp-card tp3" id="tp3"><div class="tp-icon">🧨</div><div class="tp-name">Ego alta / Tarea alta</div>';
-  h+='<div class="tp-desc">Fuerte ambicion combinada con compromiso. Quiere ganar y mejorar al mismo tiempo.</div>';
-  h+='<ul class="tp-traits"><li>✅ Ideal para construir una carrera profesional seria.</li>';
-  h+='<li>⚠ Riesgo de burnout o conflicto interno si no logra ambas cosas.</li>';
-  h+='<li>⚠ Necesita ordenar prioridades segun etapa.</li></ul>';
-  h+='<div class="tp-tag tptag-w">Perfil complejo — requiere trabajo</div></div>';
-  h+='<div class="tp-card tp4" id="tp4"><div class="tp-icon">💤</div><div class="tp-name">Ego baja / Tarea baja</div>';
-  h+='<div class="tp-desc">Motivacion difusa o fragil. Posiblemente permanece por inercia, aburrimiento o presion externa.</div>';
-  h+='<ul class="tp-traits"><li>⚠ En riesgo de desmotivacion, procrastinacion o abandono.</li>';
-  h+='<li>⚠ Altas posibilidades de problemas en vida personal.</li>';
-  h+='<li>✖ Requiere proceso psicoterapeutico completo.</li></ul>';
-  h+='<div class="tp-tag tptag-r">Requiere atencion urgente</div></div>';
-  h+='</div>';
-  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem 1rem;font-size:.75rem;color:var(--muted);line-height:1.65;">';
-  h+='<strong style="color:var(--text);display:block;margin-bottom:.25rem;">Como leer el perfil</strong>';
-  h+='El perfil es un punto de partida para la sesion, no un diagnostico definitivo. Las orientaciones pueden cambiar con el trabajo de mentalidad.';
-  h+='</div></div>';
-  h+='</div>';
-  document.getElementById('mc-body').innerHTML=h;
-  tqUpdateProgress();
-  tqUpdateResults();
-}
-
-function tqTab(idx){
-  for(var i=0;i<3;i++){
-    var t=document.getElementById('ttab'+i);
-    var p=document.getElementById('tpane'+i);
-    if(t)t.classList.toggle('on',i===idx);
-    if(p)p.classList.toggle('on',i===idx);
-  }
-  if(idx>0)tqUpdateResults();
-}
-
-function tqSelect(n,val){
-  teosqAns[n]=val;
-  for(var i=1;i<=5;i++){
-    var b=document.getElementById('tqb'+n+'_'+i);
-    if(b)b.classList.toggle('on',i===val);
-  }
-  var qi=document.getElementById('tqi'+n);
-  if(qi)qi.classList.add('done');
-  tqUpdateProgress();
-  tqUpdateResults();
-  // Auto-save draft
-  var data={};
-  Object.keys(teosqAns).forEach(function(k){data['teosq_'+k]=teosqAns[k];});
-  saveDraft(teosqLid,data);
-  updateSaveStatus('Borrador guardado','#22C55E');
-}
-
-function tqUpdateProgress(){
-  var count=Object.keys(teosqAns).length;
-  var pf=document.getElementById('tq-prog-fill');
-  var pn=document.getElementById('tq-prog-n');
-  var btn=document.getElementById('tq-send-btn');
-  var note=document.getElementById('tq-send-note');
-  if(pf)pf.style.width=(count/13*100)+'%';
-  if(pn)pn.textContent=count;
-  if(btn)btn.disabled=(count<13);
-  if(note)note.textContent=count<13?'Responde las '+(13-count)+' preguntas restantes':'Tus respuestas seran enviadas a Mauro';
-  if(note)note.style.color=count<13?'var(--dim)':'var(--green)';
-}
-
-function tqCalc(){
-  var egoItems=[1,3,4,6,9,11];
-  var tarItems=[2,5,7,8,10,12,13];
-  var eS=0,eC=0,tS=0,tC=0;
-  egoItems.forEach(function(n){if(teosqAns[n]){eS+=teosqAns[n];eC++;}});
-  tarItems.forEach(function(n){if(teosqAns[n]){tS+=teosqAns[n];tC++;}});
-  return{ego:eC===6?Math.round(eS/6*100)/100:null,tar:tC===7?Math.round(tS/7*100)/100:null};
-}
-
-function tqLevel(s){
-  if(s===null)return{lbl:'—',cls:''};
-  if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',cls:'tlvl-low'};
-  if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',cls:'tlvl-mid'};
-  return{lbl:'Alta ('+s.toFixed(2)+')',cls:'tlvl-hi'};
-}
-
-function tqUpdateResults(){
-  var s=tqCalc();
-  if(s.ego!==null&&s.tar!==null){
-    var el=tqLevel(s.ego),tl=tqLevel(s.tar);
-    var ev=document.getElementById('tq-ego-val'),tv=document.getElementById('tq-tar-val');
-    var elvl=document.getElementById('tq-ego-lvl'),tlvl=document.getElementById('tq-tar-lvl');
-    var eb=document.getElementById('tq-ego-bar'),tb=document.getElementById('tq-tar-bar');
-    if(ev)ev.textContent=s.ego.toFixed(2);
-    if(elvl){elvl.textContent=el.lbl;elvl.className='teosq-sc-lvl '+el.cls;}
-    if(eb)eb.style.width=(s.ego/5*100)+'%';
-    if(tv)tv.textContent=s.tar.toFixed(2);
-    if(tlvl){tlvl.textContent=tl.lbl;tlvl.className='teosq-sc-lvl '+tl.cls;}
-    if(tb)tb.style.width=(s.tar/5*100)+'%';
-    // Profile
-    var eHi=s.ego>=3.0,tHi=s.tar>=3.0;
-    ['tp1','tp2','tp3','tp4'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('on');});
-    var pId,pName;
-    if(!eHi&&tHi){pId='tp1';pName='Tarea alta / Ego baja';}
-    else if(eHi&&!tHi){pId='tp2';pName='Ego alta / Tarea baja';}
-    else if(eHi&&tHi){pId='tp3';pName='Ego alta / Tarea alta';}
-    else{pId='tp4';pName='Ego baja / Tarea baja';}
-    var pEl=document.getElementById(pId);
-    if(pEl)pEl.classList.add('on');
-    var pf=document.getElementById('tq-perfil');
-    if(pf)pf.textContent=pName;
-    tqDrawChart(s.ego,s.tar);
-  } else {
-    tqDrawChart(null,null);
-  }
-}
-
-function tqSubmit(){
-  var s=tqCalc();
-  if(!s.ego||!s.tar)return;
-  var def=EX_DEFS[teosqLid];
-  var user=USERS[S.user];
-  var answers=[];
-  TEOSQ_ITEMS.forEach(function(item){
-    answers.push({fid:'teosq_'+item.n,pregunta:item.t,respuesta:String(teosqAns[item.n]||'')});
-  });
-  answers.push({fid:'teosq_ego',pregunta:'SCORE Orientacion al Ego',respuesta:s.ego.toFixed(2)});
-  answers.push({fid:'teosq_tar',pregunta:'SCORE Orientacion a la Tarea',respuesta:s.tar.toFixed(2)});
-  answers.push({fid:'teosq_perfil',pregunta:'Perfil',respuesta:(function(){var e=s.ego>=3,t=s.tar>=3;return!e&&t?'Tarea alta / Ego baja':e&&!t?'Ego alta / Tarea baja':e&&t?'Ego alta / Tarea alta':'Ego baja / Tarea baja';})()});
-  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,
-    usuario:S.user,unidad:'Unidad 1',ejercicio:'TEOSQ',lid:teosqLid,respuestas:answers};
-  var saved=getLocalSubs();
-  var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});
-  if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}
-  else{saved.push(rec);}
-  localStorage.setItem('pp_submissions',JSON.stringify(saved));
-  markDoneL(teosqLid);
-  var btn=document.getElementById('tq-send-btn');
-  if(btn){btn.textContent='Actualizar envio';btn.style.background='var(--green)';btn.disabled=false;}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast('TEOSQ enviado a Mauro!');
-  var unit=C.find(function(u){return u.id===S.unitId;});
-  if(unit)renderSidebar(unit);
-  if(rec.airtableId){updateAirtable(rec.airtableId,rec);}
-  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
-}
-
-
-function tqDrawChart(ego, tar) {
-  var svg = document.getElementById('tq-chart');
-  if (!svg) return;
-  var W=380, H=220;
-  var ml=55, mr=20, mt=15, mb=65;
-  var cw=W-ml-mr, ch=H-mt-mb;
-  var maxV=5;
-  var bw=70, gap=50;
-  var cx1 = ml + cw/4;
-  var cx2 = ml + cw*3/4;
-
-  function yPx(v) { return mt + ch - (v/maxV)*ch; }
-  function barH(v) { return (v/maxV)*ch; }
-
-  var lines='';
-  // Grid lines & Y labels
-  for(var i=0;i<=5;i++){
-    var y=yPx(i);
-    var lbl=(i%1===0)?i.toFixed(2):'';
-    lines+='<line x1="'+ml+'" y1="'+y+'" x2="'+(W-mr)+'" y2="'+y+'" stroke="rgba(255,255,255,.07)" stroke-width="1"/>';
-    lines+='<text x="'+(ml-6)+'" y="'+(y+4)+'" text-anchor="end" fill="rgba(238,239,243,.4)" font-family="Montserrat,sans-serif" font-size="9">'+i+'.00</text>';
-  }
-
-  // Axes
-  var axes='<line x1="'+ml+'" y1="'+mt+'" x2="'+ml+'" y2="'+(H-mb)+'" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>';
-  axes+='<line x1="'+ml+'" y1="'+(H-mb)+'" x2="'+(W-mr)+'" y2="'+(H-mb)+'" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>';
-
-  // Y axis title
-  var yTitle='<text transform="rotate(-90)" x="-'+(mt+ch/2)+'" y="14" text-anchor="middle" fill="rgba(238,239,243,.4)" font-family="Montserrat,sans-serif" font-size="9">PUNTAJE</text>';
-
-  // Bars
-  var bars='';
-  function drawBar(cx, val, color, label) {
-    if(val===null)return;
-    var bh=barH(val);
-    var bx=cx-bw/2;
-    var by=yPx(val);
-    bars+='<rect x="'+bx+'" y="'+by+'" width="'+bw+'" height="'+bh+'" rx="3" fill="'+color+'" opacity="0.85"/>';
-    // Value label on top
-    bars+='<text x="'+cx+'" y="'+(by-6)+'" text-anchor="middle" fill="rgba(238,239,243,.9)" font-family="Montserrat,sans-serif" font-size="11" font-weight="700">'+val.toFixed(2)+'</text>';
-    // X label (two lines)
-    var words=label.split(' ');
-    var line1=words.slice(0,2).join(' '), line2=words.slice(2).join(' ');
-    bars+='<text x="'+cx+'" y="'+(H-mb+16)+'" text-anchor="middle" fill="rgba(238,239,243,.6)" font-family="Montserrat,sans-serif" font-size="9" font-weight="700">'+line1+'</text>';
-    if(line2)bars+='<text x="'+cx+'" y="'+(H-mb+27)+'" text-anchor="middle" fill="rgba(238,239,243,.6)" font-family="Montserrat,sans-serif" font-size="9" font-weight="700">'+line2+'</text>';
-  }
-
-  // Color based on level
-  function scoreColor(v) {
-    if(v<=2.9) return '#3B82F6';
-    if(v<=4.2) return '#F59E0B';
-    return '#22C55E';
-  }
-
-  drawBar(cx1, ego, scoreColor(ego||0), 'ORIENTACION AL EGO');
-  drawBar(cx2, tar, scoreColor(tar||0), 'ORIENTACION A LA TAREA');
-
-  // Legend
-  var leg='';
-  leg+='<rect x="'+(W-mr-100)+'" y="'+(mt+8)+'" width="10" height="10" rx="2" fill="'+scoreColor(ego||0)+'"/>';
-  leg+='<text x="'+(W-mr-86)+'" y="'+(mt+17)+'" fill="rgba(238,239,243,.55)" font-family="Montserrat,sans-serif" font-size="8">Ego</text>';
-  leg+='<rect x="'+(W-mr-100)+'" y="'+(mt+24)+'" width="10" height="10" rx="2" fill="'+scoreColor(tar||0)+'"/>';
-  leg+='<text x="'+(W-mr-86)+'" y="'+(mt+33)+'" fill="rgba(238,239,243,.55)" font-family="Montserrat,sans-serif" font-size="8">Tarea</text>';
-
-  svg.innerHTML = '<rect width="'+W+'" height="'+H+'" fill="transparent"/>'+yTitle+lines+axes+bars+leg;
-}
-
-
-function renderTEOSQAdminView(ej, containerId) {
-  // Extract answers from submission respuestas
-  var ans = {};
-  var egoScore = null, tarScore = null, perfil = null;
-  (ej.respuestas || []).forEach(function(r) {
-    if (!r.fid) return;
-    if (r.fid === 'teosq_ego') { egoScore = parseFloat(r.respuesta); return; }
-    if (r.fid === 'teosq_tar') { tarScore = parseFloat(r.respuesta); return; }
-    if (r.fid === 'teosq_perfil') { perfil = r.respuesta; return; }
-    var m = r.fid.match(/^teosq_(\d+)$/);
-    if (m) ans[parseInt(m[1])] = parseInt(r.respuesta) || 0;
-  });
-
-  var uid = containerId.replace(/[^a-z0-9]/gi, '_');
-  var h = '<div style="border:1px solid var(--border-r);border-top:2px solid var(--red);border-radius:0 0 5px 5px;overflow:hidden;">';
-
-  // Tabs
-  h += '<div style="display:flex;border-bottom:1px solid var(--border);background:var(--bg3);">';
-  h += '<div class="teosq-tab on" id="at0_'+uid+'" onclick="admTqTab(\''+uid+'\',0)" style="font-size:.65rem;">1. Cuestionario</div>';
-  h += '<div class="teosq-tab" id="at1_'+uid+'" onclick="admTqTab(\''+uid+'\',1)" style="font-size:.65rem;">2. Resultados</div>';
-  h += '<div class="teosq-tab" id="at2_'+uid+'" onclick="admTqTab(\''+uid+'\',2)" style="font-size:.65rem;">3. Interpretacion</div>';
-  h += '</div>';
-
-  // Pane 1: Questionnaire with answers highlighted
-  h += '<div class="teosq-pane on" id="ap0_'+uid+'" style="padding:1rem;">';
-  h += '<div class="teosq-intro" style="margin-bottom:.85rem;">Yo me siento con mas exito en el poker cuando...</div>';
-  TEOSQ_ITEMS.forEach(function(item) {
-    var v = ans[item.n] || 0;
-    h += '<div class="tq-item'+(v?' done':'')+'" style="margin-bottom:.5rem;">';
-    h += '<div class="tq-num">Item '+item.n+(item.cat==='E'?' · Ego':' · Tarea')+'</div>';
-    h += '<div class="tq-text">'+item.t+'</div>';
-    h += '<div class="tq-scale">';
-    for (var i=1;i<=5;i++) {
-      h += '<div class="tq-btn'+(v===i?' on':'')+'" style="pointer-events:none;flex:1;padding:.4rem .1rem;font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;text-align:center;border:1.5px solid var(--border);border-radius:3px;'+(v===i?'background:var(--red);border-color:var(--red);color:#fff;':'background:var(--bg3);color:var(--muted);')+'">'+(v===i?'<strong>'+i+'</strong>':i)+'</div>';
-    }
-    h += '</div>';
-    if (!v) h += '<div style="font-size:.65rem;color:var(--dim);margin-top:.25rem;">Sin respuesta</div>';
-    h += '</div>';
-  });
-  h += '</div>';
-
-  // Pane 2: Results with chart
-  h += '<div class="teosq-pane" id="ap1_'+uid+'" style="padding:1rem;">';
-  if (egoScore !== null && tarScore !== null) {
-    function lvl(s){if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',cls:'tlvl-low'};if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',cls:'tlvl-mid'};return{lbl:'Alta ('+s.toFixed(2)+')',cls:'tlvl-hi'};}
-    var el=lvl(egoScore), tl=lvl(tarScore);
-    h += '<div class="teosq-scores">';
-    h += '<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion al Ego</div>';
-    h += '<div class="teosq-sc-val">'+egoScore.toFixed(2)+'</div>';
-    h += '<div class="teosq-sc-lvl '+el.cls+'">'+el.lbl+'</div>';
-    h += '<div class="teosq-sc-bar"><div class="teosq-sc-fill" style="width:'+(egoScore/5*100)+'%;background:#E8312A"></div></div></div>';
-    h += '<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion a la Tarea</div>';
-    h += '<div class="teosq-sc-val">'+tarScore.toFixed(2)+'</div>';
-    h += '<div class="teosq-sc-lvl '+tl.cls+'">'+tl.lbl+'</div>';
-    h += '<div class="teosq-sc-bar"><div class="teosq-sc-fill" style="width:'+(tarScore/5*100)+'%;background:#22C55E"></div></div></div>';
-    h += '</div>';
-    // Chart container - will be drawn after insertion
-    h += '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:1rem;margin-top:.85rem;">';
-    h += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;">Grafico de resultados</div>';
-    h += '<svg id="admchart_'+uid+'" viewBox="0 0 380 220" style="width:100%;max-width:400px;display:block;margin:0 auto;"></svg>';
-    h += '</div>';
-  } else {
-    h += '<p style="font-size:.8rem;color:var(--dim);padding:.5rem 0;">No se encontraron scores calculados en este envio.</p>';
-  }
-  h += '</div>';
-
-  // Pane 3: Interpretation
-  h += '<div class="teosq-pane" id="ap2_'+uid+'" style="padding:1rem;">';
-  if (perfil) {
-    h += '<div style="background:var(--bg2);border-radius:5px;padding:.9rem 1rem;margin-bottom:.85rem;">';
-    h += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">Perfil del paciente</div>';
-    h += '<div style="font-size:1rem;font-weight:800;">'+perfil+'</div></div>';
-  }
-  h += '<div class="teosq-profiles">';
-  var profiles=[
-    {id:'tp1',icon:'🟢',name:'Tarea alta / Ego baja',desc:'Motivacion solida y autonoma.',traits:['✅ Ideal para resistir la varianza.','✅ Alta capacidad de adaptacion.','⚠ Puede faltarle intensidad competitiva.'],tag:'tptag-ok',tagLbl:'Perfil favorable'},
-    {id:'tp2',icon:'🔥',name:'Ego alta / Tarea baja',desc:'Busca demostrar valor y validarse.',traits:['⚠ Riesgo de frustracion ante errores.','⚠ Vulnerabilidad frente a comparacion social.','✖ Necesita redefinir que es exito.'],tag:'tptag-r',tagLbl:'Incompatible con Mindset Ganador'},
-    {id:'tp3',icon:'🧨',name:'Ego alta / Tarea alta',desc:'Fuerte ambicion combinada con compromiso.',traits:['✅ Ideal para carrera profesional seria.','⚠ Riesgo de burnout.','⚠ Necesita ordenar prioridades.'],tag:'tptag-w',tagLbl:'Perfil complejo'},
-    {id:'tp4',icon:'💤',name:'Ego baja / Tarea baja',desc:'Motivacion difusa o fragil.',traits:['⚠ Riesgo de desmotivacion.','⚠ Posibles problemas en vida personal.','✖ Requiere proceso psicoterapeutico.'],tag:'tptag-r',tagLbl:'Requiere atencion urgente'},
-  ];
-  profiles.forEach(function(p) {
-    var isActive = perfil && perfil.indexOf(p.name) !== -1;
-    h += '<div class="tp-card '+(isActive?p.id+' on':'')+'"><div class="tp-icon">'+p.icon+'</div>';
-    h += '<div class="tp-name">'+p.name+'</div>';
-    h += '<div class="tp-desc">'+p.desc+'</div>';
-    h += '<ul class="tp-traits">';
-    p.traits.forEach(function(t){h+='<li>'+t+'</li>';});
-    h += '</ul>';
-    h += '<div class="tp-tag '+p.tag+'">'+p.tagLbl+'</div></div>';
-  });
-  h += '</div></div>';
-  h += '</div>';
-
-  document.getElementById(containerId).innerHTML = h;
-
-  // Draw chart if scores exist
-  if (egoScore !== null && tarScore !== null) {
-    setTimeout(function() {
-      var chartEl = document.getElementById('admchart_'+uid);
-      if (chartEl) {
-        // Build a temp svg via tqDrawChart logic
-        var svgContent = buildTEOSQChartSVG(egoScore, tarScore);
-        chartEl.innerHTML = svgContent;
-      }
-    }, 50);
-  }
-}
-
-function buildTEOSQChartSVG(ego, tar) {
+function buildTEOSQChartSVG(ego,tar){
   var W=380,H=220,ml=55,mr=20,mt=15,mb=65,ch=H-mt-mb,cw=W-ml-mr;
   function yPx(v){return mt+ch-(v/5)*ch;}
   function scoreColor(v){if(v<=2.9)return'#3B82F6';if(v<=4.2)return'#F59E0B';return'#22C55E';}
-  var cx1=ml+cw/4, cx2=ml+cw*3/4, bw=70;
-  var s='';
+  var cx1=ml+cw/4,cx2=ml+cw*3/4,bw=70,s='';
   for(var i=0;i<=5;i++){var y=yPx(i);s+='<line x1="'+ml+'" y1="'+y+'" x2="'+(W-mr)+'" y2="'+y+'" stroke="rgba(255,255,255,.07)" stroke-width="1"/>';s+='<text x="'+(ml-6)+'" y="'+(y+4)+'" text-anchor="end" fill="rgba(238,239,243,.4)" font-family="Montserrat,sans-serif" font-size="9">'+i+'.00</text>';}
   s+='<line x1="'+ml+'" y1="'+mt+'" x2="'+ml+'" y2="'+(H-mb)+'" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>';
   s+='<line x1="'+ml+'" y1="'+(H-mb)+'" x2="'+(W-mr)+'" y2="'+(H-mb)+'" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>';
@@ -2476,342 +1948,110 @@ function buildTEOSQChartSVG(ego, tar) {
   return s;
 }
 
-function admTqTab(uid, idx) {
-  for(var i=0;i<3;i++){
-    var t=document.getElementById('at'+i+'_'+uid);
-    var p=document.getElementById('ap'+i+'_'+uid);
-    if(t)t.classList.toggle('on',i===idx);
-    if(p)p.classList.toggle('on',i===idx);
+function renderTEOSQExercise(lid){
+  teosqLid=lid;teosqAns={};
+  var draft=loadDraft(lid);
+  var subs=getLocalSubs();
+  var sub=subs.find(function(s){return s.usuario===S.user&&s.lid===lid;});
+  if(draft){TEOSQ_ITEMS.forEach(function(item){var v=draft['teosq_'+item.n];if(v)teosqAns[item.n]=parseInt(v)||0;});}
+  else if(sub&&sub.respuestas){sub.respuestas.forEach(function(r){if(r.fid&&r.fid.indexOf('teosq_')===0){var n=parseInt(r.fid.replace('teosq_',''));if(!isNaN(n))teosqAns[n]=parseInt(r.respuesta)||0;}});}
+  var alreadyDone=isDone(lid);
+  var h='<div class="ex-wrap">';
+  h+='<div class="teosq-tabs"><div class="teosq-tab on" id="ttab0" onclick="tqTab(0)">1. Cuestionario</div><div class="teosq-tab" id="ttab1" onclick="tqTab(1)">2. Resultados</div><div class="teosq-tab" id="ttab2" onclick="tqTab(2)">3. Interpretacion</div></div>';
+  // Pane 1
+  h+='<div class="teosq-pane on" id="tpane0">';
+  h+='<div class="teosq-prog"><div class="teosq-prog-bar"><div class="teosq-prog-fill" id="tq-prog-fill" style="width:'+(Object.keys(teosqAns).length/13*100)+'%"></div></div>';
+  h+='<div class="teosq-prog-lbl"><span id="tq-prog-n">'+Object.keys(teosqAns).length+'</span> / 13 respondidas</div></div>';
+  h+='<div class="teosq-intro">Yo me siento con mas exito en el poker cuando...</div>';
+  TEOSQ_ITEMS.forEach(function(item){
+    var v=teosqAns[item.n]||0;
+    h+='<div class="tq-item'+(v?' done':'')+'" id="tqi'+item.n+'">';
+    h+='<div class="tq-num">Item '+item.n+(item.cat==='E'?' · Ego':' · Tarea')+'</div>';
+    h+='<div class="tq-text">'+item.t+'</div><div class="tq-scale">';
+    for(var i=1;i<=5;i++)h+='<button class="tq-btn'+(v===i?' on':'')+'" onclick="tqSelect('+item.n+','+i+')" id="tqb'+item.n+'_'+i+'">'+i+'</button>';
+    h+='</div><div class="tq-lbl-row"><span>Totalmente en<br>Desacuerdo</span><span></span><span></span><span></span><span>Totalmente<br>de Acuerdo</span></div></div>';
+  });
+  var btnTxt=alreadyDone?'Actualizar envio':'Enviar a Mauro';
+  h+='<div class="ex-submit-row"><button class="btn-ex-send" id="tq-send-btn" onclick="tqSubmit()" '+(Object.keys(teosqAns).length<13?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+btnTxt+'</button>';
+  h+='<p class="ex-submit-note" id="tq-send-note">'+(Object.keys(teosqAns).length<13?'Respondé las '+(13-Object.keys(teosqAns).length)+' preguntas restantes':'Tus respuestas seran enviadas a Mauro')+'</p></div></div>';
+  // Pane 2
+  h+='<div class="teosq-pane" id="tpane1"><div class="teosq-scores">';
+  h+='<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion al Ego</div><div class="teosq-sc-val" id="tq-ego-val">—</div><div class="teosq-sc-lvl" id="tq-ego-lvl">—</div><div class="teosq-sc-bar"><div class="teosq-sc-fill" id="tq-ego-bar" style="width:0%;background:#E8312A"></div></div><div style="font-size:.67rem;color:var(--dim);margin-top:.6rem;">Items 1,3,4,6,9,11 (6 items)</div></div>';
+  h+='<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion a la Tarea</div><div class="teosq-sc-val" id="tq-tar-val">—</div><div class="teosq-sc-lvl" id="tq-tar-lvl">—</div><div class="teosq-sc-bar"><div class="teosq-sc-fill" id="tq-tar-bar" style="width:0%;background:#22C55E"></div></div><div style="font-size:.67rem;color:var(--dim);margin-top:.6rem;">Items 2,5,7,8,10,12,13 (7 items)</div></div>';
+  h+='</div><div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem 1rem;margin-bottom:1rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;">Escala</div><div style="display:flex;flex-wrap:wrap;gap:1rem;"><span style="font-size:.72rem;color:var(--muted);">1.0–2.9 → <strong style="color:#60A5FA">Baja</strong></span><span style="font-size:.72rem;color:var(--muted);">3.0–4.2 → <strong style="color:#FCD34D">Media</strong></span><span style="font-size:.72rem;color:var(--muted);">4.3–5.0 → <strong style="color:#4ADE80">Alta</strong></span></div></div>';
+  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:1rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;">Grafico de resultados</div>';
+  h+='<svg id="tq-chart" viewBox="0 0 380 220" style="width:100%;max-width:420px;display:block;margin:0 auto;"><text x="190" y="110" text-anchor="middle" fill="rgba(238,239,243,.2)" font-family="Montserrat,sans-serif" font-size="11">Completa el cuestionario</text></svg></div></div>';
+  // Pane 3
+  h+='<div class="teosq-pane" id="tpane2"><div style="background:var(--bg2);border-radius:5px;padding:.9rem 1rem;margin-bottom:.85rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">Tu perfil</div><div id="tq-perfil" style="font-size:.97rem;font-weight:800;">— Completa el cuestionario —</div></div>';
+  h+='<div class="teosq-profiles">';
+  var profs=[{id:'tp1',icon:'🟢',name:'Tarea alta / Ego baja',desc:'Motivacion solida y autonoma.',traits:['Ideal para resistir la varianza.','Alta capacidad de adaptacion.','Puede faltarle intensidad competitiva.'],tag:'tptag-ok',tagLbl:'Perfil favorable'},{id:'tp2',icon:'🔥',name:'Ego alta / Tarea baja',desc:'Busca demostrar valor y validarse.',traits:['Riesgo de frustracion ante errores.','Vulnerabilidad frente a comparacion social.','Necesita redefinir que es exito.'],tag:'tptag-r',tagLbl:'Incompatible con Mindset Ganador'},{id:'tp3',icon:'🧨',name:'Ego alta / Tarea alta',desc:'Fuerte ambicion combinada con compromiso.',traits:['Ideal para carrera profesional seria.','Riesgo de burnout.','Necesita ordenar prioridades.'],tag:'tptag-w',tagLbl:'Perfil complejo'},{id:'tp4',icon:'💤',name:'Ego baja / Tarea baja',desc:'Motivacion difusa o fragil.',traits:['Riesgo de desmotivacion.','Posibles problemas en vida personal.','Requiere proceso psicoterapeutico.'],tag:'tptag-r',tagLbl:'Requiere atencion urgente'}];
+  profs.forEach(function(p){h+='<div class="tp-card" id="'+p.id+'"><div class="tp-icon">'+p.icon+'</div><div class="tp-name">'+p.name+'</div><div class="tp-desc">'+p.desc+'</div><ul class="tp-traits">';p.traits.forEach(function(t){h+='<li>'+t+'</li>';});h+='</ul><div class="tp-tag '+p.tag+'">'+p.tagLbl+'</div></div>';});
+  h+='</div></div></div>';
+  document.getElementById('mc-body').innerHTML=h;
+  tqUpdateProgress();tqUpdateResults();
+}
+
+function tqTab(idx){for(var i=0;i<3;i++){var t=document.getElementById('ttab'+i);var p=document.getElementById('tpane'+i);if(t)t.classList.toggle('on',i===idx);if(p)p.classList.toggle('on',i===idx);}if(idx>0)tqUpdateResults();}
+function tqSelect(n,val){teosqAns[n]=val;for(var i=1;i<=5;i++){var b=document.getElementById('tqb'+n+'_'+i);if(b)b.classList.toggle('on',i===val);}var qi=document.getElementById('tqi'+n);if(qi)qi.classList.add('done');tqUpdateProgress();tqUpdateResults();var data={};Object.keys(teosqAns).forEach(function(k){data['teosq_'+k]=teosqAns[k];});saveDraft(teosqLid,data);updateSaveStatus('Borrador guardado','#22C55E');}
+function tqUpdateProgress(){var count=Object.keys(teosqAns).length;var pf=document.getElementById('tq-prog-fill');var pn=document.getElementById('tq-prog-n');var btn=document.getElementById('tq-send-btn');var note=document.getElementById('tq-send-note');if(pf)pf.style.width=(count/13*100)+'%';if(pn)pn.textContent=count;if(btn)btn.disabled=(count<13);if(note){note.textContent=count<13?'Responde las '+(13-count)+' preguntas restantes':'Tus respuestas seran enviadas a Mauro';note.style.color=count<13?'var(--dim)':'var(--green)';}}
+function tqCalc(){var ei=[1,3,4,6,9,11],ti=[2,5,7,8,10,12,13],eS=0,eC=0,tS=0,tC=0;ei.forEach(function(n){if(teosqAns[n]){eS+=teosqAns[n];eC++;}});ti.forEach(function(n){if(teosqAns[n]){tS+=teosqAns[n];tC++;}});return{ego:eC===6?Math.round(eS/6*100)/100:null,tar:tC===7?Math.round(tS/7*100)/100:null};}
+function tqLevel(s){if(s===null)return{lbl:'—',cls:''};if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',cls:'tlvl-low'};if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',cls:'tlvl-mid'};return{lbl:'Alta ('+s.toFixed(2)+')',cls:'tlvl-hi'};}
+function tqUpdateResults(){
+  var s=tqCalc();
+  if(s.ego!==null&&s.tar!==null){
+    var el=tqLevel(s.ego),tl=tqLevel(s.tar);
+    var ev=document.getElementById('tq-ego-val'),tv=document.getElementById('tq-tar-val');
+    var elvl=document.getElementById('tq-ego-lvl'),tlvl=document.getElementById('tq-tar-lvl');
+    var eb=document.getElementById('tq-ego-bar'),tb=document.getElementById('tq-tar-bar');
+    if(ev)ev.textContent=s.ego.toFixed(2);if(elvl){elvl.textContent=el.lbl;elvl.className='teosq-sc-lvl '+el.cls;}if(eb)eb.style.width=(s.ego/5*100)+'%';
+    if(tv)tv.textContent=s.tar.toFixed(2);if(tlvl){tlvl.textContent=tl.lbl;tlvl.className='teosq-sc-lvl '+tl.cls;}if(tb)tb.style.width=(s.tar/5*100)+'%';
+    var eHi=s.ego>=3,tHi=s.tar>=3;
+    ['tp1','tp2','tp3','tp4'].forEach(function(id){var el2=document.getElementById(id);if(el2)el2.classList.remove('on');});
+    var pId,pName;
+    if(!eHi&&tHi){pId='tp1';pName='Tarea alta / Ego baja';}else if(eHi&&!tHi){pId='tp2';pName='Ego alta / Tarea baja';}else if(eHi&&tHi){pId='tp3';pName='Ego alta / Tarea alta';}else{pId='tp4';pName='Ego baja / Tarea baja';}
+    var pEl=document.getElementById(pId);if(pEl)pEl.classList.add('on');
+    var pf=document.getElementById('tq-perfil');if(pf)pf.textContent=pName;
+    var chart=document.getElementById('tq-chart');if(chart)chart.innerHTML=buildTEOSQChartSVG(s.ego,s.tar);
   }
-  if(idx===1){
-    setTimeout(function(){
-      var chartEl=document.getElementById('admchart_'+uid);
-      if(chartEl&&chartEl.innerHTML.trim()===''){
-        // chart not drawn yet, won't reach here normally
-      }
-    },50);
-  }
+}
+function tqSubmit(){
+  var s=tqCalc();if(!s.ego||!s.tar)return;
+  var user=USERS[S.user],answers=[];
+  TEOSQ_ITEMS.forEach(function(item){answers.push({fid:'teosq_'+item.n,pregunta:item.t,respuesta:String(teosqAns[item.n]||'')});});
+  answers.push({fid:'teosq_ego',pregunta:'SCORE Orientacion al Ego',respuesta:s.ego.toFixed(2)});
+  answers.push({fid:'teosq_tar',pregunta:'SCORE Orientacion a la Tarea',respuesta:s.tar.toFixed(2)});
+  var eHi=s.ego>=3,tHi=s.tar>=3;
+  answers.push({fid:'teosq_perfil',pregunta:'Perfil',respuesta:!eHi&&tHi?'Tarea alta / Ego baja':eHi&&!tHi?'Ego alta / Tarea baja':eHi&&tHi?'Ego alta / Tarea alta':'Ego baja / Tarea baja'});
+  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,usuario:S.user,unidad:'Unidad 1',ejercicio:'TEOSQ',lid:teosqLid,respuestas:answers};
+  var saved=getLocalSubs();var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});
+  if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+  localStorage.setItem('pp_submissions',JSON.stringify(saved));
+  markDoneL(teosqLid);
+  var btn=document.getElementById('tq-send-btn');if(btn){btn.textContent='Actualizar envio';btn.style.background='var(--green)';btn.disabled=false;}
+  updateSaveStatus('Enviado a Mauro','#22C55E');showToast('TEOSQ enviado a Mauro!');
+  var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+  if(rec.airtableId){updateAirtable(rec.airtableId,rec);}else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
 
-
-function renderGridAdminView(ej, containerId) {
-  var resps = ej.respuestas || [];
-  var days = ['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
-  var gridCells = resps.filter(function(r){ return r.fid && r.fid.match(/^g_\d+_\d+$/); });
-  var reflCells = resps.filter(function(r){ return !r.fid || !r.fid.match(/^g_\d+_\d+$/); });
-
-  // Build a map: hour -> {dayIndex -> value}
-  var schedule = {};
-  gridCells.forEach(function(r) {
-    var m = r.fid.match(/^g_(\d+)_(\d+)$/);
-    if (!m) return;
-    var hrRaw = m[1]; // e.g. '700', '1500'
-    var di = parseInt(m[2]);
-    var hrDisp = hrRaw.length === 3 ? hrRaw[0] + ':00' : hrRaw.substring(0,2) + ':00';
-    if (!schedule[hrDisp]) schedule[hrDisp] = {};
-    schedule[hrDisp][di] = r.respuesta || '';
-  });
-
-  var hours = Object.keys(schedule).sort(function(a,b){
-    return parseInt(a.replace(':00','')) - parseInt(b.replace(':00',''));
-  });
-
-  var h = '<div style="padding:.5rem;">';
-
-  if (hours.length === 0 && reflCells.filter(function(r){return r.respuesta&&r.respuesta.trim();}).length === 0) {
-    h += '<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado pero sin datos registrados en esta vista.</p>';
-  } else {
-    // Grid table
-    if (hours.length > 0) {
-      h += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;">Planilla semanal ('+hours.length+' franjas horarias)</div>';
-      h += '<div style="overflow-x:auto;margin-bottom:1.25rem;">';
-      h += '<table style="width:100%;border-collapse:collapse;min-width:500px;">';
-      h += '<thead><tr>';
-      h += '<th style="background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.5rem .5rem .5rem .85rem;text-align:left;color:var(--muted);border-bottom:1px solid var(--border);width:52px;">Hora</th>';
-      days.forEach(function(d) {
-        h += '<th style="background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.5rem .35rem;text-align:center;color:var(--muted);border-bottom:1px solid var(--border);">' + d + '</th>';
-      });
-      h += '</tr></thead><tbody>';
-      hours.forEach(function(hr, hi) {
-        h += '<tr style="' + (hi%2===0?'background:rgba(255,255,255,.01);':'') + '">';
-        h += '<td style="font-size:.68rem;font-weight:700;color:var(--dim);padding:.35rem .5rem .35rem .85rem;border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap;">' + hr + '</td>';
-        days.forEach(function(d, di) {
-          var val = (schedule[hr] && schedule[hr][di]) ? schedule[hr][di] : '';
-          h += '<td style="border-bottom:1px solid rgba(255,255,255,.04);border-left:1px solid rgba(255,255,255,.04);padding:.3rem .35rem;text-align:center;">';
-          if (val) {
-            h += '<span style="font-size:.7rem;font-weight:600;color:var(--text);background:rgba(232,49,42,.12);border:1px solid rgba(232,49,42,.2);border-radius:3px;padding:.15rem .4rem;display:inline-block;">' + val + '</span>';
-          }
-          h += '</td>';
-        });
-        h += '</tr>';
-      });
-      h += '</tbody></table></div>';
-    }
-
-    // Reflection questions
-    var hasRefl = reflCells.some(function(r){ return r.respuesta&&r.respuesta.trim(); });
-    if (hasRefl) {
-      h += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;">Reflexion</div>';
-      reflCells.forEach(function(r) {
-        if (r.respuesta && r.respuesta.trim()) {
-          h += '<div class="sub-q"><div class="sub-ql">' + (r.pregunta||'') + '</div>';
-          h += '<div class="sub-ans">' + r.respuesta + '</div></div>';
-        }
-      });
-    }
-  }
-
-  h += '</div>';
-  document.getElementById(containerId).innerHTML = h;
-}
-
-
-/* ════ PDF GENERATION ════ */
-
-function buildPDFStyles() {
-  return `
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Montserrat',Arial,sans-serif;font-size:11px;color:#1a1a2e;background:#fff;padding:0;line-height:1.6;}
-    .page{max-width:760px;margin:0 auto;padding:32px 36px;}
-    .header{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:16px;border-bottom:3px solid #E8312A;margin-bottom:24px;}
-    .header-brand{display:flex;align-items:center;gap:10px;}
-    .brand-dot{width:18px;height:18px;border-radius:50%;background:#E8312A;flex-shrink:0;}
-    .brand-name{font-size:16px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#1a1a2e;}
-    .brand-sub{font-size:9px;color:#666;letter-spacing:.1em;text-transform:uppercase;margin-top:1px;}
-    .header-info{text-align:right;}
-    .header-info .label{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.1em;}
-    .header-info .value{font-size:13px;font-weight:700;color:#1a1a2e;}
-    .header-info .date{font-size:10px;color:#666;margin-top:2px;}
-    .section-title{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#E8312A;padding:6px 10px;background:#fff5f5;border-left:3px solid #E8312A;margin:20px 0 12px;}
-    .ex-block{margin-bottom:18px;border:1px solid #e8e8e8;border-radius:5px;overflow:hidden;}
-    .ex-title{font-size:11px;font-weight:700;padding:8px 12px;background:#f8f8f8;border-bottom:1px solid #e8e8e8;display:flex;justify-content:space-between;align-items:center;}
-    .ex-date{font-size:9px;color:#999;font-weight:400;}
-    .qa-row{padding:7px 12px;border-bottom:1px solid #f0f0f0;}
-    .qa-row:last-child{border-bottom:none;}
-    .qa-q{font-size:9px;font-weight:700;color:#666;margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em;}
-    .qa-a{font-size:11px;color:#1a1a2e;line-height:1.55;}
-    .grid-table{width:100%;border-collapse:collapse;font-size:9px;margin:8px 12px;width:calc(100% - 24px);}
-    .grid-table th{background:#f0f0f0;padding:4px 5px;text-align:center;font-weight:700;border:1px solid #ddd;}
-    .grid-table td{padding:3px 5px;text-align:center;border:1px solid #ddd;color:#1a1a2e;}
-    .grid-table .hour-col{font-weight:700;color:#666;text-align:left;background:#fafafa;}
-    .grid-cell-val{background:#fff0ee;border-radius:2px;padding:1px 4px;display:inline-block;font-weight:600;color:#c0392b;}
-    .teosq-scores{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 12px;}
-    .tscore-box{border:1px solid #e8e8e8;border-radius:4px;padding:10px 12px;text-align:center;}
-    .tscore-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:4px;}
-    .tscore-val{font-size:22px;font-weight:800;color:#E8312A;}
-    .tscore-lvl{font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;margin-top:4px;}
-    .lvl-low{background:#e8f4ff;color:#2980b9;}
-    .lvl-mid{background:#fef9e7;color:#d68910;}
-    .lvl-hi{background:#eafaf1;color:#1e8449;}
-    .profile-box{margin:8px 12px;padding:10px 12px;border-radius:4px;border-left:3px solid #E8312A;background:#fff5f5;}
-    .profile-name{font-size:12px;font-weight:800;margin-bottom:4px;}
-    .profile-desc{font-size:10px;color:#555;line-height:1.55;}
-    .summary-table{width:100%;border-collapse:collapse;font-size:10px;margin-top:12px;}
-    .summary-table th{background:#E8312A;color:#fff;padding:6px 10px;text-align:left;font-weight:700;}
-    .summary-table td{padding:6px 10px;border-bottom:1px solid #eee;}
-    .summary-table tr:nth-child(even) td{background:#fafafa;}
-    .badge-done{background:#eafaf1;color:#1e8449;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;}
-    .badge-pend{background:#f8f8f8;color:#999;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;}
-    .footer{margin-top:32px;padding-top:12px;border-top:1px solid #eee;font-size:9px;color:#aaa;text-align:center;}
-    @media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.page{padding:20px 24px;}.no-print{display:none;}}
-    .print-btn{position:fixed;top:16px;right:16px;background:#E8312A;color:#fff;border:none;font-family:Montserrat,sans-serif;font-size:12px;font-weight:700;padding:10px 20px;border-radius:5px;cursor:pointer;z-index:999;box-shadow:0 2px 8px rgba(0,0,0,.2);}
-  `;
-}
-
-function getTeosqProfile(resps) {
-  var egoScore=null,tarScore=null,perfil=null;
-  (resps||[]).forEach(function(r){
-    if(r.fid==='teosq_ego')egoScore=parseFloat(r.respuesta);
-    if(r.fid==='teosq_tar')tarScore=parseFloat(r.respuesta);
-    if(r.fid==='teosq_perfil')perfil=r.respuesta;
-  });
-  return{ego:egoScore,tar:tarScore,perfil:perfil};
-}
-
-function getLvlClass(v){if(!v)return'';if(v<=2.9)return'lvl-low';if(v<=4.2)return'lvl-mid';return'lvl-hi';}
-function getLvlLabel(v){if(!v)return'';if(v<=2.9)return'Baja';if(v<=4.2)return'Media';return'Alta';}
-
-function buildExerciseHTML(ej) {
-  var resps = ej.respuestas || [];
-  var isTeosq = ej.lid==='u1l5'||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf('teosq')!==-1);
-  var isGrid  = resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
-  var h = '<div class="ex-block">';
-  h += '<div class="ex-title"><span>'+ej.ejercicio+'</span><span class="ex-date">'+(ej.fecha||'')+'</span></div>';
-
-  if (isTeosq) {
-    var tq = getTeosqProfile(resps);
-    if (tq.ego!==null&&tq.tar!==null) {
-      h += '<div class="teosq-scores">';
-      h += '<div class="tscore-box"><div class="tscore-label">Orientacion al Ego</div>';
-      h += '<div class="tscore-val">'+tq.ego.toFixed(2)+'</div>';
-      h += '<div class="tscore-lvl '+getLvlClass(tq.ego)+'">'+getLvlLabel(tq.ego)+'</div></div>';
-      h += '<div class="tscore-box"><div class="tscore-label">Orientacion a la Tarea</div>';
-      h += '<div class="tscore-val">'+tq.tar.toFixed(2)+'</div>';
-      h += '<div class="tscore-lvl '+getLvlClass(tq.tar)+'">'+getLvlLabel(tq.tar)+'</div></div>';
-      h += '</div>';
-      if (tq.perfil) {
-        h += '<div class="profile-box"><div class="profile-name">Perfil: '+tq.perfil+'</div></div>';
-      }
-    }
-    // Individual answers
-    var itemResps = resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);});
-    if (itemResps.length > 0) {
-      h += '<div style="padding:6px 12px 2px;"><div class="qa-q">Respuestas individuales</div></div>';
-      itemResps.forEach(function(r){
-        h += '<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div>';
-        h += '<div class="qa-a">'+r.respuesta+' / 5</div></div>';
-      });
-    }
-  } else if (isGrid) {
-    var gridCells = resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
-    var reflCells = resps.filter(function(r){return !r.fid||!/^g_\d+_\d+$/.test(r.fid);});
-    var days=['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
-    var sched={};
-    gridCells.forEach(function(r){
-      var m=r.fid.match(/^g_(\d+)_(\d+)$/);if(!m)return;
-      var hr=m[1].length===3?m[1][0]+':00':m[1].substring(0,2)+':00';
-      var di=parseInt(m[2]);
-      if(!sched[hr])sched[hr]={};sched[hr][di]=r.respuesta||'';
-    });
-    var hours=Object.keys(sched).sort(function(a,b){return parseInt(a)-parseInt(b);});
-    if (hours.length > 0) {
-      h += '<table class="grid-table"><thead><tr><th>Hora</th>';
-      days.forEach(function(d){h+='<th>'+d+'</th>';});
-      h += '</tr></thead><tbody>';
-      hours.forEach(function(hr){
-        h += '<tr><td class="hour-col">'+hr+'</td>';
-        days.forEach(function(d,di){
-          var v=(sched[hr]&&sched[hr][di])||'';
-          h += '<td>'+(v?'<span class="grid-cell-val">'+v+'</span>':'')+'</td>';
-        });
-        h += '</tr>';
-      });
-      h += '</tbody></table>';
-    }
-    reflCells.forEach(function(r){
-      if(r.respuesta&&r.respuesta.trim()){
-        h+='<div class="qa-row"><div class="qa-q">'+r.pregunta+'</div><div class="qa-a">'+r.respuesta+'</div></div>';
-      }
-    });
-  } else {
-    var hasAny = resps.some(function(r){return r.respuesta&&r.respuesta.trim();});
-    if (hasAny) {
-      resps.forEach(function(r){
-        if(r.respuesta&&r.respuesta.trim()&&r.fid&&!/^teosq_/.test(r.fid)){
-          h+='<div class="qa-row"><div class="qa-q">'+r.pregunta+'</div><div class="qa-a">'+r.respuesta+'</div></div>';
-        }
-      });
-    } else {
-      h += '<div class="qa-row"><div class="qa-a" style="color:#aaa;">Ejercicio completado sin respuestas de texto.</div></div>';
-    }
-  }
-  h += '</div>';
-  return h;
-}
-
-function generatePatientPDF(usuario) {
-  var patient = adminData.find(function(p){return p.usuario===usuario;});
-  if (!patient) return;
-
-  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
-  function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
-  var byUnit={};
-  patient.ejercicios.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
-  var sortedUnits=Object.keys(byUnit).sort(function(a,b){return unitIdx(a)-unitIdx(b);});
-
-  var content = '<div class="page">';
-  // Header
-  content += '<div class="header">';
-  content += '<div class="header-brand"><div class="brand-dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
-  content += '<div class="header-info"><div class="label">Informe del paciente</div><div class="value">'+patient.nombre+'</div><div class="date">@'+patient.usuario+' &nbsp;·&nbsp; '+new Date().toLocaleDateString('es-AR')+'</div></div>';
-  content += '</div>';
-
-  // Summary stats
-  content += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">';
-  content += '<div style="border:1px solid #eee;border-radius:4px;padding:10px 12px;text-align:center;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:700;margin-bottom:4px;">Ejercicios completados</div><div style="font-size:20px;font-weight:800;color:#E8312A;">'+patient.ejercicios.length+'</div></div>';
-  content += '<div style="border:1px solid #eee;border-radius:4px;padding:10px 12px;text-align:center;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:700;margin-bottom:4px;">Unidades trabajadas</div><div style="font-size:20px;font-weight:800;color:#E8312A;">'+sortedUnits.length+'</div></div>';
-  var lastDate=patient.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;}).fecha||'—';
-  content += '<div style="border:1px solid #eee;border-radius:4px;padding:10px 12px;text-align:center;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:700;margin-bottom:4px;">Ultimo envio</div><div style="font-size:12px;font-weight:700;color:#1a1a2e;padding-top:4px;">'+lastDate.substring(0,10)+'</div></div>';
-  content += '</div>';
-
-  // Exercises by unit
-  sortedUnits.forEach(function(unit){
-    content += '<div class="section-title">'+unit+'</div>';
-    byUnit[unit].forEach(function(ej){ content += buildExerciseHTML(ej); });
-  });
-
-  content += '<div class="footer">Psicopoker · Programa de Psicología del Jugador Profesional · Informe generado el '+new Date().toLocaleString('es-AR')+'</div>';
-  content += '</div>';
-
-  var doc = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe — '+patient.nombre+'</title><style>'+buildPDFStyles()+'</style></head><body>';
-  doc += '<button class="print-btn no-print" onclick="window.print()">&#128424; Guardar como PDF</button>';
-  doc += content;
-  doc += '<script>setTimeout(function(){},500);<\/script></body></html>';
-
-  var blob = new Blob([doc], {type:'text/html;charset=utf-8'});
-  var url = URL.createObjectURL(blob);
-  window.open(url, '_blank');
-  setTimeout(function(){URL.revokeObjectURL(url);}, 10000);
-}
-
-function generateGeneralReport() {
-  if (!adminData || !adminData.length) { showToast('No hay datos para generar el informe'); return; }
-  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
-  function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
-
-  var doc = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe General — Psicopoker</title><style>'+buildPDFStyles()+'</style></head><body>';
-  doc += '<button class="print-btn no-print" onclick="window.print()">&#128424; Guardar como PDF</button>';
-  doc += '<div class="page">';
-  doc += '<div class="header">';
-  doc += '<div class="header-brand"><div class="brand-dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
-  doc += '<div class="header-info"><div class="label">Informe General</div><div class="value">Todos los Pacientes</div><div class="date">'+new Date().toLocaleDateString('es-AR')+'</div></div>';
-  doc += '</div>';
-
-  // Global stats
-  var totalEjs=0;
-  adminData.forEach(function(p){totalEjs+=p.ejercicios.length;});
-  doc += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;">';
-  doc += '<div style="border:1px solid #eee;border-radius:4px;padding:10px 12px;text-align:center;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:700;margin-bottom:4px;">Pacientes activos</div><div style="font-size:22px;font-weight:800;color:#E8312A;">'+adminData.length+'</div></div>';
-  doc += '<div style="border:1px solid #eee;border-radius:4px;padding:10px 12px;text-align:center;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:700;margin-bottom:4px;">Ejercicios totales</div><div style="font-size:22px;font-weight:800;color:#E8312A;">'+totalEjs+'</div></div>';
-  doc += '<div style="border:1px solid #eee;border-radius:4px;padding:10px 12px;text-align:center;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:700;margin-bottom:4px;">Promedio por paciente</div><div style="font-size:22px;font-weight:800;color:#E8312A;">'+(totalEjs/adminData.length).toFixed(1)+'</div></div>';
-  doc += '</div>';
-
-  // Summary table
-  doc += '<div class="section-title">Resumen por paciente</div>';
-  doc += '<table class="summary-table"><thead><tr><th>Paciente</th><th>Usuario</th><th>Ejercicios</th><th>Ultimo envio</th></tr></thead><tbody>';
-  var sorted = adminData.slice().sort(function(a,b){return a.nombre.localeCompare(b.nombre,'es');});
-  sorted.forEach(function(p){
-    var last=p.ejercicios.length?p.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;}).fecha||'—':'—';
-    doc += '<tr><td><strong>'+p.nombre+'</strong></td><td>@'+p.usuario+'</td>';
-    doc += '<td><span class="badge-done">'+p.ejercicios.length+' completados</span></td>';
-    doc += '<td>'+last.substring(0,10)+'</td></tr>';
-  });
-  doc += '</tbody></table>';
-
-  // Per patient detail
-  doc += '<div style="margin-top:32px;"></div>';
-  sorted.forEach(function(patient) {
-    var byUnit={};
-    patient.ejercicios.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
-    var sortedUnits=Object.keys(byUnit).sort(function(a,b){return unitIdx(a)-unitIdx(b);});
-    doc += '<div style="margin-top:28px;padding-top:20px;border-top:2px solid #E8312A;">';
-    doc += '<div style="font-size:14px;font-weight:800;margin-bottom:4px;">'+patient.nombre+'</div>';
-    doc += '<div style="font-size:10px;color:#999;margin-bottom:14px;">@'+patient.usuario+' · '+patient.ejercicios.length+' ejercicios completados</div>';
-    sortedUnits.forEach(function(unit){
-      doc += '<div class="section-title">'+unit+'</div>';
-      byUnit[unit].forEach(function(ej){ doc += buildExerciseHTML(ej); });
-    });
-    doc += '</div>';
-  });
-
-  doc += '<div class="footer">Psicopoker · Programa de Psicología del Jugador Profesional · Informe generado el '+new Date().toLocaleString('es-AR')+'</div>';
-  doc += '</div></body></html>';
-
-  var blob = new Blob([doc], {type:'text/html;charset=utf-8'});
-  var url = URL.createObjectURL(blob);
-  window.open(url, '_blank');
-  setTimeout(function(){URL.revokeObjectURL(url);}, 10000);
+/* ════ GRID CUSTOMIZABLE ════ */
+var activeCatColor='#E8312A';
+function selCat(el,color){document.querySelectorAll('.cat-pill').forEach(function(p){p.style.opacity='.55';p.style.fontWeight='600';});el.style.opacity='1';el.style.fontWeight='800';activeCatColor=color;}
+function colorCell(el){if(el.value===''&&!el.matches(':focus'))return;el.style.background=activeCatColor+'22';el.style.color=activeCatColor;el.style.borderColor=activeCatColor+'55';}
+function updateGridRows(lid){
+  var def=EX_DEFS[lid];if(!def)return;
+  var ss=document.getElementById('grid-start-hr_'+lid);
+  var es=document.getElementById('grid-end-hr_'+lid);
+  if(!ss||!es)return;
+  var startH=parseInt(ss.value),endH=parseInt(es.value);
+  if(startH>=endH){es.value=startH+1;endH=startH+1;}
+  collectAndSave(lid);
+  var draft=loadDraft(lid)||{};draft.startHour=startH;draft.endHour=endH;saveDraft(lid,draft);
+  var days=def.days||['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
+  var hours=[];for(var hh=startH;hh<=endH;hh++)hours.push(hh+':00');
+  var tbody=document.getElementById('grid-tbody-'+lid);if(!tbody)return;
+  var rows='';
+  hours.forEach(function(hr){rows+='<tr><td class="hour-cell">'+hr+'</td>';days.forEach(function(d,di){var fid='g_'+hr.replace(':','')+'_'+di;var saved=draft[fid]?draft[fid].replace(/"/g,'&quot;'):'';rows+='<td><input class="gcell" type="text" data-fid="'+fid+'" value="'+saved+'" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+(saved?' style="background:'+activeCatColor+'22;color:'+activeCatColor+';"':'')+' ></td>';});rows+='</tr>';});
+  tbody.innerHTML=rows;updateSaveStatus('Horario actualizado','#22C55E');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
