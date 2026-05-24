@@ -351,6 +351,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
       <button id="btn-tab-usuarios" onclick="adminTab('usuarios')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Pacientes</button>
       <button onclick="loadAdminPanel()" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">&#8635; Actualizar</button>
       <button onclick="generateGeneralReport()" style="display:flex;align-items:center;gap:.35rem;background:var(--red-dim);border:1px solid var(--border-r);color:var(--red);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:3px;cursor:pointer;"><svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Informe General</button>
+      <button onclick="resetAllData()" style="display:flex;align-items:center;gap:.35rem;background:rgba(107,114,128,.1);border:1px solid rgba(107,114,128,.25);color:rgba(107,114,128,.8);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor='rgba(232,49,42,.5)';this.style.color='rgba(232,49,42,.9)'" onmouseout="this.style.borderColor='rgba(107,114,128,.25)';this.style.color='rgba(107,114,128,.8)'"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Reset datos</button>
     </div>
     <div class="tnav-r"><div class="uav" id="nav-av3"></div><button class="btn-sm" onclick="doLogout()">Salir</button></div>
   </div>
@@ -1033,53 +1034,77 @@ var EX_DEFS = {
    EXERCISE RENDERER
    ═══════════════════════════════════════════════ */
 function renderGridExercise(lid, def) {
+  // Restore from draft first, then from last submission
   var draft = loadDraft(lid);
-  var h = '<div class="ex-wrap">';
-  h += '<div class="ex-header"><div class="ex-badge">Ejercicio interactivo</div>';
-  h += '<p class="ex-desc">Complete cada celda con la actividad que realizas en ese horario. El borrador se guarda automaticamente.</p></div>';
+  if (!draft) {
+    var subs = getLocalSubs();
+    var sub = subs.find(function(s){ return s.usuario===S.user && s.lid===lid; });
+    if (sub && sub.respuestas) {
+      draft = {};
+      sub.respuestas.forEach(function(r){ if(r.fid) draft[r.fid] = r.respuesta||''; });
+    }
+  }
 
+  var startH = (draft && draft.startHour) ? parseInt(draft.startHour) : 7;
+  var endH   = (draft && draft.endHour)   ? parseInt(draft.endHour)   : 23;
+  var days   = def.days || ['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
+
+  function makeHours(s,e){ var h=[]; for(var i=s;i<=e;i++) h.push(i+':00'); return h; }
+  function hrOpts(sel,mn,mx){ var o=''; for(var i=mn;i<=mx;i++) o+='<option value="'+i+'"'+(i===sel?' selected':'')+'>'+i+':00</option>'; return o; }
+
+  var hours = makeHours(startH, endH);
+
+  var h = '<div class="ex-wrap">';
+
+  // Hour config bar
+  h += '<div style="display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;">';
+  h += '<span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Franja horaria:</span>';
+  h += '<div style="display:flex;align-items:center;gap:.5rem;">';
+  h += '<label style="font-size:.72rem;color:var(--muted);">Desde</label>';
+  h += '<select id="grid-start-hr_'+lid+'" onchange="updateGridRows(\''+lid+'\')" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.35rem .6rem;border-radius:4px;outline:none;cursor:pointer;">'+hrOpts(startH,0,22)+'</select>';
+  h += '<label style="font-size:.72rem;color:var(--muted);">hasta</label>';
+  h += '<select id="grid-end-hr_'+lid+'" onchange="updateGridRows(\''+lid+'\')" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.35rem .6rem;border-radius:4px;outline:none;cursor:pointer;">'+hrOpts(endH,1,23)+'</select>';
+  h += '</div><span style="font-size:.68rem;color:var(--dim);">Ajustalo a tu rutina</span></div>';
+
+  // Category pills
   h += '<div class="cat-row">';
-  var cats = [['#E8312A','Poker'],['#3B82F6','Estudio'],['#22C55E','Familia'],['#F59E0B','Ocio'],['#8B5CF6','Trabajo'],['#EC4899','Descanso'],['#6B7280','Otro']];
-  cats.forEach(function(c) {
-    h += '<div class="cat-pill" onclick="selCat(this,\'' + c[0] + '\')" style="border-color:' + c[0] + '44;color:' + c[0] + ';">';
-    h += '<span style="background:' + c[0] + ';width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;"></span>' + c[1] + '</div>';
+  [['#E8312A','Poker'],['#3B82F6','Estudio'],['#22C55E','Familia'],['#F59E0B','Ocio'],['#8B5CF6','Trabajo'],['#EC4899','Descanso'],['#6B7280','Otro']].forEach(function(c){
+    h += '<div class="cat-pill" onclick="selCat(this,\''+c[0]+'\')" style="border-color:'+c[0]+'44;color:'+c[0]+';"><span style="background:'+c[0]+';width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;"></span>'+c[1]+'</div>';
   });
   h += '</div>';
 
+  // Grid table
   h += '<div class="grid-scroll"><table class="week-table"><thead><tr><th>Hora</th>';
-  def.days.forEach(function(d) { h += '<th>' + d + '</th>'; });
-  h += '</tr></thead><tbody>';
-  def.hours.forEach(function(hr) {
-    h += '<tr><td class="hour-cell">' + hr + '</td>';
-    def.days.forEach(function(d, di) {
-      var fid = 'g_' + hr.replace(':','') + '_' + di;
-      var saved = draft && draft[fid] ? draft[fid] : '';
-      h += '<td><input class="gcell" type="text" data-fid="' + fid + '" value="' + saved + '" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\'' + lid + '\')" onfocus="colorCell(this)"></td>';
+  days.forEach(function(d){ h += '<th>'+d+'</th>'; });
+  h += '</tr></thead><tbody id="grid-tbody-'+lid+'">';
+  hours.forEach(function(hr){
+    h += '<tr><td class="hour-cell">'+hr+'</td>';
+    days.forEach(function(d,di){
+      var fid = 'g_'+hr.replace(':','')+'_'+di;
+      var val = (draft && draft[fid]) ? draft[fid] : '';
+      var style = val ? ' style="background:'+activeCatColor+'22;color:'+activeCatColor+';"' : '';
+      h += '<td><input class="gcell" type="text" data-fid="'+fid+'" value="'+val.replace(/"/g,'&quot;')+'" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+style+'></td>';
     });
     h += '</tr>';
   });
   h += '</tbody></table></div>';
 
+  // Reflexion questions
   h += '<div class="ex-reflex"><p class="ex-reflex-title">Reflexion sobre la semana</p>';
-  def.reflexion.forEach(function(r) {
-    var saved = draft && draft[r.fid] ? draft[r.fid] : '';
-    h += '<div class="ex-q"><p class="ex-ql">' + r.label + '</p>';
-    h += '<textarea class="ex-ta" data-fid="' + r.fid + '" oninput="triggerAutoSave(\'' + lid + '\')" placeholder="Escribi tu respuesta...">' + saved + '</textarea></div>';
+  (def.reflexion||[]).forEach(function(r){
+    var val = (draft && draft[r.fid]) ? draft[r.fid] : '';
+    h += '<div class="ex-q"><p class="ex-ql">'+r.label+'</p>';
+    h += '<textarea class="ex-ta" data-fid="'+r.fid+'" oninput="triggerAutoSave(\''+lid+'\')" placeholder="Escribi tu respuesta...">'+val+'</textarea></div>';
   });
   h += '</div>';
 
-  var allQ = def.reflexion.concat([]);
-  def.hours.forEach(function(hr) {
-    def.days.forEach(function(d, di) {
-      allQ.push({ fid: 'g_' + hr.replace(':','') + '_' + di, label: hr + ' - ' + d });
-    });
-  });
-
+  // Submit
+  var alreadyDone = isDone(lid);
   h += '<div class="ex-submit-row">';
-  h += '<button class="btn-ex-send" id="btn-ex-' + lid + '" onclick="doSubmit(\'' + lid + '\')">';
+  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="doSubmit(\''+lid+'\')" '+(alreadyDone?'style="background:var(--green);"':'')+'>';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' Enviar a Mauro</button>';
-  h += '<p class="ex-submit-note">Se enviara a la planilla de seguimiento de Mauro</p>';
+  h += ' '+(alreadyDone?'Actualizar envio':'Enviar a Mauro')+'</button>';
+  h += '<p class="ex-submit-note">Se guardara automaticamente mientras escribis</p>';
   h += '</div></div>';
   return h;
 }
@@ -1180,23 +1205,48 @@ function colorCell(el) {
 }
 
 function doSubmit(lid){
-  var def=EX_DEFS[lid]; if(!def)return;
+  var def=EX_DEFS[lid];if(!def)return;
   var btn=document.getElementById('btn-ex-'+lid);
   if(btn){btn.disabled=true;btn.textContent='Guardando...';}
   collectAndSave(lid);
   var user=USERS[S.user];
-  var questions=def.type==='grid'?def.reflexion:(window['_exQ_'+lid]||[]);
   var answers=[];
-  questions.forEach(function(q){var el=document.querySelector('[data-fid="'+q.fid+'"]');answers.push({pregunta:q.label,respuesta:el?el.value.trim():''});});
-  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,usuario:S.user,unidad:def.unit,ejercicio:def.name,respuestas:answers};
-  saveLocalSub(rec);
-  markDoneL(lid);clearDraft(lid);
-  updateSaveStatus('Completado','#22C55E');
-  if(btn){btn.textContent='Completado';btn.style.background='#22C55E';}
-  showToast('Ejercicio completado!');
+  if(def.type==='grid'){
+    (def.reflexion||[]).forEach(function(q){
+      var el=document.querySelector('[data-fid="'+q.fid+'"]');
+      answers.push({fid:q.fid,pregunta:q.label,respuesta:el?el.value.trim():''});
+    });
+    (def.hours||[]).forEach(function(hr){
+      (def.days||[]).forEach(function(d,di){
+        var fid='g_'+hr.replace(':','')+'_'+di;
+        var el=document.querySelector('[data-fid="'+fid+'"]');
+        var val=el?el.value.trim():'';
+        if(val)answers.push({fid:fid,pregunta:hr+' — '+d,respuesta:val});
+      });
+    });
+  } else {
+    (window['_exQ_'+lid]||[]).forEach(function(q){
+      var el=document.querySelector('[data-fid="'+q.fid+'"]');
+      answers.push({fid:q.fid,pregunta:q.label,respuesta:el?el.value.trim():''});
+    });
+  }
+  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,
+    usuario:S.user,unidad:def.unit,ejercicio:def.name,lid:lid,respuestas:answers};
+  var saved=getLocalSubs();
+  var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});
+  if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}
+  else{saved.push(rec);}
+  localStorage.setItem('pp_submissions',JSON.stringify(saved));
+  markDoneL(lid);
+  // DO NOT clearDraft — keep values visible when patient returns
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  var isUpdate=idx>=0;
+  if(btn){btn.textContent=isUpdate?'Actualizar envio':'Enviar a Mauro';btn.style.background='#22C55E';btn.disabled=false;}
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
   var unit=C.find(function(u){return u.id===S.unitId;});
-  if(unit){renderSidebar(unit);renderContent(unit,lid);}
-  tryAirtable(rec);
+  if(unit)renderSidebar(unit);
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
 
 /* ═══════════════════════════════════════════════
@@ -1404,12 +1454,17 @@ function renderContent(unit, lid) {
     if (firstSec) firstSec.classList.add('open');
     restoreDraft(lid);
   }
-  if (lesson.ex && EX_DEFS[lid] && EX_DEFS[lid].type === 'grid') {
-    restoreDraft(lid);
-    // Re-color cells that have values
-    document.querySelectorAll('.gcell').forEach(function(el) {
-      if (el.value) el.style.background = '#E8312A22';
-    });
+  if (lesson.ex && EX_DEFS[lid] && (lesson.ex.type==='grid'||EX_DEFS[lid].type==='grid')) {
+    // Values already restored during renderGridExercise — just re-color
+    setTimeout(function(){
+      document.querySelectorAll('.gcell').forEach(function(el){
+        if(el.value&&el.value.trim()){
+          el.style.background=activeCatColor+'22';
+          el.style.color=activeCatColor;
+          el.style.borderColor=activeCatColor+'55';
+        }
+      });
+    },50);
   }
 }
 
@@ -2028,6 +2083,79 @@ function updateGridRows(lid){
   var rows='';
   hours.forEach(function(hr){rows+='<tr><td class="hour-cell">'+hr+'</td>';days.forEach(function(d,di){var fid='g_'+hr.replace(':','')+'_'+di;var saved=draft[fid]?draft[fid].replace(/"/g,'&quot;'):'';rows+='<td><input class="gcell" type="text" data-fid="'+fid+'" value="'+saved+'" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+(saved?' style="background:'+activeCatColor+'22;color:'+activeCatColor+';"':'')+' ></td>';});rows+='</tr>';});
   tbody.innerHTML=rows;updateSaveStatus('Horario actualizado','#22C55E');
+}
+
+
+function resetAllData() {
+  if (!confirm('ATENCION: Esta accion va a borrar TODOS los ejercicios completados de TODOS los pacientes.\n\nEsta accion no se puede deshacer.\n\n¿Confirmas?')) return;
+  if (!confirm('Segunda confirmacion: se borraran todos los envios. ¿Continuar?')) return;
+
+  // Clear localStorage for all users
+  var keys = Object.keys(localStorage);
+  var cleared = 0;
+  keys.forEach(function(key) {
+    if (key === 'pp_submissions' ||
+        key.startsWith('pp_p_') ||
+        key.startsWith('pp_draft_')) {
+      localStorage.removeItem(key);
+      cleared++;
+    }
+  });
+  console.log('Cleared localStorage keys:', cleared);
+
+  // Update UI immediately
+  adminData = [];
+  activePatient = null;
+  var plist = document.getElementById('admin-patient-list');
+  if (plist) plist.innerHTML = '<div style="padding:1.25rem 1.1rem;font-size:.78rem;color:var(--dim);">Limpiando Airtable...</div>';
+  var ac = document.getElementById('admin-content');
+  if (ac) ac.innerHTML = '';
+
+  // Clear Airtable records
+  clearAirtableAll(function(deleted) {
+    showToast('Reset completo — ' + cleared + ' registros locales y ' + deleted + ' de Airtable borrados');
+    loadAdminPanel();
+  });
+}
+
+function clearAirtableAll(cb, deleted) {
+  deleted = deleted || 0;
+  fetch(AIRTABLE_URL + '?pageSize=100', {
+    headers: { 'Authorization': 'Bearer ' + AIRTABLE_TOKEN }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(resp) {
+    if (!resp.records || !resp.records.length) {
+      cb(deleted);
+      return;
+    }
+    // Delete in batches of 10 (Airtable limit)
+    var ids = resp.records.map(function(r) { return r.id; });
+    var batches = [];
+    while (ids.length > 0) batches.push(ids.splice(0, 10));
+    var done = 0;
+    batches.forEach(function(batch) {
+      var qs = batch.map(function(id) { return 'records[]=' + encodeURIComponent(id); }).join('&');
+      fetch(AIRTABLE_URL + '?' + qs, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer ' + AIRTABLE_TOKEN }
+      })
+      .then(function() {
+        done++;
+        if (done === batches.length) {
+          // Check if there are more records
+          clearAirtableAll(cb, deleted + resp.records.length);
+        }
+      })
+      .catch(function() {
+        done++;
+        if (done === batches.length) clearAirtableAll(cb, deleted + resp.records.length);
+      });
+    });
+  })
+  .catch(function() {
+    cb(deleted);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
