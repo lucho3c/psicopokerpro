@@ -230,6 +230,59 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .sub-ql{font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:.25rem;}
 .sub-ans{font-size:.82rem;color:var(--text);line-height:1.65;white-space:pre-wrap;}
 .ex-select{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.8rem;padding:.6rem .85rem;border-radius:4px;outline:none;cursor:pointer;transition:border-color .2s;}.ex-select:focus{border-color:var(--red);}
+
+/* ── TEOSQ ── */
+.teosq-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:0;}
+.teosq-tab{padding:.65rem 1.1rem;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);margin-bottom:-1px;transition:all .2s;}
+.teosq-tab:hover{color:var(--text);}
+.teosq-tab.on{color:var(--text);border-bottom-color:var(--red);}
+.teosq-pane{display:none;padding:1.25rem;}
+.teosq-pane.on{display:block;}
+.teosq-prog{display:flex;align-items:center;gap:.75rem;background:var(--bg3);border-radius:4px;padding:.75rem 1rem;margin-bottom:1.1rem;}
+.teosq-prog-bar{flex:1;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
+.teosq-prog-fill{height:100%;background:var(--red);border-radius:2px;transition:width .3s;}
+.teosq-prog-lbl{font-size:.68rem;font-weight:700;color:var(--muted);white-space:nowrap;}
+.teosq-intro{background:rgba(232,49,42,.05);border-left:2px solid var(--red);padding:.7rem 1rem;border-radius:0 4px 4px 0;margin-bottom:1rem;font-size:.8rem;font-weight:600;}
+.tq-item{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem 1rem;margin-bottom:.65rem;transition:border-color .2s;}
+.tq-item.done{border-color:rgba(34,197,94,.25);}
+.tq-num{font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;}
+.tq-text{font-size:.82rem;font-weight:600;margin-bottom:.7rem;line-height:1.5;}
+.tq-scale{display:flex;gap:.3rem;}
+.tq-btn{flex:1;padding:.45rem .15rem;font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:700;text-align:center;border:1.5px solid var(--border);border-radius:3px;cursor:pointer;background:var(--bg3);color:var(--muted);transition:all .15s;min-width:0;}
+.tq-btn:hover{border-color:rgba(232,49,42,.35);color:var(--text);}
+.tq-btn.on{background:var(--red);border-color:var(--red);color:#fff;}
+.tq-lbl-row{display:flex;justify-content:space-between;margin-top:.3rem;padding:0 .05rem;}
+.tq-lbl-row span{font-size:.56rem;color:var(--dim);flex:1;text-align:center;}
+.tq-lbl-row span:first-child{text-align:left;}
+.tq-lbl-row span:last-child{text-align:right;}
+.teosq-scores{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.1rem;}
+.teosq-sc{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.1rem;}
+.teosq-sc-lbl{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
+.teosq-sc-val{font-size:1.9rem;font-weight:800;margin-bottom:.35rem;}
+.teosq-sc-lvl{display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;border-radius:20px;}
+.teosq-sc-bar{height:5px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-top:.6rem;}
+.teosq-sc-fill{height:100%;border-radius:2px;transition:width .5s;}
+.tlvl-low{background:rgba(59,130,246,.15);color:#60A5FA;}
+.tlvl-mid{background:rgba(245,158,11,.15);color:#FCD34D;}
+.tlvl-hi{background:rgba(34,197,94,.15);color:#4ADE80;}
+.teosq-profiles{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1rem;}
+.tp-card{background:var(--bg2);border:2px solid var(--border);border-radius:6px;padding:1rem;opacity:.45;transition:all .25s;}
+.tp-card.on{opacity:1;transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.3);}
+.tp-card.on.tp1{border-color:#22C55E;background:rgba(34,197,94,.06);}
+.tp-card.on.tp2{border-color:#E8312A;background:rgba(232,49,42,.06);}
+.tp-card.on.tp3{border-color:#F59E0B;background:rgba(245,158,11,.06);}
+.tp-card.on.tp4{border-color:#6B7280;background:rgba(107,114,128,.06);}
+.tp-icon{font-size:.95rem;margin-bottom:.35rem;}
+.tp-name{font-size:.78rem;font-weight:800;margin-bottom:.4rem;}
+.tp-desc{font-size:.7rem;color:var(--muted);line-height:1.55;margin-bottom:.5rem;}
+.tp-traits{list-style:none;padding:0;}
+.tp-traits li{font-size:.68rem;color:var(--muted);padding:.18rem 0;line-height:1.5;}
+.tp-tag{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.18rem .55rem;border-radius:3px;margin-top:.45rem;}
+.tptag-ok{background:rgba(34,197,94,.15);color:#4ADE80;}
+.tptag-w{background:rgba(245,158,11,.15);color:#FCD34D;}
+.tptag-r{background:rgba(232,49,42,.15);color:#FF8080;}
+.teosq-warn{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.22);border-radius:5px;padding:.8rem 1rem;font-size:.77rem;color:#FCD34D;margin-bottom:1rem;}
+
 </style>
 </head>
 <body>
@@ -403,7 +456,7 @@ var C = [
       { id:'u1l2', title:'Los 2 Desafios', driveId:'1FBh8vIHDuwcYMaAhRlgg6V5R-3xZ77Sk' },
       { id:'u1l3', title:'Poker Mindset Test', driveId:'1FzCP7Tt9d54eqrmkKkenltP3tbhgheuy', ex:{ type:'form', unit:'Unidad 1', name:'Poker Mindset Test' } },
       { id:'u1l4', title:'Inventario Psicologico de Ejecucion Deportiva', driveId:'1-3QE03f6XHNdn4Kt13TnTMrCZ0UQK0qY', ex:{ type:'form', unit:'Unidad 1', name:'IPED - Inventario Psicologico' } },
-      { id:'u1l5', title:'Task and Ego Orientation in Sport Questionnaire', driveId:'10KJXOs20u_OLfV35EoLr5ZEzbWLUn6UL', ex:{ type:'form', unit:'Unidad 1', name:'TEOSQ - Orientacion al Ego y la Tarea' } },
+      { id:'u1l5', title:'Task and Ego Orientation in Sport Questionnaire', driveId:'10KJXOs20u_OLfV35EoLr5ZEzbWLUn6UL', ex:{ type:'teosq', unit:'Unidad 1', name:'TEOSQ' } },
       { id:'u1l6', title:'Primera Sesion 1 a 1', type:'session' }
     ]
   },
@@ -1425,6 +1478,12 @@ function renderContent(unit, lid) {
     var def = EX_DEFS[lid];
     if (def.type === 'grid') body += renderGridExercise(lid, def);
     else if (def.type === 'form') body += renderFormExercise(lid, def);
+    else if (def.type === 'teosq') {
+      document.getElementById('mc-body').innerHTML = body;
+      renderTEOSQExercise(lid);
+      document.getElementById('mc').scrollTop = 0;
+      return;
+    }
   }
 
   // COMPLETE ROW (only if no exercise — exercises auto-complete on submit)
@@ -1839,6 +1898,251 @@ function restoreFromAirtable(usuario, cb) {
     cb();
   })
   .catch(function() { cb(); });
+}
+
+
+/* ════ TEOSQ ════ */
+var TEOSQ_ITEMS=[
+  {n:1,t:'...soy el/la unico/a que puede hacer la jugada o habilidad en cuestion.',cat:'E'},
+  {n:2,t:'....aprendo una nueva habilidad y me impulsa a practicar mas.',cat:'R'},
+  {n:3,t:'...yo puedo hacerlo mejor que mis companeros/as.',cat:'E'},
+  {n:4,t:'...los otros no pueden hacerlo tan bien como yo.',cat:'E'},
+  {n:5,t:'...aprendo algo que es divertido.',cat:'R'},
+  {n:6,t:'...otros fallan y yo no.',cat:'E'},
+  {n:7,t:'...aprendo una nueva habilidad esforzandome mucho.',cat:'R'},
+  {n:8,t:'...trabajo realmente duro.',cat:'R'},
+  {n:9,t:'...consigo mas resultados que todos.',cat:'E'},
+  {n:10,t:'...algo que he aprendido me impulsa a practicar mas.',cat:'R'},
+  {n:11,t:'...soy el/la mejor.',cat:'E'},
+  {n:12,t:'...noto que una habilidad que he aprendido funciona.',cat:'R'},
+  {n:13,t:'...pongo todo lo que esta de mi parte.',cat:'R'}
+];
+var teosqAns={};
+var teosqLid=null;
+
+function renderTEOSQExercise(lid){
+  teosqLid=lid;
+  teosqAns={};
+  // Restore from draft or submission
+  var draft=loadDraft(lid);
+  var subs=getLocalSubs();
+  var sub=subs.find(function(s){return s.usuario===S.user&&s.lid===lid;});
+  if(draft){
+    TEOSQ_ITEMS.forEach(function(item){
+      var v=draft['teosq_'+item.n];
+      if(v)teosqAns[item.n]=parseInt(v)||0;
+    });
+  } else if(sub&&sub.respuestas){
+    sub.respuestas.forEach(function(r){
+      if(r.fid&&r.fid.indexOf('teosq_')===0){
+        var n=parseInt(r.fid.replace('teosq_',''));
+        if(!isNaN(n))teosqAns[n]=parseInt(r.respuesta)||0;
+      }
+    });
+  }
+  var alreadyDone=isDone(lid);
+  var h='<div class="ex-wrap">';
+  h+='<div class="teosq-tabs">';
+  h+='<div class="teosq-tab on" id="ttab0" onclick="tqTab(0)">1. Cuestionario</div>';
+  h+='<div class="teosq-tab" id="ttab1" onclick="tqTab(1)">2. Resultados</div>';
+  h+='<div class="teosq-tab" id="ttab2" onclick="tqTab(2)">3. Interpretacion</div>';
+  h+='</div>';
+  // Pane 1
+  h+='<div class="teosq-pane on" id="tpane0">';
+  h+='<div class="teosq-prog"><div class="teosq-prog-bar"><div class="teosq-prog-fill" id="tq-prog-fill" style="width:0%"></div></div>';
+  h+='<div class="teosq-prog-lbl"><span id="tq-prog-n">0</span> / 13 respondidas</div></div>';
+  h+='<div class="teosq-intro">Yo me siento con mas exito en el poker cuando...</div>';
+  TEOSQ_ITEMS.forEach(function(item){
+    var v=teosqAns[item.n]||0;
+    h+='<div class="tq-item'+(v?' done':'')+'" id="tqi'+item.n+'">';
+    h+='<div class="tq-num">Item '+item.n+(item.cat==='E'?' · Ego':' · Tarea')+'</div>';
+    h+='<div class="tq-text">'+item.t+'</div>';
+    h+='<div class="tq-scale">';
+    for(var i=1;i<=5;i++){
+      h+='<button class="tq-btn'+(v===i?' on':'')+'" onclick="tqSelect('+item.n+','+i+')" id="tqb'+item.n+'_'+i+'">'+i+'</button>';
+    }
+    h+='</div>';
+    h+='<div class="tq-lbl-row"><span>Totalmente en<br>Desacuerdo</span><span></span><span></span><span></span><span>Totalmente<br>de Acuerdo</span></div>';
+    h+='</div>';
+  });
+  var btnDone=alreadyDone?'Actualizar envio':'Enviar a Mauro';
+  h+='<div class="ex-submit-row">';
+  h+='<button class="btn-ex-send" id="tq-send-btn" onclick="tqSubmit()" '+(Object.keys(teosqAns).length<13?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+btnDone+'</button>';
+  h+='<p class="ex-submit-note" id="tq-send-note">'+(Object.keys(teosqAns).length<13?'Respondé las '+(13-Object.keys(teosqAns).length)+' preguntas restantes':'Tus respuestas seran enviadas a Mauro')+'</p>';
+  h+='</div></div>';
+  // Pane 2
+  h+='<div class="teosq-pane" id="tpane1"><div class="teosq-scores">';
+  h+='<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion al Ego</div>';
+  h+='<div class="teosq-sc-val" id="tq-ego-val">—</div>';
+  h+='<div class="teosq-sc-lvl" id="tq-ego-lvl">—</div>';
+  h+='<div class="teosq-sc-bar"><div class="teosq-sc-fill" id="tq-ego-bar" style="width:0%;background:#E8312A"></div></div>';
+  h+='<div style="font-size:.67rem;color:var(--dim);margin-top:.6rem;">Items 1,3,4,6,9,11 (promedio de 6)</div></div>';
+  h+='<div class="teosq-sc"><div class="teosq-sc-lbl">Orientacion a la Tarea</div>';
+  h+='<div class="teosq-sc-val" id="tq-tar-val">—</div>';
+  h+='<div class="teosq-sc-lvl" id="tq-tar-lvl">—</div>';
+  h+='<div class="teosq-sc-bar"><div class="teosq-sc-fill" id="tq-tar-bar" style="width:0%;background:#22C55E"></div></div>';
+  h+='<div style="font-size:.67rem;color:var(--dim);margin-top:.6rem;">Items 2,5,7,8,10,12,13 (promedio de 7)</div></div>';
+  h+='</div>';
+  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem 1rem;">';
+  h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;">Escala de referencia</div>';
+  h+='<div style="display:flex;flex-wrap:wrap;gap:1rem;">';
+  h+='<span style="font-size:.72rem;color:var(--muted);">1.0–2.9 → <strong style="color:#60A5FA">Baja</strong></span>';
+  h+='<span style="font-size:.72rem;color:var(--muted);">3.0–4.2 → <strong style="color:#FCD34D">Media</strong></span>';
+  h+='<span style="font-size:.72rem;color:var(--muted);">4.3–5.0 → <strong style="color:#4ADE80">Alta</strong></span>';
+  h+='</div></div></div>';
+  // Pane 3
+  h+='<div class="teosq-pane" id="tpane2">';
+  h+='<div style="margin-bottom:1rem;padding:.9rem 1.25rem;background:var(--bg2);border-radius:5px;">';
+  h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">Tu perfil</div>';
+  h+='<div id="tq-perfil" style="font-size:.97rem;font-weight:800;">— Completá el cuestionario —</div></div>';
+  h+='<div class="teosq-profiles">';
+  h+='<div class="tp-card tp1" id="tp1"><div class="tp-icon">🟢</div><div class="tp-name">Tarea alta / Ego baja</div>';
+  h+='<div class="tp-desc">Motivacion solida y autonoma. Se enfoca en mejorar, aprender y sostener su rendimiento a largo plazo.</div>';
+  h+='<ul class="tp-traits"><li>✅ Ideal para resistir la varianza y disfrutar del proceso.</li>';
+  h+='<li>✅ Alta capacidad de adaptacion ante adversidad.</li>';
+  h+='<li>⚠ Puede faltarle intensidad competitiva si no se trabaja.</li></ul>';
+  h+='<div class="tp-tag tptag-ok">Perfil favorable</div></div>';
+  h+='<div class="tp-card tp2" id="tp2"><div class="tp-icon">🔥</div><div class="tp-name">Ego alta / Tarea baja</div>';
+  h+='<div class="tp-desc">Busca demostrar valor, destacar y validarse. Puede tener gran impulso competitivo.</div>';
+  h+='<ul class="tp-traits"><li>⚠ Riesgo de frustracion ante errores o cuando no gana.</li>';
+  h+='<li>⚠ Vulnerabilidad frente a la comparacion social.</li>';
+  h+='<li>✖ Necesita redefinir que es exito y desarrollar mentalidad de proceso.</li></ul>';
+  h+='<div class="tp-tag tptag-r">Incompatible con Mindset Ganador</div></div>';
+  h+='<div class="tp-card tp3" id="tp3"><div class="tp-icon">🧨</div><div class="tp-name">Ego alta / Tarea alta</div>';
+  h+='<div class="tp-desc">Fuerte ambicion combinada con compromiso. Quiere ganar y mejorar al mismo tiempo.</div>';
+  h+='<ul class="tp-traits"><li>✅ Ideal para construir una carrera profesional seria.</li>';
+  h+='<li>⚠ Riesgo de burnout o conflicto interno si no logra ambas cosas.</li>';
+  h+='<li>⚠ Necesita ordenar prioridades segun etapa.</li></ul>';
+  h+='<div class="tp-tag tptag-w">Perfil complejo — requiere trabajo</div></div>';
+  h+='<div class="tp-card tp4" id="tp4"><div class="tp-icon">💤</div><div class="tp-name">Ego baja / Tarea baja</div>';
+  h+='<div class="tp-desc">Motivacion difusa o fragil. Posiblemente permanece por inercia, aburrimiento o presion externa.</div>';
+  h+='<ul class="tp-traits"><li>⚠ En riesgo de desmotivacion, procrastinacion o abandono.</li>';
+  h+='<li>⚠ Altas posibilidades de problemas en vida personal.</li>';
+  h+='<li>✖ Requiere proceso psicoterapeutico completo.</li></ul>';
+  h+='<div class="tp-tag tptag-r">Requiere atencion urgente</div></div>';
+  h+='</div>';
+  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem 1rem;font-size:.75rem;color:var(--muted);line-height:1.65;">';
+  h+='<strong style="color:var(--text);display:block;margin-bottom:.25rem;">Como leer el perfil</strong>';
+  h+='El perfil es un punto de partida para la sesion, no un diagnostico definitivo. Las orientaciones pueden cambiar con el trabajo de mentalidad.';
+  h+='</div></div>';
+  h+='</div>';
+  document.getElementById('mc-body').innerHTML=h;
+  tqUpdateProgress();
+  tqUpdateResults();
+}
+
+function tqTab(idx){
+  for(var i=0;i<3;i++){
+    var t=document.getElementById('ttab'+i);
+    var p=document.getElementById('tpane'+i);
+    if(t)t.classList.toggle('on',i===idx);
+    if(p)p.classList.toggle('on',i===idx);
+  }
+  if(idx>0)tqUpdateResults();
+}
+
+function tqSelect(n,val){
+  teosqAns[n]=val;
+  for(var i=1;i<=5;i++){
+    var b=document.getElementById('tqb'+n+'_'+i);
+    if(b)b.classList.toggle('on',i===val);
+  }
+  var qi=document.getElementById('tqi'+n);
+  if(qi)qi.classList.add('done');
+  tqUpdateProgress();
+  tqUpdateResults();
+  // Auto-save draft
+  var data={};
+  Object.keys(teosqAns).forEach(function(k){data['teosq_'+k]=teosqAns[k];});
+  saveDraft(teosqLid,data);
+  updateSaveStatus('Borrador guardado','#22C55E');
+}
+
+function tqUpdateProgress(){
+  var count=Object.keys(teosqAns).length;
+  var pf=document.getElementById('tq-prog-fill');
+  var pn=document.getElementById('tq-prog-n');
+  var btn=document.getElementById('tq-send-btn');
+  var note=document.getElementById('tq-send-note');
+  if(pf)pf.style.width=(count/13*100)+'%';
+  if(pn)pn.textContent=count;
+  if(btn)btn.disabled=(count<13);
+  if(note)note.textContent=count<13?'Responde las '+(13-count)+' preguntas restantes':'Tus respuestas seran enviadas a Mauro';
+  if(note)note.style.color=count<13?'var(--dim)':'var(--green)';
+}
+
+function tqCalc(){
+  var egoItems=[1,3,4,6,9,11];
+  var tarItems=[2,5,7,8,10,12,13];
+  var eS=0,eC=0,tS=0,tC=0;
+  egoItems.forEach(function(n){if(teosqAns[n]){eS+=teosqAns[n];eC++;}});
+  tarItems.forEach(function(n){if(teosqAns[n]){tS+=teosqAns[n];tC++;}});
+  return{ego:eC===6?Math.round(eS/6*100)/100:null,tar:tC===7?Math.round(tS/7*100)/100:null};
+}
+
+function tqLevel(s){
+  if(s===null)return{lbl:'—',cls:''};
+  if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',cls:'tlvl-low'};
+  if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',cls:'tlvl-mid'};
+  return{lbl:'Alta ('+s.toFixed(2)+')',cls:'tlvl-hi'};
+}
+
+function tqUpdateResults(){
+  var s=tqCalc();
+  if(s.ego!==null&&s.tar!==null){
+    var el=tqLevel(s.ego),tl=tqLevel(s.tar);
+    var ev=document.getElementById('tq-ego-val'),tv=document.getElementById('tq-tar-val');
+    var elvl=document.getElementById('tq-ego-lvl'),tlvl=document.getElementById('tq-tar-lvl');
+    var eb=document.getElementById('tq-ego-bar'),tb=document.getElementById('tq-tar-bar');
+    if(ev)ev.textContent=s.ego.toFixed(2);
+    if(elvl){elvl.textContent=el.lbl;elvl.className='teosq-sc-lvl '+el.cls;}
+    if(eb)eb.style.width=(s.ego/5*100)+'%';
+    if(tv)tv.textContent=s.tar.toFixed(2);
+    if(tlvl){tlvl.textContent=tl.lbl;tlvl.className='teosq-sc-lvl '+tl.cls;}
+    if(tb)tb.style.width=(s.tar/5*100)+'%';
+    // Profile
+    var eHi=s.ego>=3.0,tHi=s.tar>=3.0;
+    ['tp1','tp2','tp3','tp4'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('on');});
+    var pId,pName;
+    if(!eHi&&tHi){pId='tp1';pName='Tarea alta / Ego baja';}
+    else if(eHi&&!tHi){pId='tp2';pName='Ego alta / Tarea baja';}
+    else if(eHi&&tHi){pId='tp3';pName='Ego alta / Tarea alta';}
+    else{pId='tp4';pName='Ego baja / Tarea baja';}
+    var pEl=document.getElementById(pId);
+    if(pEl)pEl.classList.add('on');
+    var pf=document.getElementById('tq-perfil');
+    if(pf)pf.textContent=pName;
+  }
+}
+
+function tqSubmit(){
+  var s=tqCalc();
+  if(!s.ego||!s.tar)return;
+  var def=EX_DEFS[teosqLid];
+  var user=USERS[S.user];
+  var answers=[];
+  TEOSQ_ITEMS.forEach(function(item){
+    answers.push({fid:'teosq_'+item.n,pregunta:item.t,respuesta:String(teosqAns[item.n]||'')});
+  });
+  answers.push({fid:'teosq_ego',pregunta:'SCORE Orientacion al Ego',respuesta:s.ego.toFixed(2)});
+  answers.push({fid:'teosq_tar',pregunta:'SCORE Orientacion a la Tarea',respuesta:s.tar.toFixed(2)});
+  answers.push({fid:'teosq_perfil',pregunta:'Perfil',respuesta:(function(){var e=s.ego>=3,t=s.tar>=3;return!e&&t?'Tarea alta / Ego baja':e&&!t?'Ego alta / Tarea baja':e&&t?'Ego alta / Tarea alta':'Ego baja / Tarea baja';})()});
+  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,
+    usuario:S.user,unidad:'Unidad 1',ejercicio:'TEOSQ',lid:teosqLid,respuestas:answers};
+  var saved=getLocalSubs();
+  var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});
+  if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}
+  else{saved.push(rec);}
+  localStorage.setItem('pp_submissions',JSON.stringify(saved));
+  markDoneL(teosqLid);
+  var btn=document.getElementById('tq-send-btn');
+  if(btn){btn.textContent='Actualizar envio';btn.style.background='var(--green)';btn.disabled=false;}
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  showToast('TEOSQ enviado a Mauro!');
+  var unit=C.find(function(u){return u.id===S.unitId;});
+  if(unit)renderSidebar(unit);
+  if(rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
 
 document.addEventListener('DOMContentLoaded', function() {
