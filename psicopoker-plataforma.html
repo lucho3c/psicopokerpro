@@ -1082,10 +1082,62 @@ var EX_DEFS = {
    ═══════════════════════════════════════════════ */
 function renderGridExercise(lid, def) {
   var draft = loadDraft(lid);
-  var h = '<div class="ex-wrap">';
-  h += '<div class="ex-header"><div class="ex-badge">Ejercicio interactivo</div>';
-  h += '<p class="ex-desc">Complete cada celda con la actividad que realizas en ese horario. El borrador se guarda automaticamente.</p></div>';
+  // Load saved hour config or use defaults
+  var startH = (draft && draft.startHour) ? parseInt(draft.startHour) : 7;
+  var endH   = (draft && draft.endHour)   ? parseInt(draft.endHour)   : 23;
 
+  function buildHours(s, e) {
+    var hrs = [];
+    for (var h = s; h <= e; h++) hrs.push(h + ':00');
+    return hrs;
+  }
+  var hours = buildHours(startH, endH);
+  var days  = def.days || ['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
+
+  function buildRows(hrs, dr) {
+    var r = '';
+    hrs.forEach(function(hr) {
+      r += '<tr><td class="hour-cell">' + hr + '</td>';
+      days.forEach(function(d, di) {
+        var fid = 'g_' + hr.replace(':', '') + '_' + di;
+        var saved = dr && dr[fid] ? dr[fid] : '';
+        r += '<td><input class="gcell" type="text" data-fid="' + fid + '" value="' + saved.replace(/"/g,'&quot;') + '" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\'' + lid + '\')" onfocus="colorCell(this)"></td>';
+      });
+      r += '</tr>';
+    });
+    return r;
+  }
+
+  // Hour options
+  function hrOpts(selected, min, max) {
+    var s = '';
+    for (var h = min; h <= max; h++) {
+      s += '<option value="' + h + '"' + (h === selected ? ' selected' : '') + '>' + h + ':00</option>';
+    }
+    return s;
+  }
+
+  var h = '<div class="ex-wrap">';
+  h += '<div class="ex-header"><div class="ex-badge">Ejercicio interactivo — Planilla semanal</div>';
+  h += '<p class="ex-desc">Completá cada celda con lo que hacés en ese horario durante la semana.</p></div>';
+
+  // Hour range config
+  h += '<div style="display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;">';
+  h += '<span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Franja horaria:</span>';
+  h += '<div style="display:flex;align-items:center;gap:.5rem;">';
+  h += '<label style="font-size:.72rem;color:var(--muted);">Desde</label>';
+  h += '<select id="grid-start-hr_' + lid + '" onchange="updateGridRows(\'' + lid + '\')" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.35rem .6rem;border-radius:4px;outline:none;cursor:pointer;">';
+  h += hrOpts(startH, 0, 22);
+  h += '</select>';
+  h += '<label style="font-size:.72rem;color:var(--muted);">hasta</label>';
+  h += '<select id="grid-end-hr_' + lid + '" onchange="updateGridRows(\'' + lid + '\')" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.35rem .6rem;border-radius:4px;outline:none;cursor:pointer;">';
+  h += hrOpts(endH, 1, 23);
+  h += '</select>';
+  h += '</div>';
+  h += '<span style="font-size:.68rem;color:var(--dim);">Podés ajustarlo a tu rutina personal</span>';
+  h += '</div>';
+
+  // Categories
   h += '<div class="cat-row">';
   var cats = [['#E8312A','Poker'],['#3B82F6','Estudio'],['#22C55E','Familia'],['#F59E0B','Ocio'],['#8B5CF6','Trabajo'],['#EC4899','Descanso'],['#6B7280','Otro']];
   cats.forEach(function(c) {
@@ -1094,42 +1146,66 @@ function renderGridExercise(lid, def) {
   });
   h += '</div>';
 
+  // Grid table
   h += '<div class="grid-scroll"><table class="week-table"><thead><tr><th>Hora</th>';
-  def.days.forEach(function(d) { h += '<th>' + d + '</th>'; });
-  h += '</tr></thead><tbody>';
-  def.hours.forEach(function(hr) {
-    h += '<tr><td class="hour-cell">' + hr + '</td>';
-    def.days.forEach(function(d, di) {
-      var fid = 'g_' + hr.replace(':','') + '_' + di;
-      var saved = draft && draft[fid] ? draft[fid] : '';
-      h += '<td><input class="gcell" type="text" data-fid="' + fid + '" value="' + saved + '" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\'' + lid + '\')" onfocus="colorCell(this)"></td>';
-    });
-    h += '</tr>';
-  });
+  days.forEach(function(d) { h += '<th>' + d + '</th>'; });
+  h += '</tr></thead><tbody id="grid-tbody-' + lid + '">';
+  h += buildRows(hours, draft);
   h += '</tbody></table></div>';
 
+  // Reflexion
   h += '<div class="ex-reflex"><p class="ex-reflex-title">Reflexion sobre la semana</p>';
-  def.reflexion.forEach(function(r) {
+  (def.reflexion || []).forEach(function(r) {
     var saved = draft && draft[r.fid] ? draft[r.fid] : '';
     h += '<div class="ex-q"><p class="ex-ql">' + r.label + '</p>';
     h += '<textarea class="ex-ta" data-fid="' + r.fid + '" oninput="triggerAutoSave(\'' + lid + '\')" placeholder="Escribi tu respuesta...">' + saved + '</textarea></div>';
   });
   h += '</div>';
 
-  var allQ = def.reflexion.concat([]);
-  def.hours.forEach(function(hr) {
-    def.days.forEach(function(d, di) {
-      allQ.push({ fid: 'g_' + hr.replace(':','') + '_' + di, label: hr + ' - ' + d });
-    });
-  });
-
   h += '<div class="ex-submit-row">';
   h += '<button class="btn-ex-send" id="btn-ex-' + lid + '" onclick="doSubmit(\'' + lid + '\')">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   h += ' Enviar a Mauro</button>';
-  h += '<p class="ex-submit-note">Se enviara a la planilla de seguimiento de Mauro</p>';
+  h += '<p class="ex-submit-note">Se enviara a Mauro con tu planilla completa</p>';
   h += '</div></div>';
   return h;
+}
+
+function updateGridRows(lid) {
+  var def = EX_DEFS[lid];
+  if (!def) return;
+  var startSel = document.getElementById('grid-start-hr_' + lid);
+  var endSel   = document.getElementById('grid-end-hr_' + lid);
+  if (!startSel || !endSel) return;
+  var startH = parseInt(startSel.value);
+  var endH   = parseInt(endSel.value);
+  if (startH >= endH) { endSel.value = startH + 1; endH = startH + 1; }
+
+  // Save current values first
+  collectAndSave(lid);
+  var draft = loadDraft(lid) || {};
+  draft.startHour = startH;
+  draft.endHour   = endH;
+  saveDraft(lid, draft);
+
+  var days = def.days || ['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
+  var hours = [];
+  for (var hh = startH; hh <= endH; hh++) hours.push(hh + ':00');
+
+  var tbody = document.getElementById('grid-tbody-' + lid);
+  if (!tbody) return;
+  var rows = '';
+  hours.forEach(function(hr) {
+    rows += '<tr><td class="hour-cell">' + hr + '</td>';
+    days.forEach(function(d, di) {
+      var fid = 'g_' + hr.replace(':', '') + '_' + di;
+      var saved = draft[fid] ? draft[fid].replace(/"/g,'&quot;') : '';
+      rows += '<td><input class="gcell" type="text" data-fid="' + fid + '" value="' + saved + '" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\'' + lid + '\')" onfocus="colorCell(this)"'+(saved?' style="background:'+activeCatColor+'22;color:'+activeCatColor+';"':'')+' ></td>';
+    });
+    rows += '</tr>';
+  });
+  tbody.innerHTML = rows;
+  updateSaveStatus('Horario actualizado', '#22C55E');
 }
 
 function renderFormExercise(lid, def) {
@@ -1699,6 +1775,7 @@ function showPatient(usuario) {
     exs.forEach(function(ej, idx) {
       var eid = 'ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
       var isTeosq = ej.lid==='u1l5' || (ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf('teosq')!==-1);
+      var isGrid  = ej.lid==='u1l1' || ej.lid==='u3l6' || (ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&r.fid.match(/^g_\d+_\d+$/);}));
       h += '<div class="sub-card">';
 
       if (isTeosq) {
@@ -1751,13 +1828,15 @@ function showPatient(usuario) {
 
   // Render TEOSQ admin views after DOM insertion
   teosqAdminQueue.forEach(function(item) {
-    renderTEOSQAdminView(item.ej, item.eid);
+    if (item.type === 'teosq') renderTEOSQAdminView(item.ej, item.eid);
+    else if (item.type === 'grid') renderGridAdminView(item.ej, item.eid);
   });
   teosqAdminQueue = [];
 
   // Render TEOSQ admin views after DOM insertion
   teosqAdminQueue.forEach(function(item) {
-    renderTEOSQAdminView(item.ej, item.eid);
+    if (item.type === 'teosq') renderTEOSQAdminView(item.ej, item.eid);
+    else if (item.type === 'grid') renderGridAdminView(item.ej, item.eid);
   });
   teosqAdminQueue = [];
 }
@@ -2405,6 +2484,78 @@ function admTqTab(uid, idx) {
       }
     },50);
   }
+}
+
+
+function renderGridAdminView(ej, containerId) {
+  var resps = ej.respuestas || [];
+  var days = ['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
+  var gridCells = resps.filter(function(r){ return r.fid && r.fid.match(/^g_\d+_\d+$/); });
+  var reflCells = resps.filter(function(r){ return !r.fid || !r.fid.match(/^g_\d+_\d+$/); });
+
+  // Build a map: hour -> {dayIndex -> value}
+  var schedule = {};
+  gridCells.forEach(function(r) {
+    var m = r.fid.match(/^g_(\d+)_(\d+)$/);
+    if (!m) return;
+    var hrRaw = m[1]; // e.g. '700', '1500'
+    var di = parseInt(m[2]);
+    var hrDisp = hrRaw.length === 3 ? hrRaw[0] + ':00' : hrRaw.substring(0,2) + ':00';
+    if (!schedule[hrDisp]) schedule[hrDisp] = {};
+    schedule[hrDisp][di] = r.respuesta || '';
+  });
+
+  var hours = Object.keys(schedule).sort(function(a,b){
+    return parseInt(a.replace(':00','')) - parseInt(b.replace(':00',''));
+  });
+
+  var h = '<div style="padding:.5rem;">';
+
+  if (hours.length === 0 && reflCells.filter(function(r){return r.respuesta&&r.respuesta.trim();}).length === 0) {
+    h += '<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado pero sin datos registrados en esta vista.</p>';
+  } else {
+    // Grid table
+    if (hours.length > 0) {
+      h += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;">Planilla semanal ('+hours.length+' franjas horarias)</div>';
+      h += '<div style="overflow-x:auto;margin-bottom:1.25rem;">';
+      h += '<table style="width:100%;border-collapse:collapse;min-width:500px;">';
+      h += '<thead><tr>';
+      h += '<th style="background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.5rem .5rem .5rem .85rem;text-align:left;color:var(--muted);border-bottom:1px solid var(--border);width:52px;">Hora</th>';
+      days.forEach(function(d) {
+        h += '<th style="background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.5rem .35rem;text-align:center;color:var(--muted);border-bottom:1px solid var(--border);">' + d + '</th>';
+      });
+      h += '</tr></thead><tbody>';
+      hours.forEach(function(hr, hi) {
+        h += '<tr style="' + (hi%2===0?'background:rgba(255,255,255,.01);':'') + '">';
+        h += '<td style="font-size:.68rem;font-weight:700;color:var(--dim);padding:.35rem .5rem .35rem .85rem;border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap;">' + hr + '</td>';
+        days.forEach(function(d, di) {
+          var val = (schedule[hr] && schedule[hr][di]) ? schedule[hr][di] : '';
+          h += '<td style="border-bottom:1px solid rgba(255,255,255,.04);border-left:1px solid rgba(255,255,255,.04);padding:.3rem .35rem;text-align:center;">';
+          if (val) {
+            h += '<span style="font-size:.7rem;font-weight:600;color:var(--text);background:rgba(232,49,42,.12);border:1px solid rgba(232,49,42,.2);border-radius:3px;padding:.15rem .4rem;display:inline-block;">' + val + '</span>';
+          }
+          h += '</td>';
+        });
+        h += '</tr>';
+      });
+      h += '</tbody></table></div>';
+    }
+
+    // Reflection questions
+    var hasRefl = reflCells.some(function(r){ return r.respuesta&&r.respuesta.trim(); });
+    if (hasRefl) {
+      h += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;">Reflexion</div>';
+      reflCells.forEach(function(r) {
+        if (r.respuesta && r.respuesta.trim()) {
+          h += '<div class="sub-q"><div class="sub-ql">' + (r.pregunta||'') + '</div>';
+          h += '<div class="sub-ans">' + r.respuesta + '</div></div>';
+        }
+      });
+    }
+  }
+
+  h += '</div>';
+  document.getElementById(containerId).innerHTML = h;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
