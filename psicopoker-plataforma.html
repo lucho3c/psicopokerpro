@@ -1607,7 +1607,7 @@ function renderAdminPanel(subs){
   subs.forEach(function(s){var key=(s.usuario||'?')+'|'+(s.lid||s.ejercicio||'?');if(!latest[key]||(s.ts||0)>(latest[key].ts||0))latest[key]=s;});
   var patients={};
   Object.values(latest).forEach(function(s){var k=s.usuario||s.jugador||'?';if(!patients[k])patients[k]={nombre:s.jugador||k,usuario:k,ejercicios:[],lastTs:0};patients[k].ejercicios.push(s);if((s.ts||0)>patients[k].lastTs)patients[k].lastTs=s.ts||0;});
-  adminData=Object.values(patients).sort(function(a,b){if(b.lastTs!==a.lastTs)return b.lastTs-a.lastTs;return a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'});});
+  adminData=Object.values(patients).sort(function(a,b){return a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'});});
   renderPatientList('');
   if(!activePatient&&adminData.length>0)showPatient(adminData[0].usuario);
   else if(activePatient)showPatient(activePatient);
@@ -1620,7 +1620,7 @@ function renderPatientList(filter){
   if(!adminData.length){if(plist)plist.innerHTML='<div style="padding:1.25rem 1.1rem;font-size:.78rem;color:var(--dim);">Sin respuestas todavia.</div>';var ac=document.getElementById('admin-content');if(ac)ac.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:4rem 2rem;"><div style="font-size:3rem;opacity:.08;margin-bottom:1rem;">&#128101;</div><p style="font-size:.9rem;font-weight:700;margin-bottom:.4rem;">Sin pacientes todavia</p></div>';return;}
   if(!filtered.length){if(plist)plist.innerHTML='<div style="padding:1.1rem;font-size:.75rem;color:var(--dim);">Ningun resultado.</div>';return;}
   var h='';
-  filtered.forEach(function(p){var n=p.ejercicios.length,active=p.usuario===activePatient;h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showPatient(\''+p.usuario+'\')">';h+='<div style="display:flex;align-items:center;gap:.65rem;"><div style="width:28px;height:28px;border-radius:50%;background:'+(active?'var(--red)':'var(--card2)')+';display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:'+(active?'#fff':'var(--muted)')+';flex-shrink:0;">'+(p.nombre[0]||'?').toUpperCase()+'</div>';h+='<div><div class="aei-name">'+p.nombre+'</div><div class="aei-count">'+n+' ejercicio'+(n!==1?'s':'')+' completado'+(n!==1?'s':'')+'</div></div></div></div>';});
+  filtered.forEach(function(p){var n=p.ejercicios.length,active=p.usuario===activePatient;h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showPatient(\''+p.usuario+'\')">';h+='<div style="display:flex;align-items:center;gap:.65rem;"><div style="width:28px;height:28px;border-radius:50%;background:'+(active?'var(--red)':'var(--card2)')+';display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:'+(active?'#fff':'var(--muted)')+';flex-shrink:0;">'+(p.nombre[0]||'?').toUpperCase()+'</div>';var lastDate=(p.ejercicios.length?p.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;}).fecha||'':'').substring(0,10);h+='<div><div class="aei-name">'+p.nombre+'</div><div class="aei-count">'+n+' ejercicio'+(n!==1?'s':'')+' &nbsp;&middot;&nbsp; '+(lastDate||'sin envios')+'</div></div></div></div>';});
   if(plist)plist.innerHTML=h;
 }
 
