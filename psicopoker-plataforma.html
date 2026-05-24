@@ -416,6 +416,9 @@ var USERS_BASE = {
   arturo: { pass: 'psico2025', name: 'Arturo Tomaselli', role: 'admin' },
   demo:   { pass: 'demo123',   name: 'Player Demo' }
 };
+function getExtraUsers(){try{return JSON.parse(localStorage.getItem('pp_extra_users')||'{}');}catch(e){return{};}}
+function getAllUsers(){var all=Object.assign({},USERS_BASE);var extra=getExtraUsers();Object.keys(extra).forEach(function(k){all[k]=extra[k];});return all;}
+var USERS=getAllUsers();
 
 /* ═══════════════════════════════════════════════
    GOOGLE SHEETS — no tocar
