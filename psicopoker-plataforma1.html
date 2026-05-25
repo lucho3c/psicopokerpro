@@ -2907,47 +2907,26 @@ function renderPMTExercise(lid) {
   // ── PANE 1: resultados ────────────────────
   h += '<div class="teosq-pane" id="pmt-tpane-1" style="padding:1.25rem;">';
 
-  // Score cards (igual estilo que TEOSQ)
-  h += '<div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">';
-
-  function scoreCard(prefix, label, color) {
-    return '<div class="tq-sc-card" style="border-top:3px solid ' + color + ';min-width:160px;">' +
-      '<div style="font-size:.58rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem;">' + label + '</div>' +
-      '<div class="tq-sc-val" id="pmt-v-' + prefix + '">—</div>' +
-      '<div class="tq-sc-bar"><div class="tq-sc-fill" id="pmt-b-' + prefix + '" style="width:0%;background:' + color + '"></div></div>' +
-      '<div class="teosq-sc-lvl" id="pmt-l-' + prefix + '">—</div>' +
-    '</div>';
-  }
-
-  h += scoreCard('cap1',   'Cap. de decisión',  'var(--red)');
-  h += scoreCard('cap2',   'Cap. de volumen',    '#F59E0B');
-  h += scoreCard('global', 'Global Mindset',     'var(--green)');
+  // Dos cards de capacidad
+  h += '<div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">';
+  h += '<div class="tq-sc-card" style="border-top:3px solid var(--red);flex:1;min-width:140px;">';
+  h += '<div style="font-size:.58rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem;">Cap. de decisión</div>';
+  h += '<div class="tq-sc-val" id="pmt-v-cap1">—</div>';
+  h += '<div class="tq-sc-bar"><div class="tq-sc-fill" id="pmt-b-cap1" style="width:0%;background:var(--red)"></div></div>';
+  h += '<div class="teosq-sc-lvl" id="pmt-l-cap1">—</div></div>';
+  h += '<div class="tq-sc-card" style="border-top:3px solid #F59E0B;flex:1;min-width:140px;">';
+  h += '<div style="font-size:.58rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem;">Cap. de volumen</div>';
+  h += '<div class="tq-sc-val" id="pmt-v-cap2">—</div>';
+  h += '<div class="tq-sc-bar"><div class="tq-sc-fill" id="pmt-b-cap2" style="width:0%;background:#F59E0B"></div></div>';
+  h += '<div class="teosq-sc-lvl" id="pmt-l-cap2">—</div></div>';
   h += '</div>';
 
-  // Tabla de ítems individuales
-  function itemsTable(title, items) {
-    var out = '<div style="margin-bottom:1.25rem;">';
-    out += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem;padding-bottom:.35rem;border-bottom:1px solid var(--border);">' + title + '</div>';
-    items.forEach(function(it) {
-      var savedN = draft[it.fid + '_n'] ? parseFloat(draft[it.fid + '_n']) : null;
-      var savedJ = draft[it.fid + '_j'] || '';
-      var color  = savedN === null ? 'var(--dim)' : savedN < 4 ? '#60A5FA' : savedN < 7 ? '#FCD34D' : '#4ADE80';
-      var pct    = savedN !== null ? savedN * 10 : 0;
-      out += '<div style="display:flex;align-items:center;gap:.75rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04);">';
-      out += '<span style="font-size:.78rem;flex:1;color:var(--text);">' + it.label + '</span>';
-      out += '<div style="width:80px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;"><div style="height:100%;width:' + pct + '%;background:' + color + ';border-radius:2px;transition:width .4s;"></div></div>';
-      out += '<span style="font-size:.82rem;font-weight:800;color:' + color + ';min-width:24px;text-align:right;">' + (savedN !== null ? savedN : '—') + '</span>';
-      out += '</div>';
-      if (savedJ) out += '<div style="font-size:.71rem;color:var(--muted);padding:.2rem .5rem .4rem;border-left:2px solid rgba(255,255,255,.08);margin-left:0;line-height:1.5;">' + savedJ + '</div>';
-    });
-    out += '</div>';
-    return out;
-  }
-
-  h += '<div id="pmt-results-items">';
-  h += itemsTable('1) Tomar buenas decisiones', PMT_ITEMS.sec1);
-  h += itemsTable('2) Tener buena disponibilidad de recursos', PMT_ITEMS.sec2a);
-  h += itemsTable('3) Administrarlos eficazmente', PMT_ITEMS.sec2b);
+  // Global Mindset — destacado
+  h += '<div style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.22);border-top:3px solid var(--green);border-radius:6px;padding:1.1rem 1.25rem;text-align:center;">';
+  h += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:.3rem;">Puntaje Global Mindset Actual</div>';
+  h += '<div class="tq-sc-val" id="pmt-v-global" style="font-size:2.8rem;">—</div>';
+  h += '<div class="tq-sc-bar" style="max-width:260px;margin:.6rem auto .4rem;"><div class="tq-sc-fill" id="pmt-b-global" style="width:0%;background:var(--green)"></div></div>';
+  h += '<div class="teosq-sc-lvl" id="pmt-l-global">—</div>';
   h += '</div>';
 
   h += '</div>'; // pane 1
