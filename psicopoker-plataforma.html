@@ -1939,22 +1939,125 @@ function buildExPDF(ej){
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
 
   if(isTeosq){
-    var ego=null,tar=null,perf=null;
+    var ego=null,tar=null,perf=null,ans={};
     resps.forEach(function(r){
-      if(r.fid==='teosq_ego')ego=parseFloat(r.respuesta);
-      if(r.fid==='teosq_tar')tar=parseFloat(r.respuesta);
-      if(r.fid==='teosq_perfil')perf=r.respuesta;
+      if(!r.fid)return;
+      if(r.fid==='teosq_ego'){ego=parseFloat(r.respuesta);return;}
+      if(r.fid==='teosq_tar'){tar=parseFloat(r.respuesta);return;}
+      if(r.fid==='teosq_perfil'){perf=r.respuesta;return;}
+      var m=r.fid.match(/^teosq_(\d+)$/);
+      if(m)ans[parseInt(m[1])]=parseInt(r.respuesta)||0;
     });
+
+    var ITEMS=[
+      {n:1, t:'...soy el/la \u00fanico/a que puede hacer la jugada.',         cat:'E'},
+      {n:2, t:'...aprendo una nueva habilidad y me impulsa a practicar m\u00e1s.', cat:'R'},
+      {n:3, t:'...yo puedo hacerlo mejor que mis compa\u00f1eros/as.',           cat:'E'},
+      {n:4, t:'...los otros no pueden hacerlo tan bien como yo.',              cat:'E'},
+      {n:5, t:'...aprendo algo que es divertido.',                             cat:'R'},
+      {n:6, t:'...otros fallan y yo no.',                                      cat:'E'},
+      {n:7, t:'...aprendo una nueva habilidad esforz\u00e1ndome mucho.',          cat:'R'},
+      {n:8, t:'...trabajo realmente duro.',                                    cat:'R'},
+      {n:9, t:'...consigo m\u00e1s puntos, goles, golpes, etc. que todos.',      cat:'E'},
+      {n:10,t:'...algo que he aprendido me impulsa a practicar m\u00e1s.',        cat:'R'},
+      {n:11,t:'...soy el/la mejor.',                                           cat:'E'},
+      {n:12,t:'...noto que una habilidad que he aprendido funciona.',           cat:'R'},
+      {n:13,t:'...pongo todo lo que est\u00e1 de mi parte.',                      cat:'R'}
+    ];
+    var SCALE=['Tot.\nDesacuerdo','En\nDesacuerdo','Ni/ni','De\nAcuerdo','Tot.\nAcuerdo'];
+
+    /* ── Sección 1: Cuestionario ── */
+    h+='<div style="padding:6px 12px 4px;background:#f8f8f8;border-bottom:1px solid #e8e8e8;">';
+    h+='<div style="font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;">1. Cuestionario</div>';
+    h+='<div style="font-size:7.5px;color:#999;margin-top:1px;">Yo me siento con m\u00e1s \u00e9xito en el deporte cuando...</div>';
+    h+='</div>';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:8px;">';
+    h+='<thead><tr style="background:#f5f5f5;">';
+    h+='<th style="padding:4px 5px;border:1px solid #ddd;width:18px;text-align:center;font-size:7px;">#</th>';
+    h+='<th style="padding:4px 6px;border:1px solid #ddd;text-align:left;font-size:7px;">Item</th>';
+    SCALE.forEach(function(l){
+      h+='<th style="padding:3px 2px;border:1px solid #ddd;text-align:center;font-size:6.5px;width:46px;line-height:1.2;">'+l.replace('\n','<br>')+'</th>';
+    });
+    h+='</tr></thead><tbody>';
+    ITEMS.forEach(function(item,ix){
+      var v=ans[item.n]||0;
+      var rowBg=v?(ix%2===0?'background:#fff8f8;':'background:#fff5f5;'):(ix%2===0?'background:#fff;':'background:#fafafa;');
+      h+='<tr style="'+rowBg+'">';
+      h+='<td style="padding:4px 5px;border:1px solid #eee;text-align:center;font-weight:700;color:#aaa;font-size:7.5px;">'+item.n+'</td>';
+      h+='<td style="padding:4px 6px;border:1px solid #eee;line-height:1.45;font-size:8px;">'+item.t+'</td>';
+      for(var i=1;i<=5;i++){
+        var sel=v===i;
+        h+='<td style="padding:4px 2px;border:1px solid #eee;text-align:center;'+(sel?'background:#E8312A;':'background:transparent;')+'">';
+        if(sel){
+          h+='<span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#fff;border:2px solid rgba(255,255,255,.8);box-shadow:0 0 0 1px #E8312A;"></span>';
+        } else {
+          h+='<span style="display:inline-block;width:11px;height:11px;border-radius:50%;border:1.5px solid #ccc;background:#fff;"></span>';
+        }
+        h+='</td>';
+      }
+      h+='</tr>';
+    });
+    h+='</tbody></table>';
+
+    /* ── Sección 2: Resultados ── */
+    h+='<div style="padding:6px 12px 4px;background:#f8f8f8;border-bottom:1px solid #e8e8e8;border-top:2px solid #E8312A;margin-top:4px;">';
+    h+='<div style="font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;">2. Resultados</div>';
+    h+='</div>';
     if(ego!==null&&tar!==null){
-      h+='<div class="tscores">';
-      h+='<div class="tscore-box"><div class="tscore-lbl">Orientacion al Ego</div><div class="tscore-val">'+ego.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(ego)+'">'+pdfLvlLbl(ego)+'</div></div>';
-      h+='<div class="tscore-box"><div class="tscore-lbl">Orientacion a la Tarea</div><div class="tscore-val">'+tar.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(tar)+'">'+pdfLvlLbl(tar)+'</div></div>';
+      function lvlData(s){
+        if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',bg:'#e8f4ff',fg:'#2980b9',bar:'#3B82F6'};
+        if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',bg:'#fef9e7',fg:'#d68910',bar:'#F59E0B'};
+        return{lbl:'Alta ('+s.toFixed(2)+')',bg:'#eafaf1',fg:'#1e8449',bar:'#22C55E'};
+      }
+      var eld=lvlData(ego),tld=lvlData(tar);
+      h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 12px;">';
+      /* Ego */
+      h+='<div style="border:1px solid #e8e8e8;border-radius:5px;padding:8px 10px;">';
+      h+='<div style="font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:4px;">ORIENTACI\u00d3N AL EGO</div>';
+      h+='<div style="font-size:26px;font-weight:800;color:#E8312A;line-height:1;">'+ego.toFixed(2)+'</div>';
+      h+='<div style="margin:4px 0;"><span style="font-size:7.5px;font-weight:700;padding:2px 7px;border-radius:10px;background:'+eld.bg+';color:'+eld.fg+';">'+eld.lbl+'</span></div>';
+      h+='<div style="height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden;margin-top:5px;">';
+      h+='<div style="height:100%;background:'+eld.bar+';border-radius:3px;width:'+(ego/5*100)+'%;"></div></div>';
+      h+='<div style="font-size:7px;color:#bbb;margin-top:4px;">Items 1,3,4,6,9,11 \u00f7 6</div>';
+      h+='</div>';
+      /* Tarea */
+      h+='<div style="border:1px solid #e8e8e8;border-radius:5px;padding:8px 10px;">';
+      h+='<div style="font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:4px;">ORIENTACI\u00d3N A LA TAREA</div>';
+      h+='<div style="font-size:26px;font-weight:800;color:#16a34a;line-height:1;">'+tar.toFixed(2)+'</div>';
+      h+='<div style="margin:4px 0;"><span style="font-size:7.5px;font-weight:700;padding:2px 7px;border-radius:10px;background:'+tld.bg+';color:'+tld.fg+';">'+tld.lbl+'</span></div>';
+      h+='<div style="height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden;margin-top:5px;">';
+      h+='<div style="height:100%;background:'+tld.bar+';border-radius:3px;width:'+(tar/5*100)+'%;"></div></div>';
+      h+='<div style="font-size:7px;color:#bbb;margin-top:4px;">Items 2,5,7,8,10,12,13 \u00f7 7</div>';
+      h+='</div>';
       h+='</div>';
     }
-    if(perf)h+='<div class="profile-box"><div class="profile-name">Perfil: '+perf+'</div></div>';
-    resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){
-      h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';
+
+    /* ── Sección 3: Interpretación ── */
+    h+='<div style="padding:6px 12px 4px;background:#f8f8f8;border-bottom:1px solid #e8e8e8;border-top:2px solid #E8312A;">';
+    h+='<div style="font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;">3. Interpretaci\u00f3n</div>';
+    h+='</div>';
+    var PROFS=[
+      {key:'Tarea alta / Ego baja', icon:'\uD83D\uDFE2', border:'#22C55E', bg:'#f0fdf4', desc:'Motivaci\u00f3n s\u00f3lida y aut\u00f3noma. Se enfoca en mejorar, aprender y sostener rendimiento.', tag:'Perfil favorable'},
+      {key:'Ego alta / Tarea baja',  icon:'\uD83D\uDD25', border:'#E8312A', bg:'#fff5f5', desc:'Busca demostrar valor y validarse. Riesgo de frustraci\u00f3n ante errores.', tag:'Incompatible con Mindset Ganador'},
+      {key:'Ego alta / Tarea alta',  icon:'\uD83E\uDDE8', border:'#F59E0B', bg:'#fffbeb', desc:'Fuerte ambici\u00f3n combinada con compromiso. Excelente si se regula bien.', tag:'Perfil complejo'},
+      {key:'Ego baja / Tarea baja',  icon:'\uD83D\uDCA4', border:'#6B7280', bg:'#f9fafb', desc:'Motivaci\u00f3n difusa. En riesgo de desmotivaci\u00f3n y abandono.', tag:'Requiere atenci\u00f3n urgente'}
+    ];
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:8px 12px;">';
+    PROFS.forEach(function(p){
+      var isActive=perf&&perf.indexOf(p.key)!==-1;
+      var cardBg=isActive?p.bg:'#fff';
+      var cardBorder=isActive?p.border+'80':'#e8e8e8';
+      var opacity=isActive?'1':'.55';
+      h+='<div style="border:1.5px solid '+cardBorder+';border-radius:5px;padding:8px 9px;background:'+cardBg+';opacity:'+opacity+';">';
+      h+='<div style="font-size:11px;margin-bottom:3px;">'+p.icon+'</div>';
+      h+='<div style="font-size:8px;font-weight:800;margin-bottom:3px;color:#1a1a2e;">'+p.key+'</div>';
+      h+='<div style="font-size:7.5px;color:#555;line-height:1.5;margin-bottom:4px;">'+p.desc+'</div>';
+      h+='<div style="font-size:6.5px;font-weight:700;padding:1.5px 6px;border-radius:10px;display:inline-block;background:'+(isActive?p.border+'20':'#f0f0f0')+';color:'+(isActive?p.border:'#888')+';">'+p.tag+'</div>';
+      if(isActive)h+='<div style="font-size:7px;font-weight:700;color:'+p.border+';margin-top:3px;">\u2713 Perfil del paciente</div>';
+      h+='</div>';
     });
+    h+='</div>';
+
 
   }else if(isGrid){
     var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
