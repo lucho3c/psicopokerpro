@@ -1937,25 +1937,80 @@ function buildExPDF(ej){
   var isTeosq=ej.lid==='u1l5'||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf('teosq')!==-1);
   var isGrid=resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
+
   if(isTeosq){
     var ego=null,tar=null,perf=null;
-    resps.forEach(function(r){if(r.fid==='teosq_ego')ego=parseFloat(r.respuesta);if(r.fid==='teosq_tar')tar=parseFloat(r.respuesta);if(r.fid==='teosq_perfil')perf=r.respuesta;});
-    if(ego!==null&&tar!==null){h+='<div class="tscores"><div class="tscore-box"><div class="tscore-lbl">Orientacion al Ego</div><div class="tscore-val">'+ego.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(ego)+'">'+pdfLvlLbl(ego)+'</div></div><div class="tscore-box"><div class="tscore-lbl">Orientacion a la Tarea</div><div class="tscore-val">'+tar.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(tar)+'">'+pdfLvlLbl(tar)+'</div></div></div>';}
+    resps.forEach(function(r){
+      if(r.fid==='teosq_ego')ego=parseFloat(r.respuesta);
+      if(r.fid==='teosq_tar')tar=parseFloat(r.respuesta);
+      if(r.fid==='teosq_perfil')perf=r.respuesta;
+    });
+    if(ego!==null&&tar!==null){
+      h+='<div class="tscores">';
+      h+='<div class="tscore-box"><div class="tscore-lbl">Orientacion al Ego</div><div class="tscore-val">'+ego.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(ego)+'">'+pdfLvlLbl(ego)+'</div></div>';
+      h+='<div class="tscore-box"><div class="tscore-lbl">Orientacion a la Tarea</div><div class="tscore-val">'+tar.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(tar)+'">'+pdfLvlLbl(tar)+'</div></div>';
+      h+='</div>';
+    }
     if(perf)h+='<div class="profile-box"><div class="profile-name">Perfil: '+perf+'</div></div>';
-    resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';});
+    resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){
+      h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';
+    });
+
   }else if(isGrid){
     var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
-    var reflCells=resps.filter(function(r){return!r.fid||!/^g_\d+_\d+$/.test(r.fid);});
+    var reflCells=resps.filter(function(r){return r.fid&&!/^g_/.test(r.fid)&&r.fid!=='_startHour'&&r.fid!=='_endHour';});
     var days=['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
-    var sc={};gridCells.forEach(function(r){var m=r.fid.match(/^g_(\d+)_(\d+)$/);if(!m)return;var hr=m[1].length===3?m[1][0]+':00':m[1].substring(0,2)+':00';var di=parseInt(m[2]);if(!sc[hr])sc[hr]={};sc[hr][di]=r.respuesta||'';});
+    var sc={};
+    gridCells.forEach(function(r){
+      var m=r.fid.match(/^g_(\d+)_(\d+)$/);if(!m)return;
+      var raw=m[1],hr=raw.length===3?raw[0]+':00':raw.substring(0,2)+':00',di=parseInt(m[2]);
+      if(!sc[hr])sc[hr]={};
+      sc[hr][di]={val:r.respuesta||'',color:r.color||''};
+    });
     var hrs=Object.keys(sc).sort(function(a,b){return parseInt(a)-parseInt(b);});
-    if(hrs.length>0){h+='<table class="gtable"><thead><tr><th>Hora</th>';days.forEach(function(d){h+='<th>'+d+'</th>';});h+='</tr></thead><tbody>';hrs.forEach(function(hr){h+='<tr><td class="hcol">'+hr+'</td>';days.forEach(function(d,di){var v=(sc[hr]&&sc[hr][di])||'';h+='<td>'+(v?'<span class="gval">'+v+'</span>':'')+'</td>';});h+='</tr>';});h+='</tbody></table>';}
-    reflCells.forEach(function(r){if(r.respuesta&&r.respuesta.trim())h+='<div class="qa-row"><div class="qa-q">'+r.pregunta+'</div><div class="qa-a">'+r.respuesta+'</div></div>';});
+    if(hrs.length>0){
+      h+='<table class="gtable"><thead><tr><th style="width:44px;">Hora</th>';
+      days.forEach(function(d){h+='<th>'+d+'</th>';});
+      h+='</tr></thead><tbody>';
+      hrs.forEach(function(hr,hi){
+        h+='<tr style="'+(hi%2===0?'background:#fafafa;':'')+'"><td class="hcol">'+hr+'</td>';
+        days.forEach(function(d,di){
+          var cell=sc[hr]&&sc[hr][di],val=cell?cell.val:'',clr=cell?cell.color:'';
+          if(val){
+            var bg=clr?clr+'28':'#fff0ee';
+            var fg=clr||'#c0392b';
+            var bdr=clr?clr+'66':'#f5a89e';
+            h+='<td><span style="background:'+bg+';color:'+fg+';border:1px solid '+bdr+';border-radius:3px;padding:2px 5px;display:inline-block;font-weight:600;font-size:9px;">'+val+'</span></td>';
+          }else{
+            h+='<td></td>';
+          }
+        });
+        h+='</tr>';
+      });
+      h+='</tbody></table>';
+    }
+    reflCells.forEach(function(r){
+      if(r.respuesta&&r.respuesta.trim())
+        h+='<div class="qa-row"><div class="qa-q">'+(r.pregunta||'')+'</div><div class="qa-a">'+r.respuesta+'</div></div>';
+    });
+
   }else{
-    resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()&&r.fid&&!/^teosq_/.test(r.fid))h+='<div class="qa-row"><div class="qa-q">'+(r.pregunta||'')+'</div><div class="qa-a">'+r.respuesta+'</div></div>';});
+    var hasAny=resps.some(function(r){return r.respuesta&&r.respuesta.trim();});
+    if(hasAny){
+      resps.forEach(function(r){
+        if(r.respuesta&&r.respuesta.trim()&&r.fid&&!/^teosq_/.test(r.fid)){
+          h+='<div class="qa-row"><div class="qa-q">'+(r.pregunta||'')+'</div><div class="qa-a">'+r.respuesta+'</div></div>';
+        }
+      });
+    }else{
+      h+='<div class="qa-row"><div class="qa-a" style="color:#aaa;">Ejercicio completado.</div></div>';
+    }
   }
-  h+='</div>';return h;
+
+  h+='</div>';
+  return h;
 }
+
 
 function openPDF(title,bodyHtml){
   var doc='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>'+title+'</title><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>'+pdfStyles()+'</style></head><body>';
