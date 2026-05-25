@@ -1937,25 +1937,80 @@ function buildExPDF(ej){
   var isTeosq=ej.lid==='u1l5'||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf('teosq')!==-1);
   var isGrid=resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
+
   if(isTeosq){
     var ego=null,tar=null,perf=null;
-    resps.forEach(function(r){if(r.fid==='teosq_ego')ego=parseFloat(r.respuesta);if(r.fid==='teosq_tar')tar=parseFloat(r.respuesta);if(r.fid==='teosq_perfil')perf=r.respuesta;});
-    if(ego!==null&&tar!==null){h+='<div class="tscores"><div class="tscore-box"><div class="tscore-lbl">Orientacion al Ego</div><div class="tscore-val">'+ego.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(ego)+'">'+pdfLvlLbl(ego)+'</div></div><div class="tscore-box"><div class="tscore-lbl">Orientacion a la Tarea</div><div class="tscore-val">'+tar.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(tar)+'">'+pdfLvlLbl(tar)+'</div></div></div>';}
+    resps.forEach(function(r){
+      if(r.fid==='teosq_ego')ego=parseFloat(r.respuesta);
+      if(r.fid==='teosq_tar')tar=parseFloat(r.respuesta);
+      if(r.fid==='teosq_perfil')perf=r.respuesta;
+    });
+    if(ego!==null&&tar!==null){
+      h+='<div class="tscores">';
+      h+='<div class="tscore-box"><div class="tscore-lbl">Orientacion al Ego</div><div class="tscore-val">'+ego.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(ego)+'">'+pdfLvlLbl(ego)+'</div></div>';
+      h+='<div class="tscore-box"><div class="tscore-lbl">Orientacion a la Tarea</div><div class="tscore-val">'+tar.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(tar)+'">'+pdfLvlLbl(tar)+'</div></div>';
+      h+='</div>';
+    }
     if(perf)h+='<div class="profile-box"><div class="profile-name">Perfil: '+perf+'</div></div>';
-    resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';});
+    resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){
+      h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';
+    });
+
   }else if(isGrid){
     var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
-    var reflCells=resps.filter(function(r){return!r.fid||!/^g_\d+_\d+$/.test(r.fid);});
+    var reflCells=resps.filter(function(r){return r.fid&&!/^g_/.test(r.fid)&&r.fid!=='_startHour'&&r.fid!=='_endHour';});
     var days=['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
-    var sc={};gridCells.forEach(function(r){var m=r.fid.match(/^g_(\d+)_(\d+)$/);if(!m)return;var hr=m[1].length===3?m[1][0]+':00':m[1].substring(0,2)+':00';var di=parseInt(m[2]);if(!sc[hr])sc[hr]={};sc[hr][di]=r.respuesta||'';});
+    var sc={};
+    gridCells.forEach(function(r){
+      var m=r.fid.match(/^g_(\d+)_(\d+)$/);if(!m)return;
+      var raw=m[1],hr=raw.length===3?raw[0]+':00':raw.substring(0,2)+':00',di=parseInt(m[2]);
+      if(!sc[hr])sc[hr]={};
+      sc[hr][di]={val:r.respuesta||'',color:r.color||''};
+    });
     var hrs=Object.keys(sc).sort(function(a,b){return parseInt(a)-parseInt(b);});
-    if(hrs.length>0){h+='<table class="gtable"><thead><tr><th>Hora</th>';days.forEach(function(d){h+='<th>'+d+'</th>';});h+='</tr></thead><tbody>';hrs.forEach(function(hr){h+='<tr><td class="hcol">'+hr+'</td>';days.forEach(function(d,di){var v=(sc[hr]&&sc[hr][di])||'';h+='<td>'+(v?'<span class="gval">'+v+'</span>':'')+'</td>';});h+='</tr>';});h+='</tbody></table>';}
-    reflCells.forEach(function(r){if(r.respuesta&&r.respuesta.trim())h+='<div class="qa-row"><div class="qa-q">'+r.pregunta+'</div><div class="qa-a">'+r.respuesta+'</div></div>';});
+    if(hrs.length>0){
+      h+='<table class="gtable"><thead><tr><th style="width:44px;">Hora</th>';
+      days.forEach(function(d){h+='<th>'+d+'</th>';});
+      h+='</tr></thead><tbody>';
+      hrs.forEach(function(hr,hi){
+        h+='<tr style="'+(hi%2===0?'background:#fafafa;':'')+'"><td class="hcol">'+hr+'</td>';
+        days.forEach(function(d,di){
+          var cell=sc[hr]&&sc[hr][di],val=cell?cell.val:'',clr=cell?cell.color:'';
+          if(val){
+            var bg=clr?clr+'28':'#fff0ee';
+            var fg=clr||'#c0392b';
+            var bdr=clr?clr+'66':'#f5a89e';
+            h+='<td><span style="background:'+bg+';color:'+fg+';border:1px solid '+bdr+';border-radius:3px;padding:2px 5px;display:inline-block;font-weight:600;font-size:9px;">'+val+'</span></td>';
+          }else{
+            h+='<td></td>';
+          }
+        });
+        h+='</tr>';
+      });
+      h+='</tbody></table>';
+    }
+    reflCells.forEach(function(r){
+      if(r.respuesta&&r.respuesta.trim())
+        h+='<div class="qa-row"><div class="qa-q">'+(r.pregunta||'')+'</div><div class="qa-a">'+r.respuesta+'</div></div>';
+    });
+
   }else{
-    resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()&&r.fid&&!/^teosq_/.test(r.fid))h+='<div class="qa-row"><div class="qa-q">'+(r.pregunta||'')+'</div><div class="qa-a">'+r.respuesta+'</div></div>';});
+    var hasAny=resps.some(function(r){return r.respuesta&&r.respuesta.trim();});
+    if(hasAny){
+      resps.forEach(function(r){
+        if(r.respuesta&&r.respuesta.trim()&&r.fid&&!/^teosq_/.test(r.fid)){
+          h+='<div class="qa-row"><div class="qa-q">'+(r.pregunta||'')+'</div><div class="qa-a">'+r.respuesta+'</div></div>';
+        }
+      });
+    }else{
+      h+='<div class="qa-row"><div class="qa-a" style="color:#aaa;">Ejercicio completado.</div></div>';
+    }
   }
-  h+='</div>';return h;
+
+  h+='</div>';
+  return h;
 }
+
 
 function openPDF(title,bodyHtml){
   var doc='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>'+title+'</title><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>'+pdfStyles()+'</style></head><body>';
@@ -2066,83 +2121,192 @@ function buildTEOSQChartSVG(ego,tar){
 }
 
 function renderTEOSQExercise(lid){
-  teosqLid=lid;teosqAns={};
+  teosqLid=lid; teosqAns={};
   var draft=loadDraft(lid);
   var sub=(getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
   if(draft){TEOSQ_ITEMS.forEach(function(it){var v=draft['teosq_'+it.n];if(v)teosqAns[it.n]=parseInt(v)||0;});}
   else if(sub&&sub.respuestas){sub.respuestas.forEach(function(r){if(r.fid&&r.fid.match(/^teosq_\d+$/)){var n=parseInt(r.fid.replace('teosq_',''));if(!isNaN(n))teosqAns[n]=parseInt(r.respuesta)||0;}});}
+  var answered=Object.keys(teosqAns).length;
   var alreadyDone=isDone(lid);
-  var SCALE=['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo\nni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'];
+
   var h='<div class="ex-wrap">';
-  // Header
+
+  /* ── Cabecera ── */
   h+='<div class="tq-hdr-box">';
-  h+='<div class="tq-hdr-title">TEOSQ &mdash; Orientaci\u00f3n al Ego y a la Tarea en el Deporte</div>';
-  h+='<div class="tq-hdr-sub">Duda, 1989 / Balaguer, Castillo &amp; Tom\u00e1s, 1996 &nbsp;&middot;&nbsp; Psicopoker</div>';
+  h+='<div class="tq-hdr-title">CUESTIONARIO DE ORIENTACI\u00d3N AL EGO Y A LA TAREA EN EL DEPORTE (TEOSQ)</div>';
+  h+='<div class="tq-hdr-sub" style="margin-top:.2rem;">Duda, 1989 &nbsp;&middot;&nbsp; Balaguer, Castillo &amp; Tom\u00e1s, 1996 &nbsp;&middot;&nbsp; Psicopoker</div>';
+  h+='<div style="margin-top:.5rem;font-size:.78rem;font-style:italic;color:var(--muted);">Respond\u00e9 de la manera m\u00e1s honesta posible</div>';
   h+='</div>';
-  // Tabs
-  h+='<div class="teosq-tabs"><div class="teosq-tab on" id="ttab0" onclick="tqTab(0)">1. Cuestionario</div><div class="teosq-tab" id="ttab1" onclick="tqTab(1)">2. Resultados</div><div class="teosq-tab" id="ttab2" onclick="tqTab(2)">3. Interpretaci\u00f3n</div></div>';
-  // ── Pane 1: Questionnaire table ──
+
+  /* ── Tabs ── */
+  h+='<div class="teosq-tabs">';
+  h+='<div class="teosq-tab on" id="ttab0" onclick="tqTab(0)">1. Cuestionario</div>';
+  h+='<div class="teosq-tab" id="ttab1" onclick="tqTab(1)">2. Resultados</div>';
+  h+='<div class="teosq-tab" id="ttab2" onclick="tqTab(2)">3. Interpretaci\u00f3n</div>';
+  h+='</div>';
+
+  /* ══ PANE 1 — Cuestionario ══ */
   h+='<div class="teosq-pane on" id="tpane0">';
-  h+='<div class="teosq-prog" style="margin:.85rem 1.25rem .5rem;"><div class="teosq-prog-bar"><div class="teosq-prog-fill" id="tq-prog-fill" style="width:'+(Object.keys(teosqAns).length/13*100)+'%"></div></div><div class="teosq-prog-lbl"><span id="tq-prog-n">'+Object.keys(teosqAns).length+'</span> / 13 respondidas</div></div>';
-  h+='<div class="tq-table-wrap" style="margin:.5rem 0;">';
-  h+='<table class="tq-table"><thead><tr>';
-  h+='<th>#</th><th>Yo me siento con m\u00e1s \u00e9xito en el deporte cuando...</th>';
-  SCALE.forEach(function(lbl){h+='<th>'+lbl.replace('\n','<br>')+'</th>';});
-  h+='</tr></thead><tbody>';
+
+  /* Progreso */
+  h+='<div class="teosq-prog" style="margin:.85rem 1.25rem .75rem;">';
+  h+='<div class="teosq-prog-bar"><div class="teosq-prog-fill" id="tq-prog-fill" style="width:'+(answered/13*100)+'%"></div></div>';
+  h+='<div class="teosq-prog-lbl"><span id="tq-prog-n">'+answered+'</span> / 13 respondidas</div>';
+  h+='</div>';
+
+  /* Tabla */
+  h+='<div class="tq-table-wrap">';
+  h+='<table class="tq-table">';
+  h+='<thead><tr>';
+  h+='<th style="width:32px;">#</th>';
+  h+='<th style="text-align:left;">Yo me siento con m\u00e1s \u00e9xito en el deporte cuando\u2026</th>';
+  h+='<th>Totalmente<br>en Desacuerdo</th>';
+  h+='<th>En<br>Desacuerdo</th>';
+  h+='<th>Ni de acuerdo<br>ni en desacuerdo</th>';
+  h+='<th>De<br>Acuerdo</th>';
+  h+='<th>Totalmente<br>de Acuerdo</th>';
+  h+='</tr></thead>';
+  h+='<tbody>';
+
   TEOSQ_ITEMS.forEach(function(item){
     var v=teosqAns[item.n]||0;
-    var answered=v>0;
-    h+='<tr class="'+(answered?'tq-answered':'')+'" id="tqrow'+item.n+'">';
-    h+='<td>'+item.n+'</td>';
-    h+='<td>'+item.t+'</td>';
+    h+='<tr class="'+(v?'tq-answered':'')+'" id="tqrow'+item.n+'">';
+    h+='<td><span style="font-weight:700;color:var(--dim);">'+item.n+'</span></td>';
+    h+='<td style="text-align:left;font-size:.82rem;line-height:1.5;padding:.6rem .5rem;">'+item.t+'</td>';
     for(var i=1;i<=5;i++){
-      var isSel=v===i;
-      h+='<td class="'+(isSel?'tq-cell-sel':'')+'" id="tqcell'+item.n+'_'+i+'">';
-      h+='<span class="tq-radio'+(isSel?' sel':'')+'" onclick="tqSelect('+item.n+','+i+')" id="tqr'+item.n+'_'+i+'">';
-      h+='<span class="tq-radio-dot"></span></span></td>';
+      h+='<td class="'+(v===i?'tq-cell-sel':'')+'" id="tqcell'+item.n+'_'+i+'">';
+      h+='<span class="tq-radio'+(v===i?' sel':'')+'" onclick="tqSelect('+item.n+','+i+')" id="tqr'+item.n+'_'+i+'">';
+      h+='<span class="tq-radio-dot"></span></span>';
+      h+='</td>';
     }
     h+='</tr>';
   });
+
   h+='</tbody></table></div>';
+
+  /* Botón enviar */
   h+='<div class="ex-submit-row" style="margin-top:.85rem;">';
-  h+='<button class="btn-ex-send" id="tq-send-btn" onclick="tqSubmit()" '+(Object.keys(teosqAns).length<13?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+(alreadyDone?'Actualizar env\u00edo':'Enviar a Mauro')+'</button>';
-  h+='<p class="ex-submit-note" id="tq-send-note" style="'+(Object.keys(teosqAns).length>=13?'color:var(--green);':'')+'">'+  (Object.keys(teosqAns).length<13?'Respond\u00e9 las '+(13-Object.keys(teosqAns).length)+' preguntas restantes':'Tus respuestas ser\u00e1n enviadas a Mauro')+'</p>';
+  h+='<button class="btn-ex-send" id="tq-send-btn" onclick="tqSubmit()" '+(answered<13?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+(alreadyDone?'Actualizar env\u00edo':'Enviar a Mauro')+'</button>';
+  h+='<p class="ex-submit-note" id="tq-send-note" style="'+(answered>=13?'color:var(--green);':'')+'">'+( answered<13 ? 'Respond\u00e9 las '+(13-answered)+' preguntas restantes' : 'Tus respuestas ser\u00e1n enviadas a Mauro')+'</p>';
   h+='</div></div>';
-  // ── Pane 2: Results ──
+
+  /* ══ PANE 2 — Resultados ══ */
   h+='<div class="teosq-pane" id="tpane1" style="padding:1.25rem;">';
+
+  /* Tabla de puntajes (igual que el Excel) */
+  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.25rem;">';
+  h+='<div style="background:var(--bg3);padding:.65rem 1rem;font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">PUNTAJES DE ORIENTACI\u00d3N</div>';
+  h+='<table style="width:100%;border-collapse:collapse;">';
+  h+='<thead><tr>';
+  h+='<th style="text-align:left;padding:.55rem 1rem;font-size:.72rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg3);">Orientaci\u00f3n</th>';
+  h+='<th style="text-align:center;padding:.55rem 1rem;font-size:.72rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg3);">Puntaje</th>';
+  h+='<th style="text-align:center;padding:.55rem 1rem;font-size:.72rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg3);">Nivel</th>';
+  h+='</tr></thead><tbody>';
+  h+='<tr><td style="padding:.85rem 1rem;font-weight:700;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.05);">ORIENTACI\u00d3N AL EGO</td>';
+  h+='<td style="text-align:center;border-bottom:1px solid rgba(255,255,255,.05);"><span id="tq-ego-val" style="font-size:1.6rem;font-weight:800;">\u2014</span></td>';
+  h+='<td style="text-align:center;border-bottom:1px solid rgba(255,255,255,.05);"><span class="teosq-sc-lvl" id="tq-ego-lvl">\u2014</span></td>';
+  h+='</tr>';
+  h+='<tr><td style="padding:.85rem 1rem;font-weight:700;font-size:.88rem;">ORIENTACI\u00d3N A LA TAREA</td>';
+  h+='<td style="text-align:center;"><span id="tq-tar-val" style="font-size:1.6rem;font-weight:800;">\u2014</span></td>';
+  h+='<td style="text-align:center;"><span class="teosq-sc-lvl" id="tq-tar-lvl">\u2014</span></td>';
+  h+='</tr></tbody></table></div>';
+
+  /* Barras visuales */
   h+='<div style="display:flex;gap:1rem;margin-bottom:1.25rem;">';
-  h+='<div class="tq-sc-card"><div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);">ORIENTACI\u00d3N AL EGO</div><div class="tq-sc-val" id="tq-ego-val">&mdash;</div><div class="teosq-sc-lvl" id="tq-ego-lvl" style="font-size:.65rem;font-weight:700;padding:.2rem .65rem;border-radius:20px;display:inline-block;">&mdash;</div><div class="tq-sc-bar"><div class="tq-sc-fill" id="tq-ego-bar" style="width:0%;background:#E8312A;"></div></div><div style="font-size:.65rem;color:var(--dim);margin-top:.5rem;">Items Ego: 1, 3, 4, 6, 9, 11</div></div>';
-  h+='<div class="tq-sc-card"><div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);">ORIENTACI\u00d3N A LA TAREA</div><div class="tq-sc-val" id="tq-tar-val">&mdash;</div><div class="teosq-sc-lvl" id="tq-tar-lvl" style="font-size:.65rem;font-weight:700;padding:.2rem .65rem;border-radius:20px;display:inline-block;">&mdash;</div><div class="tq-sc-bar"><div class="tq-sc-fill" id="tq-tar-bar" style="width:0%;background:#22C55E;"></div></div><div style="font-size:.65rem;color:var(--dim);margin-top:.5rem;">Items Tarea: 2, 5, 7, 8, 10, 12, 13</div></div>';
+  h+='<div class="tq-sc-card" style="flex:1;">';
+  h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;">EGO</div>';
+  h+='<div class="tq-sc-bar"><div class="tq-sc-fill" id="tq-ego-bar" style="width:0%;background:#E8312A;"></div></div>';
+  h+='<div style="font-size:.65rem;color:var(--dim);margin-top:.4rem;">Items 1, 3, 4, 6, 9, 11 \u2192 promedio / 6</div>';
   h+='</div>';
-  // Range reference table
-  h+='<table class="tq-range-table"><thead><tr><th>Orientaci\u00f3n</th><th style="color:#60A5FA;">Baja (1.0&ndash;2.9)</th><th style="color:#FCD34D;">Media (3.0&ndash;4.2)</th><th style="color:#4ADE80;">Alta (4.3&ndash;5.0)</th></tr></thead><tbody>';
-  h+='<tr><td style="font-weight:700;">AL EGO</td><td>Baja orientaci\u00f3n a compararse y demostrar superioridad.</td><td>Moderada. Presente pero no dominante.</td><td>Alta tendencia a buscar validaci\u00f3n externa y comparaci\u00f3n social.</td></tr>';
-  h+='<tr><td style="font-weight:700;">A LA TAREA</td><td>Poca orientaci\u00f3n al proceso y aprendizaje.</td><td>Moderada orientaci\u00f3n al proceso.</td><td>Alta motivaci\u00f3n por el aprendizaje, el esfuerzo y la mejora personal.</td></tr>';
-  h+='</tbody></table>';
-  // Chart
-  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:1rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;">Gr\u00e1fico de resultados</div>';
-  h+='<svg id="tq-chart" viewBox="0 0 380 220" style="width:100%;max-width:420px;display:block;margin:0 auto;"><text x="190" y="110" text-anchor="middle" fill="rgba(238,239,243,.2)" font-family="Montserrat,sans-serif" font-size="11">Complet\u00e1 el cuestionario para ver el gr\u00e1fico</text></svg></div>';
-  h+='</div>';
-  // ── Pane 3: Interpretation ──
-  h+='<div class="teosq-pane" id="tpane2" style="padding:1.25rem;">';
-  h+='<div style="background:var(--bg2);border-radius:5px;padding:.9rem 1rem;margin-bottom:1rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">Tu perfil</div><div id="tq-perfil" style="font-size:1rem;font-weight:800;">\u2014 Complet\u00e1 el cuestionario \u2014</div></div>';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1rem;">';
-  var PROFILES=[
-    {id:'tp1',icon:'\uD83D\uDFE2',name:'Tarea alta / Ego baja',cls:'tp1',desc:'Motivaci\u00f3n s\u00f3lida y aut\u00f3noma. Se enfoca en mejorar, aprender y sostener rendimiento a largo plazo.',traits:['\u2705 Ideal para resistir la varianza y disfrutar el proceso.','\u26A0 Puede faltarle intensidad competitiva si no se trabaja.'],tag:'tptag-ok',tagLbl:'Perfil favorable'},
-    {id:'tp2',icon:'\uD83D\uDD25',name:'Ego alta / Tarea baja',cls:'tp2',desc:'Busca demostrar valor y validarse. Puede tener gran impulso competitivo.',traits:['\u26A0 Riesgo de frustraci\u00f3n ante errores o cuando no gana.','\u26A0 Vulnerabilidad frente a comparaci\u00f3n social.'],tag:'tptag-r',tagLbl:'Incompatible con Mindset Ganador'},
-    {id:'tp3',icon:'\uD83E\uDDE8',name:'Ego alta / Tarea alta',cls:'tp3',desc:'Fuerte ambici\u00f3n combinada con compromiso. Excelente perfil si se regula bien.',traits:['\u2705 Ideal para construir una carrera profesional seria.','\u26A0 Riesgo de burnout si no logra ambas cosas.'],tag:'tptag-w',tagLbl:'Perfil complejo \u2014 requiere trabajo'},
-    {id:'tp4',icon:'\uD83D\uDCA4',name:'Ego baja / Tarea baja',cls:'tp4',desc:'Motivaci\u00f3n difusa o fr\u00e1gil. Posiblemente permanece en la profesi\u00f3n por inercia.',traits:['\u26A0 En riesgo de desmotivaci\u00f3n, procrastinaci\u00f3n o abandono.','\u2716 Requiere proceso psicoter\u00e9utico completo.'],tag:'tptag-r',tagLbl:'Requiere atenci\u00f3n urgente'}
-  ];
-  PROFILES.forEach(function(p){
-    h+='<div class="tq-profile-card '+p.cls+'" id="'+p.id+'"><div style="font-size:1.1rem;margin-bottom:.35rem;">'+p.icon+'</div><div style="font-size:.82rem;font-weight:800;margin-bottom:.4rem;">'+p.name+'</div><div style="font-size:.72rem;color:var(--muted);line-height:1.55;margin-bottom:.5rem;">'+p.desc+'</div><ul class="tp-traits">';
-    p.traits.forEach(function(t){h+='<li>'+t+'</li>';});
-    h+='</ul><div class="tp-tag '+p.tag+'">'+p.tagLbl+'</div></div>';
-  });
-  h+='</div>';
-  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem 1rem;font-size:.75rem;color:var(--muted);line-height:1.65;"><strong style="color:var(--text);display:block;margin-bottom:.25rem;">C\u00f3mo leer el perfil</strong>El perfil es un punto de partida para la sesi\u00f3n con el psic\u00f3logo. Las orientaciones pueden cambiar con el trabajo de mentalidad.</div>';
+  h+='<div class="tq-sc-card" style="flex:1;">';
+  h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;">TAREA</div>';
+  h+='<div class="tq-sc-bar"><div class="tq-sc-fill" id="tq-tar-bar" style="width:0%;background:#22C55E;"></div></div>';
+  h+='<div style="font-size:.65rem;color:var(--dim);margin-top:.4rem;">Items 2, 5, 7, 8, 10, 12, 13 \u2192 promedio / 7</div>';
   h+='</div></div>';
+
+  /* Gr\u00e1fico */
+  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1rem;">';
+  h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;">GR\u00c1FICO DE RESULTADOS</div>';
+  h+='<svg id="tq-chart" viewBox="0 0 380 220" style="width:100%;max-width:420px;display:block;margin:0 auto;"><text x="190" y="110" text-anchor="middle" fill="rgba(238,239,243,.2)" font-family="Montserrat,sans-serif" font-size="11">Complet\u00e1 el cuestionario para ver el gr\u00e1fico</text></svg>';
+  h+='</div></div>';
+
+  /* ══ PANE 3 — Interpretaci\u00f3n ══ */
+  h+='<div class="teosq-pane" id="tpane2" style="padding:1.25rem;">';
+
+  /* Perfil activo */
+  h+='<div style="background:var(--red-dim);border:1px solid var(--border-r);border-radius:6px;padding:.85rem 1.1rem;margin-bottom:1.1rem;">';
+  h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:.3rem;">TU PERFIL</div>';
+  h+='<div id="tq-perfil" style="font-size:1.05rem;font-weight:800;">\u2014 Complet\u00e1 el cuestionario \u2014</div>';
+  h+='</div>';
+
+  /* Tabla de rangos (igual al Excel) */
+  h+='<table class="tq-range-table" style="margin-bottom:1.25rem;">';
+  h+='<thead><tr><th>Orientaci\u00f3n</th><th style="color:#60A5FA;">Baja (1.0\u20132.9)</th><th style="color:#FCD34D;">Media (3.0\u20134.2)</th><th style="color:#4ADE80;">Alta (4.3\u20135.0)</th></tr></thead>';
+  h+='<tbody>';
+  h+='<tr id="tq-ego-range-row">';
+  h+='<td><strong>AL EGO</strong><div style="font-size:.7rem;font-weight:400;color:var(--muted);margin-top:.2rem;">Tendencia a buscar validaci\u00f3n externa a trav\u00e9s del rendimiento, compararse y destacar.</div></td>';
+  h+='<td id="tq-ego-r1" style="text-align:center;font-size:1.2rem;"></td>';
+  h+='<td id="tq-ego-r2" style="text-align:center;font-size:1.2rem;"></td>';
+  h+='<td id="tq-ego-r3" style="text-align:center;font-size:1.2rem;"></td>';
+  h+='</tr>';
+  h+='<tr id="tq-tar-range-row">';
+  h+='<td><strong>A LA TAREA</strong><div style="font-size:.7rem;font-weight:400;color:var(--muted);margin-top:.2rem;">Tendencia a enfocarse en el proceso, aprendizaje y mejora personal.</div></td>';
+  h+='<td id="tq-tar-r1" style="text-align:center;font-size:1.2rem;"></td>';
+  h+='<td id="tq-tar-r2" style="text-align:center;font-size:1.2rem;"></td>';
+  h+='<td id="tq-tar-r3" style="text-align:center;font-size:1.2rem;"></td>';
+  h+='</tr>';
+  h+='</tbody></table>';
+
+  /* 4 perfiles */
+  h+='<div style="font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;">TIPOS DE PERFILES Y LECTURA CL\u00cdNICA</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem;">';
+
+  var PROFS=[
+    { id:'tp1', icon:'\uD83D\uDFE2', cls:'tp1', name:'Tarea alta / Ego baja',
+      lines:['Motivaci\u00f3n s\u00f3lida y aut\u00f3noma.',
+             'Se enfoca en mejorar, aprender y sostener su rendimiento a largo plazo.',
+             '\u2705 Ideal para resistir la varianza, disfrutar del proceso y adaptarse.',
+             '\u26A0 Puede faltarle \u201chambre\u201d o intensidad competitiva si no se trabaja bien.'],
+      tag:'tptag-ok', tagLbl:'Perfil favorable' },
+    { id:'tp2', icon:'\uD83D\uDD25', cls:'tp2', name:'Ego alta / Tarea baja',
+      lines:['Busca demostrar valor, destacar, validarse.',
+             'Puede tener gran impulso en entornos competitivos.',
+             '\u26A0 Riesgo de frustraci\u00f3n ante errores o cuando no gana.',
+             '\u26A0 Vulnerabilidad frente a la comparaci\u00f3n social y resultados negativos.',
+             '* Perfil incompatible con un Mindset Ganador. Va a necesitar redefinir qu\u00e9 es \u201c\u00e9xito\u201d y desarrollar mentalidad de proceso.'],
+      tag:'tptag-r', tagLbl:'Incompatible con Mindset Ganador' },
+    { id:'tp3', icon:'\uD83E\uDDE8', cls:'tp3', name:'Ego alta / Tarea alta',
+      lines:['Fuerte ambici\u00f3n combinada con compromiso.',
+             'Excelente perfil si se regula bien: quiere ganar y mejorar.',
+             '\u2705 Ideal para construir una carrera profesional seria.',
+             '\u26A0 Riesgo de burnout o conflicto interno si no logra ambas cosas.',
+             '\u26A0 Necesita ordenar prioridades seg\u00fan etapa (estudiar, competir, entrenar).'],
+      tag:'tptag-w', tagLbl:'Perfil complejo \u2014 requiere trabajo' },
+    { id:'tp4', icon:'\uD83D\uDCA4', cls:'tp4', name:'Ego baja / Tarea baja',
+      lines:['Motivaci\u00f3n difusa o fr\u00e1gil.',
+             'Posiblemente permanece en la profesi\u00f3n por inercia, aburrimiento o presi\u00f3n externa.',
+             '\u26A0 En riesgo de desmotivaci\u00f3n, procrastinaci\u00f3n o abandono.',
+             '\u26A0 Altas posibilidades de grandes problemas en su vida personal.',
+             '* Seguramente requiere un proceso psicoter\u00e9utico completo.'],
+      tag:'tptag-r', tagLbl:'Requiere atenci\u00f3n urgente' }
+  ];
+
+  PROFS.forEach(function(p){
+    h+='<div class="tq-profile-card '+p.cls+'" id="'+p.id+'">';
+    h+='<div style="font-size:1.1rem;margin-bottom:.35rem;">'+p.icon+'</div>';
+    h+='<div style="font-size:.82rem;font-weight:800;margin-bottom:.5rem;">'+p.name+'</div>';
+    h+='<ul style="list-style:none;padding:0;margin:0;">';
+    p.lines.forEach(function(l){ h+='<li style="font-size:.72rem;color:var(--muted);line-height:1.55;padding:.15rem 0;">'+l+'</li>'; });
+    h+='</ul>';
+    h+='<div class="tp-tag '+p.tag+'" style="margin-top:.65rem;font-size:.6rem;">'+p.tagLbl+'</div>';
+    h+='</div>';
+  });
+
+  h+='</div></div></div>';
+
   document.getElementById('mc-body').innerHTML=h;
-  tqUpdateProgress();tqUpdateResults();
+  tqUpdateProgress();
+  tqUpdateResults();
 }
 
 function tqTab(idx){for(var i=0;i<3;i++){var t=document.getElementById('ttab'+i);var p=document.getElementById('tpane'+i);if(t)t.classList.toggle('on',i===idx);if(p)p.classList.toggle('on',i===idx);}if(idx>0)tqUpdateResults();}
@@ -2174,19 +2338,56 @@ function tqLevel(s){if(s===null)return{lbl:'—',cls:''};if(s<=2.9)return{lbl:'B
 function tqUpdateResults(){
   var s=tqCalc();
   if(s.ego!==null&&s.tar!==null){
-    var el=tqLevel(s.ego),tl=tqLevel(s.tar);
-    var ev=document.getElementById('tq-ego-val'),tv=document.getElementById('tq-tar-val');
-    var elvl=document.getElementById('tq-ego-lvl'),tlvl=document.getElementById('tq-tar-lvl');
-    var eb=document.getElementById('tq-ego-bar'),tb=document.getElementById('tq-tar-bar');
-    if(ev)ev.textContent=s.ego.toFixed(2);if(elvl){elvl.textContent=el.lbl;elvl.className='teosq-sc-lvl '+el.cls;}if(eb)eb.style.width=(s.ego/5*100)+'%';
-    if(tv)tv.textContent=s.tar.toFixed(2);if(tlvl){tlvl.textContent=tl.lbl;tlvl.className='teosq-sc-lvl '+tl.cls;}if(tb)tb.style.width=(s.tar/5*100)+'%';
-    var eHi=s.ego>=3,tHi=s.tar>=3;
-    ['tp1','tp2','tp3','tp4'].forEach(function(id){var el2=document.getElementById(id);if(el2)el2.classList.remove('on');});
-    var pId,pName;
-    if(!eHi&&tHi){pId='tp1';pName='Tarea alta / Ego baja';}else if(eHi&&!tHi){pId='tp2';pName='Ego alta / Tarea baja';}else if(eHi&&tHi){pId='tp3';pName='Ego alta / Tarea alta';}else{pId='tp4';pName='Ego baja / Tarea baja';}
-    var pEl=document.getElementById(pId);if(pEl)pEl.classList.add('on');
-    var pf=document.getElementById('tq-perfil');if(pf)pf.textContent=pName;
-    var chart=document.getElementById('tq-chart');if(chart)chart.innerHTML=buildTEOSQChartSVG(s.ego,s.tar);
+    var el=tqLevel(s.ego), tl=tqLevel(s.tar);
+
+    /* Pane 2 — puntajes */
+    var ev=document.getElementById('tq-ego-val');
+    var tv=document.getElementById('tq-tar-val');
+    var elvl=document.getElementById('tq-ego-lvl');
+    var tlvl=document.getElementById('tq-tar-lvl');
+    var eb=document.getElementById('tq-ego-bar');
+    var tb=document.getElementById('tq-tar-bar');
+    if(ev)ev.textContent=s.ego.toFixed(2);
+    if(tv)tv.textContent=s.tar.toFixed(2);
+    if(elvl){elvl.textContent=el.lbl;elvl.className='teosq-sc-lvl '+el.cls;}
+    if(tlvl){tlvl.textContent=tl.lbl;tlvl.className='teosq-sc-lvl '+tl.cls;}
+    if(eb)eb.style.width=(s.ego/5*100)+'%';
+    if(tb)tb.style.width=(s.tar/5*100)+'%';
+
+    /* Gr\u00e1fico */
+    var chart=document.getElementById('tq-chart');
+    if(chart)chart.innerHTML=buildTEOSQChartSVG(s.ego,s.tar);
+
+    /* Pane 3 — rangos con X (como el Excel) */
+    function markRange(prefix, score){
+      var cells=['tq-'+prefix+'-r1','tq-'+prefix+'-r2','tq-'+prefix+'-r3'];
+      cells.forEach(function(id){var el=document.getElementById(id);if(el)el.textContent='';});
+      var idx = score<=2.9 ? 0 : score<=4.2 ? 1 : 2;
+      var cell=document.getElementById(cells[idx]);
+      if(cell){
+        cell.textContent='X';
+        cell.style.fontWeight='800';
+        cell.style.color=idx===0?'#60A5FA':idx===1?'#FCD34D':'#4ADE80';
+      }
+    }
+    markRange('ego',s.ego);
+    markRange('tar',s.tar);
+
+    /* Perfil */
+    var eHi=s.ego>=3, tHi=s.tar>=3;
+    ['tp1','tp2','tp3','tp4'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el){el.classList.remove('active');el.style.opacity='.45';}
+    });
+    var pId, pName;
+    if(!eHi&&tHi){pId='tp1';pName='\uD83D\uDFE2 Tarea alta / Ego baja';}
+    else if(eHi&&!tHi){pId='tp2';pName='\uD83D\uDD25 Ego alta / Tarea baja';}
+    else if(eHi&&tHi){pId='tp3';pName='\uD83E\uDDE8 Ego alta / Tarea alta';}
+    else{pId='tp4';pName='\uD83D\uDCA4 Ego baja / Tarea baja';}
+    var pEl=document.getElementById(pId);
+    if(pEl){pEl.classList.add('active');pEl.style.opacity='1';}
+    var pf=document.getElementById('tq-perfil');
+    if(pf)pf.textContent=pName;
   }
 }
 function tqSubmit(){
