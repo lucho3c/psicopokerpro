@@ -189,7 +189,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .week-table tbody tr:hover{background:rgba(255,255,255,.015);}
 .week-table tbody td{border-bottom:1px solid rgba(255,255,255,.04);}
 .hour-cell{font-size:.65rem;font-weight:700;color:var(--dim);padding:.28rem .4rem .28rem .85rem;white-space:nowrap;}
-.gcell{width:100%;height:30px;background:transparent;border:none;border-left:1px solid rgba(255,255,255,.04);font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:500;color:var(--text);padding:.2rem .35rem;outline:none;cursor:text;text-align:center;transition:background .15s;}
+.gcell{width:100%;min-height:30px;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.78rem;padding:.35rem .5rem;border-radius:3px;outline:none;transition:border-color .2s,background .2s;resize:none;overflow:hidden;line-height:1.45;display:block;box-sizing:border-box;text-align:center;}
 .gcell:focus{background:rgba(232,49,42,.08);outline:1px solid rgba(232,49,42,.35);}
 .gcell::placeholder{color:rgba(238,239,243,.1);}
 
@@ -375,7 +375,9 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 </div>
 
 </div>
-<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+<div class="overlay" id="overlay" onclick="clofunction autoHeight(el){el.style.height='auto';el.style.height=Math.max(30,el.scrollHeight)+'px';}
+function autoHeightAll(){document.querySelectorAll('.gcell').forEach(function(el){autoHeight(el);});}
+seSidebar()"></div>
 <div class="toast" id="toast"></div>
 <script>
 /* ═══════════════════════════════════════════════
@@ -1046,15 +1048,14 @@ function renderGridExercise(lid, def) {
     var sub = subs.find(function(s){ return s.usuario===S.user && s.lid===lid; });
     if (sub && sub.respuestas) {
       draft = {};
-      sub.respuestas.forEach(function(r){
-        if (r.fid) { draft[r.fid]=r.respuesta||''; if(r.color)draft[r.fid+'_c']=r.color; }
-      });
+      sub.respuestas.forEach(function(r){ if(r.fid){draft[r.fid]=r.respuesta||'';if(r.color)draft[r.fid+'_c']=r.color;} });
     }
   }
   var startH = (draft && draft.startHour) ? parseInt(draft.startHour) : 7;
   var endH   = (draft && draft.endHour)   ? parseInt(draft.endHour)   : 23;
   var days   = def.days || ['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
   function hrOpts(sel,mn,mx){var o='';for(var i=mn;i<=mx;i++)o+='<option value="'+i+'"'+(i===sel?' selected':'')+'>'+i+':00</option>';return o;}
+  var CATS=[['#E8312A','Poker'],['#3B82F6','Estudio'],['#22C55E','Familia'],['#F59E0B','Ocio'],['#8B5CF6','Trabajo'],['#EC4899','Descanso'],['#6B7280','Otro']];
   var h='<div class="ex-wrap">';
   h+='<div style="display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;">';
   h+='<span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Franja horaria:</span>';
@@ -1065,12 +1066,13 @@ function renderGridExercise(lid, def) {
   h+='<select id="grid-end-hr_'+lid+'" onchange="updateGridRows(\''+lid+'\')" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.35rem .6rem;border-radius:4px;outline:none;cursor:pointer;">'+hrOpts(endH,1,23)+'</select>';
   h+='</div><span style="font-size:.68rem;color:var(--dim);">Ajustalo a tu rutina</span></div>';
   h+='<div class="cat-row">';
-  [['#E8312A','Poker'],['#3B82F6','Estudio'],['#22C55E','Familia'],['#F59E0B','Ocio'],['#8B5CF6','Trabajo'],['#EC4899','Descanso'],['#6B7280','Otro']].forEach(function(cat){
-    h+='<div class="cat-pill" onclick="selCat(this,\''+cat[0]+'\')" style="border-color:'+cat[0]+'44;color:'+cat[0]+';"><span style="background:'+cat[0]+';width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;"></span>'+cat[1]+'</div>';
+  CATS.forEach(function(cat){
+    h+='<div class="cat-pill" onclick="selCat(this,\''+cat[0]+'\')" style="border-color:'+cat[0]+'44;color:'+cat[0]+';">';
+    h+='<span style="background:'+cat[0]+';width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;"></span>'+cat[1]+'</div>';
   });
   h+='</div>';
-  h+='<div class="grid-scroll"><table class="week-table"><thead><tr><th>Hora</th>';
-  days.forEach(function(d){h+='<th>'+d+'</th>';});
+  h+='<div class="grid-scroll"><table class="week-table"><thead><tr><th style="width:52px;">Hora</th>';
+  days.forEach(function(d){ h+='<th>'+d+'</th>'; });
   h+='</tr></thead><tbody id="grid-tbody-'+lid+'">';
   for(var hh=startH;hh<=endH;hh++){
     var hr=hh+':00';
@@ -1081,7 +1083,8 @@ function renderGridExercise(lid, def) {
       var clr=(draft&&draft[fid+'_c'])?draft[fid+'_c']:'';
       var st=val&&clr?' style="background:'+clr+'22;color:'+clr+';border-color:'+clr+'55;"':'';
       var dc=clr?' data-color="'+clr+'"':'';
-      h+='<td><input class="gcell" type="text" data-fid="'+fid+'"'+dc+' value="'+val.replace(/"/g,'&quot;')+'" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+st+'></td>';
+      var safeVal=val.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      h+='<td><textarea class="gcell" data-fid="'+fid+'"'+dc+' placeholder="..." onclick="colorCell(this)" oninput="autoHeight(this);triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+st+'>'+safeVal+'</textarea></td>';
     });
     h+='</tr>';
   }
@@ -1094,12 +1097,14 @@ function renderGridExercise(lid, def) {
   });
   h+='</div>';
   var alreadyDone=isDone(lid);
-  h+='<div class="ex-submit-row"><button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="doSubmit(\''+lid+'\')" '+(alreadyDone?'style="background:var(--green);"':'')+'>'+
-  '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'+
-  ' '+(alreadyDone?'Actualizar envio':'Enviar a Mauro')+'</button>'+
-  '<p class="ex-submit-note">Se guarda automaticamente mientras escribis</p></div></div>';
+  h+='<div class="ex-submit-row"><button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="doSubmit(\''+lid+'\')" '+(alreadyDone?'style="background:var(--green);"':'')+'>'
+    +'<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'
+    +' '+(alreadyDone?'Actualizar envio':'Enviar a Mauro')+'</button>'
+    +'<p class="ex-submit-note">Se guarda automaticamente mientras escribis</p></div></div>';
   return h;
 }
+// After grid renders, auto-resize all cells
+function afterGridRender(){ setTimeout(autoHeightAll, 50); }
 
 function renderFormExercise(lid, def) {
   var draft = loadDraft(lid);
@@ -2144,15 +2149,18 @@ function updateGridRows(lid){
     rows+='<tr><td class="hour-cell">'+hr+'</td>';
     days.forEach(function(d,di){
       var fid='g_'+hr.replace(':','')+'_'+di;
-      var val=(draft[fid]||'').replace(/"/g,'&quot;');
+      var val=draft[fid]||'';
       var clr=draft[fid+'_c']||'';
       var st=val&&clr?' style="background:'+clr+'22;color:'+clr+';border-color:'+clr+'55;"':'';
       var dc=clr?' data-color="'+clr+'"':'';
-      rows+='<td><input class="gcell" type="text" data-fid="'+fid+'"'+dc+' value="'+val+'" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+st+'></td>';
+      var safeVal=val.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      rows+='<td><textarea class="gcell" data-fid="'+fid+'"'+dc+' placeholder="..." onclick="colorCell(this)" oninput="autoHeight(this);triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+st+'>'+safeVal+'</textarea></td>';
     });
     rows+='</tr>';
   }
-  tbody.innerHTML=rows;updateSaveStatus('Horario actualizado','#22C55E');
+  tbody.innerHTML=rows;
+  setTimeout(autoHeightAll,30);
+  updateSaveStatus('Horario actualizado','#22C55E');
 }
 
 
@@ -2184,6 +2192,8 @@ function clearAirtableAll(cb,done){
   }).catch(function(){cb(done);});
 }
 
+function autoHeight(el){el.style.height='auto';el.style.height=Math.max(30,el.scrollHeight)+'px';}
+function autoHeightAll(){document.querySelectorAll('.gcell').forEach(function(el){autoHeight(el);});}
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('ip').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
   document.getElementById('iu').addEventListener('keydown', function(e) { if (e.key === 'Enter') document.getElementById('ip').focus(); });
