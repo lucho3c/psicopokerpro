@@ -314,6 +314,21 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .attach-pending-name{font-size:.76rem;font-weight:600;}
 .attach-note{font-size:.65rem;color:var(--dim);margin-top:.3rem;}
 </style>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script>
+    (function(){
+      var cfg={
+        apiKey:"AIzaSyDmiB0y6yc1E2NY9J31N5B1ylkhKrW1lTo",
+        databaseURL:"https://psicopoker-pro-default-rtdb.firebaseio.com",
+        projectId:"psicopoker-pro",
+        appId:"1:910886993461:web:dc5482fdb5865f2e993b7c"
+      };
+      try{firebase.initializeApp(cfg);window.DB=firebase.database();console.log('✅ Firebase OK');}
+      catch(e){window.DB=null;console.warn('Firebase no disponible',e);}
+    })();
+  </script>
 </head>
 <body>
 <div id="app">
@@ -441,7 +456,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 <div class="toast" id="toast"></div>
 <script>
-/* attach */
+/* ATTACHMENTS */
 function getAttachments(lid){
   var draft=loadDraft(lid)||{},links=[],files=[];
   try{links=JSON.parse(draft._attachLinks||'[]');}catch(e){}
@@ -461,30 +476,29 @@ function injectAttachmentSection(lid){
   var at=getAttachments(lid);
   var h='<div id="attach-sec-'+lid+'" class="attach-section">';
   h+='<div class="attach-title">Adjuntos</div>';
-  h+='<div class="attach-group">';
-  h+='<div class="attach-group-label">Links</div>';
+  // Links
+  h+='<div class="attach-group"><div class="attach-group-label">Links</div>';
   h+='<div id="al-list-'+lid+'"></div>';
-  at.links.forEach(function(item,i){document.createElement('div');});
   h+='<div class="attach-row"><div class="attach-row-top">';
   h+='<input type="url" id="al-url-'+lid+'" class="attach-input" placeholder="https://...">';
   h+='<button class="attach-add-btn" onclick="attachSaveLink(\''+lid+'\')">+ Agregar</button>';
   h+='</div>';
   h+='<textarea id="al-desc-'+lid+'" class="attach-desc" placeholder="Que queres mostrar con este link? (opcional)"></textarea>';
   h+='</div></div>';
-  h+='<div class="attach-group">';
-  h+='<div class="attach-group-label">Archivos</div>';
+  // Files
+  h+='<div class="attach-group"><div class="attach-group-label">Archivos</div>';
   h+='<div id="af-list-'+lid+'"></div>';
   h+='<div id="af-pending-'+lid+'"></div>';
   h+='<div class="attach-row">';
-  h+='<label class="attach-file-label">Subir archivo';
-  h+='<input type="file" id="af-input-'+lid+'" style="display:none;" multiple onchange="attachFilePicked(\''+lid+'\',this)"></label>';
+  h+='<label class="attach-file-label">Subir archivo<input type="file" id="af-input-'+lid+'" style="display:none;" multiple onchange="attachFilePicked(\''+lid+'\',this)"></label>';
   h+='<div class="attach-note">Maximo 5 MB por archivo.</div>';
   h+='</div></div></div>';
   target.insertAdjacentHTML('beforebegin',h);
-  var list=document.getElementById('al-list-'+lid);
-  if(list)at.links.forEach(function(item,i){list.innerHTML+=renderLinkItem(lid,item,i);});
-  var flist=document.getElementById('af-list-'+lid);
-  if(flist)at.files.forEach(function(item,i){flist.innerHTML+=renderFileItem(lid,item,i);});
+  // Restore saved items
+  var al=document.getElementById('al-list-'+lid);
+  if(al)at.links.forEach(function(item,i){al.innerHTML+=renderLinkItem(lid,item,i);});
+  var afl=document.getElementById('af-list-'+lid);
+  if(afl)at.files.forEach(function(item,i){afl.innerHTML+=renderFileItem(lid,item,i);});
 }
 function renderLinkItem(lid,item,i){
   var disp=item.url.length>55?item.url.substring(0,52)+'...':item.url;
@@ -501,18 +515,17 @@ function attachSaveLink(lid){
   var url=urlEl.value.trim();if(!url)return;
   if(!/^https?:\/\//i.test(url))url='https://'+url;
   var desc=descEl?descEl.value.trim():'';
-  var at=getAttachments(lid);
-  at.links.push({url:url,desc:desc});
+  var at=getAttachments(lid);at.links.push({url:url,desc:desc});
   saveAttachments(lid,at.links,at.files);
-  var list=document.getElementById('al-list-'+lid);
-  if(list)list.innerHTML+=renderLinkItem(lid,{url:url,desc:desc},at.links.length-1);
+  var al=document.getElementById('al-list-'+lid);
+  if(al)al.innerHTML+=renderLinkItem(lid,{url:url,desc:desc},at.links.length-1);
   urlEl.value='';if(descEl)descEl.value='';
   updateSaveStatus('Link guardado','#22C55E');
 }
 function attachRemoveLink(lid,idx){
   var at=getAttachments(lid);at.links.splice(idx,1);saveAttachments(lid,at.links,at.files);
-  var list=document.getElementById('al-list-'+lid);
-  if(list){list.innerHTML='';at.links.forEach(function(item,i){list.innerHTML+=renderLinkItem(lid,item,i);});}
+  var al=document.getElementById('al-list-'+lid);
+  if(al){al.innerHTML='';at.links.forEach(function(item,i){al.innerHTML+=renderLinkItem(lid,item,i);});}
 }
 function attachFilePicked(lid,input){
   var files=Array.from(input.files);if(!files.length)return;
@@ -520,39 +533,50 @@ function attachFilePicked(lid,input){
   var MAX=5*1024*1024;
   files.forEach(function(file){
     if(file.size>MAX){showToast('Archivo "'+file.name+'" supera 5 MB');return;}
-    var pid='afp-'+lid+'-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+    var pid='afp-'+lid+'-'+Date.now()+Math.random().toString(36).slice(2);
     var sz=file.size>1048576?(file.size/1048576).toFixed(1)+' MB':Math.round(file.size/1024)+' KB';
     var h='<div class="attach-pending" id="'+pid+'">';
-    h+='<div class="attach-pending-name">&#128206; '+file.name+' <span style="font-size:.65rem;color:var(--dim);font-weight:400;">'+sz+'</span></div>';
+    h+='<div class="attach-pending-name">&#128206; '+file.name+' <span style="font-size:.65rem;color:var(--dim);">'+sz+'</span></div>';
     h+='<textarea class="attach-desc" id="'+pid+'-desc" placeholder="Que queres mostrar con este archivo? (opcional)"></textarea>';
     h+='<div style="display:flex;gap:.5rem;margin-top:.2rem;">';
-    h+='<button class="attach-add-btn" style="background:var(--red);border-color:var(--red);color:#fff;" onclick="attachConfirmFile(\''+lid+'\',\''+pid+'\',\''+file.name.replace(/'/g,'')+'\',' +file.size+',\''+file.type+'\')">Confirmar</button>';
+    h+='<button class="attach-add-btn" style="background:var(--red);border-color:var(--red);color:#fff;" onclick="attachConfirmFile(\''+lid+'\',\''+pid+'\',this)">Confirmar</button>';
     h+='<button class="attach-add-btn" onclick="document.getElementById(\''+pid+'\').remove()">Cancelar</button>';
     h+='</div></div>';
     pending.innerHTML+=h;
+    // Store file data
     var reader=new FileReader();
-    reader.onload=function(e){try{localStorage.setItem('pp_attach_'+S.user+'_'+lid+'_'+file.name,e.target.result);}catch(err){showToast('Archivo demasiado grande');}};
+    reader.onload=function(e){
+      document.getElementById(pid).dataset.b64=e.target.result;
+      document.getElementById(pid).dataset.name=file.name;
+      document.getElementById(pid).dataset.size=file.size;
+      document.getElementById(pid).dataset.type=file.type;
+    };
     reader.readAsDataURL(file);
   });
   input.value='';
 }
-function attachConfirmFile(lid,pid,name,size,type){
+function attachConfirmFile(lid,pid,btn){
+  var el=document.getElementById(pid);if(!el)return;
+  var name=el.dataset.name,size=parseInt(el.dataset.size||0),type=el.dataset.type||'',b64=el.dataset.b64||'';
+  if(!name){showToast('Esperando que se cargue el archivo...');return;}
   var descEl=document.getElementById(pid+'-desc');
   var desc=descEl?descEl.value.trim():'';
+  // Save file data to localStorage
+  if(b64){try{localStorage.setItem('pp_attach_'+S.user+'_'+lid+'_'+name,b64);}catch(err){showToast('Archivo demasiado grande');return;}}
   var at=getAttachments(lid);
   at.files.push({name:name,size:size,type:type,desc:desc});
   saveAttachments(lid,at.links,at.files);
-  var pendEl=document.getElementById(pid);if(pendEl)pendEl.remove();
-  var flist=document.getElementById('af-list-'+lid);
-  if(flist)flist.innerHTML+=renderFileItem(lid,{name:name,size:size,type:type,desc:desc},at.files.length-1);
+  el.remove();
+  var afl=document.getElementById('af-list-'+lid);
+  if(afl)afl.innerHTML+=renderFileItem(lid,{name:name,size:size,type:type,desc:desc},at.files.length-1);
   updateSaveStatus('Archivo guardado','#22C55E');
 }
 function attachRemoveFile(lid,idx){
   var at=getAttachments(lid);
   if(at.files[idx])localStorage.removeItem('pp_attach_'+S.user+'_'+lid+'_'+at.files[idx].name);
   at.files.splice(idx,1);saveAttachments(lid,at.links,at.files);
-  var flist=document.getElementById('af-list-'+lid);
-  if(flist){flist.innerHTML='';at.files.forEach(function(item,i){flist.innerHTML+=renderFileItem(lid,item,i);});}
+  var afl=document.getElementById('af-list-'+lid);
+  if(afl){afl.innerHTML='';at.files.forEach(function(item,i){afl.innerHTML+=renderFileItem(lid,item,i);});}
 }
 function getAttachAnswers(lid){
   var at=getAttachments(lid),answers=[];
@@ -560,6 +584,65 @@ function getAttachAnswers(lid){
   at.files.forEach(function(item,i){answers.push({fid:'_file_'+i,pregunta:'Archivo '+(i+1)+(item.desc?' - '+item.desc:''),respuesta:item.name});});
   return answers;
 }
+/* FIN ATTACHMENTS */
+/* FIREBASE SYNC */
+var DB=window.DB||null;
+function fbUserRef(user,path){return DB?DB.ref('psicopoker/users/'+user+(path?'/'+path:'')):(null);}
+function fbSaveDraft(user,lid,data){var r=fbUserRef(user,'drafts/'+lid);if(r)r.set(data).catch(function(){});}
+function fbSaveProgress(user,lid){var r=fbUserRef(user,'progress/'+lid);if(r)r.set(true).catch(function(){});}
+function fbSaveSubmission(user,lid,rec){var r=fbUserRef(user,'submissions/'+lid);if(r)r.set(rec).catch(function(){});}
+function fbSaveExtraUsers(extra){var r=DB?DB.ref('psicopoker/app/extra_users'):null;if(r)r.set(extra).catch(function(){});}
+function fbLoadExtraUsers(cb){
+  if(!DB){cb();return;}
+  DB.ref('psicopoker/app/extra_users').once('value')
+    .then(function(s){var d=s.val();if(d&&Object.keys(d).length){localStorage.setItem('pp_extra_users',JSON.stringify(d));USERS=getAllUsers();}cb();})
+    .catch(function(){cb();});
+}
+function loadFromFirebase(username,cb){
+  if(!DB){cb(false);return;}
+  fbUserRef(username).once('value')
+    .then(function(snapshot){
+      var data=snapshot.val();
+      if(!data){cb(false);return;}
+      var changed=false;
+      if(data.progress){
+        var ex={};try{ex=JSON.parse(localStorage.getItem('pp_p_'+username)||'{}');}catch(e){}
+        localStorage.setItem('pp_p_'+username,JSON.stringify(Object.assign({},data.progress,ex)));
+        changed=true;
+      }
+      if(data.drafts){
+        Object.keys(data.drafts).forEach(function(lid){
+          var k='pp_draft_'+username+'_'+lid;
+          if(!localStorage.getItem(k)){localStorage.setItem(k,JSON.stringify(data.drafts[lid]));changed=true;}
+        });
+      }
+      if(data.submissions){
+        var subs=getLocalSubs(),existing={};
+        subs.forEach(function(s){if(s.usuario===username&&s.lid)existing[s.lid]=1;});
+        Object.keys(data.submissions).forEach(function(lid){
+          if(!existing[lid]){subs.push(data.submissions[lid]);changed=true;}
+        });
+        if(changed)localStorage.setItem('pp_submissions',JSON.stringify(subs));
+      }
+      cb(changed);
+    })
+    .catch(function(){cb(false);});
+}
+function fbPushAllLocal(username){
+  if(!DB||!username)return;
+  var prog={};try{prog=JSON.parse(localStorage.getItem('pp_p_'+username)||'{}');}catch(e){}
+  if(Object.keys(prog).length)fbUserRef(username,'progress').set(prog).catch(function(){});
+  Object.keys(localStorage).forEach(function(k){
+    if(k.indexOf('pp_draft_'+username+'_')===0){
+      var lid=k.replace('pp_draft_'+username+'_','');
+      try{var d=JSON.parse(localStorage.getItem(k));fbUserRef(username,'drafts/'+lid).set(d).catch(function(){});}catch(e){}
+    }
+  });
+  getLocalSubs().filter(function(s){return s.usuario===username;}).forEach(function(s){
+    if(s.lid)fbUserRef(username,'submissions/'+s.lid).set(s).catch(function(){});
+  });
+}
+/* FIN FIREBASE SYNC */
 
 function generateMyUnitPDF(){
   var unit=C.find(function(u){return u.id===S.unitId;});if(!unit)return;
@@ -765,6 +848,7 @@ var saveTimer = null;
 
 function saveDraft(lessonId, data) {
   localStorage.setItem('pp_draft_' + S.user + '_' + lessonId, JSON.stringify(data));
+  if(S.user)fbSaveDraft(S.user,lessonId,data);
 }
 function loadDraft(lessonId) {
   try { return JSON.parse(localStorage.getItem('pp_draft_' + S.user + '_' + lessonId) || 'null'); }
@@ -1455,6 +1539,7 @@ function doSubmit(lid){
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   getAttachAnswers(lid).forEach(function(a){answers.push(a);});
   markDoneL(lid);
+  fbSaveSubmission(S.user,lid,rec);
   updateSaveStatus('Enviado a Mauro','#22C55E');
   var isUpdate=idx>=0;
   if(btn){btn.textContent=isUpdate?'Actualizar envio':'Enviar a Mauro';btn.style.background='#22C55E';btn.disabled=false;}
@@ -1479,7 +1564,11 @@ function doLogin() {
   }
   S.user=u;localStorage.setItem('pp_s',u);
   showDash();
-  restoreFromAirtable(u,function(){if(S.user===u)renderDash();});
+  loadFromFirebase(u,function(ok){
+    if(S.user!==u)return;
+    if(ok)renderDash();
+    restoreFromAirtable(u,function(){if(S.user===u){renderDash();fbPushAllLocal(u);}});
+  });
 }
 function doLogout() {
   S = { user: null, unitId: null, lessonId: null };
@@ -1492,7 +1581,14 @@ function doLogout() {
 function autoLogin() {
   USERS=getAllUsers();
   var u=localStorage.getItem('pp_s');
-  if(u&&USERS[u]){S.user=u;showDash();restoreFromAirtable(u,function(){if(S.user===u)renderDash();});}
+  if(u&&USERS[u]){
+    S.user=u;showDash();
+    loadFromFirebase(u,function(ok){
+      if(S.user!==u)return;
+      if(ok)renderDash();
+      restoreFromAirtable(u,function(){if(S.user===u){renderDash();fbPushAllLocal(u);}});
+    });
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -1671,6 +1767,7 @@ function renderContent(unit, lid) {
     if (firstSec) firstSec.classList.add('open');
     restoreDraft(lid);
   }
+  if(lesson.ex)setTimeout(function(){injectAttachmentSection(lid);},120);
   if (lesson.ex && EX_DEFS[lid] && EX_DEFS[lid].type === 'grid') {
     restoreDraft(lid);
     // Re-color cells that have values
@@ -1678,7 +1775,6 @@ function renderContent(unit, lid) {
       if (el.value) el.style.background = '#E8312A22';
     });
   }
-  if(lesson.ex)setTimeout(function(){injectAttachmentSection(lid);},100);
 }
 
 function markComplete(lid) {
@@ -1943,8 +2039,22 @@ function renderFormAdminView(ej,cid){
   else{h+='<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado.</p>';}
   var linkR=resps.filter(function(r){return r.fid&&r.fid.indexOf('_link_')===0;});
   var fileR=resps.filter(function(r){return r.fid&&r.fid.indexOf('_file_')===0;});
-  if(linkR.length){h+='<div class="sub-q"><div class="sub-ql" style="color:#3B82F6;">Links adjuntos</div>';linkR.forEach(function(r){var d=r.pregunta.replace(/^Link \d+ - /,'');h+='<div style="margin:.25rem 0;font-size:.78rem;">&#128279; <a href="'+r.respuesta+'" target="_blank" style="color:var(--text);">'+r.respuesta+'</a>'+(d&&!d.match(/^Link \d+$/)? '<div style="font-size:.72rem;color:var(--muted);">'+d+'</div>':'')+'</div>';});h+='</div>';}
-  if(fileR.length){h+='<div class="sub-q"><div class="sub-ql" style="color:#F59E0B;">Archivos adjuntos</div>';fileR.forEach(function(r){var d=r.pregunta.replace(/^Archivo \d+ - /,'');h+='<div style="margin:.25rem 0;font-size:.78rem;">&#128206; '+r.respuesta+(d&&!d.match(/^Archivo \d+$/)? '<div style="font-size:.72rem;color:var(--muted);">'+d+'</div>':'')+'</div>';});h+='</div>';}
+  if(linkR.length){
+    h+='<div class="sub-q"><div class="sub-ql" style="color:#3B82F6;">Links adjuntos</div>';
+    linkR.forEach(function(r){
+      var desc=r.pregunta.replace(/^Link \d+ - /,'');
+      h+='<div style="margin:.25rem 0;font-size:.78rem;">&#128279; <a href="'+r.respuesta+'" target="_blank" style="color:var(--text);">'+r.respuesta+'</a>'+(desc&&!desc.match(/^Link \d+$/)? '<div style="font-size:.72rem;color:var(--muted);margin-top:.15rem;">'+desc+'</div>':'')+'</div>';
+    });
+    h+='</div>';
+  }
+  if(fileR.length){
+    h+='<div class="sub-q"><div class="sub-ql" style="color:#F59E0B;">Archivos adjuntos</div>';
+    fileR.forEach(function(r){
+      var desc=r.pregunta.replace(/^Archivo \d+ - /,'');
+      h+='<div style="margin:.25rem 0;font-size:.78rem;">&#128206; '+r.respuesta+(desc&&!desc.match(/^Archivo \d+$/)? '<div style="font-size:.72rem;color:var(--muted);margin-top:.15rem;">'+desc+'</div>':'')+'</div>';
+    });
+    h+='</div>';
+  }
   h+='</div>';
   var el=document.getElementById(cid);if(el)el.innerHTML=h;
 }
@@ -2598,7 +2708,7 @@ function updateGridRows(lid){
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('ip').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
   document.getElementById('iu').addEventListener('keydown', function(e) { if (e.key === 'Enter') document.getElementById('ip').focus(); });
-  autoLogin();
+  fbLoadExtraUsers(function(){ autoLogin(); });
 });
 </script>
 </body>
