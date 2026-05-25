@@ -286,6 +286,33 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .tq-range-table th{background:var(--bg3);padding:.5rem .7rem;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);text-align:left;}
 .tq-range-table td{padding:.6rem .7rem;border:1px solid var(--border);vertical-align:top;line-height:1.55;}
 .tq-range-table td:first-child{font-weight:700;white-space:nowrap;background:var(--bg3);}
+.attach-section{border-top:2px solid var(--border);padding:1.1rem 1.25rem;background:var(--bg3);}
+.attach-title{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;}
+.attach-group{margin-bottom:1rem;}
+.attach-group-label{font-size:.65rem;font-weight:700;color:var(--muted);margin-bottom:.45rem;}
+.attach-row{display:flex;flex-direction:column;gap:.35rem;background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.65rem .85rem;margin-bottom:.4rem;}
+.attach-row-top{display:flex;gap:.5rem;align-items:flex-start;}
+.attach-input{flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.78rem;padding:.45rem .75rem;border-radius:4px;outline:none;transition:border-color .2s;min-width:0;}
+.attach-input:focus{border-color:var(--red);}
+.attach-desc{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.76rem;padding:.4rem .75rem;border-radius:4px;outline:none;resize:none;height:46px;line-height:1.4;transition:border-color .2s;}
+.attach-desc:focus{border-color:var(--red);}
+.attach-add-btn{background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;padding:.45rem .85rem;border-radius:4px;cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0;}
+.attach-add-btn:hover{border-color:var(--red);color:var(--text);}
+.attach-item{display:flex;align-items:flex-start;gap:.6rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:.55rem .8rem;margin-bottom:.35rem;}
+.attach-item-icon{font-size:.9rem;flex-shrink:0;margin-top:1px;}
+.attach-item-body{flex:1;min-width:0;}
+.attach-item-main{font-size:.76rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.attach-item-main a{color:var(--text);text-decoration:none;}
+.attach-item-main a:hover{color:var(--red);}
+.attach-item-desc{font-size:.72rem;color:var(--muted);margin-top:.2rem;line-height:1.45;}
+.attach-item-size{font-size:.65rem;color:var(--dim);margin-top:.15rem;}
+.attach-remove{background:transparent;border:none;color:var(--dim);cursor:pointer;font-size:.8rem;padding:0 .2rem;line-height:1;transition:color .15s;flex-shrink:0;}
+.attach-remove:hover{color:var(--red);}
+.attach-file-label{display:inline-flex;align-items:center;gap:.45rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;padding:.45rem .9rem;border-radius:4px;cursor:pointer;transition:all .15s;}
+.attach-file-label:hover{border-color:var(--red);color:var(--text);}
+.attach-pending{display:flex;flex-direction:column;gap:.35rem;padding:.65rem .85rem;background:rgba(232,49,42,.04);border:1px dashed var(--border-r);border-radius:4px;margin-bottom:.4rem;}
+.attach-pending-name{font-size:.76rem;font-weight:600;}
+.attach-note{font-size:.65rem;color:var(--dim);margin-top:.3rem;}
 </style>
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -428,7 +455,137 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 </div>
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 <div class="toast" id="toast"></div>
-<script>/* FIREBASE SYNC */
+<script>
+/* ATTACHMENTS */
+function getAttachments(lid){
+  var draft=loadDraft(lid)||{},links=[],files=[];
+  try{links=JSON.parse(draft._attachLinks||'[]');}catch(e){}
+  try{files=JSON.parse(draft._attachFiles||'[]');}catch(e){}
+  return{links:links,files:files};
+}
+function saveAttachments(lid,links,files){
+  var draft=loadDraft(lid)||{};
+  draft._attachLinks=JSON.stringify(links);
+  draft._attachFiles=JSON.stringify(files);
+  saveDraft(lid,draft);
+}
+function injectAttachmentSection(lid){
+  if(document.getElementById('attach-sec-'+lid))return;
+  var target=document.querySelector('.ex-submit-row');
+  if(!target)return;
+  var at=getAttachments(lid);
+  var h='<div id="attach-sec-'+lid+'" class="attach-section">';
+  h+='<div class="attach-title">Adjuntos</div>';
+  // Links
+  h+='<div class="attach-group"><div class="attach-group-label">Links</div>';
+  h+='<div id="al-list-'+lid+'"></div>';
+  h+='<div class="attach-row"><div class="attach-row-top">';
+  h+='<input type="url" id="al-url-'+lid+'" class="attach-input" placeholder="https://...">';
+  h+='<button class="attach-add-btn" onclick="attachSaveLink(\''+lid+'\')">+ Agregar</button>';
+  h+='</div>';
+  h+='<textarea id="al-desc-'+lid+'" class="attach-desc" placeholder="Que queres mostrar con este link? (opcional)"></textarea>';
+  h+='</div></div>';
+  // Files
+  h+='<div class="attach-group"><div class="attach-group-label">Archivos</div>';
+  h+='<div id="af-list-'+lid+'"></div>';
+  h+='<div id="af-pending-'+lid+'"></div>';
+  h+='<div class="attach-row">';
+  h+='<label class="attach-file-label">Subir archivo<input type="file" id="af-input-'+lid+'" style="display:none;" multiple onchange="attachFilePicked(\''+lid+'\',this)"></label>';
+  h+='<div class="attach-note">Maximo 5 MB por archivo.</div>';
+  h+='</div></div></div>';
+  target.insertAdjacentHTML('beforebegin',h);
+  // Restore saved items
+  var al=document.getElementById('al-list-'+lid);
+  if(al)at.links.forEach(function(item,i){al.innerHTML+=renderLinkItem(lid,item,i);});
+  var afl=document.getElementById('af-list-'+lid);
+  if(afl)at.files.forEach(function(item,i){afl.innerHTML+=renderFileItem(lid,item,i);});
+}
+function renderLinkItem(lid,item,i){
+  var disp=item.url.length>55?item.url.substring(0,52)+'...':item.url;
+  return '<div class="attach-item" id="al-item-'+lid+'-'+i+'"><span class="attach-item-icon">&#128279;</span><div class="attach-item-body"><div class="attach-item-main"><a href="'+item.url+'" target="_blank" rel="noopener">'+disp+'</a></div>'+(item.desc?'<div class="attach-item-desc">'+item.desc+'</div>':'')+'</div><button class="attach-remove" onclick="attachRemoveLink(\''+lid+'\','+i+')" title="Eliminar">&#10005;</button></div>';
+}
+function renderFileItem(lid,item,i){
+  var sz=item.size>1048576?(item.size/1048576).toFixed(1)+' MB':Math.round(item.size/1024)+' KB';
+  return '<div class="attach-item" id="af-item-'+lid+'-'+i+'"><span class="attach-item-icon">&#128206;</span><div class="attach-item-body"><div class="attach-item-main">'+item.name+'</div><div class="attach-item-size">'+sz+'</div>'+(item.desc?'<div class="attach-item-desc">'+item.desc+'</div>':'')+'</div><button class="attach-remove" onclick="attachRemoveFile(\''+lid+'\','+i+')" title="Eliminar">&#10005;</button></div>';
+}
+function attachSaveLink(lid){
+  var urlEl=document.getElementById('al-url-'+lid);
+  var descEl=document.getElementById('al-desc-'+lid);
+  if(!urlEl)return;
+  var url=urlEl.value.trim();if(!url)return;
+  if(!/^https?:\/\//i.test(url))url='https://'+url;
+  var desc=descEl?descEl.value.trim():'';
+  var at=getAttachments(lid);at.links.push({url:url,desc:desc});
+  saveAttachments(lid,at.links,at.files);
+  var al=document.getElementById('al-list-'+lid);
+  if(al)al.innerHTML+=renderLinkItem(lid,{url:url,desc:desc},at.links.length-1);
+  urlEl.value='';if(descEl)descEl.value='';
+  updateSaveStatus('Link guardado','#22C55E');
+}
+function attachRemoveLink(lid,idx){
+  var at=getAttachments(lid);at.links.splice(idx,1);saveAttachments(lid,at.links,at.files);
+  var al=document.getElementById('al-list-'+lid);
+  if(al){al.innerHTML='';at.links.forEach(function(item,i){al.innerHTML+=renderLinkItem(lid,item,i);});}
+}
+function attachFilePicked(lid,input){
+  var files=Array.from(input.files);if(!files.length)return;
+  var pending=document.getElementById('af-pending-'+lid);if(!pending)return;
+  var MAX=5*1024*1024;
+  files.forEach(function(file){
+    if(file.size>MAX){showToast('Archivo "'+file.name+'" supera 5 MB');return;}
+    var pid='afp-'+lid+'-'+Date.now()+Math.random().toString(36).slice(2);
+    var sz=file.size>1048576?(file.size/1048576).toFixed(1)+' MB':Math.round(file.size/1024)+' KB';
+    var h='<div class="attach-pending" id="'+pid+'">';
+    h+='<div class="attach-pending-name">&#128206; '+file.name+' <span style="font-size:.65rem;color:var(--dim);">'+sz+'</span></div>';
+    h+='<textarea class="attach-desc" id="'+pid+'-desc" placeholder="Que queres mostrar con este archivo? (opcional)"></textarea>';
+    h+='<div style="display:flex;gap:.5rem;margin-top:.2rem;">';
+    h+='<button class="attach-add-btn" style="background:var(--red);border-color:var(--red);color:#fff;" onclick="attachConfirmFile(\''+lid+'\',\''+pid+'\',this)">Confirmar</button>';
+    h+='<button class="attach-add-btn" onclick="document.getElementById(\''+pid+'\').remove()">Cancelar</button>';
+    h+='</div></div>';
+    pending.innerHTML+=h;
+    // Store file data
+    var reader=new FileReader();
+    reader.onload=function(e){
+      document.getElementById(pid).dataset.b64=e.target.result;
+      document.getElementById(pid).dataset.name=file.name;
+      document.getElementById(pid).dataset.size=file.size;
+      document.getElementById(pid).dataset.type=file.type;
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value='';
+}
+function attachConfirmFile(lid,pid,btn){
+  var el=document.getElementById(pid);if(!el)return;
+  var name=el.dataset.name,size=parseInt(el.dataset.size||0),type=el.dataset.type||'',b64=el.dataset.b64||'';
+  if(!name){showToast('Esperando que se cargue el archivo...');return;}
+  var descEl=document.getElementById(pid+'-desc');
+  var desc=descEl?descEl.value.trim():'';
+  // Save file data to localStorage
+  if(b64){try{localStorage.setItem('pp_attach_'+S.user+'_'+lid+'_'+name,b64);}catch(err){showToast('Archivo demasiado grande');return;}}
+  var at=getAttachments(lid);
+  at.files.push({name:name,size:size,type:type,desc:desc});
+  saveAttachments(lid,at.links,at.files);
+  el.remove();
+  var afl=document.getElementById('af-list-'+lid);
+  if(afl)afl.innerHTML+=renderFileItem(lid,{name:name,size:size,type:type,desc:desc},at.files.length-1);
+  updateSaveStatus('Archivo guardado','#22C55E');
+}
+function attachRemoveFile(lid,idx){
+  var at=getAttachments(lid);
+  if(at.files[idx])localStorage.removeItem('pp_attach_'+S.user+'_'+lid+'_'+at.files[idx].name);
+  at.files.splice(idx,1);saveAttachments(lid,at.links,at.files);
+  var afl=document.getElementById('af-list-'+lid);
+  if(afl){afl.innerHTML='';at.files.forEach(function(item,i){afl.innerHTML+=renderFileItem(lid,item,i);});}
+}
+function getAttachAnswers(lid){
+  var at=getAttachments(lid),answers=[];
+  at.links.forEach(function(item,i){answers.push({fid:'_link_'+i,pregunta:'Link '+(i+1)+(item.desc?' - '+item.desc:''),respuesta:item.url});});
+  at.files.forEach(function(item,i){answers.push({fid:'_file_'+i,pregunta:'Archivo '+(i+1)+(item.desc?' - '+item.desc:''),respuesta:item.name});});
+  return answers;
+}
+/* FIN ATTACHMENTS */
+/* FIREBASE SYNC */
 var DB=window.DB||null;
 function fbUserRef(user,path){return DB?DB.ref('psicopoker/users/'+user+(path?'/'+path:'')):(null);}
 function fbSaveDraft(user,lid,data){var r=fbUserRef(user,'drafts/'+lid);if(r)r.set(data).catch(function(){});}
@@ -1380,6 +1537,7 @@ function doSubmit(lid){
   var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});
   if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
+  getAttachAnswers(lid).forEach(function(a){answers.push(a);});
   markDoneL(lid);
   fbSaveSubmission(S.user,lid,rec);
   updateSaveStatus('Enviado a Mauro','#22C55E');
@@ -1609,6 +1767,7 @@ function renderContent(unit, lid) {
     if (firstSec) firstSec.classList.add('open');
     restoreDraft(lid);
   }
+  if(lesson.ex)setTimeout(function(){injectAttachmentSection(lid);},120);
   if (lesson.ex && EX_DEFS[lid] && EX_DEFS[lid].type === 'grid') {
     restoreDraft(lid);
     // Re-color cells that have values
@@ -1878,6 +2037,24 @@ function renderFormAdminView(ej,cid){
   var has=resps.some(function(r){return r.respuesta&&r.respuesta.trim();});
   if(has){resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()){h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';}});}
   else{h+='<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado.</p>';}
+  var linkR=resps.filter(function(r){return r.fid&&r.fid.indexOf('_link_')===0;});
+  var fileR=resps.filter(function(r){return r.fid&&r.fid.indexOf('_file_')===0;});
+  if(linkR.length){
+    h+='<div class="sub-q"><div class="sub-ql" style="color:#3B82F6;">Links adjuntos</div>';
+    linkR.forEach(function(r){
+      var desc=r.pregunta.replace(/^Link \d+ - /,'');
+      h+='<div style="margin:.25rem 0;font-size:.78rem;">&#128279; <a href="'+r.respuesta+'" target="_blank" style="color:var(--text);">'+r.respuesta+'</a>'+(desc&&!desc.match(/^Link \d+$/)? '<div style="font-size:.72rem;color:var(--muted);margin-top:.15rem;">'+desc+'</div>':'')+'</div>';
+    });
+    h+='</div>';
+  }
+  if(fileR.length){
+    h+='<div class="sub-q"><div class="sub-ql" style="color:#F59E0B;">Archivos adjuntos</div>';
+    fileR.forEach(function(r){
+      var desc=r.pregunta.replace(/^Archivo \d+ - /,'');
+      h+='<div style="margin:.25rem 0;font-size:.78rem;">&#128206; '+r.respuesta+(desc&&!desc.match(/^Archivo \d+$/)? '<div style="font-size:.72rem;color:var(--muted);margin-top:.15rem;">'+desc+'</div>':'')+'</div>';
+    });
+    h+='</div>';
+  }
   h+='</div>';
   var el=document.getElementById(cid);if(el)el.innerHTML=h;
 }
