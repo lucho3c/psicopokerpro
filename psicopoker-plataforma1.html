@@ -189,7 +189,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .week-table tbody tr:hover{background:rgba(255,255,255,.015);}
 .week-table tbody td{border-bottom:1px solid rgba(255,255,255,.04);}
 .hour-cell{font-size:.65rem;font-weight:700;color:var(--dim);padding:.28rem .4rem .28rem .85rem;white-space:nowrap;}
-.gcell{width:100%;min-height:30px;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.78rem;padding:.35rem .5rem;border-radius:3px;outline:none;transition:border-color .2s,background .2s;resize:none;overflow:hidden;line-height:1.45;display:block;box-sizing:border-box;text-align:center;}
+.gcell{width:100%;height:30px;background:transparent;border:none;border-left:1px solid rgba(255,255,255,.04);font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:500;color:var(--text);padding:.2rem .35rem;outline:none;cursor:text;text-align:center;transition:background .15s;}
 .gcell:focus{background:rgba(232,49,42,.08);outline:1px solid rgba(232,49,42,.35);}
 .gcell::placeholder{color:rgba(238,239,243,.1);}
 
@@ -278,6 +278,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
       <span class="uname" id="nav-nm"></span>
       <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Mauro</button>
       <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Mauro</button>
+      <button id="btn-dl-full" onclick="generateMyFullPDF()" style="display:none;align-items:center;gap:.4rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .85rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Mi programa</button>
       <button class="btn-sm" onclick="doLogout()">Salir</button>
     </div>
   </div>
@@ -310,7 +311,8 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
         </svg> Volver al programa
       </button>
     </div>
-    <div class="tnav-r">
+    <div class="tnav-r" style="gap:.5rem;">
+      <button id="btn-dl-unit" onclick="generateMyUnitPDF()" style="display:none;align-items:center;gap:.4rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .85rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Descargar unidad</button>
       <div class="uav" id="nav-av2"></div>
       <button class="btn-sm" onclick="doLogout()">Salir</button>
     </div>
@@ -349,7 +351,6 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
       <button id="btn-tab-pacientes" onclick="adminTab('pacientes')" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Ejercicios</button>
       <button id="btn-tab-usuarios" onclick="adminTab('usuarios')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Pacientes</button>
       <button onclick="loadAdminPanel()" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">&#8635; Actualizar</button>
-      <button onclick="resetAllData()" style="background:transparent;border:1px solid rgba(107,114,128,.3);color:rgba(107,114,128,.7);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">&#10005; Reset datos</button>
       <button onclick="generateGeneralReport()" style="display:flex;align-items:center;gap:.35rem;background:var(--red-dim);border:1px solid var(--border-r);color:var(--red);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:3px;cursor:pointer;"><svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Informe General</button>
     </div>
     <div class="tnav-r"><div class="uav" id="nav-av3"></div><button class="btn-sm" onclick="doLogout()">Salir</button></div>
@@ -375,11 +376,47 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 </div>
 
 </div>
-<div class="overlay" id="overlay" onclick="clofunction autoHeight(el){el.style.height='auto';el.style.height=Math.max(30,el.scrollHeight)+'px';}
-function autoHeightAll(){document.querySelectorAll('.gcell').forEach(function(el){autoHeight(el);});}
-seSidebar()"></div>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 <div class="toast" id="toast"></div>
 <script>
+function generateMyUnitPDF(){
+  var unit=C.find(function(u){return u.id===S.unitId;});if(!unit)return;
+  var user=USERS[S.user];
+  var unitName=unit.name||unit.id;
+  var allLids=(unit.lessons||[]).concat(unit.extra||[]).map(function(l){return l.id;});
+  var subs=getLocalSubs().filter(function(s){return s.usuario===S.user&&(s.unidad===unitName||allLids.indexOf(s.lid)!==-1);});
+  var seen={};subs.forEach(function(e){var k=e.lid||e.ejercicio;if(!seen[k]||(e.ts||0)>(seen[k].ts||0))seen[k]=e;});
+  var unique=Object.values(seen);
+  if(!unique.length){showToast('No hay ejercicios completados en esta unidad todavia');return;}
+  var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div><div class="hdr-info"><div class="hdr-lbl">'+unitName+'</div><div class="hdr-val">'+user.name+'</div><div class="hdr-date">'+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
+  h+='<div class="sec-title">'+unitName+' — Ejercicios completados</div>';
+  unique.forEach(function(ej){h+=buildExPDF(ej);});
+  h+='<div class="footer">Psicopoker · '+new Date().toLocaleString('es-AR')+'</div></div>';
+  openPDF(unitName+' — '+user.name,h);
+}
+
+function generateMyFullPDF(){
+  var user=USERS[S.user];
+  var subs=getLocalSubs().filter(function(s){return s.usuario===S.user;});
+  var seen={};subs.forEach(function(e){var k=e.lid||e.ejercicio;if(!seen[k]||(e.ts||0)>(seen[k].ts||0))seen[k]=e;});
+  var unique=Object.values(seen);
+  if(!unique.length){showToast('No hay ejercicios completados todavia');return;}
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
+  var byUnit={};unique.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
+  var sortedUnits=Object.keys(byUnit).sort(function(a,b){return unitIdx(a)-unitIdx(b);});
+  var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div><div class="hdr-info"><div class="hdr-lbl">Programa completo</div><div class="hdr-val">'+user.name+'</div><div class="hdr-date">'+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
+  h+='<div class="stats-grid"><div class="stat-box"><div class="stat-lbl">Ejercicios</div><div class="stat-val">'+unique.length+'</div></div><div class="stat-box"><div class="stat-lbl">Unidades</div><div class="stat-val">'+sortedUnits.length+'</div></div></div>';
+  sortedUnits.forEach(function(unit){h+='<div class="sec-title">'+unit+'</div>';byUnit[unit].forEach(function(ej){h+=buildExPDF(ej);});});
+  h+='<div class="footer">Psicopoker · '+new Date().toLocaleString('es-AR')+'</div></div>';
+  openPDF('Programa Completo — '+user.name,h);
+}
+
+function resetAllData(){if(!confirm('ATENCION: Borrar TODOS los ejercicios de TODOS los pacientes. No se puede deshacer. ¿Confirmar?'))return;if(!confirm('Segunda confirmacion: ¿Borrar todo?'))return;var keys=Object.keys(localStorage);keys.forEach(function(k){if(k==='pp_submissions'||k.startsWith('pp_p_')||k.startsWith('pp_draft_'))localStorage.removeItem(k);});adminData=[];activePatient=null;var plist=document.getElementById('admin-patient-list');if(plist)plist.innerHTML='<div style="padding:1rem;font-size:.75rem;color:var(--dim);">Limpiando...</div>';clearAirtableAll(function(n){showToast('Reset: '+n+' registros borrados');loadAdminPanel();});}
+function clearAirtableAll(cb,done){done=done||0;fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}}).then(function(r){return r.json();}).then(function(resp){if(!resp.records||!resp.records.length){cb(done);return;}var ids=resp.records.map(function(r){return r.id;}),batches=[],tmp=ids.slice();while(tmp.length)batches.push(tmp.splice(0,10));var finished=0;batches.forEach(function(batch){var qs=batch.map(function(id){return'records[]='+encodeURIComponent(id);}).join('&');fetch(AIRTABLE_URL+'?'+qs,{method:'DELETE',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}}).then(function(){if(++finished===batches.length)clearAirtableAll(cb,done+resp.records.length);}).catch(function(){if(++finished===batches.length)clearAirtableAll(cb,done+resp.records.length);});});}).catch(function(){cb(done);});}
+function autoHeight(el){el.style.height='auto';el.style.height=Math.max(30,el.scrollHeight)+'px';}
+function autoHeightAll(){document.querySelectorAll('.gcell').forEach(function(el){autoHeight(el);});}
+
 /* ═══════════════════════════════════════════════
    USUARIOS — editá para agregar jugadores
    ═══════════════════════════════════════════════ */
@@ -569,16 +606,13 @@ function triggerAutoSave(lessonId) {
 function collectAndSave(lid) {
   var data = {};
   document.querySelectorAll('[data-fid]').forEach(function(el) {
-    var fid = el.getAttribute('data-fid');
-    data[fid] = el.value;
-    var clr = el.getAttribute('data-color');
-    if (clr) data[fid + '_c'] = clr;
+    var fid=el.getAttribute('data-fid');data[fid]=el.value;
+    var clr=el.getAttribute('data-color');if(clr)data[fid+'_c']=clr;
   });
-  var ss = document.getElementById('grid-start-hr_' + lid);
-  var es = document.getElementById('grid-end-hr_' + lid);
-  if (ss) data.startHour = ss.value;
-  if (es) data.endHour   = es.value;
-  saveDraft(lid, data);
+  var ss=document.getElementById('grid-start-hr_'+lid);
+  var es=document.getElementById('grid-end-hr_'+lid);
+  if(ss)data.startHour=ss.value;if(es)data.endHour=es.value;
+  if(Object.keys(data).length>0)saveDraft(lid,data);
 }
 function restoreDraft(lessonId) {
   var draft=loadDraft(lessonId);
@@ -742,7 +776,6 @@ var EX_DEFS = {
       { fid:'u8l4_5', label:'Que todavia cuesta: aspectos que no pudiste modificar o pudiste en menor medida' }
     ]}
   ]},
-
 
 
   'u1l3':{ type:'form', unit:'Unidad 1', name:'Poker Mindset Test', sections:[
@@ -1048,14 +1081,15 @@ function renderGridExercise(lid, def) {
     var sub = subs.find(function(s){ return s.usuario===S.user && s.lid===lid; });
     if (sub && sub.respuestas) {
       draft = {};
-      sub.respuestas.forEach(function(r){ if(r.fid){draft[r.fid]=r.respuesta||'';if(r.color)draft[r.fid+'_c']=r.color;} });
+      sub.respuestas.forEach(function(r){
+        if (r.fid) { draft[r.fid]=r.respuesta||''; if(r.color)draft[r.fid+'_c']=r.color; }
+      });
     }
   }
   var startH = (draft && draft.startHour) ? parseInt(draft.startHour) : 7;
   var endH   = (draft && draft.endHour)   ? parseInt(draft.endHour)   : 23;
   var days   = def.days || ['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
   function hrOpts(sel,mn,mx){var o='';for(var i=mn;i<=mx;i++)o+='<option value="'+i+'"'+(i===sel?' selected':'')+'>'+i+':00</option>';return o;}
-  var CATS=[['#E8312A','Poker'],['#3B82F6','Estudio'],['#22C55E','Familia'],['#F59E0B','Ocio'],['#8B5CF6','Trabajo'],['#EC4899','Descanso'],['#6B7280','Otro']];
   var h='<div class="ex-wrap">';
   h+='<div style="display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;">';
   h+='<span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Franja horaria:</span>';
@@ -1066,13 +1100,12 @@ function renderGridExercise(lid, def) {
   h+='<select id="grid-end-hr_'+lid+'" onchange="updateGridRows(\''+lid+'\')" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.35rem .6rem;border-radius:4px;outline:none;cursor:pointer;">'+hrOpts(endH,1,23)+'</select>';
   h+='</div><span style="font-size:.68rem;color:var(--dim);">Ajustalo a tu rutina</span></div>';
   h+='<div class="cat-row">';
-  CATS.forEach(function(cat){
-    h+='<div class="cat-pill" onclick="selCat(this,\''+cat[0]+'\')" style="border-color:'+cat[0]+'44;color:'+cat[0]+';">';
-    h+='<span style="background:'+cat[0]+';width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;"></span>'+cat[1]+'</div>';
+  [['#E8312A','Poker'],['#3B82F6','Estudio'],['#22C55E','Familia'],['#F59E0B','Ocio'],['#8B5CF6','Trabajo'],['#EC4899','Descanso'],['#6B7280','Otro']].forEach(function(cat){
+    h+='<div class="cat-pill" onclick="selCat(this,\''+cat[0]+'\')" style="border-color:'+cat[0]+'44;color:'+cat[0]+';"><span style="background:'+cat[0]+';width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;"></span>'+cat[1]+'</div>';
   });
   h+='</div>';
-  h+='<div class="grid-scroll"><table class="week-table"><thead><tr><th style="width:52px;">Hora</th>';
-  days.forEach(function(d){ h+='<th>'+d+'</th>'; });
+  h+='<div class="grid-scroll"><table class="week-table"><thead><tr><th>Hora</th>';
+  days.forEach(function(d){h+='<th>'+d+'</th>';});
   h+='</tr></thead><tbody id="grid-tbody-'+lid+'">';
   for(var hh=startH;hh<=endH;hh++){
     var hr=hh+':00';
@@ -1083,8 +1116,7 @@ function renderGridExercise(lid, def) {
       var clr=(draft&&draft[fid+'_c'])?draft[fid+'_c']:'';
       var st=val&&clr?' style="background:'+clr+'22;color:'+clr+';border-color:'+clr+'55;"':'';
       var dc=clr?' data-color="'+clr+'"':'';
-      var safeVal=val.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      h+='<td><textarea class="gcell" data-fid="'+fid+'"'+dc+' placeholder="..." onclick="colorCell(this)" oninput="autoHeight(this);triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+st+'>'+safeVal+'</textarea></td>';
+      h+='<td><input class="gcell" type="text" data-fid="'+fid+'"'+dc+' value="'+val.replace(/"/g,'&quot;')+'" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+st+'></td>';
     });
     h+='</tr>';
   }
@@ -1097,14 +1129,12 @@ function renderGridExercise(lid, def) {
   });
   h+='</div>';
   var alreadyDone=isDone(lid);
-  h+='<div class="ex-submit-row"><button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="doSubmit(\''+lid+'\')" '+(alreadyDone?'style="background:var(--green);"':'')+'>'
-    +'<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'
-    +' '+(alreadyDone?'Actualizar envio':'Enviar a Mauro')+'</button>'
-    +'<p class="ex-submit-note">Se guarda automaticamente mientras escribis</p></div></div>';
+  h+='<div class="ex-submit-row"><button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="doSubmit(\''+lid+'\')" '+(alreadyDone?'style="background:var(--green);"':'')+'>'+
+  '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'+
+  ' '+(alreadyDone?'Actualizar envio':'Enviar a Mauro')+'</button>'+
+  '<p class="ex-submit-note">Se guarda automaticamente mientras escribis</p></div></div>';
   return h;
 }
-// After grid renders, auto-resize all cells
-function afterGridRender(){ setTimeout(autoHeightAll, 50); }
 
 function renderFormExercise(lid, def) {
   var draft = loadDraft(lid);
@@ -1298,6 +1328,8 @@ function showDash(){
   var ab=document.getElementById('btn-admin');
   if(ab)ab.style.display=isAdmin()?'inline-flex':'none';
   renderDash();showView('vdash');
+  var dlFull=document.getElementById('btn-dl-full');
+  if(dlFull)dlFull.style.display=isAdmin()?'none':'flex';
 }
 function renderDash() {
   var pct = totalPct();
@@ -1627,31 +1659,11 @@ function loadAdminPanel(){
 }
 
 function renderAdminPanel(subs){
-  // Deduplicate submissions — keep latest per user+exercise
   var latest={};
-  subs.forEach(function(s){
-    var key=(s.usuario||'?')+'|'+(s.lid||s.ejercicio||'?');
-    if(!latest[key]||(s.ts||0)>(latest[key].ts||0))latest[key]=s;
-  });
-  // Build patient map from submissions
+  subs.forEach(function(s){var key=(s.usuario||'?')+'|'+(s.lid||s.ejercicio||'?');if(!latest[key]||(s.ts||0)>(latest[key].ts||0))latest[key]=s;});
   var patients={};
-  Object.values(latest).forEach(function(s){
-    var k=s.usuario||s.jugador||'?';
-    if(!patients[k])patients[k]={nombre:s.jugador||k,usuario:k,ejercicios:[],lastTs:0};
-    patients[k].ejercicios.push(s);
-    if((s.ts||0)>patients[k].lastTs)patients[k].lastTs=s.ts||0;
-  });
-  // Add ALL registered users (even those with 0 exercises)
-  var allUsers=getAllUsers();
-  Object.keys(allUsers).forEach(function(u){
-    var usr=allUsers[u];
-    if(usr.role==='admin')return;
-    if(!patients[u])patients[u]={nombre:usr.name,usuario:u,ejercicios:[],lastTs:0};
-  });
-  // Sort ALPHABETICALLY by name
-  adminData=Object.values(patients).sort(function(a,b){
-    return a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'});
-  });
+  Object.values(latest).forEach(function(s){var k=s.usuario||s.jugador||'?';if(!patients[k])patients[k]={nombre:s.jugador||k,usuario:k,ejercicios:[],lastTs:0};patients[k].ejercicios.push(s);if((s.ts||0)>patients[k].lastTs)patients[k].lastTs=s.ts||0;});
+  adminData=Object.values(patients).sort(function(a,b){if(b.lastTs!==a.lastTs)return b.lastTs-a.lastTs;return a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'});});
   renderPatientList('');
   if(!activePatient&&adminData.length>0)showPatient(adminData[0].usuario);
   else if(activePatient)showPatient(activePatient);
@@ -1659,43 +1671,13 @@ function renderAdminPanel(subs){
 
 function renderPatientList(filter){
   var f=(filter||'').toLowerCase().trim();
-  var filtered=adminData.filter(function(p){
-    return !f||p.nombre.toLowerCase().includes(f)||p.usuario.toLowerCase().includes(f);
-  });
+  var filtered=adminData.filter(function(p){return!f||p.nombre.toLowerCase().includes(f)||p.usuario.toLowerCase().includes(f);});
   var plist=document.getElementById('admin-patient-list');
-  if(!plist)return;
-  if(!adminData.length){
-    plist.innerHTML='<div style="padding:1.25rem 1.1rem;font-size:.78rem;color:var(--dim);line-height:1.6;">Agrega pacientes en la pestana Pacientes.</div>';
-    var ac=document.getElementById('admin-content');
-    if(ac)ac.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:4rem 2rem;"><div style="font-size:3rem;opacity:.08;margin-bottom:1rem;">&#128101;</div><p style="font-size:.9rem;font-weight:700;">Sin pacientes todavia</p></div>';
-    return;
-  }
-  if(!filtered.length){
-    plist.innerHTML='<div style="padding:1.1rem;font-size:.75rem;color:var(--dim);">Ningun resultado para "'+f+'"</div>';
-    return;
-  }
+  if(!adminData.length){if(plist)plist.innerHTML='<div style="padding:1.25rem 1.1rem;font-size:.78rem;color:var(--dim);">Sin respuestas todavia.</div>';var ac=document.getElementById('admin-content');if(ac)ac.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:4rem 2rem;"><div style="font-size:3rem;opacity:.08;margin-bottom:1rem;">&#128101;</div><p style="font-size:.9rem;font-weight:700;margin-bottom:.4rem;">Sin pacientes todavia</p></div>';return;}
+  if(!filtered.length){if(plist)plist.innerHTML='<div style="padding:1.1rem;font-size:.75rem;color:var(--dim);">Ningun resultado.</div>';return;}
   var h='';
-  filtered.forEach(function(p){
-    var n=p.ejercicios.length;
-    var active=p.usuario===activePatient;
-    var initial=(p.nombre[0]||'?').toUpperCase();
-    h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showPatient(\''+p.usuario+'\')">'+
-      '<div style="display:flex;align-items:center;gap:.65rem;">'+
-      '<div style="width:30px;height:30px;border-radius:50%;background:'+(active?'var(--red)':'var(--card2)')+
-      ';display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;'+
-      'color:'+(active?'#fff':'var(--muted)')+';flex-shrink:0;">'+initial+'</div>'+
-      '<div style="min-width:0;">'+
-        '<div class="aei-name" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+p.nombre+'</div>'+
-        '<div class="aei-count">'+
-          (n===0
-            ? '<span style="color:var(--dim);">Sin ejercicios aun</span>'
-            : n+' ejercicio'+(n!==1?'s':'')+' completado'+(n!==1?'s':''))
-        +'</div>'+
-      '</div>'+
-      '</div>'+
-    '</div>';
-  });
-  plist.innerHTML=h;
+  filtered.forEach(function(p){var n=p.ejercicios.length,active=p.usuario===activePatient;h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showPatient(\''+p.usuario+'\')">';h+='<div style="display:flex;align-items:center;gap:.65rem;"><div style="width:28px;height:28px;border-radius:50%;background:'+(active?'var(--red)':'var(--card2)')+';display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:'+(active?'#fff':'var(--muted)')+';flex-shrink:0;">'+(p.nombre[0]||'?').toUpperCase()+'</div>';h+='<div><div class="aei-name">'+p.nombre+'</div><div class="aei-count">'+n+' ejercicio'+(n!==1?'s':'')+' completado'+(n!==1?'s':'')+'</div></div></div></div>';});
+  if(plist)plist.innerHTML=h;
 }
 
 function showPatient(usuario){
@@ -1922,37 +1904,11 @@ function buildExPDF(ej){
     resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';});
   }else if(isGrid){
     var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
-    var reflCells=resps.filter(function(r){return r.fid&&!/^g_/.test(r.fid)&&r.fid!=='_startHour'&&r.fid!=='_endHour';});
+    var reflCells=resps.filter(function(r){return!r.fid||!/^g_\d+_\d+$/.test(r.fid);});
     var days=['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
-    var sc={};
-    gridCells.forEach(function(r){
-      var m=r.fid.match(/^g_(\d+)_(\d+)$/);if(!m)return;
-      var raw=m[1],hr=raw.length===3?raw[0]+':00':raw.substring(0,2)+':00',di=parseInt(m[2]);
-      if(!sc[hr])sc[hr]={};
-      sc[hr][di]={val:r.respuesta||'',color:r.color||''};
-    });
+    var sc={};gridCells.forEach(function(r){var m=r.fid.match(/^g_(\d+)_(\d+)$/);if(!m)return;var hr=m[1].length===3?m[1][0]+':00':m[1].substring(0,2)+':00';var di=parseInt(m[2]);if(!sc[hr])sc[hr]={};sc[hr][di]=r.respuesta||'';});
     var hrs=Object.keys(sc).sort(function(a,b){return parseInt(a)-parseInt(b);});
-    if(hrs.length>0){
-      h+='<table class="gtable"><thead><tr><th>Hora</th>';
-      days.forEach(function(d){h+='<th>'+d+'</th>';});
-      h+='</tr></thead><tbody>';
-      hrs.forEach(function(hr){
-        h+='<tr><td class="hcol">'+hr+'</td>';
-        days.forEach(function(d,di){
-          var cell=sc[hr]&&sc[hr][di], val=cell?cell.val:'', clr=cell?cell.color:'';
-          if(val){
-            var bg=clr?clr+'33':'#fff0ee';
-            var fg=clr||'#c0392b';
-            var bc=clr?clr+'88':'#f5a89e';
-            h+='<td><span style="background:'+bg+';color:'+fg+';border:1px solid '+bc+';border-radius:3px;padding:2px 6px;display:inline-block;font-weight:600;font-size:9px;">'+val+'</span></td>';
-          } else {
-            h+='<td></td>';
-          }
-        });
-        h+='</tr>';
-      });
-      h+='</tbody></table>';
-    }
+    if(hrs.length>0){h+='<table class="gtable"><thead><tr><th>Hora</th>';days.forEach(function(d){h+='<th>'+d+'</th>';});h+='</tr></thead><tbody>';hrs.forEach(function(hr){h+='<tr><td class="hcol">'+hr+'</td>';days.forEach(function(d,di){var v=(sc[hr]&&sc[hr][di])||'';h+='<td>'+(v?'<span class="gval">'+v+'</span>':'')+'</td>';});h+='</tr>';});h+='</tbody></table>';}
     reflCells.forEach(function(r){if(r.respuesta&&r.respuesta.trim())h+='<div class="qa-row"><div class="qa-q">'+r.pregunta+'</div><div class="qa-a">'+r.respuesta+'</div></div>';});
   }else{
     resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()&&r.fid&&!/^teosq_/.test(r.fid))h+='<div class="qa-row"><div class="qa-q">'+(r.pregunta||'')+'</div><div class="qa-a">'+r.respuesta+'</div></div>';});
@@ -2175,51 +2131,17 @@ function updateGridRows(lid){
     rows+='<tr><td class="hour-cell">'+hr+'</td>';
     days.forEach(function(d,di){
       var fid='g_'+hr.replace(':','')+'_'+di;
-      var val=draft[fid]||'';
+      var val=(draft[fid]||'').replace(/"/g,'&quot;');
       var clr=draft[fid+'_c']||'';
       var st=val&&clr?' style="background:'+clr+'22;color:'+clr+';border-color:'+clr+'55;"':'';
       var dc=clr?' data-color="'+clr+'"':'';
-      var safeVal=val.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      rows+='<td><textarea class="gcell" data-fid="'+fid+'"'+dc+' placeholder="..." onclick="colorCell(this)" oninput="autoHeight(this);triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+st+'>'+safeVal+'</textarea></td>';
+      rows+='<td><input class="gcell" type="text" data-fid="'+fid+'"'+dc+' value="'+val+'" placeholder="..." onclick="colorCell(this)" oninput="triggerAutoSave(\''+lid+'\')" onfocus="colorCell(this)"'+st+'></td>';
     });
     rows+='</tr>';
   }
-  tbody.innerHTML=rows;
-  setTimeout(autoHeightAll,30);
-  updateSaveStatus('Horario actualizado','#22C55E');
+  tbody.innerHTML=rows;updateSaveStatus('Horario actualizado','#22C55E');
 }
 
-
-function resetAllData(){
-  if(!confirm('ATENCION: Esto borra TODOS los ejercicios de TODOS los pacientes. No se puede deshacer. ¿Confirmar?'))return;
-  if(!confirm('Segunda confirmacion: ¿Borrar todo?'))return;
-  var keys=Object.keys(localStorage);
-  keys.forEach(function(k){if(k==='pp_submissions'||k.startsWith('pp_p_')||k.startsWith('pp_draft_'))localStorage.removeItem(k);});
-  adminData=[];activePatient=null;
-  var plist=document.getElementById('admin-patient-list');
-  if(plist)plist.innerHTML='<div style="padding:1rem;font-size:.75rem;color:var(--dim);">Limpiando Airtable...</div>';
-  clearAirtableAll(function(n){showToast('Reset completo — Airtable: '+n+' registros borrados');loadAdminPanel();});
-}
-function clearAirtableAll(cb,done){
-  done=done||0;
-  fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
-  .then(function(r){return r.json();})
-  .then(function(resp){
-    if(!resp.records||!resp.records.length){cb(done);return;}
-    var ids=resp.records.map(function(r){return r.id;}),batches=[],tmp=ids.slice();
-    while(tmp.length)batches.push(tmp.splice(0,10));
-    var finished=0;
-    batches.forEach(function(batch){
-      var qs=batch.map(function(id){return'records[]='+encodeURIComponent(id);}).join('&');
-      fetch(AIRTABLE_URL+'?'+qs,{method:'DELETE',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
-      .then(function(){if(++finished===batches.length)clearAirtableAll(cb,done+resp.records.length);})
-      .catch(function(){if(++finished===batches.length)clearAirtableAll(cb,done+resp.records.length);});
-    });
-  }).catch(function(){cb(done);});
-}
-
-function autoHeight(el){el.style.height='auto';el.style.height=Math.max(30,el.scrollHeight)+'px';}
-function autoHeightAll(){document.querySelectorAll('.gcell').forEach(function(el){autoHeight(el);});}
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('ip').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
   document.getElementById('iu').addEventListener('keydown', function(e) { if (e.key === 'Enter') document.getElementById('ip').focus(); });
