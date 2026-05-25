@@ -139,44 +139,31 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .btn-nxt:hover{border-color:var(--red);color:var(--text);}
 
 
+
 /* ── PMT STYLES ────────────────────────────── */
-.pmt-intro{padding:.85rem 1.25rem;border-bottom:1px solid var(--border);background:rgba(232,49,42,.03);}
-.pmt-intro p{font-size:.78rem;color:var(--muted);line-height:1.6;}
-.pmt-intro strong{color:var(--text);}
-.pmt-item{padding:.85rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.pmt-section{margin-bottom:1rem;}
+.pmt-sec-header{display:flex;align-items:baseline;gap:.5rem;padding:.6rem 0 .45rem;border-bottom:2px solid rgba(232,49,42,.18);margin-bottom:.6rem;}
+.pmt-sec-num{font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--red);}
+.pmt-sec-title{font-size:.82rem;font-weight:700;color:var(--text);}
+.pmt-item{padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .pmt-item:last-child{border-bottom:none;}
-.pmt-item-top{display:flex;align-items:center;gap:.75rem;margin-bottom:.4rem;}
-.pmt-item-label{font-size:.82rem;font-weight:600;flex:1;color:var(--text);}
+.pmt-item-top{display:flex;align-items:center;gap:.75rem;}
+.pmt-item-label{font-size:.82rem;font-weight:600;flex:1;color:var(--text);line-height:1.35;}
 .pmt-item-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
-.pmt-item-bar-wrap{width:80px;}
-.pmt-item-bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
-.pmt-item-bar-fill{height:100%;background:var(--red);border-radius:2px;transition:width .3s;}
-.pmt-item-score{font-size:.72rem;font-weight:800;min-width:22px;text-align:right;transition:color .2s;}
-.pmt-num-input{width:52px;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.88rem;font-weight:700;padding:.35rem .45rem;border-radius:4px;outline:none;text-align:center;transition:border-color .2s;}
+.pmt-ibar-wrap{width:72px;}
+.pmt-ibar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
+.pmt-ibar-fill{height:100%;background:var(--red);border-radius:2px;transition:width .3s;}
+.pmt-item-score{font-size:.75rem;font-weight:800;min-width:22px;text-align:right;transition:color .2s;color:var(--dim);}
+.pmt-num-input{width:52px;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:700;padding:.35rem .4rem;border-radius:4px;outline:none;text-align:center;transition:border-color .2s;}
 .pmt-num-input:focus{border-color:var(--red);}
 .pmt-num-input::-webkit-inner-spin-button,.pmt-num-input::-webkit-outer-spin-button{opacity:.4;}
-.pmt-justif{width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.74rem;padding:.5rem .75rem;border-radius:4px;outline:none;resize:vertical;min-height:42px;transition:border-color .2s;}
-.pmt-justif:focus{border-color:var(--border);color:var(--text);}
+.pmt-justif{width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.74rem;padding:.45rem .7rem;border-radius:4px;outline:none;resize:vertical;min-height:38px;margin-top:.4rem;transition:border-color .2s;line-height:1.5;}
+.pmt-justif:focus{border-color:rgba(255,255,255,.15);color:var(--text);}
 .pmt-justif::placeholder{color:var(--dim);}
-/* Score levels */
-.pmt-lvl-low{color:#60A5FA !important;}
-.pmt-lvl-mid{color:#FCD34D !important;}
-.pmt-lvl-hi{color:#4ADE80 !important;}
-/* Item bar colors by level — updated via JS */
-/* Results panel */
-.pmt-results{border-top:2px solid var(--border);padding:1.25rem 1.25rem 1rem;background:rgba(0,0,0,.12);}
-.pmt-results-title{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.85rem;}
-.pmt-score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;}
-.pmt-score-card{background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:.9rem 1rem;text-align:center;}
-.pmt-score-global{border-color:rgba(232,49,42,.25);background:rgba(232,49,42,.04);}
-.pmt-score-lbl{font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;line-height:1.35;}
-.pmt-score-val{font-size:1.6rem;font-weight:800;color:var(--dim);transition:color .3s;margin-bottom:.3rem;}
-.pmt-score-bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-bottom:.35rem;}
-.pmt-score-fill{height:100%;background:var(--red);border-radius:2px;transition:width .4s;}
-.pmt-fill-global{background:var(--red);}
-.pmt-score-lvl{font-size:.65rem;font-weight:700;}
-@media(max-width:600px){.pmt-score-grid{grid-template-columns:1fr;}.pmt-item-bar-wrap{width:50px;}}
-
+.pmt-divider{height:1px;background:var(--border);margin:1rem 0;}
+.pmt-low{color:#60A5FA !important;}
+.pmt-mid{color:#FCD34D !important;}
+.pmt-hi{color:#4ADE80 !important;}
 /* ── EXERCISE STYLES ── */
 .ex-wrap{background:var(--card);border:1px solid var(--border-r);border-top:2px solid var(--red);border-radius:5px;margin-bottom:1.5rem;overflow:hidden;}
 .ex-header{padding:1.1rem 1.25rem .9rem;border-bottom:1px solid var(--border);background:rgba(232,49,42,.04);}
@@ -758,7 +745,7 @@ var C = [
       { id:'u1l1', title:'Registro una semana', driveId:'1m6A32xyvHp_rlCidxyP-Oi44O4vISflQ',
         ex:{ type:'grid', unit:'Unidad 1', name:'Registro una semana' } },
       { id:'u1l2', title:'Los 2 Desafios', driveId:'1FBh8vIHDuwcYMaAhRlgg6V5R-3xZ77Sk' },
-      { id:'u1l3', title:'Poker Mindset Test', driveId:'1FzCP7Tt9d54eqrmkKkenltP3tbhgheuy', ex:{ type:'form', unit:'Unidad 1', name:'Poker Mindset Test' } },
+      { id:'u1l3', title:'Poker Mindset Test', driveId:'1FzCP7Tt9d54eqrmkKkenltP3tbhgheuy', ex:{ type:'pmt', unit:'Unidad 1', name:'Poker Mindset Test' } },
       { id:'u1l4', title:'Inventario Psicologico de Ejecucion Deportiva', driveId:'1-3QE03f6XHNdn4Kt13TnTMrCZ0UQK0qY', ex:{ type:'form', unit:'Unidad 1', name:'IPED - Inventario Psicologico' } },
       { id:'u1l5', title:'Task and Ego Orientation in Sport Questionnaire', driveId:'10KJXOs20u_OLfV35EoLr5ZEzbWLUn6UL', ex:{ type:'teosq', unit:'Unidad 1', name:'TEOSQ' } },
       { id:'u1l6', title:'Primera Sesion 1 a 1', type:'session' }
@@ -2782,180 +2769,192 @@ var PMT_ITEMS = {
 
 var pmtLid = 'u1l3';
 
-function pmtVal(fid) {
+function pmtGetN(fid) {
   var el = document.getElementById('pmt-n-' + fid);
-  return el ? (parseFloat(el.value) || null) : null;
+  if (!el || el.value === '') return null;
+  var v = parseFloat(el.value);
+  return (isNaN(v) || v < 1 || v > 10) ? null : v;
 }
 
 function pmtAvg(items) {
-  var vals = items.map(function(it) { return pmtVal(it.fid); }).filter(function(v) { return v !== null; });
+  var vals = items.map(function(it){ return pmtGetN(it.fid); }).filter(function(v){ return v !== null; });
   if (!vals.length) return null;
   return vals.reduce(function(a,b){return a+b;},0) / vals.length;
 }
 
-function pmtScores() {
-  var avg1 = pmtAvg(PMT_ITEMS.sec1);
-  var avg2a = pmtAvg(PMT_ITEMS.sec2a);
-  var avg2b = pmtAvg(PMT_ITEMS.sec2b);
-  var cap2 = (avg2a !== null && avg2b !== null) ? (avg2a + avg2b) / 2 : null;
-  var global = (avg1 !== null && cap2 !== null) ? (avg1 + cap2) / 2 : null;
-  return { cap1: avg1, cap2: cap2, global: global };
+function pmtCalcScores() {
+  var cap1   = pmtAvg(PMT_ITEMS.sec1);
+  var avg2a  = pmtAvg(PMT_ITEMS.sec2a);
+  var avg2b  = pmtAvg(PMT_ITEMS.sec2b);
+  var cap2   = (avg2a !== null && avg2b !== null) ? (avg2a + avg2b) / 2 : null;
+  var global = (cap1 !== null && cap2 !== null) ? (cap1 + cap2) / 2 : null;
+  return { cap1: cap1, cap2: cap2, global: global };
 }
 
-function pmtColorClass(v) {
-  if (v === null) return '';
-  if (v < 4)  return 'pmt-lvl-low';
-  if (v < 7)  return 'pmt-lvl-mid';
-  return 'pmt-lvl-hi';
-}
-function pmtColorLabel(v) {
-  if (v === null) return '—';
-  if (v < 4)  return 'Bajo';
-  if (v < 7)  return 'Medio';
-  return 'Alto';
+function pmtLvl(v) {
+  if (v === null) return { lbl:'—', cls:'' };
+  if (v < 4) return { lbl:'Bajo (' + v.toFixed(2) + ')', cls:'tlvl-low' };
+  if (v < 7) return { lbl:'Medio (' + v.toFixed(2) + ')', cls:'tlvl-mid' };
+  return { lbl:'Alto (' + v.toFixed(2) + ')', cls:'tlvl-hi' };
 }
 
 function pmtUpdateResults() {
-  var s = pmtScores();
-  function setScore(id, val) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    if (val === null) { el.textContent = '—'; el.className = 'pmt-score-val'; return; }
-    el.textContent = val.toFixed(2);
-    el.className = 'pmt-score-val ' + pmtColorClass(val);
-  }
-  function setBar(id, val) {
-    var el = document.getElementById(id);
-    if (el) el.style.width = (val !== null ? (val/10*100) : 0) + '%';
-  }
-  function setLvl(id, val) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.textContent = val !== null ? pmtColorLabel(val) : '—';
-    el.className = 'pmt-score-lvl ' + (val !== null ? pmtColorClass(val) : '');
-  }
-  setScore('pmt-v-cap1', s.cap1);   setBar('pmt-b-cap1', s.cap1);   setLvl('pmt-l-cap1', s.cap1);
-  setScore('pmt-v-cap2', s.cap2);   setBar('pmt-b-cap2', s.cap2);   setLvl('pmt-l-cap2', s.cap2);
-  setScore('pmt-v-global', s.global); setBar('pmt-b-global', s.global); setLvl('pmt-l-global', s.global);
+  var s = pmtCalcScores();
 
-  // Individual item mini-bars
-  var allItems = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
-  allItems.forEach(function(it) {
-    var v = pmtVal(it.fid);
+  // --- Tab 1: mini-bars per item ---
+  var all = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
+  all.forEach(function(it) {
+    var v = pmtGetN(it.fid);
     var bar = document.getElementById('pmt-ibar-' + it.fid);
     var lbl = document.getElementById('pmt-ilbl-' + it.fid);
-    if (bar) bar.style.width = (v !== null ? v*10 : 0) + '%';
+    if (bar) bar.style.width = (v !== null ? v * 10 : 0) + '%';
     if (lbl) {
       lbl.textContent = v !== null ? v : '—';
-      lbl.className = 'pmt-item-score ' + (v !== null ? pmtColorClass(v) : '');
+      var cls = 'pmt-item-score';
+      if (v !== null) cls += v < 4 ? ' pmt-low' : v < 7 ? ' pmt-mid' : ' pmt-hi';
+      lbl.className = cls;
     }
   });
 
-  // Progress bar
-  var filled = allItems.filter(function(it){ return pmtVal(it.fid) !== null; }).length;
-  var pct = Math.round(filled / allItems.length * 100);
+  // Progress count
+  var filled = all.filter(function(it){ return pmtGetN(it.fid) !== null; }).length;
   var pf = document.getElementById('ex-prog-pmt');
   var pt = document.getElementById('ex-prog-txt-pmt');
-  if (pf) pf.style.width = pct + '%';
-  if (pt) pt.textContent = filled + ' de ' + allItems.length + ' ítems completados';
+  if (pf) pf.style.width = Math.round(filled / all.length * 100) + '%';
+  if (pt) pt.textContent = filled + ' de ' + all.length + ' ítems completados';
+
+  // --- Tab 2: score cards ---
+  function setCard(prefix, val) {
+    var lvl = pmtLvl(val);
+    var vEl = document.getElementById('pmt-v-' + prefix);
+    var bEl = document.getElementById('pmt-b-' + prefix);
+    var lEl = document.getElementById('pmt-l-' + prefix);
+    if (vEl) { vEl.textContent = val !== null ? val.toFixed(2) : '—'; vEl.className = 'tq-sc-val ' + (val !== null ? (val < 4 ? 'pmt-low' : val < 7 ? 'pmt-mid' : 'pmt-hi') : ''); }
+    if (bEl) { bEl.style.width = (val !== null ? val / 10 * 100 : 0) + '%'; bEl.style.background = val !== null ? (val < 4 ? '#60A5FA' : val < 7 ? '#FCD34D' : '#4ADE80') : 'var(--border)'; }
+    if (lEl) { lEl.textContent = lvl.lbl; lEl.className = 'teosq-sc-lvl ' + lvl.cls; }
+  }
+  setCard('cap1', s.cap1);
+  setCard('cap2', s.cap2);
+  setCard('global', s.global);
 }
 
-function pmtItemHTML(it, draft) {
-  var savedN = draft && draft[it.fid + '_n'] ? draft[it.fid + '_n'] : '';
-  var savedJ = draft && draft[it.fid + '_j'] ? draft[it.fid + '_j'] : '';
-  var barW = savedN ? (parseFloat(savedN)*10) + '%' : '0%';
-  var cls = savedN ? pmtColorClass(parseFloat(savedN)) : '';
-  return '<div class="pmt-item" id="pmt-row-'+it.fid+'">' +
-    '<div class="pmt-item-top">' +
-      '<span class="pmt-item-label">'+it.label+'</span>' +
-      '<div class="pmt-item-right">' +
-        '<div class="pmt-item-bar-wrap"><div class="pmt-item-bar"><div class="pmt-item-bar-fill" id="pmt-ibar-'+it.fid+'" style="width:'+barW+'"></div></div></div>' +
-        '<span class="pmt-item-score '+cls+'" id="pmt-ilbl-'+it.fid+'">'+(savedN||'—')+'</span>' +
-        '<input class="pmt-num-input" type="number" id="pmt-n-'+it.fid+'" data-fid="'+it.fid+'_n" min="1" max="10" placeholder="—"' +
-          ' value="'+savedN+'" oninput="pmtUpdateResults();pmtAutoSave();">' +
-      '</div>' +
-    '</div>' +
-    '<textarea class="pmt-justif" id="pmt-j-'+it.fid+'" data-fid="'+it.fid+'_j"' +
-      ' placeholder="¿Por qué esta nota? (opcional)" oninput="pmtAutoSave();">'+savedJ+'</textarea>' +
-  '</div>';
+function pmtTab(idx) {
+  [0,1].forEach(function(i) {
+    var t = document.getElementById('pmt-ttab-' + i);
+    var p = document.getElementById('pmt-tpane-' + i);
+    if (t) t.classList.toggle('on', i === idx);
+    if (p) p.classList.toggle('on', i === idx);
+  });
+  if (idx === 1) pmtUpdateResults();
+}
+
+function pmtSectionHTML(titleNum, titleText, items, draft) {
+  var h = '<div class="pmt-section">';
+  h += '<div class="pmt-sec-header">';
+  h += '<span class="pmt-sec-num">' + titleNum + '</span>';
+  h += '<span class="pmt-sec-title">' + titleText + '</span>';
+  h += '</div>';
+  items.forEach(function(it) {
+    var savedN = draft && draft[it.fid + '_n'] ? draft[it.fid + '_n'] : '';
+    var savedJ = draft && draft[it.fid + '_j'] ? draft[it.fid + '_j'] : '';
+    var barW   = savedN ? (parseFloat(savedN) * 10) + '%' : '0%';
+    var nCls   = savedN ? (parseFloat(savedN) < 4 ? 'pmt-low' : parseFloat(savedN) < 7 ? 'pmt-mid' : 'pmt-hi') : '';
+    h += '<div class="pmt-item">';
+    h += '<div class="pmt-item-top">';
+    h += '<span class="pmt-item-label">' + it.label + '</span>';
+    h += '<div class="pmt-item-right">';
+    h += '<div class="pmt-ibar-wrap"><div class="pmt-ibar"><div class="pmt-ibar-fill" id="pmt-ibar-' + it.fid + '" style="width:' + barW + '"></div></div></div>';
+    h += '<span class="pmt-item-score ' + nCls + '" id="pmt-ilbl-' + it.fid + '">' + (savedN || '—') + '</span>';
+    h += '<input class="pmt-num-input" type="number" id="pmt-n-' + it.fid + '" min="1" max="10" placeholder="—" value="' + savedN + '" oninput="pmtUpdateResults();pmtAutoSave();">';
+    h += '</div></div>';
+    h += '<textarea class="pmt-justif" id="pmt-j-' + it.fid + '" placeholder="¿Por qué esta nota? (opcional)" oninput="pmtAutoSave();">' + savedJ + '</textarea>';
+    h += '</div>';
+  });
+  h += '</div>';
+  return h;
 }
 
 function renderPMTExercise(lid) {
   pmtLid = lid;
   var draft = loadDraft(lid) || {};
-  var s = pmtScores();
 
-  var h = '<div class="ex-wrap pmt-wrap">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
 
   // Header
-  h += '<div class="ex-header">';
+  h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">Diagnóstico — Autoevaluación</div>';
-  h += '<div class="ex-prog-bar"><div class="ex-prog-fill" id="ex-prog-pmt" style="width:0%"></div></div>';
+  h += '<div class="tq-hdr-title">Poker Mindset Test</div>';
+  h += '<div class="tq-hdr-sub">Ponete una nota del 1 al 10 en cada área. Los puntajes se calculan automáticamente.</div>';
+  h += '<div class="ex-prog-bar" style="margin-top:.75rem;"><div class="ex-prog-fill" id="ex-prog-pmt" style="width:0%"></div></div>';
   h += '<p class="ex-prog-txt" id="ex-prog-txt-pmt">0 de 15 ítems completados</p>';
   h += '</div>';
 
-  // Intro
-  h += '<div class="pmt-intro"><p>Ponete una nota del <strong>1 al 10</strong> en cada área. Podés justificar brevemente si querés. Los puntajes se calculan automáticamente.</p></div>';
+  // Tabs
+  h += '<div class="teosq-tabs">';
+  h += '<div class="teosq-tab on" id="pmt-ttab-0" onclick="pmtTab(0)">1. Autoevaluación</div>';
+  h += '<div class="teosq-tab" id="pmt-ttab-1" onclick="pmtTab(1)">2. Resultados</div>';
+  h += '</div>';
 
-  // ── SECCION 1 ──────────────────────────────
-  h += '<div class="ex-sec open" id="pmt-sec-1">';
-  h += '<div class="ex-sec-hdr" onclick="toggleExSec(\'pmt-sec-1\')">';
-  h += '<div><p class="ex-sec-num">Sección 1 de 3</p><p class="ex-sec-title">1) Tomar buenas decisiones</p></div>';
-  h += '<div class="ex-sec-right"><div class="ex-sec-done" id="done-pmt-sec-1">&#10003;</div><span class="ex-chevron">&#9660;</span></div></div>';
-  h += '<div class="ex-sec-body">';
-  PMT_ITEMS.sec1.forEach(function(it){ h += pmtItemHTML(it, draft); });
-  h += '<div class="ex-sec-nav"><button class="btn-ex-next" onclick="navPmtSec(2)">Siguiente &#8594;</button></div>';
-  h += '</div></div>';
+  // ── PANE 0: cuestionario ──────────────────
+  h += '<div class="teosq-pane on" id="pmt-tpane-0" style="padding:1.1rem 1.25rem;">';
+  h += pmtSectionHTML('1)', 'Tomar buenas decisiones', PMT_ITEMS.sec1, draft);
+  h += '<div class="pmt-divider"></div>';
+  h += pmtSectionHTML('2)', 'Tener buena disponibilidad de recursos', PMT_ITEMS.sec2a, draft);
+  h += '<div class="pmt-divider"></div>';
+  h += pmtSectionHTML('3)', 'Administrarlos eficazmente', PMT_ITEMS.sec2b, draft);
+  h += '</div>';
 
-  // ── SECCION 2 ──────────────────────────────
-  h += '<div class="ex-sec" id="pmt-sec-2">';
-  h += '<div class="ex-sec-hdr" onclick="toggleExSec(\'pmt-sec-2\')">';
-  h += '<div><p class="ex-sec-num">Sección 2 de 3</p><p class="ex-sec-title">2) Disponibilidad de recursos</p></div>';
-  h += '<div class="ex-sec-right"><div class="ex-sec-done" id="done-pmt-sec-2">&#10003;</div><span class="ex-chevron">&#9660;</span></div></div>';
-  h += '<div class="ex-sec-body">';
-  PMT_ITEMS.sec2a.forEach(function(it){ h += pmtItemHTML(it, draft); });
-  h += '<div class="ex-sec-nav">';
-  h += '<button class="btn-ex-prev" onclick="navPmtSec(1)">&#8592; Anterior</button>';
-  h += '<button class="btn-ex-next" onclick="navPmtSec(3)">Siguiente &#8594;</button>';
-  h += '</div></div></div>';
+  // ── PANE 1: resultados ────────────────────
+  h += '<div class="teosq-pane" id="pmt-tpane-1" style="padding:1.25rem;">';
 
-  // ── SECCION 3 ──────────────────────────────
-  h += '<div class="ex-sec" id="pmt-sec-3">';
-  h += '<div class="ex-sec-hdr" onclick="toggleExSec(\'pmt-sec-3\')">';
-  h += '<div><p class="ex-sec-num">Sección 3 de 3</p><p class="ex-sec-title">3) Administrarlos eficazmente</p></div>';
-  h += '<div class="ex-sec-right"><div class="ex-sec-done" id="done-pmt-sec-3">&#10003;</div><span class="ex-chevron">&#9660;</span></div></div>';
-  h += '<div class="ex-sec-body">';
-  PMT_ITEMS.sec2b.forEach(function(it){ h += pmtItemHTML(it, draft); });
-  h += '<div class="ex-sec-nav"><button class="btn-ex-prev" onclick="navPmtSec(2)">&#8592; Anterior</button></div>';
-  h += '</div></div>';
+  // Score cards (igual estilo que TEOSQ)
+  h += '<div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">';
 
-  // ── RESULTADOS ─────────────────────────────
-  h += '<div class="pmt-results">';
-  h += '<div class="pmt-results-title">Resultados</div>';
-  h += '<div class="pmt-score-grid">';
-
-  function scoreCard(id, label, fid_val, fid_bar, fid_lvl) {
-    return '<div class="pmt-score-card">' +
-      '<div class="pmt-score-lbl">'+label+'</div>' +
-      '<div class="pmt-score-val '+'" id="'+fid_val+'">—</div>' +
-      '<div class="pmt-score-bar"><div class="pmt-score-fill" id="'+fid_bar+'" style="width:0%"></div></div>' +
-      '<div class="pmt-score-lvl" id="'+fid_lvl+'">—</div>' +
+  function scoreCard(prefix, label, color) {
+    return '<div class="tq-sc-card" style="border-top:3px solid ' + color + ';min-width:160px;">' +
+      '<div style="font-size:.58rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem;">' + label + '</div>' +
+      '<div class="tq-sc-val" id="pmt-v-' + prefix + '">—</div>' +
+      '<div class="tq-sc-bar"><div class="tq-sc-fill" id="pmt-b-' + prefix + '" style="width:0%;background:' + color + '"></div></div>' +
+      '<div class="teosq-sc-lvl" id="pmt-l-' + prefix + '">—</div>' +
     '</div>';
   }
 
-  h += scoreCard('c1','Capacidad de decisión','pmt-v-cap1','pmt-b-cap1','pmt-l-cap1');
-  h += scoreCard('c2','Capacidad de volumen','pmt-v-cap2','pmt-b-cap2','pmt-l-cap2');
-  h += '<div class="pmt-score-card pmt-score-global">' +
-    '<div class="pmt-score-lbl">PUNTAJE GLOBAL MINDSET</div>' +
-    '<div class="pmt-score-val" id="pmt-v-global">—</div>' +
-    '<div class="pmt-score-bar"><div class="pmt-score-fill pmt-fill-global" id="pmt-b-global" style="width:0%"></div></div>' +
-    '<div class="pmt-score-lvl" id="pmt-l-global">—</div>' +
-  '</div>';
-  h += '</div></div>';
+  h += scoreCard('cap1',   'Cap. de decisión',  'var(--red)');
+  h += scoreCard('cap2',   'Cap. de volumen',    '#F59E0B');
+  h += scoreCard('global', 'Global Mindset',     'var(--green)');
+  h += '</div>';
 
-  // ── SUBMIT ─────────────────────────────────
+  // Tabla de ítems individuales
+  function itemsTable(title, items) {
+    var out = '<div style="margin-bottom:1.25rem;">';
+    out += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem;padding-bottom:.35rem;border-bottom:1px solid var(--border);">' + title + '</div>';
+    items.forEach(function(it) {
+      var savedN = draft[it.fid + '_n'] ? parseFloat(draft[it.fid + '_n']) : null;
+      var savedJ = draft[it.fid + '_j'] || '';
+      var color  = savedN === null ? 'var(--dim)' : savedN < 4 ? '#60A5FA' : savedN < 7 ? '#FCD34D' : '#4ADE80';
+      var pct    = savedN !== null ? savedN * 10 : 0;
+      out += '<div style="display:flex;align-items:center;gap:.75rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04);">';
+      out += '<span style="font-size:.78rem;flex:1;color:var(--text);">' + it.label + '</span>';
+      out += '<div style="width:80px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;"><div style="height:100%;width:' + pct + '%;background:' + color + ';border-radius:2px;transition:width .4s;"></div></div>';
+      out += '<span style="font-size:.82rem;font-weight:800;color:' + color + ';min-width:24px;text-align:right;">' + (savedN !== null ? savedN : '—') + '</span>';
+      out += '</div>';
+      if (savedJ) out += '<div style="font-size:.71rem;color:var(--muted);padding:.2rem .5rem .4rem;border-left:2px solid rgba(255,255,255,.08);margin-left:0;line-height:1.5;">' + savedJ + '</div>';
+    });
+    out += '</div>';
+    return out;
+  }
+
+  h += '<div id="pmt-results-items">';
+  h += itemsTable('1) Tomar buenas decisiones', PMT_ITEMS.sec1);
+  h += itemsTable('2) Tener buena disponibilidad de recursos', PMT_ITEMS.sec2a);
+  h += itemsTable('3) Administrarlos eficazmente', PMT_ITEMS.sec2b);
+  h += '</div>';
+
+  h += '</div>'; // pane 1
+
+  // Submit
   h += '<div class="ex-submit-row">';
-  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="pmtSubmit()">';
+  h += '<button class="btn-ex-send" id="btn-ex-' + lid + '" onclick="pmtSubmit()">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   h += ' Enviar a Mauro</button>';
   h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
@@ -2965,19 +2964,10 @@ function renderPMTExercise(lid) {
   pmtUpdateResults();
 }
 
-function navPmtSec(n) {
-  [1,2,3].forEach(function(i){
-    var s=document.getElementById('pmt-sec-'+i);
-    if(s) s.classList.toggle('open', i===n);
-  });
-  var target=document.getElementById('pmt-sec-'+n);
-  if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
-}
-
 function pmtAutoSave() {
+  var all = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
   var data = {};
-  var allItems = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
-  allItems.forEach(function(it) {
+  all.forEach(function(it) {
     var ni = document.getElementById('pmt-n-' + it.fid);
     var ji = document.getElementById('pmt-j-' + it.fid);
     if (ni && ni.value !== '') data[it.fid + '_n'] = ni.value;
@@ -2988,51 +2978,47 @@ function pmtAutoSave() {
 }
 
 function pmtSubmit() {
-  var s = pmtScores();
+  var s = pmtCalcScores();
   var user = USERS[S.user];
   var answers = [];
-  var allItems = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
-  allItems.forEach(function(it) {
+  var all = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
+  all.forEach(function(it) {
     var ni = document.getElementById('pmt-n-' + it.fid);
     var ji = document.getElementById('pmt-j-' + it.fid);
-    var nota = ni ? (ni.value || '') : '';
-    var justif = ji ? (ji.value.trim() || '') : '';
-    answers.push({ fid: it.fid + '_n', pregunta: it.label + ' — nota', respuesta: nota });
-    answers.push({ fid: it.fid + '_j', pregunta: it.label + ' — por qué', respuesta: justif });
+    answers.push({ fid: it.fid + '_n', pregunta: it.label + ' — nota', respuesta: ni ? (ni.value || '') : '' });
+    answers.push({ fid: it.fid + '_j', pregunta: it.label + ' — por qué', respuesta: ji ? ji.value.trim() : '' });
   });
-  if (s.cap1 !== null)    answers.push({ fid:'pmt_cap1',    pregunta:'Capacidad de decisión',        respuesta: s.cap1.toFixed(2) });
-  if (s.cap2 !== null)    answers.push({ fid:'pmt_cap2',    pregunta:'Capacidad de volumen',          respuesta: s.cap2.toFixed(2) });
-  if (s.global !== null)  answers.push({ fid:'pmt_global',  pregunta:'Puntaje Global Mindset',        respuesta: s.global.toFixed(2) });
+  if (s.cap1   !== null) answers.push({ fid:'pmt_cap1',   pregunta:'Capacidad de decisión',  respuesta: s.cap1.toFixed(2) });
+  if (s.cap2   !== null) answers.push({ fid:'pmt_cap2',   pregunta:'Capacidad de volumen',   respuesta: s.cap2.toFixed(2) });
+  if (s.global !== null) answers.push({ fid:'pmt_global', pregunta:'Puntaje Global Mindset', respuesta: s.global.toFixed(2) });
 
-  var rec = {
-    ts: Date.now(), fecha: new Date().toLocaleString('es-AR'),
+  var rec = { ts: Date.now(), fecha: new Date().toLocaleString('es-AR'),
     jugador: user.name, usuario: S.user,
     unidad: 'Unidad 1', ejercicio: 'Poker Mindset Test',
-    lid: pmtLid, respuestas: answers
-  };
+    lid: pmtLid, respuestas: answers };
   var saved = getLocalSubs();
-  var idx = saved.findIndex(function(x){ return x.usuario===S.user && x.lid===pmtLid; });
-  if (idx >= 0) { rec.airtableId = saved[idx].airtableId; saved[idx] = rec; }
+  var idx = saved.findIndex(function(x){ return x.usuario === S.user && x.lid === pmtLid; });
+  var isUpdate = idx >= 0;
+  if (isUpdate) { rec.airtableId = saved[idx].airtableId; saved[idx] = rec; }
   else { saved.push(rec); }
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(pmtLid);
   fbSaveSubmission(S.user, pmtLid, rec);
   var btn = document.getElementById('btn-ex-' + pmtLid);
-  if (btn) { btn.textContent = idx >= 0 ? 'Actualizar envío' : 'Enviar a Mauro'; btn.style.background = 'var(--green)'; btn.disabled = false; }
+  if (btn) { btn.textContent = isUpdate ? 'Actualizar envío' : 'Enviar a Mauro'; btn.style.background = 'var(--green)'; btn.disabled = false; }
   updateSaveStatus('Enviado a Mauro', '#22C55E');
-  showToast(idx >= 0 ? 'Respuestas actualizadas!' : 'Enviado a Mauro!');
+  showToast(isUpdate ? 'Respuestas actualizadas!' : 'Enviado a Mauro!');
   var unit = C.find(function(u){ return u.id === S.unitId; });
   if (unit) renderSidebar(unit);
-  if (idx >= 0 && rec.airtableId) { updateAirtable(rec.airtableId, rec); }
+  if (isUpdate && rec.airtableId) { updateAirtable(rec.airtableId, rec); }
   else { createAirtable(rec, function(id){ if(id){ var s2=getLocalSubs(); var i2=s2.findIndex(function(x){return x.usuario===S.user&&x.lid===pmtLid;}); if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));} } }); }
 }
 
-/* ── PMT ADMIN VIEW ────────────────────────── */
+/* ── PMT ADMIN VIEW ─────────────────────────── */
 function renderPMTAdminView(ej, cid) {
-  var resps = ej.respuestas || [];
-  var data = {};
-  var cap1 = null, cap2 = null, global = null;
-  resps.forEach(function(r) {
+  var resps = ej.respuestas || {};
+  var data = {}, cap1 = null, cap2 = null, global = null;
+  (ej.respuestas || []).forEach(function(r) {
     if (!r.fid) return;
     if (r.fid === 'pmt_cap1')   { cap1   = parseFloat(r.respuesta); return; }
     if (r.fid === 'pmt_cap2')   { cap2   = parseFloat(r.respuesta); return; }
@@ -3040,66 +3026,70 @@ function renderPMTAdminView(ej, cid) {
     data[r.fid] = r.respuesta || '';
   });
 
-  var allItems = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
+  var uid = cid.replace(/[^a-z0-9]/gi,'');
 
-  function adminScoreBar(val, max) {
-    if (val === null || isNaN(val)) return '<span style="color:var(--dim)">—</span>';
-    var pct = Math.round(val / max * 100);
-    var color = val < 4 ? '#60A5FA' : val < 7 ? '#FCD34D' : '#4ADE80';
-    return '<div style="display:flex;align-items:center;gap:.5rem;">' +
-      '<div style="flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;">' +
-        '<div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:3px;"></div>' +
-      '</div>' +
-      '<span style="font-size:.78rem;font-weight:800;color:'+color+';min-width:28px;text-align:right;">'+val.toFixed(2)+'</span>' +
+  var h = '<div style="padding:.75rem;">';
+
+  // Tabs
+  h += '<div class="teosq-tabs">';
+  h += '<div class="teosq-tab on" id="admpt0_'+uid+'" onclick="admPmtTab(\''+uid+'\',0)" style="font-size:.65rem;">1. Ítems</div>';
+  h += '<div class="teosq-tab" id="admpt1_'+uid+'" onclick="admPmtTab(\''+uid+'\',1)" style="font-size:.65rem;">2. Puntajes</div>';
+  h += '</div>';
+
+  // Pane 0: items
+  h += '<div class="teosq-pane on" id="admpp0_'+uid+'" style="padding:.75rem 0;">';
+  var all = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
+  var secTitles = { 'u1l3_1':'1) Tomar buenas decisiones', 'u1l3_5':'2) Disponibilidad de recursos', 'u1l3_11':'3) Administrarlos eficazmente' };
+  all.forEach(function(it) {
+    if (secTitles[it.fid]) {
+      h += '<div style="font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);padding:.6rem .5rem .3rem;border-bottom:1px solid var(--border);margin-bottom:.35rem;">' + secTitles[it.fid] + '</div>';
+    }
+    var nota = parseFloat(data[it.fid + '_n']) || null;
+    var justif = data[it.fid + '_j'] || '';
+    var color = nota === null ? 'var(--dim)' : nota < 4 ? '#60A5FA' : nota < 7 ? '#FCD34D' : '#4ADE80';
+    var pct = nota !== null ? nota * 10 : 0;
+    h += '<div style="padding:.4rem .25rem;border-bottom:1px solid rgba(255,255,255,.04);">';
+    h += '<div style="display:flex;align-items:center;gap:.65rem;">';
+    h += '<span style="font-size:.76rem;flex:1;color:var(--text);">' + it.label + '</span>';
+    h += '<div style="width:70px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:2px;"></div></div>';
+    h += '<span style="font-size:.82rem;font-weight:800;color:'+color+';min-width:22px;text-align:right;">' + (nota !== null ? nota : '—') + '</span>';
+    h += '</div>';
+    if (justif) h += '<div style="font-size:.71rem;color:var(--muted);padding:.2rem .4rem;border-left:2px solid rgba(255,255,255,.08);margin-top:.25rem;line-height:1.5;">' + justif + '</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+
+  // Pane 1: puntajes
+  h += '<div class="teosq-pane" id="admpp1_'+uid+'" style="padding:1rem 0;">';
+  h += '<div style="display:flex;gap:.75rem;flex-wrap:wrap;">';
+  function admSc(label, val, color) {
+    var lvl = val === null ? '—' : val < 4 ? 'Bajo' : val < 7 ? 'Medio' : 'Alto';
+    var clr = val === null ? 'var(--dim)' : color;
+    return '<div class="tq-sc-card" style="border-top:3px solid '+clr+';flex:1;min-width:130px;">' +
+      '<div style="font-size:.57rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">'+label+'</div>' +
+      '<div class="tq-sc-val" style="color:'+clr+';">'+(val !== null ? val.toFixed(2) : '—')+'</div>' +
+      '<div class="tq-sc-bar"><div class="tq-sc-fill" style="width:'+(val!==null?val/10*100:0)+'%;background:'+clr+';"></div></div>' +
+      '<div style="font-size:.65rem;font-weight:700;color:'+clr+';">'+lvl+'</div>' +
     '</div>';
   }
-
-  var h = '<div style="padding:.75rem 1.25rem 1.25rem;">';
-
-  // Puntajes resumen
-  if (cap1 !== null || cap2 !== null || global !== null) {
-    h += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.25rem;">';
-    function adminSc(label, val) {
-      var color = val === null ? 'var(--dim)' : val < 4 ? '#60A5FA' : val < 7 ? '#FCD34D' : '#4ADE80';
-      var lvl   = val === null ? '—' : val < 4 ? 'Bajo' : val < 7 ? 'Medio' : 'Alto';
-      return '<div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:.8rem 1rem;text-align:center;">' +
-        '<div style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;">'+label+'</div>' +
-        '<div style="font-size:1.5rem;font-weight:800;color:'+color+';">'+(val!==null?val.toFixed(2):'—')+'</div>' +
-        '<div style="font-size:.65rem;font-weight:700;color:'+color+';margin-top:.15rem;">'+lvl+'</div>' +
-      '</div>';
-    }
-    h += adminSc('Cap. Decisión', cap1);
-    h += adminSc('Cap. Volumen', cap2);
-    h += adminSc('Global Mindset', global);
-    h += '</div>';
-  }
-
-  // Tabla por sección
-  function renderSection(title, items) {
-    var out = '<div style="margin-bottom:1rem;">';
-    out += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem;">'+title+'</div>';
-    items.forEach(function(it) {
-      var nota = parseFloat(data[it.fid + '_n']) || null;
-      var justif = data[it.fid + '_j'] || '';
-      out += '<div style="padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.05);">';
-      out += '<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:'+(justif?'.3rem':'0')+';">';
-      out += '<span style="font-size:.76rem;font-weight:600;flex:1;color:var(--text);">'+it.label+'</span>';
-      out += adminScoreBar(nota, 10);
-      out += '</div>';
-      if (justif) out += '<div style="font-size:.72rem;color:var(--muted);padding:.25rem .5rem;background:rgba(255,255,255,.03);border-left:2px solid var(--border);border-radius:0 3px 3px 0;">'+justif+'</div>';
-      out += '</div>';
-    });
-    out += '</div>';
-    return out;
-  }
-
-  h += renderSection('1) Tomar buenas decisiones', PMT_ITEMS.sec1);
-  h += renderSection('2) Disponibilidad de recursos', PMT_ITEMS.sec2a);
-  h += renderSection('3) Administrarlos eficazmente', PMT_ITEMS.sec2b);
+  h += admSc('Cap. de decisión', cap1, 'var(--red)');
+  h += admSc('Cap. de volumen', cap2, '#F59E0B');
+  h += admSc('Global Mindset', global, 'var(--green)');
+  h += '</div>';
+  h += '</div>';
 
   h += '</div>';
   var el = document.getElementById(cid);
   if (el) el.innerHTML = h;
+}
+
+function admPmtTab(uid, idx) {
+  [0,1].forEach(function(i){
+    var t = document.getElementById('admpt'+i+'_'+uid);
+    var p = document.getElementById('admpp'+i+'_'+uid);
+    if(t) t.classList.toggle('on', i===idx);
+    if(p) p.classList.toggle('on', i===idx);
+  });
 }
 
 
