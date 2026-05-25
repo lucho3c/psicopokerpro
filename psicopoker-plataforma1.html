@@ -2012,11 +2012,104 @@ function buildExPDF(ej){
   var isGrid=resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
   if(isTeosq){
-    var ego=null,tar=null,perf=null;
-    resps.forEach(function(r){if(r.fid==='teosq_ego')ego=parseFloat(r.respuesta);if(r.fid==='teosq_tar')tar=parseFloat(r.respuesta);if(r.fid==='teosq_perfil')perf=r.respuesta;});
-    if(ego!==null&&tar!==null){h+='<div class="tscores"><div class="tscore-box"><div class="tscore-lbl">Orientacion al Ego</div><div class="tscore-val">'+ego.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(ego)+'">'+pdfLvlLbl(ego)+'</div></div><div class="tscore-box"><div class="tscore-lbl">Orientacion a la Tarea</div><div class="tscore-val">'+tar.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(tar)+'">'+pdfLvlLbl(tar)+'</div></div></div>';}
-    if(perf)h+='<div class="profile-box"><div class="profile-name">Perfil: '+perf+'</div></div>';
-    resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';});
+    var ego=null,tar=null,perf=null,ans={};
+    resps.forEach(function(r){
+      if(r.fid==='teosq_ego'){ego=parseFloat(r.respuesta);return;}
+      if(r.fid==='teosq_tar'){tar=parseFloat(r.respuesta);return;}
+      if(r.fid==='teosq_perfil'){perf=r.respuesta;return;}
+      var m=r.fid&&r.fid.match(/^teosq_(\d+)$/);
+      if(m)ans[parseInt(m[1])]=parseInt(r.respuesta)||0;
+    });
+
+    /* Title */
+    h+='<div style="padding:8px 12px 6px;background:#f8f8f8;border-bottom:1px solid #e8e8e8;">';
+    h+='<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#666;">CUESTIONARIO DE ORIENTACI\u00d3N AL EGO Y A LA TAREA (TEOSQ)</div>';
+    h+='<div style="font-size:8px;color:#999;margin-top:2px;">Duda, 1989 \u00b7 Balaguer, Castillo &amp; Tom\u00e1s, 1996</div>';
+    h+='</div>';
+
+    /* Questionnaire table */
+    var ITEMS=[
+      {n:1,t:'...soy el/la \u00fanico/a que puede hacer la jugada.',cat:'E'},
+      {n:2,t:'...aprendo una nueva habilidad y me impulsa a practicar m\u00e1s.',cat:'R'},
+      {n:3,t:'...yo puedo hacerlo mejor que mis compa\u00f1eros/as.',cat:'E'},
+      {n:4,t:'...los otros no pueden hacerlo tan bien como yo.',cat:'E'},
+      {n:5,t:'...aprendo algo que es divertido.',cat:'R'},
+      {n:6,t:'...otros fallan y yo no.',cat:'E'},
+      {n:7,t:'...aprendo una nueva habilidad esforz\u00e1ndome mucho.',cat:'R'},
+      {n:8,t:'...trabajo realmente duro.',cat:'R'},
+      {n:9,t:'...consigo m\u00e1s puntos, goles, golpes, etc. que todos.',cat:'E'},
+      {n:10,t:'...algo que he aprendido me impulsa a practicar m\u00e1s.',cat:'R'},
+      {n:11,t:'...soy el/la mejor.',cat:'E'},
+      {n:12,t:'...noto que una habilidad que he aprendido funciona.',cat:'R'},
+      {n:13,t:'...pongo todo lo que est\u00e1 de mi parte.',cat:'R'}
+    ];
+    var SCALE=['Tot. Desacuerdo','En Desacuerdo','Ni/ni','De Acuerdo','Tot. Acuerdo'];
+
+    h+='<table style="width:100%;border-collapse:collapse;font-size:8px;margin:0;">';
+    h+='<thead><tr style="background:#f0f0f0;">';
+    h+='<th style="padding:4px 6px;text-align:left;border:1px solid #ddd;width:20px;">#</th>';
+    h+='<th style="padding:4px 6px;text-align:left;border:1px solid #ddd;">Yo me siento con m\u00e1s \u00e9xito cuando\u2026</th>';
+    SCALE.forEach(function(l){h+='<th style="padding:4px 4px;text-align:center;border:1px solid #ddd;font-size:7px;width:52px;">'+l+'</th>';});
+    h+='</tr></thead><tbody>';
+
+    ITEMS.forEach(function(item,idx2){
+      var v=ans[item.n]||0;
+      var rowBg=v?'background:#fff8f8;':'background:'+(idx2%2===0?'#fff':'#fafafa')+';';
+      h+='<tr style="'+rowBg+'">';
+      h+='<td style="padding:4px 6px;border:1px solid #eee;text-align:center;font-weight:700;color:#999;">'+item.n+'</td>';
+      h+='<td style="padding:4px 6px;border:1px solid #eee;line-height:1.4;">'+item.t+'</td>';
+      for(var i=1;i<=5;i++){
+        var isSel=v===i;
+        var cellBg=isSel?'background:#E8312A;':'';
+        var dotStyle=isSel
+          ?'width:12px;height:12px;border-radius:50%;background:#fff;display:inline-block;border:2px solid #fff;'
+          :'width:12px;height:12px;border-radius:50%;border:1.5px solid #ccc;display:inline-block;';
+        h+='<td style="padding:4px;border:1px solid #eee;text-align:center;'+cellBg+'">';
+        h+='<span style="'+dotStyle+'"></span>';
+        h+='</td>';
+      }
+      h+='</tr>';
+    });
+    h+='</tbody></table>';
+
+    /* Scores */
+    if(ego!==null&&tar!==null){
+      function lvlCls(v){if(v<=2.9)return{lbl:'Baja',bg:'#e8f4ff',fg:'#2980b9'};if(v<=4.2)return{lbl:'Media',bg:'#fef9e7',fg:'#d68910'};return{lbl:'Alta',bg:'#eafaf1',fg:'#1e8449'};}
+      var el=lvlCls(ego),tl=lvlCls(tar);
+      h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 12px 6px;">';
+      h+='<div style="border:1px solid #e8e8e8;border-radius:4px;padding:8px 10px;text-align:center;">';
+      h+='<div style="font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:3px;">ORIENTACI\u00d3N AL EGO</div>';
+      h+='<div style="font-size:22px;font-weight:800;color:#E8312A;">'+ego.toFixed(2)+'</div>';
+      h+='<div style="font-size:8px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;background:'+el.bg+';color:'+el.fg+';">'+el.lbl+'</div>';
+      h+='<div style="height:5px;background:#f0f0f0;border-radius:3px;overflow:hidden;margin-top:6px;"><div style="height:100%;background:#E8312A;border-radius:3px;width:'+(ego/5*100)+'%;"></div></div>';
+      h+='<div style="font-size:7px;color:#aaa;margin-top:4px;">Items 1,3,4,6,9,11</div>';
+      h+='</div>';
+      h+='<div style="border:1px solid #e8e8e8;border-radius:4px;padding:8px 10px;text-align:center;">';
+      h+='<div style="font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:3px;">ORIENTACI\u00d3N A LA TAREA</div>';
+      h+='<div style="font-size:22px;font-weight:800;color:#27ae60;">'+tar.toFixed(2)+'</div>';
+      h+='<div style="font-size:8px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;background:'+tl.bg+';color:'+tl.fg+';">'+tl.lbl+'</div>';
+      h+='<div style="height:5px;background:#f0f0f0;border-radius:3px;overflow:hidden;margin-top:6px;"><div style="height:100%;background:#27ae60;border-radius:3px;width:'+(tar/5*100)+'%;"></div></div>';
+      h+='<div style="font-size:7px;color:#aaa;margin-top:4px;">Items 2,5,7,8,10,12,13</div>';
+      h+='</div></div>';
+    }
+
+    /* Profile */
+    if(perf){
+      var profileColors={
+        'Tarea alta / Ego baja':{bg:'#eafaf1',border:'#27ae60',icon:'\uD83D\uDFE2'},
+        'Ego alta / Tarea baja':{bg:'#fdedec',border:'#E8312A',icon:'\uD83D\uDD25'},
+        'Ego alta / Tarea alta':{bg:'#fef9e7',border:'#d68910',icon:'\uD83E\uDDE8'},
+        'Ego baja / Tarea baja':{bg:'#f8f9fa',border:'#95a5a6',icon:'\uD83D\uDCA4'}
+      };
+      var pc=null;
+      Object.keys(profileColors).forEach(function(k){if(perf.indexOf(k)!==-1)pc=profileColors[k];});
+      if(!pc)pc={bg:'#f8f9fa',border:'#ccc',icon:'\uD83D\uDCCA'};
+      h+='<div style="margin:6px 12px 8px;padding:8px 12px;border-radius:4px;border-left:3px solid '+pc.border+';background:'+pc.bg+'">';
+      h+='<div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:3px;">PERFIL DETECTADO</div>';
+      h+='<div style="font-size:13px;font-weight:800;">'+pc.icon+' '+perf+'</div>';
+      h+='</div>';
+    }
+
   }else if(isGrid){
     var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
     var reflCells=resps.filter(function(r){return!r.fid||!/^g_\d+_\d+$/.test(r.fid);});
