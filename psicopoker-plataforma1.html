@@ -1838,76 +1838,6 @@ function showToast(msg) {
 }
 
 
-var adminData=null,activeExIdx=-1;
-function showAdmin(){var usr=USERS[S.user];document.getElementById('nav-av3').textContent=usr.name[0].toUpperCase();showView('vadmin');loadAdminPanel();}
-function fetchAdminData(){
-  var subs=getLocalSubs();
-  buildAdminData(subs);
-  fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
-  .then(function(r){return r.json();})
-  .then(function(resp){
-    if(!resp.records||!resp.records.length)return;
-    var local=getLocalSubs(),keys={};
-    local.forEach(function(s){keys[(s.jugador||'')+'|'+(s.fecha||'')]=1;});
-    resp.records.forEach(function(rec){
-      var f=rec.fields,key=(f.Jugador||'')+'|'+(f.Fecha||'');
-      if(!keys[key]){
-        var resps=(f.Respuestas||'').split('\n\n---\n\n').map(function(b){var nl=b.indexOf('\n');return{pregunta:nl>-1?b.substring(0,nl):b,respuesta:nl>-1?b.substring(nl+1):''};});
-        local.push({ts:0,fecha:f.Fecha||'',jugador:f.Jugador||'',usuario:f.Usuario||'',unidad:f.Unidad||'',ejercicio:f.Ejercicio||'',respuestas:resps});
-      }
-    });
-    localStorage.setItem('pp_submissions',JSON.stringify(local));
-    buildAdminData(local);
-  }).catch(function(){});
-}
-function buildAdminData(subs){
-  var groups={};
-  subs.forEach(function(s){var k=(s.unidad||'')+' - '+(s.ejercicio||'');if(!groups[k])groups[k]={ejercicio:k,registros:[]};groups[k].registros.push(s);});
-  adminData=Object.values(groups);
-  if(!adminData.length){
-    document.getElementById('admin-ex-list').innerHTML='<div style="padding:1rem 1.1rem;font-size:.75rem;color:var(--dim);">Sin respuestas aun</div>';
-    document.getElementById('admin-content').innerHTML='<div style="text-align:center;padding:4rem 2rem;"><div style="font-size:2rem;opacity:.15;margin-bottom:1rem;">&#128203;</div><p style="font-size:.85rem;color:var(--muted);">Cuando los jugadores completen ejercicios apareceran aca.</p></div>';
-    return;
-  }
-  var h='';
-  adminData.forEach(function(ex,i){
-    var n=(ex.registros||[]).length,active=i===activeExIdx;
-    h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showAdminEx('+i+')">';
-    h+='<div class="aei-name">'+ex.ejercicio+'</div>';
-    h+='<div class="aei-count">'+n+' respuesta'+(n!==1?'s':'')+'</div></div>';
-  });
-  document.getElementById('admin-ex-list').innerHTML=h;
-  if(activeExIdx<0||activeExIdx>=adminData.length)showAdminEx(0);
-  else showAdminEx(activeExIdx);
-}
-function showAdminEx(idx){
-  activeExIdx=idx;
-  buildAdminData(getLocalSubs());
-  if(!adminData||!adminData[idx])return;
-  var ex=adminData[idx],registros=ex.registros||[],h='';
-  h+='<div style="margin-bottom:1.5rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.35rem;">'+ex.ejercicio+'</div>';
-  h+='<div style="font-size:1.1rem;font-weight:800;">'+registros.length+' respuesta'+(registros.length!==1?'s':'')+'</div></div>';
-  if(!registros.length){h+='<p style="color:var(--muted)">Sin respuestas aun.</p>';}
-  else{
-    var jugadores={};registros.forEach(function(r){jugadores[r.usuario||'?']=1;});
-    h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.75rem;">';
-    h+=sc('Respuestas',registros.length)+sc('Ultimo envio',(registros[0].fecha||'-').substring(0,16))+sc('Jugadores',Object.keys(jugadores).length);
-    h+='</div>';
-    registros.forEach(function(rec){
-      var nombre=rec.jugador||'?',usuario=rec.usuario||'',fecha=rec.fecha||'',resps=rec.respuestas||[];
-      h+='<div class="sub-card"><div class="sub-card-hdr">';
-      h+='<div class="sub-av">'+(nombre[0]||'?').toUpperCase()+'</div>';
-      h+='<div><div class="sub-name">'+nombre+'</div><div class="sub-meta">@'+usuario+' &middot; '+fecha+'</div></div>';
-      h+='<button class="sub-toggle" onclick="toggleSub(this)">Ver &#9660;</button>';
-      h+='</div><div class="sub-body" style="display:none;">';
-      resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()){h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';}});
-      h+='</div></div>';
-    });
-  }
-  document.getElementById('admin-content').innerHTML=h;
-}
-function sc(label,val){return'<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;"><div style="font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">'+label+'</div><div style="font-size:1.3rem;font-weight:800;">'+val+'</div></div>';}
-function toggleSub(btn){var b=btn.closest('.sub-card').querySelector('.sub-body');var open=b.style.display!=='none';b.style.display=open?'none':'block';btn.innerHTML=open?'Ver &#9660;':'Ocultar &#9650;';}
 
 
 function restoreFromAirtable(usuario,cb){
@@ -2034,10 +1964,10 @@ function showPatient(usuario){
     var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
     exs.forEach(function(ej,idx){
       var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
-      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);
+      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);
       var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
       h+='<div class="sub-card">';
-      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
+      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
       h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
       h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
       h+='<button class="sub-toggle">'+btnLabel+'</button></div>';
@@ -2056,6 +1986,7 @@ function showPatient(usuario){
   teosqQueue.forEach(function(item){
     if(item.type==='pmt')renderPMTAdminView(item.ej,item.eid);
     else if(item.type==='teosq')renderTEOSQAdminView(item.ej,item.eid);
+    else if(item.type==='iped')renderIPEDAdminView(item.ej,item.eid);
     else if(item.type==='grid')renderGridAdminView(item.ej,item.eid);
     else renderFormAdminView(item.ej,item.eid);
   });
