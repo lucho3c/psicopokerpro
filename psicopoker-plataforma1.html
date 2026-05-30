@@ -348,6 +348,20 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .cl-q4-ta{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;padding:.65rem .85rem;border-radius:4px;resize:vertical;min-height:80px;outline:none;transition:border-color .2s;line-height:1.65;margin-top:.5rem;}
 .cl-q4-ta:focus{border-color:var(--red);}
 .cl-q4-ta::placeholder{color:var(--dim);}
+/* Equipamiento */
+.eq-table{width:100%;border-collapse:collapse;min-width:480px;}
+.eq-th{padding:.65rem 1rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--bg3);border-bottom:2px solid var(--border);text-align:left;}
+.eq-th-num{width:42px;text-align:center;border-right:1px solid var(--border);}
+.eq-th-obj{width:38%;border-right:1px solid var(--border);}
+.eq-th-func{}
+.eq-row{border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;transition:background .15s;}
+.eq-row:hover{background:rgba(255,255,255,.03)!important;}
+.eq-num{padding:.5rem .6rem;text-align:center;font-size:.72rem;font-weight:800;color:var(--dim);border-right:1px solid var(--border);vertical-align:middle;width:42px;}
+.eq-cell{padding:.35rem .5rem;border-right:1px solid rgba(255,255,255,.04);}
+.eq-cell:last-child{border-right:none;}
+.eq-ta{width:100%;background:transparent;border:none;border-bottom:1px solid transparent;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;padding:.3rem .4rem;resize:none;min-height:36px;outline:none;line-height:1.55;transition:border-color .2s;}
+.eq-ta:focus{border-bottom-color:var(--red);background:rgba(232,49,42,.03);}
+.eq-ta::placeholder{color:var(--dim);font-size:.75rem;}
 .attach-title{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;}
 .attach-group{margin-bottom:1rem;}
 .attach-group-label{font-size:.65rem;font-weight:700;color:var(--muted);margin-bottom:.45rem;}
@@ -826,7 +840,7 @@ var C = [
       { id:'u4l9', title:'Cuarta sesion 1 a 1', type:'session' }
     ],
     extra:[
-      { id:'u4e1', title:'Equipamiento', ex:{ type:'form', unit:'Unidad 4', name:'Equipamiento Indispensable' } },
+      { id:'u4e1', title:'Equipamiento', noVideo:true, ex:{ type:'equip', unit:'Unidad 4', name:'Equipamiento Indispensable' } },
       { id:'u4e2', title:'Descansos', ex:{ type:'form', unit:'Unidad 4', name:'Gestion de Descansos' } }
     ]
   },
@@ -1036,20 +1050,7 @@ var EX_DEFS = {
       { fid:'u3l6_obs', label:'Observaciones de la semana' }
     ]
   },
-  'u4e1':{ type:'form', unit:'Unidad 4', name:'Equipamiento Indispensable', sections:[
-    { title:'Mi equipamiento para competir al maximo', questions:[
-      { fid:'u4e1_1', label:'Item 1: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_2', label:'Item 2: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_3', label:'Item 3: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_4', label:'Item 4: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_5', label:'Item 5: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_6', label:'Item 6: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_7', label:'Item 7: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_8', label:'Item 8: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_9', label:'Item 9: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_10', label:'Item 10: objeto o herramienta y para que lo necesito' }
-    ]}
-  ]},
+  'u4e1':{ type:'equip', unit:'Unidad 4', name:'Equipamiento Indispensable' },
   'u4e2':{ type:'form', unit:'Unidad 4', name:'Gestion de Descansos', sections:[
     { title:'Cash / Spins', questions:[
       { fid:'u4e2_c1', label:'Descanso 1: acciones indispensables' },
@@ -1748,7 +1749,7 @@ function renderContent(unit, lid) {
   var body = '';
 
   // VIDEO
-  if (lesson.type !== 'resource' && lesson.type !== 'session') {
+  if (lesson.type !== 'resource' && lesson.type !== 'session' && !lesson.noVideo) {
     if (lesson.driveId) {
       body += '<div class="vwrap"><div class="vembed">';
       body += '<iframe src="https://drive.google.com/file/d/' + lesson.driveId + '/preview" allow="autoplay" allowfullscreen></iframe>';
@@ -1806,6 +1807,11 @@ function renderContent(unit, lid) {
     } else if (exType === 'checklist') {
       document.getElementById('mc-body').innerHTML = body;
       renderChecklistExercise(lid);
+      document.getElementById('mc').scrollTop = 0;
+      return;
+    } else if (exType === 'equip') {
+      document.getElementById('mc-body').innerHTML = body;
+      renderEquipExercise(lid);
       document.getElementById('mc').scrollTop = 0;
       return;
     } else if (exType === 'grid') body += renderGridExercise(lid, def);
@@ -1998,10 +2004,10 @@ function showPatient(usuario){
     var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
     exs.forEach(function(ej,idx){
       var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
-      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);
+      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);
       var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
       h+='<div class="sub-card">';
-      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
+      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
       h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
       h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
       h+='<button class="sub-toggle">'+btnLabel+'</button></div>';
@@ -2012,6 +2018,7 @@ function showPatient(usuario){
       else if(isIped)teosqQueue.push({type:'iped',eid:eid,ej:ej});
       else if(isGps)teosqQueue.push({type:'gps',eid:eid,ej:ej});
       else if(isCl)teosqQueue.push({type:'checklist',eid:eid,ej:ej});
+      else if(isEquip)teosqQueue.push({type:'equip',eid:eid,ej:ej});
       else if(isGrid)teosqQueue.push({type:'grid',eid:eid,ej:ej});
       else teosqQueue.push({type:'form',eid:eid,ej:ej});
     });
@@ -2025,6 +2032,7 @@ function showPatient(usuario){
     else if(item.type==='iped')renderIPEDAdminView(item.ej,item.eid);
     else if(item.type==='gps')renderGPSAdminView(item.ej,item.eid);
     else if(item.type==='checklist')renderChecklistAdminView(item.ej,item.eid);
+    else if(item.type==='equip')renderEquipAdminView(item.ej,item.eid);
     else if(item.type==='grid')renderGridAdminView(item.ej,item.eid);
     else renderFormAdminView(item.ej,item.eid);
   });
@@ -2205,7 +2213,7 @@ function pdfLvlLbl(v){if(!v)return'';if(v<=2.9)return'Baja';if(v<=4.2)return'Med
 
 function buildExPDF(ej){
   var resps=ej.respuestas||[];
-  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);
+  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);
   var isGrid=resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
 
@@ -2281,6 +2289,22 @@ function buildExPDF(ej){
       h+='<div style="padding:6px 10px;border-bottom:1px solid #f0f0f0;display:flex;gap:8px;align-items:flex-start;"><div style="flex:1;"><div style="font-size:10px;font-weight:700;color:#1a1a2e;margin-bottom:1px;">'+sub.name+'</div><div style="font-size:9px;color:#555;line-height:1.45;">'+IDESCS[sub.id]+'</div></div><div style="flex-shrink:0;font-size:13px;font-weight:800;color:'+sub.color+';min-width:20px;text-align:right;">'+(sc!==null?sc:'—')+'</div><div style="flex-shrink:0;"><span style="font-size:8px;font-weight:700;background:'+lv.bg+';color:'+lv.color+';border-radius:3px;padding:1px 5px;">'+lv.lbl+'</span></div></div>';
     });
     h+='</div>';
+
+  }else if(isEquip){
+    var eqData={};
+    (resps||[]).forEach(function(r){if(r.fid)eqData[r.fid]=r.respuesta||'';});
+    var eqCount=0;Object.keys(eqData).forEach(function(k){var m=k.match(/^eq_(\d+)_/);if(m)eqCount=Math.max(eqCount,parseInt(m[1]));});
+    if(eqCount>0){
+      h+='<div style="border:1px solid #e8e8e8;border-radius:4px;overflow:hidden;">';
+      h+='<table style="width:100%;border-collapse:collapse;font-size:10px;">';
+      h+='<thead><tr style="background:#f0f0f0;"><th style="padding:6px 8px;border:1px solid #ddd;width:32px;text-align:center;">#</th><th style="padding:6px 8px;border:1px solid #ddd;width:42%;">Objeto</th><th style="padding:6px 8px;border:1px solid #ddd;">Función / Para qué</th></tr></thead><tbody>';
+      for(var i=1;i<=eqCount;i++){
+        var obj=eqData['eq_'+i+'_obj']||'',fn=eqData['eq_'+i+'_func']||'';
+        if(!obj&&!fn)continue;
+        h+='<tr style="'+(i%2===0?'background:#fafafa;':'')+'" ><td style="padding:6px 8px;border:1px solid #e8e8e8;text-align:center;font-weight:700;color:#666;">'+i+'</td><td style="padding:6px 8px;border:1px solid #e8e8e8;white-space:pre-wrap;">'+obj+'</td><td style="padding:6px 8px;border:1px solid #e8e8e8;white-space:pre-wrap;">'+fn+'</td></tr>';
+      }
+      h+='</tbody></table></div>';
+    }
 
   }else if(isCl){
     var clData={};
@@ -4015,6 +4039,159 @@ function renderChecklistAdminView(ej, cid) {
     h += '</div>';
   }
 
+  h += '</div>';
+  var el = document.getElementById(cid);
+  if(el) el.innerHTML = h;
+}
+
+
+
+/* ═══════════════════════════════════════════════
+   EQUIPAMIENTO INDISPENSABLE
+   ═══════════════════════════════════════════════ */
+
+function equipGetData(lid) {
+  var draft = loadDraft(lid) || {};
+  var sub = (getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
+  var data = {};
+  if (Object.keys(draft).length) { data = draft; }
+  else if (sub && sub.respuestas) { sub.respuestas.forEach(function(r){ if(r.fid) data[r.fid]=r.respuesta||''; }); }
+  return data;
+}
+
+function equipRowCount(data) {
+  var max = 0;
+  Object.keys(data).forEach(function(k){ var m=k.match(/^eq_(\d+)_/); if(m) max=Math.max(max,parseInt(m[1])); });
+  return max;
+}
+
+function equipSaveDraft(lid) {
+  var data = {};
+  document.querySelectorAll('[data-eq-fid]').forEach(function(el){
+    if(el.value.trim()) data[el.getAttribute('data-eq-fid')] = el.value;
+  });
+  saveDraft(lid, data);
+  updateSaveStatus('Borrador guardado','rgba(238,239,243,.5)');
+}
+
+function equipAddRow(lid) {
+  var tbody = document.getElementById('eq-tbody');
+  if (!tbody) return;
+  var rows = tbody.querySelectorAll('tr');
+  var idx = rows.length + 1;
+  var tr = document.createElement('tr');
+  tr.className = 'eq-row';
+  tr.innerHTML =
+    '<td class="eq-num">'+idx+'</td>'+
+    '<td class="eq-cell"><textarea class="eq-ta" data-eq-fid="eq_'+idx+'_obj" oninput="equipSaveDraft(\''+lid+'\')" placeholder="Objeto o herramienta..."></textarea></td>'+
+    '<td class="eq-cell"><textarea class="eq-ta" data-eq-fid="eq_'+idx+'_func" oninput="equipSaveDraft(\''+lid+'\')" placeholder="¿Para qué lo necesitás?"></textarea></td>';
+  tbody.appendChild(tr);
+  tr.querySelector('textarea').focus();
+}
+
+function renderEquipExercise(lid) {
+  var data = equipGetData(lid);
+  var count = Math.max(equipRowCount(data), 14); // min 14 rows like Excel
+  var alreadyDone = isDone(lid);
+
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  h += '<div class="tq-hdr-box">';
+  h += '<div class="ex-badge">Planificación · Unidad 4</div>';
+  h += '<div class="tq-hdr-title">Equipamiento Indispensable</div>';
+  h += '<div class="tq-hdr-sub" style="margin-top:.3rem;">Listá todo lo que necesitás tener listo para competir al máximo. Objeto por objeto, y para qué sirve cada uno.</div>';
+  h += '</div>';
+
+  h += '<div style="overflow-x:auto;">';
+  h += '<table class="eq-table">';
+  h += '<thead><tr>';
+  h += '<th class="eq-th eq-th-num">#</th>';
+  h += '<th class="eq-th eq-th-obj">Objeto</th>';
+  h += '<th class="eq-th eq-th-func">Función / Para qué</th>';
+  h += '</tr></thead>';
+  h += '<tbody id="eq-tbody">';
+
+  for (var i = 1; i <= count; i++) {
+    var obj  = data['eq_'+i+'_obj']  || '';
+    var func = data['eq_'+i+'_func'] || '';
+    var stripe = i % 2 === 0 ? 'background:rgba(255,255,255,.02);' : '';
+    h += '<tr class="eq-row" style="'+stripe+'">';
+    h += '<td class="eq-num">'+i+'</td>';
+    h += '<td class="eq-cell"><textarea class="eq-ta" data-eq-fid="eq_'+i+'_obj" oninput="equipSaveDraft(\''+lid+'\')" placeholder="Objeto o herramienta...">'+obj+'</textarea></td>';
+    h += '<td class="eq-cell"><textarea class="eq-ta" data-eq-fid="eq_'+i+'_func" oninput="equipSaveDraft(\''+lid+'\')" placeholder="¿Para qué lo necesitás?">'+func+'</textarea></td>';
+    h += '</tr>';
+  }
+
+  h += '</tbody></table></div>';
+
+  h += '<div style="padding:.65rem 1.25rem;border-top:1px solid var(--border);background:var(--bg2);">';
+  h += '<button onclick="equipAddRow(\''+lid+'\')" style="background:none;border:1px dashed var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;padding:.3rem .9rem;border-radius:3px;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor=\'var(--red)\';this.style.color=\'var(--red)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--muted)\'">+ Agregar fila</button>';
+  h += '</div>';
+
+  h += '<div class="ex-submit-row">';
+  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="equipSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
+  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '</div></div>';
+
+  document.getElementById('mc-body').innerHTML = h;
+}
+
+function equipSubmit(lid) {
+  equipSaveDraft(lid);
+  var user = USERS[S.user];
+  var answers = [];
+  document.querySelectorAll('[data-eq-fid]').forEach(function(el){
+    answers.push({ fid:el.getAttribute('data-eq-fid'), pregunta:el.getAttribute('data-eq-fid'), respuesta:el.value });
+  });
+  var rec = { ts:Date.now(), fecha:new Date().toLocaleString('es-AR'),
+    jugador:user.name, usuario:S.user,
+    unidad:'Unidad 4', ejercicio:'Equipamiento Indispensable', lid:lid, respuestas:answers };
+  var saved = getLocalSubs();
+  var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
+  var isUpdate = idx >= 0;
+  if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+  localStorage.setItem('pp_submissions', JSON.stringify(saved));
+  markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
+  var btn = document.getElementById('btn-ex-'+lid);
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
+}
+
+/* ── EQUIP ADMIN VIEW ─────────────────────────── */
+function renderEquipAdminView(ej, cid) {
+  var resps = ej.respuestas || [];
+  var data = {};
+  resps.forEach(function(r){ if(r.fid) data[r.fid]=r.respuesta||''; });
+  var count = 0;
+  Object.keys(data).forEach(function(k){ var m=k.match(/^eq_(\d+)_/); if(m) count=Math.max(count,parseInt(m[1])); });
+
+  var h = '<div style="padding:.75rem;overflow-x:auto;">';
+  if (!count) {
+    h += '<p style="font-size:.78rem;color:var(--dim);font-style:italic;">Sin equipamiento completado.</p>';
+  } else {
+    h += '<table style="width:100%;border-collapse:collapse;min-width:400px;">';
+    h += '<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
+    h += '<th style="padding:.55rem .75rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:36px;">#</th>';
+    h += '<th style="padding:.55rem .85rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);width:42%;">Objeto</th>';
+    h += '<th style="padding:.55rem .85rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;">Función / Para qué</th>';
+    h += '</tr></thead><tbody>';
+    for (var i = 1; i <= count; i++) {
+      var obj = data['eq_'+i+'_obj']||'', fn = data['eq_'+i+'_func']||'';
+      if (!obj && !fn) continue;
+      var stripe = i%2===0?'background:rgba(255,255,255,.02);':'';
+      h += '<tr style="'+stripe+';border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;">';
+      h += '<td style="padding:.6rem .75rem;border-right:1px solid var(--border);text-align:center;font-size:.72rem;font-weight:800;color:var(--dim);">'+i+'</td>';
+      h += '<td style="padding:.6rem .85rem;border-right:1px solid var(--border);font-size:.82rem;white-space:pre-wrap;line-height:1.55;">'+obj+'</td>';
+      h += '<td style="padding:.6rem .85rem;font-size:.82rem;white-space:pre-wrap;line-height:1.55;">'+fn+'</td>';
+      h += '</tr>';
+    }
+    h += '</tbody></table>';
+  }
   h += '</div>';
   var el = document.getElementById(cid);
   if(el) el.innerHTML = h;
