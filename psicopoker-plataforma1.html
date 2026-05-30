@@ -670,35 +670,51 @@ function attachFilePicked(lid,input){
     h+='<div class="attach-pending-name">&#128206; '+file.name+' <span style="font-size:.65rem;color:var(--dim);">'+sz+'</span></div>';
     h+='<textarea class="attach-desc" id="'+pid+'-desc" placeholder="Que queres mostrar con este archivo? (opcional)"></textarea>';
     h+='<div style="display:flex;gap:.5rem;margin-top:.2rem;">';
-    h+='<button class="attach-add-btn" style="background:var(--red);border-color:var(--red);color:#fff;" onclick="attachConfirmFile(\''+lid+'\',\''+pid+'\',this)">Confirmar</button>';
+    h+='<button class="attach-add-btn" style="background:var(--red);border-color:var(--red);color:#fff;" id="'+pid+'-btn" onclick="attachConfirmFile(\''+lid+'\',\''+pid+'\',this)">Confirmar</button>';
     h+='<button class="attach-add-btn" onclick="document.getElementById(\''+pid+'\').remove()">Cancelar</button>';
     h+='</div></div>';
     pending.innerHTML+=h;
-    // Store file data
+    // Set name/size/type SYNCHRONOUSLY — these are available immediately from File object
+    var pidEl=document.getElementById(pid);
+    if(pidEl){
+      pidEl.dataset.name=file.name;
+      pidEl.dataset.size=file.size;
+      pidEl.dataset.type=file.type||'application/octet-stream';
+    }
+    // Only b64 needs async FileReader
     var reader=new FileReader();
     reader.onload=function(e){
-      document.getElementById(pid).dataset.b64=e.target.result;
-      document.getElementById(pid).dataset.name=file.name;
-      document.getElementById(pid).dataset.size=file.size;
-      document.getElementById(pid).dataset.type=file.type;
+      var el=document.getElementById(pid);
+      if(el){el.dataset.b64=e.target.result;el.dataset.ready='1';}
     };
+    reader.onerror=function(){showToast('Error al leer el archivo "'+file.name+'"');};
     reader.readAsDataURL(file);
   });
   input.value='';
 }
 function attachConfirmFile(lid,pid,btn){
   var el=document.getElementById(pid);if(!el)return;
-  var name=el.dataset.name,size=parseInt(el.dataset.size||0),type=el.dataset.type||'',b64=el.dataset.b64||'';
-  if(!name||!b64){showToast('El archivo todavía se está cargando, esperá un momento...');return;}
+  var name=el.dataset.name||'',size=parseInt(el.dataset.size||0),type=el.dataset.type||'application/octet-stream',b64=el.dataset.b64||'';
+  if(!name){showToast('Error: nombre de archivo no disponible');return;}
+  // If b64 not ready yet, show loading state and retry
+  if(!b64||!el.dataset.ready){
+    if(btn){btn.textContent='Cargando...';btn.disabled=true;}
+    setTimeout(function(){
+      if(btn){btn.textContent='Confirmar';btn.disabled=false;}
+      attachConfirmFile(lid,pid,btn);
+    },800);
+    return;
+  }
   var descEl=document.getElementById(pid+'-desc');
   var desc=descEl?descEl.value.trim():'';
-  // Save base64 to localStorage for local use
+  // Save base64 to localStorage
   try{localStorage.setItem('pp_attach_'+S.user+'_'+lid+'_'+name,b64);}catch(err){showToast('Archivo demasiado grande para guardar localmente');return;}
-  // Save to Firebase so Mauro can access it from his panel
+  // Save metadata to draft
   var at=getAttachments(lid);
   var fileIdx=at.files.length;
   at.files.push({name:name,size:size,type:type,desc:desc});
   saveAttachments(lid,at.links,at.files);
+  // Save to Firebase so Mauro can access from his panel
   if(typeof DB!=='undefined'&&DB){
     DB.ref('psicopoker/files/'+S.user+'/'+lid+'/'+fileIdx).set({b64:b64,name:name,type:type,desc:desc}).catch(function(){});
   }
