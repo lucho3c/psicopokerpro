@@ -2147,15 +2147,37 @@ function renderTEOSQAdminView(ej,cid){
     if(r.fid==='teosq_perfil'){perfil=r.respuesta;return;}
     var m=r.fid.match(/^teosq_(\d+)$/);if(m)ans[parseInt(m[1])]=parseInt(r.respuesta)||0;
   });
-  var uid=cid.replace(/[^a-z0-9]/gi,'_');
+
   var SCALE=['Tot. Desacuerdo','En Desacuerdo','Ni/ni','De Acuerdo','Tot. Acuerdo'];
   var h='<div>';
-  h+='<div style="display:flex;border-bottom:1px solid var(--border);background:var(--bg3);">';
-  for(var ti=0;ti<3;ti++)h+='<div class="teosq-tab'+(ti===0?' on':'')+'" id="at'+ti+'_'+uid+'" onclick="admTqTab(\''+uid+'\','+ti+')" style="font-size:.65rem;">'+['1. Cuestionario','2. Resultados','3. Interpretaci\u00f3n'][ti]+'</div>';
-  h+='</div>';
-  // Pane 0 — table
-  h+='<div class="teosq-pane on" id="ap0_'+uid+'" style="padding:.75rem 0;">';
-  h+='<div class="tq-table-wrap"><table class="tq-table"><thead><tr><th>#</th><th>Yo me siento con m\u00e1s \u00e9xito cuando...</th>';
+
+  // ── Puntajes + gráfico ──
+  if(egoScore!==null&&tarScore!==null){
+    function lvl(s){if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',cls:'tlvl-low'};if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',cls:'tlvl-mid'};return{lbl:'Alta ('+s.toFixed(2)+')',cls:'tlvl-hi'};}
+    var el2=lvl(egoScore),tl=lvl(tarScore);
+    h+='<div style="padding:.75rem .75rem 0;">';
+    h+='<div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:.85rem;">';
+    h+='<div class="tq-sc-card"><div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);">Orientaci\u00f3n al Ego</div><div class="tq-sc-val">'+egoScore.toFixed(2)+'</div><div class="teosq-sc-lvl '+el2.cls+'">'+el2.lbl+'</div><div class="tq-sc-bar"><div class="tq-sc-fill" style="width:'+(egoScore/5*100)+'%;background:#E8312A;"></div></div></div>';
+    h+='<div class="tq-sc-card"><div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);">Orientaci\u00f3n a la Tarea</div><div class="tq-sc-val">'+tarScore.toFixed(2)+'</div><div class="teosq-sc-lvl '+tl.cls+'">'+tl.lbl+'</div><div class="tq-sc-bar"><div class="tq-sc-fill" style="width:'+(tarScore/5*100)+'%;background:#22C55E;"></div></div></div>';
+    h+='</div>';
+    h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:1rem;margin-bottom:.85rem;">';
+    h+='<svg viewBox="0 0 380 220" style="width:100%;max-width:400px;display:block;margin:0 auto;">'+buildTEOSQChartSVG(egoScore,tarScore)+'</svg></div>';
+    h+='</div>';
+  }
+
+  // ── Perfil ──
+  if(perfil){
+    var PROFS=[{id:'tp1',icon:'\uD83D\uDFE2',name:'Tarea alta / Ego baja',desc:'Motivaci\u00f3n s\u00f3lida y aut\u00f3noma.',tag:'tptag-ok',tagLbl:'Perfil favorable'},{id:'tp2',icon:'\uD83D\uDD25',name:'Ego alta / Tarea baja',desc:'Busca demostrar valor y validarse.',tag:'tptag-r',tagLbl:'Incompatible con Mindset Ganador'},{id:'tp3',icon:'\uD83E\uDDE8',name:'Ego alta / Tarea alta',desc:'Fuerte ambici\u00f3n con compromiso.',tag:'tptag-w',tagLbl:'Perfil complejo'},{id:'tp4',icon:'\uD83D\uDCA4',name:'Ego baja / Tarea baja',desc:'Motivaci\u00f3n difusa o fr\u00e1gil.',tag:'tptag-r',tagLbl:'Requiere atenci\u00f3n urgente'}];
+    h+='<div style="padding:0 .75rem .75rem;">';
+    h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem 1rem;margin-bottom:.75rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">Perfil</div><div style="font-size:1rem;font-weight:800;">'+perfil+'</div></div>';
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem;">';
+    PROFS.forEach(function(p){var isA=perfil.indexOf(p.name)!==-1;h+='<div class="tq-profile-card '+p.id+(isA?' active':'')+'" style="opacity:'+(isA?'1':'.4')+'"><div style="font-size:.95rem;margin-bottom:.3rem;">'+p.icon+'</div><div style="font-size:.75rem;font-weight:800;margin-bottom:.3rem;">'+p.name+'</div><div style="font-size:.7rem;color:var(--muted);line-height:1.5;margin-bottom:.4rem;">'+p.desc+'</div><div class="tp-tag '+p.tag+'" style="font-size:.58rem;">'+p.tagLbl+'</div></div>';});
+    h+='</div></div>';
+  }
+
+  // ── Tabla de ítems (read-only) ──
+  h+='<div class="tq-table-wrap" style="padding:0 .75rem .75rem;">';
+  h+='<table class="tq-table"><thead><tr><th>#</th><th>Yo me siento con m\u00e1s \u00e9xito cuando...</th>';
   SCALE.forEach(function(l){h+='<th>'+l+'</th>';});
   h+='</tr></thead><tbody>';
   TEOSQ_ITEMS.forEach(function(item){
@@ -2167,34 +2189,10 @@ function renderTEOSQAdminView(ej,cid){
     }
     h+='</tr>';
   });
-  h+='</tbody></table></div></div>';
-  // Pane 1 — scores + chart
-  h+='<div class="teosq-pane" id="ap1_'+uid+'" style="padding:1rem;">';
-  if(egoScore!==null&&tarScore!==null){
-    function lvl(s){if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',cls:'tlvl-low'};if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',cls:'tlvl-mid'};return{lbl:'Alta ('+s.toFixed(2)+')',cls:'tlvl-hi'};}
-    var el2=lvl(egoScore),tl=lvl(tarScore);
-    h+='<div style="display:flex;gap:1rem;margin-bottom:1rem;">';
-    h+='<div class="tq-sc-card"><div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);">ORIENTACI\u00d3N AL EGO</div><div class="tq-sc-val">'+egoScore.toFixed(2)+'</div><div class="teosq-sc-lvl '+el2.cls+'">'+el2.lbl+'</div><div class="tq-sc-bar"><div class="tq-sc-fill" style="width:'+(egoScore/5*100)+'%;background:#E8312A;"></div></div></div>';
-    h+='<div class="tq-sc-card"><div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);">ORIENTACI\u00d3N A LA TAREA</div><div class="tq-sc-val">'+tarScore.toFixed(2)+'</div><div class="teosq-sc-lvl '+tl.cls+'">'+tl.lbl+'</div><div class="tq-sc-bar"><div class="tq-sc-fill" style="width:'+(tarScore/5*100)+'%;background:#22C55E;"></div></div></div>';
-    h+='</div>';
-    h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:1rem;">';
-    h+='<svg viewBox="0 0 380 220" style="width:100%;max-width:400px;display:block;margin:0 auto;">'+buildTEOSQChartSVG(egoScore,tarScore)+'</svg></div>';
-  } else {
-    h+='<p style="font-size:.8rem;color:var(--dim);">No se encontraron scores en este env\u00edo.</p>';
-  }
-  h+='</div>';
-  // Pane 2 — profile
-  h+='<div class="teosq-pane" id="ap2_'+uid+'" style="padding:1rem;">';
-  if(perfil)h+='<div style="background:var(--bg2);border-radius:5px;padding:.9rem 1rem;margin-bottom:.85rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">Perfil</div><div style="font-size:1rem;font-weight:800;">'+perfil+'</div></div>';
-  var PROFS=[{id:'tp1',icon:'\uD83D\uDFE2',name:'Tarea alta / Ego baja',desc:'Motivaci\u00f3n s\u00f3lida y aut\u00f3noma.',tag:'tptag-ok',tagLbl:'Perfil favorable'},{id:'tp2',icon:'\uD83D\uDD25',name:'Ego alta / Tarea baja',desc:'Busca demostrar valor y validarse.',tag:'tptag-r',tagLbl:'Incompatible con Mindset Ganador'},{id:'tp3',icon:'\uD83E\uDDE8',name:'Ego alta / Tarea alta',desc:'Fuerte ambici\u00f3n con compromiso.',tag:'tptag-w',tagLbl:'Perfil complejo'},{id:'tp4',icon:'\uD83D\uDCA4',name:'Ego baja / Tarea baja',desc:'Motivaci\u00f3n difusa o fr\u00e1gil.',tag:'tptag-r',tagLbl:'Requiere atenci\u00f3n urgente'}];
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">';
-  PROFS.forEach(function(p){var isA=perfil&&perfil.indexOf(p.name)!==-1;h+='<div class="tq-profile-card '+p.id+(isA?' active':'')+'" style="opacity:'+(isA?'1':'.4')+'"><div style="font-size:.95rem;margin-bottom:.3rem;">'+p.icon+'</div><div style="font-size:.75rem;font-weight:800;margin-bottom:.3rem;">'+p.name+'</div><div style="font-size:.7rem;color:var(--muted);line-height:1.5;margin-bottom:.4rem;">'+p.desc+'</div><div class="tp-tag '+p.tag+'" style="font-size:.58rem;">'+p.tagLbl+'</div></div>';});
-  h+='</div></div></div>';
-  var cont=document.getElementById(cid);if(cont)cont.innerHTML=h;
-}
+  h+='</tbody></table></div>';
 
-function admTqTab(uid,idx){
-  for(var i=0;i<3;i++){var t=document.getElementById('at'+i+'_'+uid);var p=document.getElementById('ap'+i+'_'+uid);if(t)t.classList.toggle('on',i===idx);if(p)p.classList.toggle('on',i===idx);}
+  h+='</div>';
+  var cont=document.getElementById(cid);if(cont)cont.innerHTML=h;
 }
 
 /* ════ USER MANAGEMENT ════ */
@@ -2250,6 +2248,52 @@ function buildExPDF(ej){
     if(perf)h+='<div class="profile-box"><div class="profile-name">Perfil: '+perf+'</div></div>';
     resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){
       h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';
+    });
+
+  }else if(isPmt){
+    var pmtData={},pmtCap1=null,pmtCap2=null,pmtGlobal=null;
+    resps.forEach(function(r){
+      if(!r.fid)return;
+      if(r.fid==='pmt_cap1'){pmtCap1=parseFloat(r.respuesta);return;}
+      if(r.fid==='pmt_cap2'){pmtCap2=parseFloat(r.respuesta);return;}
+      if(r.fid==='pmt_global'){pmtGlobal=parseFloat(r.respuesta);return;}
+      pmtData[r.fid]=r.respuesta||'';
+    });
+    // Score cards
+    if(pmtCap1!==null||pmtCap2!==null||pmtGlobal!==null){
+      h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 12px 14px;">';
+      function pmtSc(label,val,color){
+        var lvl=val===null?'—':val<4?'Bajo':val<7?'Medio':'Alto';
+        var lvlCls=val===null?'':val<4?'lvl-l':val<7?'lvl-m':'lvl-h';
+        return '<div class="tscore-box" style="border-top:3px solid '+color+';"><div class="tscore-lbl">'+label+'</div>'+
+          '<div class="tscore-val" style="color:'+color+';">'+(val!==null?val.toFixed(2):'—')+'</div>'+
+          '<div class="tscore-lvl '+lvlCls+'">'+(val!==null?lvl:'—')+'</div></div>';
+      }
+      h+=pmtSc('Cap. de decision',pmtCap1,'#E8312A');
+      h+=pmtSc('Cap. de volumen',pmtCap2,'#D97706');
+      h+=pmtSc('Global Mindset',pmtGlobal,'#16A34A');
+      h+='</div>';
+    }
+    // Sections + items
+    var pmtSecs=[
+      {title:'1) Tomar buenas decisiones',items:PMT_ITEMS.sec1},
+      {title:'2) Disponibilidad de recursos',items:PMT_ITEMS.sec2a},
+      {title:'3) Administrarlos eficazmente',items:PMT_ITEMS.sec2b}
+    ];
+    pmtSecs.forEach(function(sec){
+      h+='<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#E8312A;padding:5px 12px 3px;background:#fff5f5;border-left:3px solid #E8312A;margin-top:6px;">'+sec.title+'</div>';
+      sec.items.forEach(function(it){
+        var nota=parseFloat(pmtData[it.fid+'_n'])||null;
+        var justif=pmtData[it.fid+'_j']||'';
+        var color=nota===null?'#aaa':nota<4?'#2563EB':nota<7?'#D97706':'#16A34A';
+        h+='<div class="qa-row">';
+        h+='<div style="display:flex;align-items:center;gap:8px;">';
+        h+='<span style="flex:1;font-size:11px;">'+it.label+'</span>';
+        h+='<span style="font-size:15px;font-weight:800;color:'+color+';min-width:22px;text-align:right;">'+(nota!==null?nota:'—')+'</span>';
+        h+='</div>';
+        if(justif)h+='<div style="font-size:10px;color:#666;margin-top:3px;padding-left:8px;border-left:2px solid #e5e7eb;line-height:1.5;">'+justif+'</div>';
+        h+='</div>';
+      });
     });
 
   }else if(isGrid){
@@ -2995,7 +3039,6 @@ function pmtSubmit() {
 
 /* ── PMT ADMIN VIEW ─────────────────────────── */
 function renderPMTAdminView(ej, cid) {
-  var resps = ej.respuestas || {};
   var data = {}, cap1 = null, cap2 = null, global = null;
   (ej.respuestas || []).forEach(function(r) {
     if (!r.fid) return;
@@ -3005,42 +3048,10 @@ function renderPMTAdminView(ej, cid) {
     data[r.fid] = r.respuesta || '';
   });
 
-  var uid = cid.replace(/[^a-z0-9]/gi,'');
-
   var h = '<div style="padding:.75rem;">';
 
-  // Tabs
-  h += '<div class="teosq-tabs">';
-  h += '<div class="teosq-tab on" id="admpt0_'+uid+'" onclick="admPmtTab(\''+uid+'\',0)" style="font-size:.65rem;">1. Ítems</div>';
-  h += '<div class="teosq-tab" id="admpt1_'+uid+'" onclick="admPmtTab(\''+uid+'\',1)" style="font-size:.65rem;">2. Puntajes</div>';
-  h += '</div>';
-
-  // Pane 0: items
-  h += '<div class="teosq-pane on" id="admpp0_'+uid+'" style="padding:.75rem 0;">';
-  var all = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
-  var secTitles = { 'u1l3_1':'1) Tomar buenas decisiones', 'u1l3_5':'2) Disponibilidad de recursos', 'u1l3_11':'3) Administrarlos eficazmente' };
-  all.forEach(function(it) {
-    if (secTitles[it.fid]) {
-      h += '<div style="font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);padding:.6rem .5rem .3rem;border-bottom:1px solid var(--border);margin-bottom:.35rem;">' + secTitles[it.fid] + '</div>';
-    }
-    var nota = parseFloat(data[it.fid + '_n']) || null;
-    var justif = data[it.fid + '_j'] || '';
-    var color = nota === null ? 'var(--dim)' : nota < 4 ? '#60A5FA' : nota < 7 ? '#FCD34D' : '#4ADE80';
-    var pct = nota !== null ? nota * 10 : 0;
-    h += '<div style="padding:.4rem .25rem;border-bottom:1px solid rgba(255,255,255,.04);">';
-    h += '<div style="display:flex;align-items:center;gap:.65rem;">';
-    h += '<span style="font-size:.76rem;flex:1;color:var(--text);">' + it.label + '</span>';
-    h += '<div style="width:70px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:2px;"></div></div>';
-    h += '<span style="font-size:.82rem;font-weight:800;color:'+color+';min-width:22px;text-align:right;">' + (nota !== null ? nota : '—') + '</span>';
-    h += '</div>';
-    if (justif) h += '<div style="font-size:.71rem;color:var(--muted);padding:.2rem .4rem;border-left:2px solid rgba(255,255,255,.08);margin-top:.25rem;line-height:1.5;">' + justif + '</div>';
-    h += '</div>';
-  });
-  h += '</div>';
-
-  // Pane 1: puntajes
-  h += '<div class="teosq-pane" id="admpp1_'+uid+'" style="padding:1rem 0;">';
-  h += '<div style="display:flex;gap:.75rem;flex-wrap:wrap;">';
+  // ── Puntajes (siempre visibles arriba) ──
+  h += '<div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem;">';
   function admSc(label, val, color) {
     var lvl = val === null ? '—' : val < 4 ? 'Bajo' : val < 7 ? 'Medio' : 'Alto';
     var clr = val === null ? 'var(--dim)' : color;
@@ -3055,20 +3066,37 @@ function renderPMTAdminView(ej, cid) {
   h += admSc('Cap. de volumen', cap2, '#F59E0B');
   h += admSc('Global Mindset', global, 'var(--green)');
   h += '</div>';
-  h += '</div>';
+
+  // ── Ítems por sección ──
+  var secDefs = [
+    { title: '1) Tomar buenas decisiones',      items: PMT_ITEMS.sec1  },
+    { title: '2) Disponibilidad de recursos',   items: PMT_ITEMS.sec2a },
+    { title: '3) Administrarlos eficazmente',   items: PMT_ITEMS.sec2b }
+  ];
+  secDefs.forEach(function(sec) {
+    h += '<div class="pmt-section">';
+    h += '<div class="pmt-sec-header"><span class="pmt-sec-title">' + sec.title + '</span></div>';
+    sec.items.forEach(function(it) {
+      var nota   = parseFloat(data[it.fid + '_n']) || null;
+      var justif = data[it.fid + '_j'] || '';
+      var color  = nota === null ? 'var(--dim)' : nota < 4 ? '#60A5FA' : nota < 7 ? '#FCD34D' : '#4ADE80';
+      var pct    = nota !== null ? nota * 10 : 0;
+      h += '<div class="pmt-item">';
+      h += '<div class="pmt-item-top">';
+      h += '<span class="pmt-item-label">' + it.label + '</span>';
+      h += '<div class="pmt-item-right">';
+      h += '<div class="pmt-ibar-wrap"><div class="pmt-ibar"><div class="pmt-ibar-fill" style="width:'+pct+'%;background:'+color+'"></div></div></div>';
+      h += '<span class="pmt-item-score" style="color:'+color+';">' + (nota !== null ? nota : '—') + '</span>';
+      h += '</div></div>';
+      if (justif) h += '<div style="font-size:.74rem;color:var(--muted);padding:.3rem .5rem;border-left:2px solid rgba(255,255,255,.1);margin-top:.3rem;line-height:1.5;">' + justif + '</div>';
+      h += '</div>';
+    });
+    h += '</div>';
+  });
 
   h += '</div>';
   var el = document.getElementById(cid);
   if (el) el.innerHTML = h;
-}
-
-function admPmtTab(uid, idx) {
-  [0,1].forEach(function(i){
-    var t = document.getElementById('admpt'+i+'_'+uid);
-    var p = document.getElementById('admpp'+i+'_'+uid);
-    if(t) t.classList.toggle('on', i===idx);
-    if(p) p.classList.toggle('on', i===idx);
-  });
 }
 
 
