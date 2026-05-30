@@ -331,11 +331,11 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .cl-examples{display:flex;flex-direction:column;gap:.25rem;margin-bottom:1rem;}
 .cl-ex-item{display:flex;align-items:center;gap:.6rem;padding:.35rem .65rem;border-radius:4px;cursor:pointer;transition:background .15s;user-select:none;}
 .cl-ex-item:hover{background:rgba(255,255,255,.04);}
-.cl-ex-item.checked{opacity:.65;}
+.cl-ex-item.checked{background:rgba(34,197,94,.07);}
 .cl-ex-item input[type="checkbox"]{display:none;}
 .cl-ex-check{font-size:1rem;flex-shrink:0;width:18px;transition:all .15s;}
-.cl-ex-text{font-size:.82rem;color:var(--text);transition:all .15s;}
-.cl-ex-item.checked .cl-ex-text{text-decoration:line-through;color:var(--muted);}
+.cl-ex-text{font-size:.82rem;color:var(--text);}
+.cl-ex-item.checked .cl-ex-text{color:var(--text);}
 .cl-custom-label{font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;padding-top:.85rem;border-top:1px solid var(--border);}
 .cl-custom-items{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.75rem;}
 .cl-item-row{display:flex;align-items:center;gap:.6rem;}
@@ -2287,13 +2287,30 @@ function buildExPDF(ej){
   }else if(isCl){
     var clData={};
     (resps||[]).forEach(function(r){if(r.fid)clData[r.fid]=r.respuesta||'';});
-    var CL_SECS=['amb','obj','tar'];
-    var CL_TITLES={amb:'1. El Ambiente',obj:'2. Objetos para competir',tar:'3. Tareas a resolver antes de empezar'};
-    var CL_COLORS={amb:'#f5f5f5',obj:'#dbeafe',tar:'#fef9c3'};
-    CL_SECS.forEach(function(sec){
+    var CL_SECS_PDF=[
+      {id:'amb',title:'1. El Ambiente',color:'#f5f5f5',
+       examples:['Silencio o auriculares puestos','Buena iluminación','Temperatura agradable','Espacio ordenado y sin distracciones','Silla cómoda']},
+      {id:'obj',title:'2. Objetos para competir',color:'#dbeafe',
+       examples:['Agua / snacks','HUD y monitores configurados','Mouse cargado','Papel y lápiz / block de notas','Temporizador para breaks']},
+      {id:'tar',title:'3. Tareas a resolver antes de empezar',color:'#fef9c3',
+       examples:['Haber comido','Ir al baño','Apagar notificaciones','Resolver pendientes / trámites','Definir grilla y política de reentries']}
+    ];
+    CL_SECS_PDF.forEach(function(sec){
+      var items=[],exStates=[];
+      try{items=JSON.parse(clData['cl_'+sec.id]||'[]');}catch(e){}
+      try{exStates=JSON.parse(clData['cl_ex_'+sec.id]||'[]');}catch(e){}
+      var checkedEx=sec.examples.filter(function(ex,i){return exStates[i];});
+      var hasAny=checkedEx.length>0||items.some(function(it){return it.text&&it.text.trim();});
+      if(!hasAny)return;
       h+='<div style="margin-bottom:10px;border:1px solid #e8e8e8;border-radius:4px;overflow:hidden;">';
-      h+='<div style="background:'+CL_COLORS[sec]+';padding:6px 10px;font-size:11px;font-weight:700;border-bottom:1px solid #ddd;">'+CL_TITLES[sec]+'</div>';
-      try{var items=JSON.parse(clData['cl_'+sec]||'[]');items.forEach(function(it){if(it.text&&it.text.trim())h+='<div style="padding:4px 10px;font-size:10px;border-bottom:1px solid #f5f5f5;">'+(it.checked?'☑':'☐')+' '+it.text+'</div>';});}catch(e){}
+      h+='<div style="background:'+sec.color+';padding:6px 10px;font-size:11px;font-weight:700;border-bottom:1px solid #ddd;">'+sec.title+'</div>';
+      checkedEx.forEach(function(ex){
+        h+='<div style="padding:5px 10px;font-size:10px;border-bottom:1px solid #f5f5f5;display:flex;gap:6px;align-items:center;">☑ <span>'+ex+'</span><span style="font-size:8px;color:#999;margin-left:auto;">ejemplo</span></div>';
+      });
+      items.forEach(function(it){
+        if(it.text&&it.text.trim())
+          h+='<div style="padding:5px 10px;font-size:10px;border-bottom:1px solid #f5f5f5;">'+(it.checked?'☑':'☐')+' '+it.text+'</div>';
+      });
       h+='</div>';
     });
     var q4=clData['cl_q4']||'';
@@ -3848,7 +3865,7 @@ function renderChecklistExercise(lid) {
     h += '</div>';
 
     // Examples
-    h += '<div class="cl-examples-label">Ejemplos — tachá o usá los que te sirvan:</div>';
+    h += '<div class="cl-examples-label">Ejemplos — seleccioná los que te sirvan y agregá todos los que necesites:</div>';
     h += '<div class="cl-examples" id="cl-ex-'+sec.id+'">';
     sec.examples.forEach(function(ex, i) {
       var checked = savedEx[i] === true || savedEx[i] === 'true';
@@ -3990,7 +4007,7 @@ function renderChecklistAdminView(ej, cid) {
         if (!item.text) return;
         h += '<div style="padding:.45rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:.5rem;font-size:.8rem;">';
         h += '<span style="color:'+(item.checked?'var(--green)':'var(--dim)')+';font-size:.9rem;">'+(item.checked?'☑':'☐')+'</span>';
-        h += '<span style="'+(item.checked?'text-decoration:line-through;color:var(--muted);':'')+'">'+item.text+'</span>';
+        h += '<span style="'+(item.checked?'font-weight:600;':'')+'">'+item.text+'</span>';
         h += '</div>';
       });
     }
