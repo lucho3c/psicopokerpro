@@ -551,6 +551,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 /* ATTACHMENTS */
 // Links use their own dedicated storage key — completely separate from exercise drafts
 function getStoredLinks(lid){
+  if(!S||!S.user)return [];
   try{return JSON.parse(localStorage.getItem('pp_lnk_'+S.user+'_'+lid)||'[]');}catch(e){return [];}
 }
 function saveStoredLinks(lid,links){
@@ -610,8 +611,16 @@ function injectAttachmentSection(lid){
   if(afl)at.files.forEach(function(item,i){afl.innerHTML+=renderFileItem(lid,item,i);});
 }
 function renderLinkItem(lid,item,i){
-  var disp=item.url.length>55?item.url.substring(0,52)+'...':item.url;
-  return '<div class="attach-item" id="al-item-'+lid+'-'+i+'"><span class="attach-item-icon">&#128279;</span><div class="attach-item-body"><div class="attach-item-main"><a href="'+item.url+'" target="_blank" rel="noopener">'+disp+'</a></div>'+(item.desc?'<div class="attach-item-desc">'+item.desc+'</div>':'')+'</div><button class="attach-remove" onclick="attachRemoveLink(\''+lid+'\','+i+')" title="Eliminar">&#10005;</button></div>';
+  var url=item.url;if(!/^https?:\/\//i.test(url))url='https://'+url;
+  var disp=item.url.length>60?item.url.substring(0,57)+'...':item.url;
+  return '<div class="attach-item" id="al-item-'+lid+'-'+i+'">'+
+    '<span class="attach-item-icon">&#128279;</span>'+
+    '<div class="attach-item-body">'+
+    '<div class="attach-item-main"><a href="'+url+'" target="_blank" rel="noopener noreferrer" style="color:#93C5FD;text-decoration:underline;">'+disp+'</a></div>'+
+    (item.desc?'<div class="attach-item-desc">'+item.desc+'</div>':'')+
+    '</div>'+
+    '<button class="attach-remove" onclick="attachRemoveLink(\''+lid+'\','+i+')" title="Eliminar">&#10005;</button>'+
+    '</div>';
 }
 function renderFileItem(lid,item,i){
   var sz=item.size>1048576?(item.size/1048576).toFixed(1)+' MB':Math.round(item.size/1024)+' KB';
@@ -620,21 +629,34 @@ function renderFileItem(lid,item,i){
 function attachSaveLink(lid){
   var urlEl=document.getElementById('al-url-'+lid);
   var descEl=document.getElementById('al-desc-'+lid);
-  if(!urlEl)return;
-  var url=urlEl.value.trim();if(!url)return;
+  if(!urlEl){console.warn('attachSaveLink: no input found for lid='+lid);return;}
+  var url=(urlEl.value||'').trim();
+  if(!url){showToast('Escribí un link primero');return;}
   if(!/^https?:\/\//i.test(url))url='https://'+url;
-  var desc=descEl?descEl.value.trim():'';
-  var at=getAttachments(lid);at.links.push({url:url,desc:desc});
-  saveAttachments(lid,at.links,at.files);
+  var desc=descEl?(descEl.value||'').trim():'';
+  // Save directly to dedicated localStorage key (no draft dependency)
+  var key='pp_lnk_'+S.user+'_'+lid;
+  var links=[];
+  try{links=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
+  links.push({url:url,desc:desc});
+  localStorage.setItem(key,JSON.stringify(links));
+  // Sync to Firebase
+  if(typeof DB!=='undefined'&&DB)DB.ref('psicopoker/links/'+S.user+'/'+lid).set(links).catch(function(){});
+  // Render in UI
   var al=document.getElementById('al-list-'+lid);
-  if(al)al.innerHTML+=renderLinkItem(lid,{url:url,desc:desc},at.links.length-1);
+  if(al)al.innerHTML+=renderLinkItem(lid,{url:url,desc:desc},links.length-1);
   urlEl.value='';if(descEl)descEl.value='';
+  showToast('🔗 Link guardado: '+url.substring(0,40)+(url.length>40?'...':''));
   updateSaveStatus('Link guardado','#22C55E');
 }
 function attachRemoveLink(lid,idx){
-  var at=getAttachments(lid);at.links.splice(idx,1);saveAttachments(lid,at.links,at.files);
+  var key='pp_lnk_'+S.user+'_'+lid;
+  var links=[];try{links=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
+  links.splice(idx,1);
+  localStorage.setItem(key,JSON.stringify(links));
+  if(typeof DB!=='undefined'&&DB)DB.ref('psicopoker/links/'+S.user+'/'+lid).set(links).catch(function(){});
   var al=document.getElementById('al-list-'+lid);
-  if(al){al.innerHTML='';at.links.forEach(function(item,i){al.innerHTML+=renderLinkItem(lid,item,i);});}
+  if(al){al.innerHTML='';links.forEach(function(item,i){al.innerHTML+=renderLinkItem(lid,item,i);});}
 }
 function attachFilePicked(lid,input){
   var files=Array.from(input.files);if(!files.length)return;
