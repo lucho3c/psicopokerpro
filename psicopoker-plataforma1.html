@@ -1166,13 +1166,11 @@ var EX_DEFS = {
     ]}
   ]},
   'u3l3':{ type:'form', unit:'Unidad 3', name:'Dia ideal de tu vida en 5 anos', sections:[
-    { title:'Tu dia ideal perfecto', questions:[
-      { fid:'u3l3_1', label:'Al despertar: que ves, quien esta contigo, donde estas, que tiempo hace?' },
-      { fid:'u3l3_2', label:'Como es tu manana? Actividades, estado de animo, con quien?' },
-      { fid:'u3l3_3', label:'Como es tu trabajo? Con quien, que estas creando, para quien, que obtienen?' },
-      { fid:'u3l3_4', label:'Como termina tu dia? Actividades, cena, conversaciones, relax' },
-      { fid:'u3l3_5', label:'Describe TODO lo que tus ojos veran y lo que tu cuerpo sentira. Dejate llevar.' }
-    ]}
+    { title:'¿Cómo sería un día ideal para vos una vez que te conviertas en esa persona?',
+      desc:'¿Qué ves cuando te despiertas, quién está contigo, qué estás desayunando? ¿Dónde estás? ¿Apartamento, casa, habitación de hotel? ¿Qué tiempo hace? ¿Estás cerca del océano, en la ciudad, rodeado de montañas? Recuerda, es tu día perfecto, ¡todo es posible! ¿Qué es lo siguiente? ¿Estás de vacaciones? ¿Vives aquí? ¿Vas a pie al trabajo? ¿Vas a salir a la naturaleza? ¿Tienes una oficina? ¿Estás pasando el rato en un estudio, una galería o simplemente haciendo cosas desde tu portátil? ¿Cómo es tu trabajo? ¿Con quién trabajas? ¿En equipo o solo? ¿Cómo trabajas? ¿Cómo es tu estado de ánimo? ¿Qué estás creando? ¿Para quién lo haces? ¿Qué obtienen estas personas (y qué obtienes tú) de esto? ¿Qué es lo siguiente? ¿Vas a ir a comer? ¿Al gimnasio? ¿Estás haciendo Yoga? ¿Dormir la siesta? ¿Juegos de video? ¿Tienes mucho tiempo para ti mismo? ¿Para la familia, la pareja, los amigos, los niños? ¿Cómo termina tu día? ¿Deporte? ¿Películas? ¿Alguna actividad? ¿Cenas en un restaurante o te cocinas a ti mismo? ¿Cómo es tu cocina? ¿Qué tipo de comida estás comiendo? ¿Qué es lo siguiente? ¿Tienes conversaciones interesantes con tu pareja, amigos? ¿Sales a bailar, te relajas afuera mirando las estrellas? Describe TODO lo que tus ojos verían y lo que tu cuerpo sentiría en tu día ideal.\n\nTené en cuenta que si al final de la descripción, no llorás... ¡Hay algo que está faltando!',
+      questions:[
+        { fid:'u3l3_1', label:'Tu descripción (opcional)' }
+      ]}
   ]},
   'u4l2':{ type:'form', unit:'Unidad 4', name:'Diagnostico actual de Rutina', sections:[
     { title:'Antes de la sesion', questions:[
@@ -1442,10 +1440,15 @@ function renderFormExercise(lid, def) {
     h += '<div class="ex-sec" id="' + secId + '">';
     h += '<div class="ex-sec-hdr" onclick="toggleExSec(\'' + secId + '\')">';
     h += '<div><p class="ex-sec-num">Seccion ' + (si+1) + ' de ' + def.sections.length + '</p>';
-    h += '<p class="ex-sec-title">' + sec.title + '</p></div>';
+    h += '<p class="ex-sec-title" style="' + (sec.desc ? 'font-size:1rem;font-weight:800;line-height:1.4;' : '') + '">' + sec.title + '</p></div>';
     h += '<div class="ex-sec-right"><div class="ex-sec-done" id="done-' + secId + '">&#10003;</div>';
     h += '<span class="ex-chevron">&#9660;</span></div></div>';
     h += '<div class="ex-sec-body">';
+    if (sec.desc) {
+      h += '<div style="background:rgba(232,49,42,.04);border-left:3px solid rgba(232,49,42,.3);padding:.85rem 1.1rem;margin-bottom:1.1rem;border-radius:0 4px 4px 0;">';
+      h += '<p style="font-size:.82rem;color:var(--muted);line-height:1.8;white-space:pre-line;">' + sec.desc + '</p>';
+      h += '</div>';
+    }
     sec.questions.forEach(function(q, qi) {
       var saved = draft && draft[q.fid] ? draft[q.fid] : '';
       var isReflex = q.fid.endsWith('rl');
