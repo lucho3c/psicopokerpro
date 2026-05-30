@@ -3241,19 +3241,8 @@ function renderIPEDExercise(lid){
   h+='<div style="margin-top:.5rem;font-size:.78rem;font-style:italic;color:var(--muted);">Respondé de la manera más honesta posible</div>';
   h+='</div>';
 
-  // Tabs
-  h+='<div class="teosq-tabs">';
-  h+='<div class="teosq-tab on" id="iped-tab0" onclick="ipedTab(0)">1. Cuestionario</div>';
-  h+='<div class="teosq-tab" id="iped-tab1" onclick="ipedTab(1)">2. Resultados</div>';
-  h+='<div class="teosq-tab" id="iped-tab2" onclick="ipedTab(2)">3. Interpretación</div>';
-  h+='</div>';
-
   // ── PANE 0: cuestionario ──
-  h+='<div class="teosq-pane on" id="iped-pane0">';
-  h+='<div class="teosq-prog" style="margin:.85rem 1.25rem .75rem;">';
-  h+='<div class="teosq-prog-bar"><div class="teosq-prog-fill" id="iped-prog-fill" style="width:'+(answered/42*100)+'%"></div></div>';
-  h+='<div class="teosq-prog-lbl"><span id="iped-prog-n">'+answered+'</span> / 42 respondidas</div>';
-  h+='</div>';
+  h+='<div id="iped-pane0" style="padding:0 0 .5rem;">';
   h+='<div class="tq-table-wrap"><table class="tq-table"><thead><tr>';
   h+='<th style="width:28px;">#</th><th style="text-align:left;">Ítem</th>';
   LABELS.forEach(function(l){h+='<th>'+l+'</th>';});
@@ -3277,7 +3266,7 @@ function renderIPEDExercise(lid){
   h+='</div></div>';
 
   // ── PANE 1: resultados ──
-  h+='<div class="teosq-pane" id="iped-pane1" style="padding:1.25rem;">';
+  h+='<div id="iped-pane1" style="padding:1.25rem;">';
   h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.25rem;">';
   h+='<div style="background:var(--bg3);padding:.65rem 1rem;font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">PUNTAJES POR VARIABLE (máximo 30)</div>';
   h+='<table style="width:100%;border-collapse:collapse;"><thead><tr>';
@@ -3307,7 +3296,7 @@ function renderIPEDExercise(lid){
   h+='</div></div>';
 
   // ── PANE 2: interpretación ──
-  h+='<div class="teosq-pane" id="iped-pane2" style="padding:1.25rem;">';
+  h+='<div id="iped-pane2" style="padding:1.25rem;">';
   h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.25rem;">';
   h+='<div style="background:var(--bg3);padding:.65rem 1rem;font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">RANGOS — Bajo (7–20) · Bueno (21–26) · Excelente (27–30)</div>';
   IPED_SUBSCALES.forEach(function(sub,i){
@@ -3353,8 +3342,6 @@ function ipedSelect(n,val){
   var cel=document.getElementById('iped-cell'+n+'_'+val);if(cel)cel.className='tq-cell-sel';
   var row=document.getElementById('iped-row'+n);if(row)row.className='tq-answered';
   var answered=Object.keys(ipedAns).length;
-  var fill=document.getElementById('iped-prog-fill');if(fill)fill.style.width=(answered/42*100)+'%';
-  var num=document.getElementById('iped-prog-n');if(num)num.textContent=answered;
   var btn=document.getElementById('iped-send-btn');if(btn)btn.disabled=answered<42;
   var note=document.getElementById('iped-send-note');
   if(note){note.textContent=answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Mauro';note.style.color=answered>=42?'var(--green)':'';}
