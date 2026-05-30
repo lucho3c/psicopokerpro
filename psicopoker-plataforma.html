@@ -321,6 +321,47 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .gps-input{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.78rem;padding:.45rem .6rem;border-radius:3px;outline:none;transition:border-color .2s;text-align:center;}
 .gps-input:focus{border-color:var(--red);}
 .gps-input::placeholder{color:var(--dim);font-size:.7rem;}
+/* Checklist */
+.cl-section{padding:1.25rem 1.5rem;margin-bottom:1rem;border-radius:0;transition:background .2s;}
+.cl-sec-hdr{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.85rem;}
+.cl-sec-icon{font-size:1.3rem;flex-shrink:0;margin-top:.05rem;}
+.cl-sec-title{font-size:.95rem;font-weight:800;margin-bottom:.2rem;line-height:1.3;}
+.cl-sec-desc{font-size:.78rem;color:var(--muted);line-height:1.55;}
+.cl-examples-label{font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:.5rem;}
+.cl-examples{display:flex;flex-direction:column;gap:.25rem;margin-bottom:1rem;}
+.cl-ex-item{display:flex;align-items:center;gap:.6rem;padding:.35rem .65rem;border-radius:4px;cursor:pointer;transition:background .15s;user-select:none;}
+.cl-ex-item:hover{background:rgba(255,255,255,.04);}
+.cl-ex-item.checked{background:rgba(34,197,94,.07);}
+.cl-ex-text{font-size:.82rem;color:var(--text);}
+.cl-ex-item.checked .cl-ex-text{color:var(--text);}
+.cl-custom-label{font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;padding-top:.85rem;border-top:1px solid var(--border);}
+.cl-custom-items{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.75rem;}
+.cl-item-row{display:flex;align-items:center;gap:.6rem;}
+.cl-cb{width:16px;height:16px;accent-color:var(--red);cursor:pointer;flex-shrink:0;}
+.cl-txt{flex:1;background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;padding:.3rem .1rem;outline:none;transition:border-color .2s;}
+.cl-txt:focus{border-bottom-color:var(--red);}
+.cl-txt::placeholder{color:var(--dim);}
+.cl-remove{background:none;border:none;color:var(--dim);font-size:1rem;cursor:pointer;padding:0 .2rem;line-height:1;flex-shrink:0;transition:color .15s;}
+.cl-remove:hover{color:var(--red);}
+.cl-add-btn{background:none;border:1px dashed;font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:700;padding:.3rem .85rem;border-radius:3px;cursor:pointer;opacity:.75;transition:opacity .2s;}
+.cl-add-btn:hover{opacity:1;}
+.cl-q4-ta{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;padding:.65rem .85rem;border-radius:4px;resize:vertical;min-height:80px;outline:none;transition:border-color .2s;line-height:1.65;margin-top:.5rem;}
+.cl-q4-ta:focus{border-color:var(--red);}
+.cl-q4-ta::placeholder{color:var(--dim);}
+/* Equipamiento */
+.eq-table{width:100%;border-collapse:collapse;min-width:480px;}
+.eq-th{padding:.65rem 1rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--bg3);border-bottom:2px solid var(--border);text-align:left;}
+.eq-th-num{width:42px;text-align:center;border-right:1px solid var(--border);}
+.eq-th-obj{width:38%;border-right:1px solid var(--border);}
+.eq-th-func{}
+.eq-row{border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;transition:background .15s;}
+.eq-row:hover{background:rgba(255,255,255,.03)!important;}
+.eq-num{padding:.5rem .6rem;text-align:center;font-size:.72rem;font-weight:800;color:var(--dim);border-right:1px solid var(--border);vertical-align:middle;width:42px;}
+.eq-cell{padding:.35rem .5rem;border-right:1px solid rgba(255,255,255,.04);}
+.eq-cell:last-child{border-right:none;}
+.eq-ta{width:100%;background:transparent;border:none;border-bottom:1px solid transparent;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;padding:.3rem .4rem;resize:none;min-height:36px;outline:none;line-height:1.55;transition:border-color .2s;}
+.eq-ta:focus{border-bottom-color:var(--red);background:rgba(232,49,42,.03);}
+.eq-ta::placeholder{color:var(--dim);font-size:.75rem;}
 .attach-title{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;}
 .attach-group{margin-bottom:1rem;}
 .attach-group-label{font-size:.65rem;font-weight:700;color:var(--muted);margin-bottom:.45rem;}
@@ -791,7 +832,7 @@ var C = [
       { id:'u4l1', title:'Introduccion a la Unidad 4', driveId:'1eP5aH8uma_TKtXQFdEBHGrHI_xNL2qaw' },
       { id:'u4l2', title:'Ejercicio 1 - Diagnostico actual de Rutina', driveId:'1aH-P66U8JMvKmPVncZTwnx59XSkcUShO', ex:{ type:'form', unit:'Unidad 4', name:'Diagnostico actual de Rutina' } },
       { id:'u4l3', title:'Explicacion Set and Setting', driveId:'1Ht5hktVXVED6jA01l-FCMjVlbvr-xNfE' },
-      { id:'u4l4', title:'Ejercicio 2 - Disena tu Checklist pre-sesion', driveId:'1zqUW-dbpmTEY8ODj6Hc4_fyfLEvRyW9Y', ex:{ type:'form', unit:'Unidad 4', name:'Checklist pre-sesion' } },
+      { id:'u4l4', title:'Ejercicio 2 - Disena tu Checklist pre-sesion', driveId:'1zqUW-dbpmTEY8ODj6Hc4_fyfLEvRyW9Y', ex:{ type:'checklist', unit:'Unidad 4', name:'Checklist pre-sesion' } },
       { id:'u4l5', title:'Ejercicio 3 - Disponibilidad Emocional', driveId:'1At-1tyZ0_mj5NiUdoY72B6MpW7ASfoth' },
       { id:'u4l6', title:'Explicacion de lo Cognitivo/Conductual', driveId:'1qYvqHwnvWuglfZemkmbVDS_mKWDJzAOQ' },
       { id:'u4l7', title:'Ejercicio 4 - Disena tu Rutina', driveId:'1OA8pe-_JX6tKJ1gzgBF4Hr07IK4JsmoC', ex:{ type:'form', unit:'Unidad 4', name:'Disena tu Rutina de Sesion' } },
@@ -799,8 +840,8 @@ var C = [
       { id:'u4l9', title:'Cuarta sesion 1 a 1', type:'session' }
     ],
     extra:[
-      { id:'u4e1', title:'Equipamiento', ex:{ type:'form', unit:'Unidad 4', name:'Equipamiento Indispensable' } },
-      { id:'u4e2', title:'Descansos', ex:{ type:'form', unit:'Unidad 4', name:'Gestion de Descansos' } }
+      { id:'u4e1', title:'Equipamiento', noVideo:true, ex:{ type:'equip', unit:'Unidad 4', name:'Equipamiento Indispensable' } },
+      { id:'u4e2', title:'Descansos', noVideo:true, ex:{ type:'form', unit:'Unidad 4', name:'Gestion de Descansos' } }
     ]
   },
   { id:'u5', num:5, badge:'Unidad 5', title:'Proceso: Confianza y la Ansiedad',
@@ -1009,20 +1050,7 @@ var EX_DEFS = {
       { fid:'u3l6_obs', label:'Observaciones de la semana' }
     ]
   },
-  'u4e1':{ type:'form', unit:'Unidad 4', name:'Equipamiento Indispensable', sections:[
-    { title:'Mi equipamiento para competir al maximo', questions:[
-      { fid:'u4e1_1', label:'Item 1: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_2', label:'Item 2: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_3', label:'Item 3: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_4', label:'Item 4: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_5', label:'Item 5: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_6', label:'Item 6: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_7', label:'Item 7: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_8', label:'Item 8: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_9', label:'Item 9: objeto o herramienta y para que lo necesito' },
-      { fid:'u4e1_10', label:'Item 10: objeto o herramienta y para que lo necesito' }
-    ]}
-  ]},
+  'u4e1':{ type:'equip', unit:'Unidad 4', name:'Equipamiento Indispensable' },
   'u4e2':{ type:'form', unit:'Unidad 4', name:'Gestion de Descansos', sections:[
     { title:'Cash / Spins', questions:[
       { fid:'u4e2_c1', label:'Descanso 1: acciones indispensables' },
@@ -1195,14 +1223,7 @@ var EX_DEFS = {
       { fid:'u4l2_12', label:'Que parte esta menos consolidada? Que impacto tendria mejorarla?' }
     ]}
   ]},
-  'u4l4':{ type:'form', unit:'Unidad 4', name:'Checklist pre-sesion', sections:[
-    { title:'Tu checklist personalizado', questions:[
-      { fid:'u4l4_1', label:'EL AMBIENTE: como tiene que estar el espacio donde vas a jugar (silencio, iluminacion, temperatura, orden, etc.)' },
-      { fid:'u4l4_2', label:'OBJETOS: cosas fisicas o digitales que si o si necesitas tener listas (agua, HUD, mouse, papel, temporizador, etc.)' },
-      { fid:'u4l4_3', label:'TAREAS A RESOLVER: cosas que tenes que dejar hechas antes de jugar (comer, notificaciones, pendientes, definir grilla, etc.)' },
-      { fid:'u4l4_4', label:'Que vas a jugar hoy segun tu nivel y tu banca? Stakes, formato y limites.' }
-    ]}
-  ]},
+  'u4l4':{ type:'checklist', unit:'Unidad 4', name:'Checklist pre-sesion' },
   'u4l7':{ type:'form', unit:'Unidad 4', name:'Disena tu Rutina de Sesion', sections:[
     { title:'Antes de la sesion', questions:[
       { fid:'u4l7_1', label:'Las 12 horas antes: que necesitas en orden, que evitas, que te resta energia?' },
@@ -1220,21 +1241,57 @@ var EX_DEFS = {
     ]}
   ]},
   'u5l2':{ type:'form', unit:'Unidad 5', name:'Reconociendo otro proceso', sections:[
-    { title:'El proceso elegido', questions:[
-      { fid:'u5l2_1', label:'Que proceso elegiste? Describilo brevemente.' },
-      { fid:'u5l2_2', label:'Como te sentiste en los primeros intentos? Que tan lejos te parecia el objetivo? Que dudas tenias?' }
+    { title:'Paso 1 — Elegí un proceso que hayas atravesado',
+      desc:'Pensá en algo que aprendiste o lograste con el tiempo. Puede ser:\n✅ Cambio corporal\n✅ Dominar un deporte o una habilidad física\n✅ Armar un negocio\n✅ Estudiar una carrera o capacitarte en algo\n✅ La escolarización\n✅ Superar una etapa difícil de tu vida',
+      questions:[
+        { fid:'u5l2_p1', label:'✍️ Mi proceso elegido:' }
     ]},
-    { title:'Dificultad y quiebre', questions:[
-      { fid:'u5l2_3', label:'Cual fue tu momento de mayor dificultad? Pensaste en abandonar? Que hiciste para seguir?' },
-      { fid:'u5l2_4', label:'Cuando sentiste que finalmente estabas avanzando? Que papel jugo la constancia?' }
+    { title:'Paso 2 — Recordá cómo fue el inicio',
+      desc:'• ¿Cómo te sentiste en los primeros intentos?\n• ¿Qué tan lejos te parecía estar del objetivo?\n• ¿Qué dudas tenías en ese momento?',
+      questions:[
+        { fid:'u5l2_p2', label:'✍️ Mis sensaciones al inicio:' }
     ]},
-    { title:'Aciertos y errores', questions:[
-      { fid:'u5l2_5', label:'Principales aciertos y virtudes que te ayudaron en ese proceso' },
-      { fid:'u5l2_6', label:'Principales errores o debilidades. Como evitarlos en el poker?' }
+    { title:'Paso 3 — Identificá los momentos de dificultad',
+      desc:'Todo proceso tiene altibajos. Pensá en un momento en el que sentiste que no avanzabas o estabas estancado, o te frustraste y pensaste en abandonar.',
+      questions:[
+        { fid:'u5l2_p3a', label:'✍️ Mi momento de dificultad fue cuando:' },
+        { fid:'u5l2_p3b', label:'🔹 ¿Qué hiciste para seguir?' },
+        { fid:'u5l2_p3c', label:'🔹 ¿Cómo saliste de ese momento difícil?' }
     ]},
-    { title:'Aplicando al poker', questions:[
-      { fid:'u5l2_7', label:'Cuales son las similitudes con tu camino en el poker?' },
-      { fid:'u5l2_8', label:'Cada vez que te salgas del proceso por ansiedad, cual va a ser tu manera de volver?' }
+    { title:'Paso 4 — El punto de quiebre y el progreso',
+      desc:'En todo proceso hay un momento en el que las cosas empiezan a hacer "click".\n• ¿En qué momento sentiste que finalmente estabas avanzando?\n• ¿Cómo te diste cuenta de que estabas mejorando?\n• ¿Cómo fue ese cambio en tu mentalidad?',
+      questions:[
+        { fid:'u5l2_p4a', label:'✍️ Me di cuenta de que estaba avanzando cuando:' },
+        { fid:'u5l2_p4b', label:'🔹 ¿Qué papel jugó la constancia en ese progreso?' }
+    ]},
+    { title:'Paso 5 — Aciertos, virtudes y errores',
+      desc:'Analizá tu desempeño en este proceso y extraé aprendizajes clave.',
+      questions:[
+        { fid:'u5l2_ac1', label:'✅ Acierto / cosa que hice bien (1):' },
+        { fid:'u5l2_ac2', label:'✅ Acierto / cosa que hice bien (2):' },
+        { fid:'u5l2_ac3', label:'✅ Acierto / cosa que hice bien (3):' },
+        { fid:'u5l2_vt1', label:'💪 Virtud o fortaleza que me ayudó (1):' },
+        { fid:'u5l2_vt2', label:'💪 Virtud o fortaleza que me ayudó (2):' },
+        { fid:'u5l2_vt3', label:'💪 Virtud o fortaleza que me ayudó (3):' },
+        { fid:'u5l2_er1', label:'❌ Error o cosa que pude haber hecho mejor (1):' },
+        { fid:'u5l2_er2', label:'❌ Error o cosa que pude haber hecho mejor (2):' },
+        { fid:'u5l2_er3', label:'❌ Error o cosa que pude haber hecho mejor (3):' },
+        { fid:'u5l2_db1', label:'❌ Debilidad (vanidad, soberbia, conservadurismo, etc.) (1):' },
+        { fid:'u5l2_db2', label:'❌ Debilidad (2):' },
+        { fid:'u5l2_db3', label:'❌ Debilidad (3):' }
+    ]},
+    { title:'Paso 5 — Conclusiones',
+      questions:[
+        { fid:'u5l2_cc1', label:'🎯 ¿Cómo podrías evitar cometer esos errores y favorecerte de tus virtudes en tu camino en el póker?' },
+        { fid:'u5l2_cc2', label:'🎯 ¿Cómo podrías protegerte de tus debilidades?' }
+    ]},
+    { title:'Paso 6 — Aplicando esto al póker',
+      desc:'Ahora que revisaste un proceso que atravesaste en tu vida, pensá:\n• ¿Cuáles son las similitudes con tu camino en el póker?\n• ¿Qué te enseña esta experiencia sobre confiar en un proceso?\n• ¿Qué recordatorio podrías usar la próxima vez que sientas que estás estancado?',
+      note:'💬 Recordatorio: Ya atravesaste procesos antes y confiaste en ellos, aunque no siempre fueran lineales. Quiero que puedas ser consciente y aprovechemos lo que te sirvió de tu experiencia para saber qué te funcionó y qué no.',
+      questions:[
+        { fid:'u5l2_p6a', label:'✍️ Las similitudes con el póker son:' },
+        { fid:'u5l2_p6b', label:'✍️ Lo que me recuerda confiar en el proceso es:' },
+        { fid:'u5l2_p6c', label:'✍️ Cada vez que me salga del proceso por ansiedad, mi manera de volver va a ser:' }
     ]}
   ]},
   'u5l3':{ type:'form', unit:'Unidad 5', name:'Ampliacion de consciencia - Autoconfianza', sections:[
@@ -1471,7 +1528,13 @@ function renderFormExercise(lid, def) {
     h += '<div class="ex-sec-nav">';
     if (si > 0) h += '<button class="btn-ex-prev" onclick="navExSec(\'' + lid + '\',' + (si-1) + ')">&#8592; Anterior</button>';
     if (si < def.sections.length - 1) h += '<button class="btn-ex-next" onclick="navExSec(\'' + lid + '\',' + (si+1) + ')">Siguiente &#8594;</button>';
-    h += '</div></div></div>';
+    h += '</div>';
+    if (sec.note) {
+      h += '<div style="background:rgba(34,197,94,.06);border-left:3px solid rgba(34,197,94,.35);padding:.85rem 1.1rem;margin-top:1rem;border-radius:0 4px 4px 0;">';
+      h += '<p style="font-size:.8rem;color:var(--muted);line-height:1.75;white-space:pre-line;">' + sec.note + '</p>';
+      h += '</div>';
+    }
+    h += '</div></div>';
   });
 
   h += '<div class="ex-submit-row">';
@@ -1728,7 +1791,7 @@ function renderContent(unit, lid) {
   var body = '';
 
   // VIDEO
-  if (lesson.type !== 'resource' && lesson.type !== 'session') {
+  if (lesson.type !== 'resource' && lesson.type !== 'session' && !lesson.noVideo) {
     if (lesson.driveId) {
       body += '<div class="vwrap"><div class="vembed">';
       body += '<iframe src="https://drive.google.com/file/d/' + lesson.driveId + '/preview" allow="autoplay" allowfullscreen></iframe>';
@@ -1781,6 +1844,16 @@ function renderContent(unit, lid) {
     } else if (exType === 'gps') {
       document.getElementById('mc-body').innerHTML = body;
       renderGPSExercise(lid);
+      document.getElementById('mc').scrollTop = 0;
+      return;
+    } else if (exType === 'checklist') {
+      document.getElementById('mc-body').innerHTML = body;
+      renderChecklistExercise(lid);
+      document.getElementById('mc').scrollTop = 0;
+      return;
+    } else if (exType === 'equip') {
+      document.getElementById('mc-body').innerHTML = body;
+      renderEquipExercise(lid);
       document.getElementById('mc').scrollTop = 0;
       return;
     } else if (exType === 'grid') body += renderGridExercise(lid, def);
@@ -1973,10 +2046,10 @@ function showPatient(usuario){
     var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
     exs.forEach(function(ej,idx){
       var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
-      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);
+      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);
       var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
       h+='<div class="sub-card">';
-      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
+      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
       h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
       h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
       h+='<button class="sub-toggle">'+btnLabel+'</button></div>';
@@ -1986,6 +2059,8 @@ function showPatient(usuario){
       else if(isTeosq)teosqQueue.push({type:'teosq',eid:eid,ej:ej});
       else if(isIped)teosqQueue.push({type:'iped',eid:eid,ej:ej});
       else if(isGps)teosqQueue.push({type:'gps',eid:eid,ej:ej});
+      else if(isCl)teosqQueue.push({type:'checklist',eid:eid,ej:ej});
+      else if(isEquip)teosqQueue.push({type:'equip',eid:eid,ej:ej});
       else if(isGrid)teosqQueue.push({type:'grid',eid:eid,ej:ej});
       else teosqQueue.push({type:'form',eid:eid,ej:ej});
     });
@@ -1998,6 +2073,8 @@ function showPatient(usuario){
     else if(item.type==='teosq')renderTEOSQAdminView(item.ej,item.eid);
     else if(item.type==='iped')renderIPEDAdminView(item.ej,item.eid);
     else if(item.type==='gps')renderGPSAdminView(item.ej,item.eid);
+    else if(item.type==='checklist')renderChecklistAdminView(item.ej,item.eid);
+    else if(item.type==='equip')renderEquipAdminView(item.ej,item.eid);
     else if(item.type==='grid')renderGridAdminView(item.ej,item.eid);
     else renderFormAdminView(item.ej,item.eid);
   });
@@ -2178,7 +2255,7 @@ function pdfLvlLbl(v){if(!v)return'';if(v<=2.9)return'Baja';if(v<=4.2)return'Med
 
 function buildExPDF(ej){
   var resps=ej.respuestas||[];
-  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);
+  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);
   var isGrid=resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
 
@@ -2254,6 +2331,54 @@ function buildExPDF(ej){
       h+='<div style="padding:6px 10px;border-bottom:1px solid #f0f0f0;display:flex;gap:8px;align-items:flex-start;"><div style="flex:1;"><div style="font-size:10px;font-weight:700;color:#1a1a2e;margin-bottom:1px;">'+sub.name+'</div><div style="font-size:9px;color:#555;line-height:1.45;">'+IDESCS[sub.id]+'</div></div><div style="flex-shrink:0;font-size:13px;font-weight:800;color:'+sub.color+';min-width:20px;text-align:right;">'+(sc!==null?sc:'—')+'</div><div style="flex-shrink:0;"><span style="font-size:8px;font-weight:700;background:'+lv.bg+';color:'+lv.color+';border-radius:3px;padding:1px 5px;">'+lv.lbl+'</span></div></div>';
     });
     h+='</div>';
+
+  }else if(isEquip){
+    var eqData={};
+    (resps||[]).forEach(function(r){if(r.fid)eqData[r.fid]=r.respuesta||'';});
+    var eqCount=0;Object.keys(eqData).forEach(function(k){var m=k.match(/^eq_(\d+)_/);if(m)eqCount=Math.max(eqCount,parseInt(m[1]));});
+    if(eqCount>0){
+      h+='<div style="border:1px solid #e8e8e8;border-radius:4px;overflow:hidden;">';
+      h+='<table style="width:100%;border-collapse:collapse;font-size:10px;">';
+      h+='<thead><tr style="background:#f0f0f0;"><th style="padding:6px 8px;border:1px solid #ddd;width:32px;text-align:center;">#</th><th style="padding:6px 8px;border:1px solid #ddd;width:42%;">Objeto</th><th style="padding:6px 8px;border:1px solid #ddd;">Función / Para qué</th></tr></thead><tbody>';
+      for(var i=1;i<=eqCount;i++){
+        var obj=eqData['eq_'+i+'_obj']||'',fn=eqData['eq_'+i+'_func']||'';
+        if(!obj&&!fn)continue;
+        h+='<tr style="'+(i%2===0?'background:#fafafa;':'')+'" ><td style="padding:6px 8px;border:1px solid #e8e8e8;text-align:center;font-weight:700;color:#666;">'+i+'</td><td style="padding:6px 8px;border:1px solid #e8e8e8;white-space:pre-wrap;">'+obj+'</td><td style="padding:6px 8px;border:1px solid #e8e8e8;white-space:pre-wrap;">'+fn+'</td></tr>';
+      }
+      h+='</tbody></table></div>';
+    }
+
+  }else if(isCl){
+    var clData={};
+    (resps||[]).forEach(function(r){if(r.fid)clData[r.fid]=r.respuesta||'';});
+    var CL_SECS_PDF=[
+      {id:'amb',title:'1. El Ambiente',color:'#f5f5f5',
+       examples:['Silencio o auriculares puestos','Buena iluminación','Temperatura agradable','Espacio ordenado y sin distracciones','Silla cómoda']},
+      {id:'obj',title:'2. Objetos para competir',color:'#dbeafe',
+       examples:['Agua / snacks','HUD y monitores configurados','Mouse cargado','Papel y lápiz / block de notas','Temporizador para breaks']},
+      {id:'tar',title:'3. Tareas a resolver antes de empezar',color:'#fef9c3',
+       examples:['Haber comido','Ir al baño','Apagar notificaciones','Resolver pendientes / trámites','Definir grilla y política de reentries']}
+    ];
+    CL_SECS_PDF.forEach(function(sec){
+      var items=[],exStates=[];
+      try{items=JSON.parse(clData['cl_'+sec.id]||'[]');}catch(e){}
+      try{exStates=JSON.parse(clData['cl_ex_'+sec.id]||'[]');}catch(e){}
+      var checkedEx=sec.examples.filter(function(ex,i){return exStates[i];});
+      var hasAny=checkedEx.length>0||items.some(function(it){return it.text&&it.text.trim();});
+      if(!hasAny)return;
+      h+='<div style="margin-bottom:10px;border:1px solid #e8e8e8;border-radius:4px;overflow:hidden;">';
+      h+='<div style="background:'+sec.color+';padding:6px 10px;font-size:11px;font-weight:700;border-bottom:1px solid #ddd;">'+sec.title+'</div>';
+      checkedEx.forEach(function(ex){
+        h+='<div style="padding:5px 10px;font-size:10px;border-bottom:1px solid #f5f5f5;display:flex;gap:6px;align-items:center;">☑ <span>'+ex+'</span></div>';
+      });
+      items.forEach(function(it){
+        if(it.text&&it.text.trim())
+          h+='<div style="padding:5px 10px;font-size:10px;border-bottom:1px solid #f5f5f5;">'+(it.checked?'☑':'☐')+' '+it.text+'</div>';
+      });
+      h+='</div>';
+    });
+    var q4=clData['cl_q4']||'';
+    if(q4)h+='<div class="qa-row"><div class="qa-q">¿Qué vas a jugar?</div><div class="qa-a">'+q4+'</div></div>';
 
   }else if(isGps){
     var GPS_ROWS_PDF=[
@@ -3689,6 +3814,430 @@ function renderGPSAdminView(ej, cid) {
   if(el) el.innerHTML = h;
 }
 
+
+
+
+/* ═══════════════════════════════════════════════
+   CHECKLIST PRE-SESIÓN
+   ═══════════════════════════════════════════════ */
+
+var CL_SECTIONS = [
+  {
+    id: 'amb', icon: '🧱',
+    title: 'El Ambiente',
+    desc: '¿Cómo tiene que estar el espacio donde vas a jugar para ayudarte a concentrarte?',
+    color: 'rgba(255,255,255,.04)', accent: 'rgba(200,200,200,.3)', textColor: 'var(--text)',
+    examples: ['Silencio o auriculares puestos','Buena iluminación','Temperatura agradable','Espacio ordenado y sin distracciones','Silla cómoda']
+  },
+  {
+    id: 'obj', icon: '🎯',
+    title: 'Objetos que necesitás para competir',
+    desc: 'Cosas físicas o digitales que sí o sí necesitás tener listas antes de jugar.',
+    color: 'rgba(59,130,246,.06)', accent: 'rgba(59,130,246,.4)', textColor: '#93C5FD',
+    examples: ['Agua / snacks','HUD y monitores configurados','Mouse cargado','Papel y lápiz / block de notas','Temporizador para breaks']
+  },
+  {
+    id: 'tar', icon: '🧘',
+    title: 'Tareas a resolver antes de empezar',
+    desc: 'Cosas que tenés que dejar hechas o fuera de tu cabeza para jugar bien.',
+    color: 'rgba(252,211,77,.06)', accent: 'rgba(252,211,77,.4)', textColor: '#FCD34D',
+    examples: ['Haber comido','Ir al baño','Apagar notificaciones','Resolver pendientes / trámites','Definir grilla y política de reentries']
+  }
+];
+
+function clGetData(lid) {
+  var draft = loadDraft(lid) || {};
+  var sub = (getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
+  var data = {};
+  if (Object.keys(draft).length) {
+    data = draft;
+  } else if (sub && sub.respuestas) {
+    sub.respuestas.forEach(function(r){ if(r.fid) data[r.fid] = r.respuesta||''; });
+  }
+  return data;
+}
+
+function clParseItems(data, secId) {
+  try { return JSON.parse(data['cl_'+secId] || '[]'); } catch(e) { return []; }
+}
+
+function clSaveDraft(lid) {
+  var data = {};
+  CL_SECTIONS.forEach(function(sec) {
+    var items = [];
+    var container = document.getElementById('cl-custom-'+sec.id);
+    if (container) {
+      container.querySelectorAll('.cl-item-row').forEach(function(row) {
+        var cb = row.querySelector('.cl-cb');
+        var txt = row.querySelector('.cl-txt');
+        if (txt && txt.value.trim()) {
+          items.push({ text: txt.value.trim(), checked: cb ? cb.checked : false });
+        }
+      });
+    }
+    data['cl_'+sec.id] = JSON.stringify(items);
+    // examples
+    var exBox = document.getElementById('cl-ex-'+sec.id);
+    if (exBox) {
+      var exStates = [];
+      exBox.querySelectorAll('.cl-ex-cb').forEach(function(cb) { exStates.push(cb.checked); });
+      data['cl_ex_'+sec.id] = JSON.stringify(exStates);
+    }
+  });
+  var q4 = document.getElementById('cl-q4');
+  if (q4) data['cl_q4'] = q4.value;
+  saveDraft(lid, data);
+  updateSaveStatus('Borrador guardado','rgba(238,239,243,.5)');
+}
+
+function clAddItem(lid, secId) {
+  var container = document.getElementById('cl-custom-'+secId);
+  if (!container) return;
+  var sec = CL_SECTIONS.find(function(s){return s.id===secId;});
+  var row = document.createElement('div');
+  row.className = 'cl-item-row';
+  row.innerHTML = '<input type="checkbox" class="cl-cb" onchange="clSaveDraft(\''+lid+'\')">' +
+    '<input type="text" class="cl-txt" placeholder="Escribí tu ítem..." oninput="clSaveDraft(\''+lid+'\')" style="border-bottom-color:'+sec.accent+';">' +
+    '<button class="cl-remove" onclick="this.parentNode.remove();clSaveDraft(\''+lid+'\')" title="Eliminar">×</button>';
+  container.appendChild(row);
+  row.querySelector('.cl-txt').focus();
+}
+
+function renderChecklistExercise(lid) {
+  var data = clGetData(lid);
+  var alreadyDone = isDone(lid);
+
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  h += '<div class="tq-hdr-box">';
+  h += '<div class="ex-badge">Ejercicio 2 · Unidad 4</div>';
+  h += '<div class="tq-hdr-title">Diseñá tu Checklist Pre-Sesión Personalizado</div>';
+  h += '<div class="tq-hdr-sub" style="margin-top:.4rem;line-height:1.7;">Este ejercicio es simple, pero poderoso. Vas a armar tu propia lista de cosas que necesitás tener en orden para poder competir bien.<br>No importa si es extravagante o "raro" lo que necesitás hacer antes de la sesión. La idea es que te sirva a <em>vos</em>.</div>';
+  h += '</div>';
+
+  CL_SECTIONS.forEach(function(sec) {
+    var savedItems = clParseItems(data, sec.id);
+    var savedEx = [];
+    try { savedEx = JSON.parse(data['cl_ex_'+sec.id] || '[]'); } catch(e) {}
+
+    h += '<div class="cl-section" style="background:'+sec.color+';border-left:3px solid '+sec.accent+';">';
+
+    // Section header
+    h += '<div class="cl-sec-hdr">';
+    h += '<span class="cl-sec-icon">'+sec.icon+'</span>';
+    h += '<div><div class="cl-sec-title" style="color:'+sec.textColor+';">'+sec.title+'</div>';
+    h += '<div class="cl-sec-desc">'+sec.desc+'</div></div>';
+    h += '</div>';
+
+    // Examples
+    h += '<div class="cl-examples-label">Ejemplos — seleccioná los que te sirvan y agregá todos los que necesites:</div>';
+    h += '<div class="cl-examples" id="cl-ex-'+sec.id+'">';
+    sec.examples.forEach(function(ex, i) {
+      var checked = savedEx[i] === true || savedEx[i] === 'true';
+      h += '<label class="cl-ex-item'+(checked?' checked':'')+'">';
+      h += '<input type="checkbox" class="cl-cb cl-ex-cb" '+(checked?'checked':'')+' onchange="this.closest(\'label\').classList.toggle(\'checked\',this.checked);clSaveDraft(\''+lid+'\')">';
+      h += '<span class="cl-ex-text">'+ex+'</span>';
+      h += '</label>';
+    });
+    h += '</div>';
+
+    // Custom items
+    h += '<div class="cl-custom-label">📝 Tu checklist personalizado:</div>';
+    h += '<div class="cl-custom-items" id="cl-custom-'+sec.id+'">';
+    if (savedItems.length === 0) {
+      // 3 blank rows by default
+      for (var i = 0; i < 3; i++) {
+        h += '<div class="cl-item-row">';
+        h += '<input type="checkbox" class="cl-cb" onchange="clSaveDraft(\''+lid+'\')">';
+        h += '<input type="text" class="cl-txt" placeholder="Escribí tu ítem..." oninput="clSaveDraft(\''+lid+'\')" style="border-bottom-color:'+sec.accent+';">';
+        h += '<button class="cl-remove" onclick="this.parentNode.remove();clSaveDraft(\''+lid+'\')" title="Eliminar">×</button>';
+        h += '</div>';
+      }
+    } else {
+      savedItems.forEach(function(item) {
+        h += '<div class="cl-item-row">';
+        h += '<input type="checkbox" class="cl-cb" '+(item.checked?'checked':'')+' onchange="clSaveDraft(\''+lid+'\')">';
+        h += '<input type="text" class="cl-txt" value="'+(item.text||'')+'" placeholder="Escribí tu ítem..." oninput="clSaveDraft(\''+lid+'\')" style="border-bottom-color:'+sec.accent+';">';
+        h += '<button class="cl-remove" onclick="this.parentNode.remove();clSaveDraft(\''+lid+'\')" title="Eliminar">×</button>';
+        h += '</div>';
+      });
+    }
+    h += '</div>';
+    h += '<button class="cl-add-btn" onclick="clAddItem(\''+lid+'\',\''+sec.id+'\')" style="border-color:'+sec.accent+';color:'+sec.textColor+';">+ Agregar ítem</button>';
+    h += '</div>';
+  });
+
+  // Section 4 - text field
+  var q4val = data['cl_q4'] || '';
+  h += '<div class="cl-section" style="background:rgba(34,197,94,.06);border-left:3px solid rgba(34,197,94,.4);">';
+  h += '<div class="cl-sec-hdr">';
+  h += '<span class="cl-sec-icon">📋</span>';
+  h += '<div><div class="cl-sec-title" style="color:#4ADE80;">4. Definí qué vas a jugar según tu nivel y tu banca</div>';
+  h += '<div class="cl-sec-desc">¿Qué vas a jugar hoy y qué no? Stakes, formato y límites.</div></div>';
+  h += '</div>';
+  h += '<textarea id="cl-q4" class="cl-q4-ta" placeholder="Ej: Cash NL25, máximo 4 mesas, no MTTs hoy..." oninput="clSaveDraft(\''+lid+'\')">'+q4val+'</textarea>';
+  h += '</div>';
+
+  // Submit
+  h += '<div class="ex-submit-row">';
+  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="clSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
+  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '</div></div>';
+
+  document.getElementById('mc-body').innerHTML = h;
+}
+
+function clSubmit(lid) {
+  clSaveDraft(lid);
+  var user = USERS[S.user];
+  var answers = [];
+  CL_SECTIONS.forEach(function(sec) {
+    var items = [];
+    var container = document.getElementById('cl-custom-'+sec.id);
+    if (container) {
+      container.querySelectorAll('.cl-item-row').forEach(function(row) {
+        var cb = row.querySelector('.cl-cb');
+        var txt = row.querySelector('.cl-txt');
+        if (txt && txt.value.trim()) items.push({ text: txt.value.trim(), checked: cb ? cb.checked : false });
+      });
+    }
+    var exStates = [];
+    var exBox = document.getElementById('cl-ex-'+sec.id);
+    if (exBox) exBox.querySelectorAll('.cl-ex-cb').forEach(function(cb){ exStates.push(cb.checked); });
+    answers.push({ fid:'cl_'+sec.id, pregunta:sec.title+' — ítems personalizados', respuesta: JSON.stringify(items) });
+    answers.push({ fid:'cl_ex_'+sec.id, pregunta:sec.title+' — ejemplos seleccionados', respuesta: JSON.stringify(exStates) });
+  });
+  var q4 = document.getElementById('cl-q4');
+  if (q4) answers.push({ fid:'cl_q4', pregunta:'¿Qué vas a jugar?', respuesta: q4.value });
+
+  var rec = { ts:Date.now(), fecha:new Date().toLocaleString('es-AR'),
+    jugador:user.name, usuario:S.user,
+    unidad:'Unidad 4', ejercicio:'Checklist pre-sesion', lid:lid, respuestas:answers };
+  var saved = getLocalSubs();
+  var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
+  var isUpdate = idx >= 0;
+  if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+  localStorage.setItem('pp_submissions', JSON.stringify(saved));
+  markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
+  var btn = document.getElementById('btn-ex-'+lid);
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
+}
+
+/* ── CHECKLIST ADMIN VIEW ─────────────────────── */
+function renderChecklistAdminView(ej, cid) {
+  var resps = ej.respuestas || [];
+  var data = {};
+  resps.forEach(function(r){ if(r.fid) data[r.fid] = r.respuesta||''; });
+
+  var h = '<div style="padding:.75rem;">';
+
+  CL_SECTIONS.forEach(function(sec) {
+    var items = [];
+    var exStates = [];
+    try { items = JSON.parse(data['cl_'+sec.id] || '[]'); } catch(e) {}
+    try { exStates = JSON.parse(data['cl_ex_'+sec.id] || '[]'); } catch(e) {}
+
+    var checkedExamples = sec.examples.filter(function(ex, i){ return exStates[i]; });
+    var hasContent = items.length > 0 || checkedExamples.length > 0;
+
+    h += '<div style="margin-bottom:1rem;border:1px solid var(--border);border-radius:5px;overflow:hidden;">';
+    h += '<div style="background:'+sec.color+';border-left:3px solid '+sec.accent+';padding:.65rem 1rem;display:flex;align-items:center;gap:.5rem;">';
+    h += '<span>'+sec.icon+'</span><span style="font-size:.82rem;font-weight:800;color:'+sec.textColor+';">'+sec.title+'</span>';
+    h += '</div>';
+
+    if (!hasContent) {
+      h += '<div style="padding:.65rem 1rem;font-size:.75rem;color:var(--dim);font-style:italic;">Sin ítems completados.</div>';
+    } else {
+      // Checked examples
+      checkedExamples.forEach(function(ex) {
+        h += '<div style="padding:.45rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:.5rem;font-size:.8rem;">';
+        h += '<span style="color:var(--green);font-size:.9rem;">☑</span><span>'+ex+'</span>';
+        h += '</div>';
+      });
+      // Custom items
+      items.forEach(function(item) {
+        if (!item.text) return;
+        h += '<div style="padding:.45rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:.5rem;font-size:.8rem;">';
+        h += '<span style="color:'+(item.checked?'var(--green)':'var(--dim)')+';font-size:.9rem;">'+(item.checked?'☑':'☐')+'</span>';
+        h += '<span style="'+(item.checked?'font-weight:600;':'')+'">'+item.text+'</span>';
+        h += '</div>';
+      });
+    }
+    h += '</div>';
+  });
+
+  // Q4
+  var q4 = data['cl_q4'] || '';
+  if (q4) {
+    h += '<div style="border:1px solid var(--border);border-radius:5px;overflow:hidden;">';
+    h += '<div style="background:rgba(34,197,94,.06);border-left:3px solid rgba(34,197,94,.4);padding:.65rem 1rem;font-size:.82rem;font-weight:800;color:#4ADE80;">📋 ¿Qué vas a jugar?</div>';
+    h += '<div style="padding:.75rem 1rem;font-size:.82rem;line-height:1.65;white-space:pre-wrap;">'+q4+'</div>';
+    h += '</div>';
+  }
+
+  h += '</div>';
+  var el = document.getElementById(cid);
+  if(el) el.innerHTML = h;
+}
+
+
+
+/* ═══════════════════════════════════════════════
+   EQUIPAMIENTO INDISPENSABLE
+   ═══════════════════════════════════════════════ */
+
+function equipGetData(lid) {
+  var draft = loadDraft(lid) || {};
+  var sub = (getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
+  var data = {};
+  if (Object.keys(draft).length) { data = draft; }
+  else if (sub && sub.respuestas) { sub.respuestas.forEach(function(r){ if(r.fid) data[r.fid]=r.respuesta||''; }); }
+  return data;
+}
+
+function equipRowCount(data) {
+  var max = 0;
+  Object.keys(data).forEach(function(k){ var m=k.match(/^eq_(\d+)_/); if(m) max=Math.max(max,parseInt(m[1])); });
+  return max;
+}
+
+function equipSaveDraft(lid) {
+  var data = {};
+  document.querySelectorAll('[data-eq-fid]').forEach(function(el){
+    if(el.value.trim()) data[el.getAttribute('data-eq-fid')] = el.value;
+  });
+  saveDraft(lid, data);
+  updateSaveStatus('Borrador guardado','rgba(238,239,243,.5)');
+}
+
+function equipAddRow(lid) {
+  var tbody = document.getElementById('eq-tbody');
+  if (!tbody) return;
+  var rows = tbody.querySelectorAll('tr');
+  var idx = rows.length + 1;
+  var tr = document.createElement('tr');
+  tr.className = 'eq-row';
+  tr.innerHTML =
+    '<td class="eq-num">'+idx+'</td>'+
+    '<td class="eq-cell"><textarea class="eq-ta" data-eq-fid="eq_'+idx+'_obj" oninput="equipSaveDraft(\''+lid+'\')" placeholder="Objeto o herramienta..."></textarea></td>'+
+    '<td class="eq-cell"><textarea class="eq-ta" data-eq-fid="eq_'+idx+'_func" oninput="equipSaveDraft(\''+lid+'\')" placeholder="¿Para qué lo necesitás?"></textarea></td>';
+  tbody.appendChild(tr);
+  tr.querySelector('textarea').focus();
+}
+
+function renderEquipExercise(lid) {
+  var data = equipGetData(lid);
+  var count = Math.max(equipRowCount(data), 14); // min 14 rows like Excel
+  var alreadyDone = isDone(lid);
+
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  h += '<div class="tq-hdr-box">';
+  h += '<div class="ex-badge">Planificación · Unidad 4</div>';
+  h += '<div class="tq-hdr-title">Equipamiento Indispensable</div>';
+  h += '<div class="tq-hdr-sub" style="margin-top:.3rem;">Listá todo lo que necesitás tener listo para competir al máximo. Objeto por objeto, y para qué sirve cada uno.</div>';
+  h += '</div>';
+
+  h += '<div style="overflow-x:auto;">';
+  h += '<table class="eq-table">';
+  h += '<thead><tr>';
+  h += '<th class="eq-th eq-th-num">#</th>';
+  h += '<th class="eq-th eq-th-obj">Objeto</th>';
+  h += '<th class="eq-th eq-th-func">Función / Para qué</th>';
+  h += '</tr></thead>';
+  h += '<tbody id="eq-tbody">';
+
+  for (var i = 1; i <= count; i++) {
+    var obj  = data['eq_'+i+'_obj']  || '';
+    var func = data['eq_'+i+'_func'] || '';
+    var stripe = i % 2 === 0 ? 'background:rgba(255,255,255,.02);' : '';
+    h += '<tr class="eq-row" style="'+stripe+'">';
+    h += '<td class="eq-num">'+i+'</td>';
+    h += '<td class="eq-cell"><textarea class="eq-ta" data-eq-fid="eq_'+i+'_obj" oninput="equipSaveDraft(\''+lid+'\')" placeholder="Objeto o herramienta...">'+obj+'</textarea></td>';
+    h += '<td class="eq-cell"><textarea class="eq-ta" data-eq-fid="eq_'+i+'_func" oninput="equipSaveDraft(\''+lid+'\')" placeholder="¿Para qué lo necesitás?">'+func+'</textarea></td>';
+    h += '</tr>';
+  }
+
+  h += '</tbody></table></div>';
+
+  h += '<div style="padding:.65rem 1.25rem;border-top:1px solid var(--border);background:var(--bg2);">';
+  h += '<button onclick="equipAddRow(\''+lid+'\')" style="background:none;border:1px dashed var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;padding:.3rem .9rem;border-radius:3px;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor=\'var(--red)\';this.style.color=\'var(--red)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--muted)\'">+ Agregar fila</button>';
+  h += '</div>';
+
+  h += '<div class="ex-submit-row">';
+  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="equipSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
+  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '</div></div>';
+
+  document.getElementById('mc-body').innerHTML = h;
+}
+
+function equipSubmit(lid) {
+  equipSaveDraft(lid);
+  var user = USERS[S.user];
+  var answers = [];
+  document.querySelectorAll('[data-eq-fid]').forEach(function(el){
+    answers.push({ fid:el.getAttribute('data-eq-fid'), pregunta:el.getAttribute('data-eq-fid'), respuesta:el.value });
+  });
+  var rec = { ts:Date.now(), fecha:new Date().toLocaleString('es-AR'),
+    jugador:user.name, usuario:S.user,
+    unidad:'Unidad 4', ejercicio:'Equipamiento Indispensable', lid:lid, respuestas:answers };
+  var saved = getLocalSubs();
+  var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
+  var isUpdate = idx >= 0;
+  if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+  localStorage.setItem('pp_submissions', JSON.stringify(saved));
+  markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
+  var btn = document.getElementById('btn-ex-'+lid);
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
+}
+
+/* ── EQUIP ADMIN VIEW ─────────────────────────── */
+function renderEquipAdminView(ej, cid) {
+  var resps = ej.respuestas || [];
+  var data = {};
+  resps.forEach(function(r){ if(r.fid) data[r.fid]=r.respuesta||''; });
+  var count = 0;
+  Object.keys(data).forEach(function(k){ var m=k.match(/^eq_(\d+)_/); if(m) count=Math.max(count,parseInt(m[1])); });
+
+  var h = '<div style="padding:.75rem;overflow-x:auto;">';
+  if (!count) {
+    h += '<p style="font-size:.78rem;color:var(--dim);font-style:italic;">Sin equipamiento completado.</p>';
+  } else {
+    h += '<table style="width:100%;border-collapse:collapse;min-width:400px;">';
+    h += '<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
+    h += '<th style="padding:.55rem .75rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:36px;">#</th>';
+    h += '<th style="padding:.55rem .85rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);width:42%;">Objeto</th>';
+    h += '<th style="padding:.55rem .85rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;">Función / Para qué</th>';
+    h += '</tr></thead><tbody>';
+    for (var i = 1; i <= count; i++) {
+      var obj = data['eq_'+i+'_obj']||'', fn = data['eq_'+i+'_func']||'';
+      if (!obj && !fn) continue;
+      var stripe = i%2===0?'background:rgba(255,255,255,.02);':'';
+      h += '<tr style="'+stripe+';border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;">';
+      h += '<td style="padding:.6rem .75rem;border-right:1px solid var(--border);text-align:center;font-size:.72rem;font-weight:800;color:var(--dim);">'+i+'</td>';
+      h += '<td style="padding:.6rem .85rem;border-right:1px solid var(--border);font-size:.82rem;white-space:pre-wrap;line-height:1.55;">'+obj+'</td>';
+      h += '<td style="padding:.6rem .85rem;font-size:.82rem;white-space:pre-wrap;line-height:1.55;">'+fn+'</td>';
+      h += '</tr>';
+    }
+    h += '</tbody></table>';
+  }
+  h += '</div>';
+  var el = document.getElementById(cid);
+  if(el) el.innerHTML = h;
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
