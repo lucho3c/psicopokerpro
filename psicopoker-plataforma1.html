@@ -785,40 +785,6 @@ function adminAttachHTML(resps,userId,lid){
   h+='</div>';
   return h;
 }
-  if(!linkR.length&&!fileR.length)return '';
-  var h='<div style="margin-top:.85rem;border-top:2px solid var(--border);padding-top:.85rem;">';
-  if(linkR.length){
-    h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3B82F6;margin-bottom:.5rem;">🔗 Links adjuntos</div>';
-    linkR.forEach(function(r){
-      var desc=r.pregunta.replace(/^Link \d+( — | - )?/,'').replace(/^Link \d+$/,'');
-      var url=r.respuesta;
-      if(!/^https?:\/\//i.test(url))url='https://'+url;
-      h+='<div style="margin:.35rem 0;">';
-      h+='<a href="'+url+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.35rem;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);color:#93C5FD;font-size:.74rem;font-weight:600;padding:.3rem .75rem;border-radius:3px;text-decoration:none;word-break:break-all;">🔗 '+r.respuesta+'</a>';
-      if(desc)h+='<div style="font-size:.7rem;color:var(--muted);margin-top:.15rem;padding-left:.25rem;">'+desc+'</div>';
-      h+='</div>';
-    });
-  }
-  if(fileR.length){
-    if(linkR.length)h+='<div style="margin-top:.6rem;"></div>';
-    h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#F59E0B;margin-bottom:.5rem;">📎 Archivos adjuntos</div>';
-    fileR.forEach(function(r){
-      var idx=r.fid.replace('_file_','');
-      var b64R=all.find(function(x){return x.fid==='_file_b64_'+idx;});
-      var desc=r.pregunta.replace(/^Archivo \d+( — | - )?/,'').replace(/^Archivo \d+$/,'');
-      h+='<div style="margin:.35rem 0;">';
-      if(b64R&&b64R.respuesta){
-        h+='<a href="'+b64R.respuesta+'" download="'+r.respuesta+'" style="display:inline-flex;align-items:center;gap:.35rem;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#FCD34D;font-size:.74rem;font-weight:600;padding:.3rem .75rem;border-radius:3px;text-decoration:none;">📄 '+r.respuesta+' ↓ Descargar</a>';
-      }else{
-        h+='<span style="font-size:.78rem;color:var(--muted);">📄 '+r.respuesta+'</span>';
-      }
-      if(desc)h+='<div style="font-size:.7rem;color:var(--muted);margin-top:.15rem;padding-left:.25rem;">'+desc+'</div>';
-      h+='</div>';
-    });
-  }
-  h+='</div>';
-  return h;
-}
 function pdfAttachHTML(resps){
   var all=resps||[];
   var linkR=all.filter(function(r){return r.fid&&/^_link_\d+$/.test(r.fid)&&r.respuesta;});
@@ -2620,7 +2586,7 @@ function buildExPDF(ej){
 
   }else if(isGrid){
     var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
-    var reflCells=resps.filter(function(r){return r.fid&&!/^g_/.test(r.fid)&&r.fid!=='_startHour'&&r.fid!=='_endHour';});
+    var reflCells=resps.filter(function(r){return r.fid&&!/^g_/.test(r.fid)&&r.fid!=='_startHour'&&r.fid!=='_endHour'&&!/^_link_/.test(r.fid)&&!/^_file_/.test(r.fid);});
     var days=['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
     var sc={};
     gridCells.forEach(function(r){
@@ -2657,10 +2623,10 @@ function buildExPDF(ej){
     });
 
   }else{
-    var hasAny=resps.some(function(r){return r.respuesta&&r.respuesta.trim();});
+    var hasAny=resps.some(function(r){return r.respuesta&&r.respuesta.trim()&&r.fid&&!/^_link_|^_file_/.test(r.fid);});
     if(hasAny){
       resps.forEach(function(r){
-        if(r.respuesta&&r.respuesta.trim()&&r.fid&&!/^teosq_/.test(r.fid)){
+        if(r.respuesta&&r.respuesta.trim()&&r.fid&&!/^teosq_/.test(r.fid)&&!/^_link_/.test(r.fid)&&!/^_file_/.test(r.fid)){
           h+='<div class="qa-row"><div class="qa-q">'+(r.pregunta||'')+'</div><div class="qa-a">'+r.respuesta+'</div></div>';
         }
       });
