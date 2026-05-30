@@ -1016,7 +1016,7 @@ function triggerAutoSave(lessonId) {
   }, 800);
 }
 function collectAndSave(lid) {
-  var data = {};
+  var data = loadDraft(lid)||{};
   document.querySelectorAll('[data-fid]').forEach(function(el) {
     var fid=el.getAttribute('data-fid');data[fid]=el.value;
     var clr=el.getAttribute('data-color');if(clr)data[fid+'_c']=clr;
@@ -1024,7 +1024,7 @@ function collectAndSave(lid) {
   var ss=document.getElementById('grid-start-hr_'+lid);
   var es=document.getElementById('grid-end-hr_'+lid);
   if(ss)data.startHour=ss.value;if(es)data.endHour=es.value;
-  if(Object.keys(data).length>0)saveDraft(lid,data);
+  saveDraft(lid,data);
 }
 function restoreDraft(lessonId) {
   var draft=loadDraft(lessonId);
@@ -2871,7 +2871,7 @@ function tqSelect(n,val){
   var row=document.getElementById('tqrow'+n);
   if(row)row.className='tq-answered';
   tqUpdateProgress();tqUpdateResults();
-  var data={};Object.keys(teosqAns).forEach(function(k){data['teosq_'+k]=teosqAns[k];});
+  var data=loadDraft(teosqLid)||{};Object.keys(teosqAns).forEach(function(k){data['teosq_'+k]=teosqAns[k];});
   saveDraft(teosqLid,data);
   updateSaveStatus('Borrador guardado','#22C55E');
 }
@@ -3193,12 +3193,12 @@ function renderPMTExercise(lid) {
 
 function pmtAutoSave() {
   var all = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
-  var data = {};
+  var data = loadDraft(pmtLid)||{};
   all.forEach(function(it) {
     var ni = document.getElementById('pmt-n-' + it.fid);
     var ji = document.getElementById('pmt-j-' + it.fid);
-    if (ni && ni.value !== '') data[it.fid + '_n'] = ni.value;
-    if (ji && ji.value.trim() !== '') data[it.fid + '_j'] = ji.value;
+    if (ni) data[it.fid + '_n'] = ni.value;
+    if (ji) data[it.fid + '_j'] = ji.value;
   });
   saveDraft(pmtLid, data);
   updateSaveStatus('Borrador guardado', 'rgba(238,239,243,.5)');
@@ -3534,7 +3534,7 @@ function ipedSelect(n,val){
   var btn=document.getElementById('iped-send-btn');if(btn)btn.disabled=answered<42;
   var note=document.getElementById('iped-send-note');
   if(note){note.textContent=answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Mauro';note.style.color=answered>=42?'var(--green)':'';}
-  var data={};IPED_ITEMS.forEach(function(it){if(ipedAns[it.n])data['iped_'+it.n]=ipedAns[it.n];});
+  var data=loadDraft(ipedLid)||{};IPED_ITEMS.forEach(function(it){data['iped_'+it.n]=ipedAns[it.n]||0;});
   saveDraft(ipedLid,data);
   updateSaveStatus('Borrador guardado','rgba(238,239,243,.5)');
   ipedUpdateResults();
@@ -3806,9 +3806,9 @@ function gpsAddRow(lid, routeId) {
 }
 
 function gpsDraft(lid) {
-  var data = {};
+  var data = loadDraft(lid)||{};
   document.querySelectorAll('[data-fid^="gps_"]').forEach(function(el) {
-    if (el.value) data[el.getAttribute('data-fid')] = el.value;
+    data[el.getAttribute('data-fid')] = el.value;
   });
   saveDraft(lid, data);
   updateSaveStatus('Borrador guardado', 'rgba(238,239,243,.5)');
@@ -3947,7 +3947,7 @@ function clParseItems(data, secId) {
 }
 
 function clSaveDraft(lid) {
-  var data = {};
+  var data = loadDraft(lid)||{};
   CL_SECTIONS.forEach(function(sec) {
     var items = [];
     var container = document.getElementById('cl-custom-'+sec.id);
@@ -4195,9 +4195,9 @@ function equipRowCount(data) {
 }
 
 function equipSaveDraft(lid) {
-  var data = {};
+  var data = loadDraft(lid)||{};
   document.querySelectorAll('[data-eq-fid]').forEach(function(el){
-    if(el.value.trim()) data[el.getAttribute('data-eq-fid')] = el.value;
+    data[el.getAttribute('data-eq-fid')] = el.value;
   });
   saveDraft(lid, data);
   updateSaveStatus('Borrador guardado','rgba(238,239,243,.5)');
@@ -4368,9 +4368,9 @@ function conGetData(lid) {
 }
 
 function conSaveDraft(lid) {
-  var data = {};
+  var data = loadDraft(lid)||{};
   document.querySelectorAll('[data-con-fid]').forEach(function(el){
-    if (el.value !== undefined && el.value !== '') data[el.getAttribute('data-con-fid')] = el.value;
+    data[el.getAttribute('data-con-fid')] = el.value;
   });
   // checkboxes
   var sel = [];
