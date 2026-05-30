@@ -1241,21 +1241,57 @@ var EX_DEFS = {
     ]}
   ]},
   'u5l2':{ type:'form', unit:'Unidad 5', name:'Reconociendo otro proceso', sections:[
-    { title:'El proceso elegido', questions:[
-      { fid:'u5l2_1', label:'Que proceso elegiste? Describilo brevemente.' },
-      { fid:'u5l2_2', label:'Como te sentiste en los primeros intentos? Que tan lejos te parecia el objetivo? Que dudas tenias?' }
+    { title:'Paso 1 — Elegí un proceso que hayas atravesado',
+      desc:'Pensá en algo que aprendiste o lograste con el tiempo. Puede ser:\n✅ Cambio corporal\n✅ Dominar un deporte o una habilidad física\n✅ Armar un negocio\n✅ Estudiar una carrera o capacitarte en algo\n✅ La escolarización\n✅ Superar una etapa difícil de tu vida',
+      questions:[
+        { fid:'u5l2_p1', label:'✍️ Mi proceso elegido:' }
     ]},
-    { title:'Dificultad y quiebre', questions:[
-      { fid:'u5l2_3', label:'Cual fue tu momento de mayor dificultad? Pensaste en abandonar? Que hiciste para seguir?' },
-      { fid:'u5l2_4', label:'Cuando sentiste que finalmente estabas avanzando? Que papel jugo la constancia?' }
+    { title:'Paso 2 — Recordá cómo fue el inicio',
+      desc:'• ¿Cómo te sentiste en los primeros intentos?\n• ¿Qué tan lejos te parecía estar del objetivo?\n• ¿Qué dudas tenías en ese momento?',
+      questions:[
+        { fid:'u5l2_p2', label:'✍️ Mis sensaciones al inicio:' }
     ]},
-    { title:'Aciertos y errores', questions:[
-      { fid:'u5l2_5', label:'Principales aciertos y virtudes que te ayudaron en ese proceso' },
-      { fid:'u5l2_6', label:'Principales errores o debilidades. Como evitarlos en el poker?' }
+    { title:'Paso 3 — Identificá los momentos de dificultad',
+      desc:'Todo proceso tiene altibajos. Pensá en un momento en el que sentiste que no avanzabas o estabas estancado, o te frustraste y pensaste en abandonar.',
+      questions:[
+        { fid:'u5l2_p3a', label:'✍️ Mi momento de dificultad fue cuando:' },
+        { fid:'u5l2_p3b', label:'🔹 ¿Qué hiciste para seguir?' },
+        { fid:'u5l2_p3c', label:'🔹 ¿Cómo saliste de ese momento difícil?' }
     ]},
-    { title:'Aplicando al poker', questions:[
-      { fid:'u5l2_7', label:'Cuales son las similitudes con tu camino en el poker?' },
-      { fid:'u5l2_8', label:'Cada vez que te salgas del proceso por ansiedad, cual va a ser tu manera de volver?' }
+    { title:'Paso 4 — El punto de quiebre y el progreso',
+      desc:'En todo proceso hay un momento en el que las cosas empiezan a hacer "click".\n• ¿En qué momento sentiste que finalmente estabas avanzando?\n• ¿Cómo te diste cuenta de que estabas mejorando?\n• ¿Cómo fue ese cambio en tu mentalidad?',
+      questions:[
+        { fid:'u5l2_p4a', label:'✍️ Me di cuenta de que estaba avanzando cuando:' },
+        { fid:'u5l2_p4b', label:'🔹 ¿Qué papel jugó la constancia en ese progreso?' }
+    ]},
+    { title:'Paso 5 — Aciertos, virtudes y errores',
+      desc:'Analizá tu desempeño en este proceso y extraé aprendizajes clave.',
+      questions:[
+        { fid:'u5l2_ac1', label:'✅ Acierto / cosa que hice bien (1):' },
+        { fid:'u5l2_ac2', label:'✅ Acierto / cosa que hice bien (2):' },
+        { fid:'u5l2_ac3', label:'✅ Acierto / cosa que hice bien (3):' },
+        { fid:'u5l2_vt1', label:'💪 Virtud o fortaleza que me ayudó (1):' },
+        { fid:'u5l2_vt2', label:'💪 Virtud o fortaleza que me ayudó (2):' },
+        { fid:'u5l2_vt3', label:'💪 Virtud o fortaleza que me ayudó (3):' },
+        { fid:'u5l2_er1', label:'❌ Error o cosa que pude haber hecho mejor (1):' },
+        { fid:'u5l2_er2', label:'❌ Error o cosa que pude haber hecho mejor (2):' },
+        { fid:'u5l2_er3', label:'❌ Error o cosa que pude haber hecho mejor (3):' },
+        { fid:'u5l2_db1', label:'❌ Debilidad (vanidad, soberbia, conservadurismo, etc.) (1):' },
+        { fid:'u5l2_db2', label:'❌ Debilidad (2):' },
+        { fid:'u5l2_db3', label:'❌ Debilidad (3):' }
+    ]},
+    { title:'Paso 5 — Conclusiones',
+      questions:[
+        { fid:'u5l2_cc1', label:'🎯 ¿Cómo podrías evitar cometer esos errores y favorecerte de tus virtudes en tu camino en el póker?' },
+        { fid:'u5l2_cc2', label:'🎯 ¿Cómo podrías protegerte de tus debilidades?' }
+    ]},
+    { title:'Paso 6 — Aplicando esto al póker',
+      desc:'Ahora que revisaste un proceso que atravesaste en tu vida, pensá:\n• ¿Cuáles son las similitudes con tu camino en el póker?\n• ¿Qué te enseña esta experiencia sobre confiar en un proceso?\n• ¿Qué recordatorio podrías usar la próxima vez que sientas que estás estancado?',
+      note:'💬 Recordatorio: Ya atravesaste procesos antes y confiaste en ellos, aunque no siempre fueran lineales. Quiero que puedas ser consciente y aprovechemos lo que te sirvió de tu experiencia para saber qué te funcionó y qué no.',
+      questions:[
+        { fid:'u5l2_p6a', label:'✍️ Las similitudes con el póker son:' },
+        { fid:'u5l2_p6b', label:'✍️ Lo que me recuerda confiar en el proceso es:' },
+        { fid:'u5l2_p6c', label:'✍️ Cada vez que me salga del proceso por ansiedad, mi manera de volver va a ser:' }
     ]}
   ]},
   'u5l3':{ type:'form', unit:'Unidad 5', name:'Ampliacion de consciencia - Autoconfianza', sections:[
@@ -1492,7 +1528,13 @@ function renderFormExercise(lid, def) {
     h += '<div class="ex-sec-nav">';
     if (si > 0) h += '<button class="btn-ex-prev" onclick="navExSec(\'' + lid + '\',' + (si-1) + ')">&#8592; Anterior</button>';
     if (si < def.sections.length - 1) h += '<button class="btn-ex-next" onclick="navExSec(\'' + lid + '\',' + (si+1) + ')">Siguiente &#8594;</button>';
-    h += '</div></div></div>';
+    h += '</div>';
+    if (sec.note) {
+      h += '<div style="background:rgba(34,197,94,.06);border-left:3px solid rgba(34,197,94,.35);padding:.85rem 1.1rem;margin-top:1rem;border-radius:0 4px 4px 0;">';
+      h += '<p style="font-size:.8rem;color:var(--muted);line-height:1.75;white-space:pre-line;">' + sec.note + '</p>';
+      h += '</div>';
+    }
+    h += '</div></div>';
   });
 
   h += '<div class="ex-submit-row">';
