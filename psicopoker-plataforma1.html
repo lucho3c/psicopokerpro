@@ -313,6 +313,14 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .tq-range-table td{padding:.6rem .7rem;border:1px solid var(--border);vertical-align:top;line-height:1.55;}
 .tq-range-table td:first-child{font-weight:700;white-space:nowrap;background:var(--bg3);}
 .attach-section{border-top:2px solid var(--border);padding:1.1rem 1.25rem;background:var(--bg3);}
+.gps-ta{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.8rem;padding:.5rem .7rem;resize:vertical;min-height:72px;outline:none;transition:border-color .2s;line-height:1.6;}
+.gps-ta:focus{border-color:var(--red);background:rgba(255,255,255,.05);}
+.gps-ta::placeholder{color:var(--dim);}
+.gps-sel{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.75rem;padding:.45rem .6rem;border-radius:3px;outline:none;cursor:pointer;transition:border-color .2s;}
+.gps-sel:focus{border-color:var(--red);}
+.gps-input{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.78rem;padding:.45rem .6rem;border-radius:3px;outline:none;transition:border-color .2s;text-align:center;}
+.gps-input:focus{border-color:var(--red);}
+.gps-input::placeholder{color:var(--dim);font-size:.7rem;}
 .attach-title{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;}
 .attach-group{margin-bottom:1rem;}
 .attach-group-label{font-size:.65rem;font-weight:700;color:var(--muted);margin-bottom:.45rem;}
@@ -771,7 +779,7 @@ var C = [
       { id:'u3l2', title:'Ejercicio 1 - Fantasia guiada', driveId:'1rOWd0v8kcNscStROKb5V9l7Ri6rSvDEb' },
       { id:'u3l3', title:'Ejercicio 2 - Dia ideal de tu vida en 5 anos', driveId:'19emLaGmkZZOzO-BXrjS6s2jEwk49nXda', ex:{ type:'form', unit:'Unidad 3', name:'Dia ideal de tu vida en 5 anos' } },
       { id:'u3l4', title:'Aspectos teoricos de la Motivacion', driveId:'1QmjY5YYbg0aDCmEfs6ar2YWrN8kFM_El' },
-      { id:'u3l5', title:'Ejercicio 3 - GPS', driveId:'', ex:{ type:'form', unit:'Unidad 3', name:'GPS de Objetivos' } },
+      { id:'u3l5', title:'Ejercicio 3 - GPS', driveId:'', ex:{ type:'gps', unit:'Unidad 3', name:'GPS de Objetivos' } },
       { id:'u3l6', title:'Ejercicio 4 - La Rutina Ganadora', driveId:'1COivUMh2sAcPa_jFKlmGO-izPCDcp64l', ex:{ type:'grid', unit:'Unidad 3', name:'Rutina Ganadora' } },
       { id:'u3l7', title:'Tercera sesion 1 a 1', type:'session' }
     ]
@@ -990,14 +998,7 @@ var EX_DEFS = {
 
     'u1l4':{ type:'iped', unit:'Unidad 1', name:'IPED - Inventario Psicológico de Ejecución Deportiva' },
   'u1l5':{ type:'form', unit:'Unidad 1', name:'TEOSQ - Orientacion al Ego y la Tarea', sections:[{ title:'Las 13 afirmaciones', questions:[{ fid:'u1l5_1', type:'scale', label:'1. Yo me siento con mas exito en el poker cuando: ...soy el/la unico/a que puede hacer la jugada o habilidad en cuestion.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_2', type:'scale', label:'2. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad y me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_3', type:'scale', label:'3. Yo me siento con mas exito en el poker cuando: ...yo puedo hacerlo mejor que mis companeros/as.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_4', type:'scale', label:'4. Yo me siento con mas exito en el poker cuando: ...los otros no pueden hacerlo tan bien como yo.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_5', type:'scale', label:'5. Yo me siento con mas exito en el poker cuando: ...aprendo algo que es divertido.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_6', type:'scale', label:'6. Yo me siento con mas exito en el poker cuando: ...otros fallan y yo no.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_7', type:'scale', label:'7. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad esforzandome mucho.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_8', type:'scale', label:'8. Yo me siento con mas exito en el poker cuando: ...trabajo realmente duro.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_9', type:'scale', label:'9. Yo me siento con mas exito en el poker cuando: ...consigo mas resultados que todos.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_10', type:'scale', label:'10. Yo me siento con mas exito en el poker cuando: ...algo que aprendi me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_11', type:'scale', label:'11. Yo me siento con mas exito en el poker cuando: ...soy el/la mejor.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_12', type:'scale', label:'12. Yo me siento con mas exito en el poker cuando: ...noto que una habilidad que aprendi funciona.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_13', type:'scale', label:'13. Yo me siento con mas exito en el poker cuando: ...pongo todo lo que esta de mi parte.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] }]}] },
-  'u3l5':{ type:'form', unit:'Unidad 3', name:'GPS de Objetivos', sections:[
-    { title:'Tu ruta de objetivos', questions:[
-      { fid:'u3l5_1', label:'SUENO VISUALIZADO (5 anos): objetivo especifico y medible, tipo, deadline, punto intermedio' },
-      { fid:'u3l5_2', label:'OBJETIVO LARGO PLAZO (2 anos): objetivo, tipo, deadline, punto intermedio' },
-      { fid:'u3l5_3', label:'OBJETIVO MEDIANO PLAZO (1 ano): objetivo, tipo, deadline, punto intermedio' },
-      { fid:'u3l5_4', label:'OBJETIVO CORTO PLAZO (3 meses — SOLO de Rendimiento, no de Resultado): que podes controlar y medir?' }
-    ]}
-  ]},
+  'u3l5':{ type:'gps', unit:'Unidad 3', name:'GPS de Objetivos' },
   'u3l6':{ type:'grid', unit:'Unidad 3', name:'Rutina Ganadora',
     hours:['7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'],
     days:['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'],
@@ -1777,6 +1778,11 @@ function renderContent(unit, lid) {
       renderIPEDExercise(lid);
       document.getElementById('mc').scrollTop = 0;
       return;
+    } else if (exType === 'gps') {
+      document.getElementById('mc-body').innerHTML = body;
+      renderGPSExercise(lid);
+      document.getElementById('mc').scrollTop = 0;
+      return;
     } else if (exType === 'grid') body += renderGridExercise(lid, def);
     else if (exType === 'form') body += renderFormExercise(lid, def);
   }
@@ -1967,10 +1973,10 @@ function showPatient(usuario){
     var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
     exs.forEach(function(ej,idx){
       var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
-      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);
+      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);
       var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
       h+='<div class="sub-card">';
-      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
+      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
       h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
       h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
       h+='<button class="sub-toggle">'+btnLabel+'</button></div>';
@@ -1979,6 +1985,7 @@ function showPatient(usuario){
       if(isPmt)teosqQueue.push({type:'pmt',eid:eid,ej:ej});
       else if(isTeosq)teosqQueue.push({type:'teosq',eid:eid,ej:ej});
       else if(isIped)teosqQueue.push({type:'iped',eid:eid,ej:ej});
+      else if(isGps)teosqQueue.push({type:'gps',eid:eid,ej:ej});
       else if(isGrid)teosqQueue.push({type:'grid',eid:eid,ej:ej});
       else teosqQueue.push({type:'form',eid:eid,ej:ej});
     });
@@ -1990,6 +1997,7 @@ function showPatient(usuario){
     if(item.type==='pmt')renderPMTAdminView(item.ej,item.eid);
     else if(item.type==='teosq')renderTEOSQAdminView(item.ej,item.eid);
     else if(item.type==='iped')renderIPEDAdminView(item.ej,item.eid);
+    else if(item.type==='gps')renderGPSAdminView(item.ej,item.eid);
     else if(item.type==='grid')renderGridAdminView(item.ej,item.eid);
     else renderFormAdminView(item.ej,item.eid);
   });
@@ -2170,7 +2178,7 @@ function pdfLvlLbl(v){if(!v)return'';if(v<=2.9)return'Baja';if(v<=4.2)return'Med
 
 function buildExPDF(ej){
   var resps=ej.respuestas||[];
-  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);
+  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);
   var isGrid=resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
 
@@ -2246,6 +2254,39 @@ function buildExPDF(ej){
       h+='<div style="padding:6px 10px;border-bottom:1px solid #f0f0f0;display:flex;gap:8px;align-items:flex-start;"><div style="flex:1;"><div style="font-size:10px;font-weight:700;color:#1a1a2e;margin-bottom:1px;">'+sub.name+'</div><div style="font-size:9px;color:#555;line-height:1.45;">'+IDESCS[sub.id]+'</div></div><div style="flex-shrink:0;font-size:13px;font-weight:800;color:'+sub.color+';min-width:20px;text-align:right;">'+(sc!==null?sc:'—')+'</div><div style="flex-shrink:0;"><span style="font-size:8px;font-weight:700;background:'+lv.bg+';color:'+lv.color+';border-radius:3px;padding:1px 5px;">'+lv.lbl+'</span></div></div>';
     });
     h+='</div>';
+
+  }else if(isGps){
+    var GPS_ROWS_PDF=[
+      {id:'sueno',label:'Sue\u00f1o visualizado',sub:'5 a\u00f1os m\u00e1ximo',color:'#f5f5f5'},
+      {id:'lp',label:'Objetivo Largo Plazo',sub:'2 a\u00f1os',color:'#dbeafe'},
+      {id:'mp',label:'Objetivo Mediano Plazo',sub:'1 a\u00f1o',color:'#fef9c3'},
+      {id:'cp',label:'Objetivo Corto Plazo',sub:'3 meses \u2014 Solo Rendimiento',color:'#dcfce7'}
+    ];
+    var gpsData={};
+    resps.forEach(function(r){if(r.fid)gpsData[r.fid]=r.respuesta||'';});
+    h+='<div style="margin:0 0 6px;overflow:hidden;border:1px solid #e8e8e8;border-radius:4px;">';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:10px;">';
+    h+='<thead><tr style="background:#f0f0f0;">';
+    h+='<th style="padding:6px 8px;font-weight:700;text-align:left;border:1px solid #ddd;width:18%;">Ruta</th>';
+    h+='<th style="padding:6px 8px;font-weight:700;text-align:left;border:1px solid #ddd;width:32%;">Objetivo espec\u00edfico y medible</th>';
+    h+='<th style="padding:6px 8px;font-weight:700;text-align:center;border:1px solid #ddd;width:14%;">Tipo</th>';
+    h+='<th style="padding:6px 8px;font-weight:700;text-align:center;border:1px solid #ddd;width:12%;">Deadline</th>';
+    h+='<th style="padding:6px 8px;font-weight:700;text-align:left;border:1px solid #ddd;width:24%;">Habr\u00e9 logrado la mitad cuando...</th>';
+    h+='</tr></thead><tbody>';
+    GPS_ROWS_PDF.forEach(function(row){
+      var obj=gpsData['gps_'+row.id+'_obj']||'';
+      var tipo=gpsData['gps_'+row.id+'_tipo']||(row.id==='cp'?'Rendimiento':'');
+      var dl=gpsData['gps_'+row.id+'_dl']||'';
+      var pi=gpsData['gps_'+row.id+'_pi']||'';
+      h+='<tr style="background:'+row.color+';vertical-align:top;">';
+      h+='<td style="padding:8px;border:1px solid #ddd;font-weight:700;font-size:10px;"><div>'+row.label+'</div><div style="font-size:8px;color:#666;margin-top:2px;">'+row.sub+'</div></td>';
+      h+='<td style="padding:8px;border:1px solid #ddd;white-space:pre-wrap;line-height:1.5;">'+obj+'</td>';
+      h+='<td style="padding:8px;border:1px solid #ddd;text-align:center;font-weight:600;">'+tipo+'</td>';
+      h+='<td style="padding:8px;border:1px solid #ddd;text-align:center;">'+dl+'</td>';
+      h+='<td style="padding:8px;border:1px solid #ddd;white-space:pre-wrap;line-height:1.5;">'+pi+'</td>';
+      h+='</tr>';
+    });
+    h+='</tbody></table></div>';
 
   }else if(isGrid){
     var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
@@ -3404,6 +3445,194 @@ function renderIPEDAdminView(ej,cid){
   });
   h+='</tbody></table></div></div>';
   var el=document.getElementById(cid);if(el)el.innerHTML=h;
+}
+
+
+
+/* ═══════════════════════════════════════════════
+   GPS DE OBJETIVOS
+   ═══════════════════════════════════════════════ */
+
+var GPS_ROWS = [
+  { id:'sueno', label:'Sueño visualizado', sub:'5 años máximo',
+    color:'rgba(255,255,255,.05)', accent:'rgba(200,200,200,.35)', textColor:'var(--text)' },
+  { id:'lp',    label:'Objetivo Largo Plazo', sub:'2 años',
+    color:'rgba(59,130,246,.08)', accent:'rgba(59,130,246,.5)', textColor:'#93C5FD' },
+  { id:'mp',    label:'Objetivo Mediano Plazo', sub:'1 año',
+    color:'rgba(252,211,77,.07)', accent:'rgba(252,211,77,.5)', textColor:'#FCD34D' },
+  { id:'cp',    label:'Objetivo Corto Plazo', sub:'3 meses — Solo Rendimiento',
+    color:'rgba(34,197,94,.07)', accent:'rgba(34,197,94,.5)', textColor:'#4ADE80', soloRendimiento:true }
+];
+
+function renderGPSExercise(lid) {
+  var draft = loadDraft(lid) || {};
+  var sub = (getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
+  var data = {};
+  if (Object.keys(draft).length) {
+    data = draft;
+  } else if (sub && sub.respuestas) {
+    sub.respuestas.forEach(function(r){ if(r.fid) data[r.fid] = r.respuesta||''; });
+  }
+  var alreadyDone = isDone(lid);
+
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+
+  // Header
+  h += '<div class="tq-hdr-box">';
+  h += '<div class="ex-badge">Planificación de Objetivos</div>';
+  h += '<div class="tq-hdr-title">GPS de Objetivos</div>';
+  h += '<div class="tq-hdr-sub" style="margin-top:.2rem;">Definí tu ruta de objetivos: sueño a 5 años, largo plazo, mediano plazo y corto plazo.</div>';
+  h += '</div>';
+
+  // Table header
+  h += '<div style="overflow-x:auto;">';
+  h += '<table style="width:100%;border-collapse:collapse;min-width:700px;">';
+  h += '<thead>';
+  h += '<tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
+  h += '<th style="padding:.75rem 1rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:18%;border-right:1px solid var(--border);">Ruta</th>';
+  h += '<th style="padding:.75rem 1rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:30%;border-right:1px solid var(--border);">Objetivo específico y medible</th>';
+  h += '<th style="padding:.75rem .75rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;width:14%;border-right:1px solid var(--border);">Tipo</th>';
+  h += '<th style="padding:.75rem .75rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;width:13%;border-right:1px solid var(--border);">Deadline</th>';
+  h += '<th style="padding:.75rem 1rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:25%;">Habré logrado la mitad cuando...</th>';
+  h += '</tr></thead><tbody>';
+
+  GPS_ROWS.forEach(function(row) {
+    var obj = data['gps_'+row.id+'_obj'] || '';
+    var tipo = data['gps_'+row.id+'_tipo'] || (row.soloRendimiento ? 'Rendimiento' : '');
+    var dl = data['gps_'+row.id+'_dl'] || '';
+    var pi = data['gps_'+row.id+'_pi'] || '';
+
+    h += '<tr style="background:'+row.color+';border-bottom:1px solid var(--border);vertical-align:top;">';
+
+    // Ruta label
+    h += '<td style="padding:.85rem 1rem;border-right:1px solid var(--border);vertical-align:middle;">';
+    h += '<div style="font-size:.78rem;font-weight:800;color:'+row.textColor+';">'+row.label+'</div>';
+    h += '<div style="font-size:.65rem;color:var(--dim);margin-top:.2rem;">'+row.sub+'</div>';
+    if (row.soloRendimiento) h += '<div style="font-size:.6rem;font-weight:700;color:'+row.textColor+';opacity:.7;margin-top:.3rem;">★ Solo Rendimiento</div>';
+    h += '</td>';
+
+    // Objetivo
+    h += '<td style="padding:.6rem .75rem;border-right:1px solid var(--border);">';
+    h += '<textarea class="gps-ta" data-fid="gps_'+row.id+'_obj" oninput="gpsDraft(\''+lid+'\')" placeholder="Describí tu objetivo de forma específica y medible..." style="border-left:2px solid '+row.accent+';">'+obj+'</textarea>';
+    h += '</td>';
+
+    // Tipo
+    h += '<td style="padding:.6rem .5rem;border-right:1px solid var(--border);text-align:center;">';
+    if (row.soloRendimiento) {
+      h += '<div style="font-size:.75rem;font-weight:700;color:'+row.textColor+';padding:.35rem .5rem;background:'+row.color+';border:1px solid '+row.accent+';border-radius:3px;">Rendimiento</div>';
+      h += '<input type="hidden" data-fid="gps_'+row.id+'_tipo" value="Rendimiento">';
+    } else {
+      h += '<select class="gps-sel" data-fid="gps_'+row.id+'_tipo" onchange="gpsDraft(\''+lid+'\')" style="border-color:'+row.accent+';">';
+      h += '<option value="">— elegir —</option>';
+      h += '<option value="Resultado"'+(tipo==='Resultado'?' selected':'')+'>Resultado</option>';
+      h += '<option value="Rendimiento"'+(tipo==='Rendimiento'?' selected':'')+'>Rendimiento</option>';
+      h += '</select>';
+    }
+    h += '</td>';
+
+    // Deadline
+    h += '<td style="padding:.6rem .5rem;border-right:1px solid var(--border);text-align:center;">';
+    h += '<input type="text" class="gps-input" data-fid="gps_'+row.id+'_dl" oninput="gpsDraft(\''+lid+'\')" placeholder="ej: Jun 2026" value="'+dl+'" style="border-color:'+row.accent+';">';
+    h += '</td>';
+
+    // Punto intermedio
+    h += '<td style="padding:.6rem .75rem;">';
+    h += '<textarea class="gps-ta" data-fid="gps_'+row.id+'_pi" oninput="gpsDraft(\''+lid+'\')" placeholder="¿Qué habrás logrado a mitad del camino?" style="border-left:2px solid '+row.accent+';">'+pi+'</textarea>';
+    h += '</td>';
+
+    h += '</tr>';
+  });
+
+  h += '</tbody></table></div>';
+
+  // Submit
+  h += '<div class="ex-submit-row">';
+  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="gpsSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
+  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '</div></div>';
+
+  document.getElementById('mc-body').innerHTML = h;
+}
+
+function gpsDraft(lid) {
+  var data = {};
+  document.querySelectorAll('[data-fid^="gps_"]').forEach(function(el) {
+    if (el.value) data[el.getAttribute('data-fid')] = el.value;
+  });
+  saveDraft(lid, data);
+  updateSaveStatus('Borrador guardado', 'rgba(238,239,243,.5)');
+}
+
+function gpsSubmit(lid) {
+  var user = USERS[S.user];
+  var answers = [];
+  GPS_ROWS.forEach(function(row) {
+    var fields = ['obj','tipo','dl','pi'];
+    var labels = ['Objetivo','Tipo','Deadline','Habré logrado la mitad cuando'];
+    fields.forEach(function(f, i) {
+      var el = document.querySelector('[data-fid="gps_'+row.id+'_'+f+'"]');
+      answers.push({ fid:'gps_'+row.id+'_'+f, pregunta:row.label+' — '+labels[i], respuesta: el ? (el.value||'') : (row.soloRendimiento&&f==='tipo'?'Rendimiento':'') });
+    });
+  });
+  var rec = { ts:Date.now(), fecha:new Date().toLocaleString('es-AR'),
+    jugador:user.name, usuario:S.user,
+    unidad:'Unidad 3', ejercicio:'GPS de Objetivos',
+    lid:lid, respuestas:answers };
+  var saved = getLocalSubs();
+  var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
+  var isUpdate = idx >= 0;
+  if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+  localStorage.setItem('pp_submissions', JSON.stringify(saved));
+  markDoneL(lid);
+  fbSaveSubmission(S.user, lid, rec);
+  var btn = document.getElementById('btn-ex-'+lid);
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
+}
+
+/* ── GPS ADMIN VIEW ─────────────────────────── */
+function renderGPSAdminView(ej, cid) {
+  var resps = ej.respuestas || [];
+  var data = {};
+  resps.forEach(function(r){ if(r.fid) data[r.fid] = r.respuesta||''; });
+
+  var h = '<div style="padding:.75rem;overflow-x:auto;">';
+  h += '<table style="width:100%;border-collapse:collapse;min-width:600px;">';
+  h += '<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
+  h += '<th style="padding:.6rem .85rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);width:18%;">Ruta</th>';
+  h += '<th style="padding:.6rem .85rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);width:30%;">Objetivo</th>';
+  h += '<th style="padding:.6rem .5rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:12%;">Tipo</th>';
+  h += '<th style="padding:.6rem .5rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:12%;">Deadline</th>';
+  h += '<th style="padding:.6rem .85rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:28%;">Punto intermedio</th>';
+  h += '</tr></thead><tbody>';
+
+  GPS_ROWS.forEach(function(row) {
+    var obj  = data['gps_'+row.id+'_obj']  || '';
+    var tipo = data['gps_'+row.id+'_tipo'] || (row.soloRendimiento?'Rendimiento':'—');
+    var dl   = data['gps_'+row.id+'_dl']   || '—';
+    var pi   = data['gps_'+row.id+'_pi']   || '';
+
+    h += '<tr style="background:'+row.color+';border-bottom:1px solid var(--border);vertical-align:top;">';
+    h += '<td style="padding:.75rem .85rem;border-right:1px solid var(--border);vertical-align:middle;">';
+    h += '<div style="font-size:.78rem;font-weight:800;color:'+row.textColor+';">'+row.label+'</div>';
+    h += '<div style="font-size:.63rem;color:var(--dim);margin-top:.15rem;">'+row.sub+'</div>';
+    h += '</td>';
+    h += '<td style="padding:.7rem .85rem;border-right:1px solid var(--border);font-size:.82rem;line-height:1.6;white-space:pre-wrap;">'+obj+'</td>';
+    h += '<td style="padding:.7rem .5rem;border-right:1px solid var(--border);text-align:center;font-size:.78rem;font-weight:700;color:'+row.textColor+';">'+tipo+'</td>';
+    h += '<td style="padding:.7rem .5rem;border-right:1px solid var(--border);text-align:center;font-size:.78rem;">'+dl+'</td>';
+    h += '<td style="padding:.7rem .85rem;font-size:.82rem;line-height:1.6;white-space:pre-wrap;">'+pi+'</td>';
+    h += '</tr>';
+  });
+
+  h += '</tbody></table></div>';
+  var el = document.getElementById(cid);
+  if(el) el.innerHTML = h;
 }
 
 
