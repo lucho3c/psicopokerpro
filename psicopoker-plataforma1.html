@@ -676,6 +676,60 @@ function getAttachAnswers(lid){
   at.files.forEach(function(item,i){answers.push({fid:'_file_'+i,pregunta:'Archivo '+(i+1)+(item.desc?' - '+item.desc:''),respuesta:item.name});});
   return answers;
 }
+function adminAttachHTML(resps){
+  var linkR=(resps||[]).filter(function(r){return r.fid&&r.fid.indexOf('_link_')===0&&r.respuesta;});
+  var fileR=(resps||[]).filter(function(r){return r.fid&&r.fid.indexOf('_file_')===0&&r.respuesta;});
+  if(!linkR.length&&!fileR.length)return '';
+  var h='<div style="margin-top:.75rem;border-top:1px solid var(--border);padding-top:.75rem;">';
+  if(linkR.length){
+    h+='<div class="sub-q"><div class="sub-ql" style="color:#3B82F6;">🔗 Links adjuntos</div>';
+    linkR.forEach(function(r){
+      var desc=r.pregunta.replace(/^Link \d+ - /,'').replace(/^Link \d+$/,'');
+      h+='<div style="margin:.25rem 0;font-size:.78rem;"><a href="'+r.respuesta+'" target="_blank" style="color:#93C5FD;">'+r.respuesta+'</a>';
+      if(desc)h+='<div style="font-size:.72rem;color:var(--muted);margin-top:.1rem;">'+desc+'</div>';
+      h+='</div>';
+    });
+    h+='</div>';
+  }
+  if(fileR.length){
+    h+='<div class="sub-q"><div class="sub-ql" style="color:#F59E0B;">📎 Archivos adjuntos</div>';
+    fileR.forEach(function(r){
+      var desc=r.pregunta.replace(/^Archivo \d+ - /,'').replace(/^Archivo \d+$/,'');
+      h+='<div style="margin:.25rem 0;font-size:.78rem;color:var(--text);">📄 '+r.respuesta;
+      if(desc)h+='<div style="font-size:.72rem;color:var(--muted);margin-top:.1rem;">'+desc+'</div>';
+      h+='</div>';
+    });
+    h+='</div>';
+  }
+  h+='</div>';
+  return h;
+}
+function pdfAttachHTML(resps){
+  var linkR=(resps||[]).filter(function(r){return r.fid&&r.fid.indexOf('_link_')===0&&r.respuesta;});
+  var fileR=(resps||[]).filter(function(r){return r.fid&&r.fid.indexOf('_file_')===0&&r.respuesta;});
+  if(!linkR.length&&!fileR.length)return '';
+  var h='<div style="margin-top:10px;border-top:1px solid #e8e8e8;padding-top:8px;">';
+  if(linkR.length){
+    h+='<div style="font-size:9px;font-weight:700;color:#2563EB;margin-bottom:4px;">🔗 Links adjuntos</div>';
+    linkR.forEach(function(r){
+      var desc=r.pregunta.replace(/^Link \d+ - /,'').replace(/^Link \d+$/,'');
+      h+='<div style="font-size:9px;margin-bottom:3px;"><a href="'+r.respuesta+'" style="color:#2563EB;">'+r.respuesta+'</a>';
+      if(desc)h+='<span style="color:#666;margin-left:4px;">— '+desc+'</span>';
+      h+='</div>';
+    });
+  }
+  if(fileR.length){
+    h+='<div style="font-size:9px;font-weight:700;color:#D97706;margin-top:4px;margin-bottom:4px;">📎 Archivos adjuntos</div>';
+    fileR.forEach(function(r){
+      var desc=r.pregunta.replace(/^Archivo \d+ - /,'').replace(/^Archivo \d+$/,'');
+      h+='<div style="font-size:9px;margin-bottom:3px;">📄 '+r.respuesta;
+      if(desc)h+='<span style="color:#666;margin-left:4px;">— '+desc+'</span>';
+      h+='</div>';
+    });
+  }
+  h+='</div>';
+  return h;
+}
 /* FIN ATTACHMENTS */
 /* FIREBASE SYNC */
 var DB=window.DB||null;
@@ -1629,11 +1683,11 @@ function doSubmit(lid){
   }
   var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,
     usuario:S.user,unidad:def.unit,ejercicio:def.name,lid:lid,respuestas:answers};
+  getAttachAnswers(lid).forEach(function(a){answers.push(a);});
   var saved=getLocalSubs();
   var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});
   if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
-  getAttachAnswers(lid).forEach(function(a){answers.push(a);});
   markDoneL(lid);
   fbSaveSubmission(S.user,lid,rec);
   updateSaveStatus('Enviado a Mauro','#22C55E');
@@ -2102,27 +2156,11 @@ function toggleEj(eid,hdr){
 
 function renderFormAdminView(ej,cid){
   var resps=ej.respuestas||[],h='<div style="padding:.5rem 1.25rem 1.25rem;">';
-  var has=resps.some(function(r){return r.respuesta&&r.respuesta.trim();});
-  if(has){resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()){h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';}});}
+  var mainResps=resps.filter(function(r){return r.fid&&r.fid.indexOf('_link_')!==0&&r.fid.indexOf('_file_')!==0;});
+  var has=mainResps.some(function(r){return r.respuesta&&r.respuesta.trim();});
+  if(has){mainResps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()){h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';}});}
   else{h+='<p style="font-size:.78rem;color:var(--dim);padding:.5rem 0;">Ejercicio completado.</p>';}
-  var linkR=resps.filter(function(r){return r.fid&&r.fid.indexOf('_link_')===0;});
-  var fileR=resps.filter(function(r){return r.fid&&r.fid.indexOf('_file_')===0;});
-  if(linkR.length){
-    h+='<div class="sub-q"><div class="sub-ql" style="color:#3B82F6;">Links adjuntos</div>';
-    linkR.forEach(function(r){
-      var desc=r.pregunta.replace(/^Link \d+ - /,'');
-      h+='<div style="margin:.25rem 0;font-size:.78rem;">&#128279; <a href="'+r.respuesta+'" target="_blank" style="color:var(--text);">'+r.respuesta+'</a>'+(desc&&!desc.match(/^Link \d+$/)? '<div style="font-size:.72rem;color:var(--muted);margin-top:.15rem;">'+desc+'</div>':'')+'</div>';
-    });
-    h+='</div>';
-  }
-  if(fileR.length){
-    h+='<div class="sub-q"><div class="sub-ql" style="color:#F59E0B;">Archivos adjuntos</div>';
-    fileR.forEach(function(r){
-      var desc=r.pregunta.replace(/^Archivo \d+ - /,'');
-      h+='<div style="margin:.25rem 0;font-size:.78rem;">&#128206; '+r.respuesta+(desc&&!desc.match(/^Archivo \d+$/)? '<div style="font-size:.72rem;color:var(--muted);margin-top:.15rem;">'+desc+'</div>':'')+'</div>';
-    });
-    h+='</div>';
-  }
+  h += adminAttachHTML(resps);
   h+='</div>';
   var el=document.getElementById(cid);if(el)el.innerHTML=h;
 }
@@ -2225,6 +2263,7 @@ function renderTEOSQAdminView(ej,cid){
   h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">';
   PROFS.forEach(function(p){var isA=perfil&&perfil.indexOf(p.name)!==-1;h+='<div class="tq-profile-card '+p.id+(isA?' active':'')+'" style="opacity:'+(isA?'1':'.4')+'"><div style="font-size:.95rem;margin-bottom:.3rem;">'+p.icon+'</div><div style="font-size:.75rem;font-weight:800;margin-bottom:.3rem;">'+p.name+'</div><div style="font-size:.7rem;color:var(--muted);line-height:1.5;margin-bottom:.4rem;">'+p.desc+'</div><div class="tp-tag '+p.tag+'" style="font-size:.58rem;">'+p.tagLbl+'</div></div>';});
   h+='</div></div></div>';
+    h += adminAttachHTML(ej.respuestas||[]);
   var cont=document.getElementById(cid);if(cont)cont.innerHTML=h;
 }
 
@@ -2510,6 +2549,7 @@ function buildExPDF(ej){
     }
   }
 
+  h += pdfAttachHTML(resps);
   h+='</div>';
   return h;
 }
@@ -2904,6 +2944,7 @@ function tqSubmit(){
   var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,usuario:S.user,unidad:'Unidad 1',ejercicio:'TEOSQ',lid:teosqLid,respuestas:answers};
   var saved=getLocalSubs();var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});
   if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+    getAttachAnswers(tqLid).forEach(function(a){answers.push(a);});
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   markDoneL(teosqLid);
   var btn=document.getElementById('tq-send-btn');if(btn){btn.textContent='Actualizar envio';btn.style.background='var(--green)';btn.disabled=false;}
@@ -3187,6 +3228,7 @@ function pmtSubmit() {
   var isUpdate = idx >= 0;
   if (isUpdate) { rec.airtableId = saved[idx].airtableId; saved[idx] = rec; }
   else { saved.push(rec); }
+    getAttachAnswers(lid).forEach(function(a){answers.push(a);});
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(pmtLid);
   fbSaveSubmission(S.user, pmtLid, rec);
@@ -3265,6 +3307,7 @@ function renderPMTAdminView(ej, cid) {
   h += '</div>';
 
   h += '</div>';
+    h += adminAttachHTML(ej.respuestas||[]);
   var el = document.getElementById(cid);
   if (el) el.innerHTML = h;
 }
@@ -3544,6 +3587,7 @@ function ipedSubmit(){
   var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===ipedLid;});
   var isUpdate=idx>=0;
   if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+    getAttachAnswers(lid).forEach(function(a){answers.push(a);});
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   markDoneL(ipedLid);fbSaveSubmission(S.user,ipedLid,rec);
   var btn=document.getElementById('iped-send-btn');
@@ -3615,6 +3659,7 @@ function renderIPEDAdminView(ej,cid){
     h+='</tr>';
   });
   h+='</tbody></table></div></div>';
+  h += adminAttachHTML(ej.respuestas||[]);
   var el=document.getElementById(cid);if(el)el.innerHTML=h;
 }
 
@@ -3790,6 +3835,7 @@ function gpsSubmit(lid) {
   var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
   var isUpdate = idx >= 0;
   if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+    getAttachAnswers(lid).forEach(function(a){answers.push(a);});
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
@@ -3848,6 +3894,7 @@ function renderGPSAdminView(ej, cid) {
   });
 
   h += '</tbody></table></div>';
+    h += adminAttachHTML(ej.respuestas||[]);
   var el = document.getElementById(cid);
   if(el) el.innerHTML = h;
 }
@@ -4056,6 +4103,7 @@ function clSubmit(lid) {
   var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
   var isUpdate = idx >= 0;
   if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+    getAttachAnswers(lid).forEach(function(a){answers.push(a);});
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
@@ -4120,6 +4168,7 @@ function renderChecklistAdminView(ej, cid) {
   }
 
   h += '</div>';
+    h += adminAttachHTML(ej.respuestas||[]);
   var el = document.getElementById(cid);
   if(el) el.innerHTML = h;
 }
@@ -4231,6 +4280,7 @@ function equipSubmit(lid) {
   var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
   var isUpdate = idx >= 0;
   if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+    getAttachAnswers(lid).forEach(function(a){answers.push(a);});
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
@@ -4273,6 +4323,7 @@ function renderEquipAdminView(ej, cid) {
     h += '</tbody></table>';
   }
   h += '</div>';
+    h += adminAttachHTML(ej.respuestas||[]);
   var el = document.getElementById(cid);
   if(el) el.innerHTML = h;
 }
@@ -4417,6 +4468,7 @@ function conSubmit(lid) {
   var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
   var isUpdate = idx >= 0;
   if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+    getAttachAnswers(lid).forEach(function(a){answers.push(a);});
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
@@ -4476,6 +4528,7 @@ function renderConcienciaAdminView(ej, cid) {
   }
 
   h += '</div>';
+    h += adminAttachHTML(ej.respuestas||[]);
   var el = document.getElementById(cid);
   if(el) el.innerHTML = h;
 }
