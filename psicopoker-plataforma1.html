@@ -362,6 +362,23 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .eq-ta{width:100%;background:transparent;border:none;border-bottom:1px solid transparent;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;padding:.3rem .4rem;resize:none;min-height:36px;outline:none;line-height:1.55;transition:border-color .2s;}
 .eq-ta:focus{border-bottom-color:var(--red);background:rgba(232,49,42,.03);}
 .eq-ta::placeholder{color:var(--dim);font-size:.75rem;}
+/* Conciencia */
+.con-q-block{display:flex;flex-direction:column;gap:.5rem;}
+.con-q-label{font-size:.88rem;font-weight:600;color:var(--text);line-height:1.55;}
+.con-q-num{font-size:1rem;margin-right:.25rem;}
+.con-ta{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;padding:.65rem .85rem;border-radius:4px;resize:vertical;min-height:72px;outline:none;transition:border-color .2s;line-height:1.65;}
+.con-ta:focus{border-color:var(--red);}
+.con-ta::placeholder{color:var(--dim);}
+.con-items-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.4rem;}
+@media(max-width:600px){.con-items-grid{grid-template-columns:1fr;}}
+.con-item{display:flex;align-items:center;gap:.55rem;padding:.45rem .75rem;border-radius:4px;border:1px solid var(--border);cursor:pointer;transition:all .15s;user-select:none;background:var(--bg2);}
+.con-item:hover{border-color:var(--red);background:rgba(232,49,42,.04);}
+.con-item.checked{border-color:var(--red);background:rgba(232,49,42,.08);}
+.con-item input[type="checkbox"]{display:none;}
+.con-item-text{font-size:.78rem;color:var(--text);line-height:1.4;}
+.con-item.checked .con-item-text{font-weight:600;color:var(--text);}
+.con-item.checked::before{content:'☑';color:var(--red);font-size:.9rem;flex-shrink:0;}
+.con-item:not(.checked)::before{content:'☐';color:var(--dim);font-size:.9rem;flex-shrink:0;}
 .attach-title{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;}
 .attach-group{margin-bottom:1rem;}
 .attach-group-label{font-size:.65rem;font-weight:700;color:var(--muted);margin-bottom:.45rem;}
@@ -850,7 +867,7 @@ var C = [
     lessons:[
       { id:'u5l1', title:'Introduccion', driveId:'1GqYhgbT9TODP7oxwfLUHrxjGUwE7IyUL' },
       { id:'u5l2', title:'Proceso y Ansiedad', driveId:'1JBwKg_CyfdEUkCorLqUdu7F1NfT003Z_', ex:{ type:'form', unit:'Unidad 5', name:'Reconociendo otro proceso' } },
-      { id:'u5l3', title:'Autoconfianza. Teoria y ampliacion de consciencia', driveId:'1okNjfKuqiABD3TSEx2O0HR4AI0qtE8dU', ex:{ type:'form', unit:'Unidad 5', name:'Ampliacion de consciencia - Autoconfianza' } },
+      { id:'u5l3', title:'Autoconfianza. Teoria y ampliacion de consciencia', driveId:'1okNjfKuqiABD3TSEx2O0HR4AI0qtE8dU', ex:{ type:'conciencia', unit:'Unidad 5', name:'Ampliacion de consciencia - Autoconfianza' } },
       { id:'u5l4', title:'Como mejorar la Autoconfianza', driveId:'15-LTZsMge3oVHiwjeagzKQWau0Ss2XA9' },
       { id:'u5l5', title:'Ejercicio 2 - Mi Caja de Confianza', driveId:'', ex:{ type:'form', unit:'Unidad 5', name:'Mi Caja de Confianza' } },
       { id:'u5l6', title:'Quinta sesion 1 a 1', type:'session' }
@@ -1294,21 +1311,7 @@ var EX_DEFS = {
         { fid:'u5l2_p6c', label:'✍️ Cada vez que me salga del proceso por ansiedad, mi manera de volver va a ser:' }
     ]}
   ]},
-  'u5l3':{ type:'form', unit:'Unidad 5', name:'Ampliacion de consciencia - Autoconfianza', sections:[
-    { title:'Tu historia de confianza', questions:[
-      { fid:'u5l3_1', label:'Que crees que piensa tu entorno sobre tus cualidades?' },
-      { fid:'u5l3_2', label:'Quien es la persona que mas te ayuda a creer en vos mismo? Por que?' },
-      { fid:'u5l3_3', label:'Quien es la persona que menos ayuda a creer en vos mismo? Por que?' },
-      { fid:'u5l3_4', label:'Como fue el juego de expectativas de confianza en tu ambito familiar?' },
-      { fid:'u5l3_5', label:'Como dirías que fue tu crianza en relacion a la construccion de confianza? (no solo buena/mala, describila)' }
-    ]},
-    { title:'Tu confianza hoy', questions:[
-      { fid:'u5l3_6', label:'Necesitas enfocarte mas en tu confianza estado (momentanea) o rasgo (profunda y estable)?' },
-      { fid:'u5l3_7', label:'Cuales de estos factores te representan? (bajo nivel de asertividad / sesgo hacia "no puedo" / ansiedad elevada / sobreexigencia / desorganizacion)' },
-      { fid:'u5l3_8', label:'Que necesitas hacer para mejorar estos aspectos? Podes solo o necesitas ayuda?' },
-      { fid:'u5l3_rl', label:'Reflexion libre' }
-    ]}
-  ]},
+  'u5l3':{ type:'conciencia', unit:'Unidad 5', name:'Ampliacion de consciencia - Autoconfianza' },
   'u5l5':{ type:'form', unit:'Unidad 5', name:'Mi Caja de Confianza', sections:[
     { title:'Anclajes internos', questions:[
       { fid:'u5l5_1', label:'3 situaciones en las que lograste algo dificil y te sentiste orgulloso. Que hiciste bien? Que fortalezas usaste?' },
@@ -1856,6 +1859,11 @@ function renderContent(unit, lid) {
       renderEquipExercise(lid);
       document.getElementById('mc').scrollTop = 0;
       return;
+    } else if (exType === 'conciencia') {
+      document.getElementById('mc-body').innerHTML = body;
+      renderConcienciaExercise(lid);
+      document.getElementById('mc').scrollTop = 0;
+      return;
     } else if (exType === 'grid') body += renderGridExercise(lid, def);
     else if (exType === 'form') body += renderFormExercise(lid, def);
   }
@@ -2046,10 +2054,10 @@ function showPatient(usuario){
     var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
     exs.forEach(function(ej,idx){
       var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
-      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);
+      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);
       var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
       h+='<div class="sub-card">';
-      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
+      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isCon?'Ver respuestas &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
       h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
       h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
       h+='<button class="sub-toggle">'+btnLabel+'</button></div>';
@@ -2061,6 +2069,7 @@ function showPatient(usuario){
       else if(isGps)teosqQueue.push({type:'gps',eid:eid,ej:ej});
       else if(isCl)teosqQueue.push({type:'checklist',eid:eid,ej:ej});
       else if(isEquip)teosqQueue.push({type:'equip',eid:eid,ej:ej});
+      else if(isCon)teosqQueue.push({type:'conciencia',eid:eid,ej:ej});
       else if(isGrid)teosqQueue.push({type:'grid',eid:eid,ej:ej});
       else teosqQueue.push({type:'form',eid:eid,ej:ej});
     });
@@ -2075,6 +2084,7 @@ function showPatient(usuario){
     else if(item.type==='gps')renderGPSAdminView(item.ej,item.eid);
     else if(item.type==='checklist')renderChecklistAdminView(item.ej,item.eid);
     else if(item.type==='equip')renderEquipAdminView(item.ej,item.eid);
+    else if(item.type==='conciencia')renderConcienciaAdminView(item.ej,item.eid);
     else if(item.type==='grid')renderGridAdminView(item.ej,item.eid);
     else renderFormAdminView(item.ej,item.eid);
   });
@@ -2255,7 +2265,7 @@ function pdfLvlLbl(v){if(!v)return'';if(v<=2.9)return'Baja';if(v<=4.2)return'Med
 
 function buildExPDF(ej){
   var resps=ej.respuestas||[];
-  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);
+  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);
   var isGrid=resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
 
@@ -2331,6 +2341,34 @@ function buildExPDF(ej){
       h+='<div style="padding:6px 10px;border-bottom:1px solid #f0f0f0;display:flex;gap:8px;align-items:flex-start;"><div style="flex:1;"><div style="font-size:10px;font-weight:700;color:#1a1a2e;margin-bottom:1px;">'+sub.name+'</div><div style="font-size:9px;color:#555;line-height:1.45;">'+IDESCS[sub.id]+'</div></div><div style="flex-shrink:0;font-size:13px;font-weight:800;color:'+sub.color+';min-width:20px;text-align:right;">'+(sc!==null?sc:'—')+'</div><div style="flex-shrink:0;"><span style="font-size:8px;font-weight:700;background:'+lv.bg+';color:'+lv.color+';border-radius:3px;padding:1px 5px;">'+lv.lbl+'</span></div></div>';
     });
     h+='</div>';
+
+  }else if(isCon){
+    var conData={};
+    (resps||[]).forEach(function(r){if(r.fid)conData[r.fid]=r.respuesta||'';});
+    var CON_QS=[
+      {fid:'cc_q1',n:'1',q:'¿Qué creés que piensa tu entorno sobre tus cualidades?'},
+      {fid:'cc_q2',n:'2',q:'¿Quién es la persona que más te ayuda a creer en vos mismo? ¿Por qué?'},
+      {fid:'cc_q3',n:'3',q:'¿Quién es la persona que menos ayuda a creer en vos mismo? ¿Por qué?'},
+      {fid:'cc_q4',n:'4',q:'¿Cómo fue el juego de expectativas de confianza en tu ámbito familiar?'},
+      {fid:'cc_q5',n:'5',q:'¿Tu crianza fue favorecedora y generadora de confianza? ¿Por qué?'},
+      {fid:'cc_q6',n:'6',q:'¿Cómo dirías que fue tu crianza en relación a la construcción de confianza?'},
+      {fid:'cc_q7',n:'7',q:'¿Creés que necesitás enfocarte más en tu confianza estado o rasgo?'}
+    ];
+    var CON_ITEMS=['Bajo nivel de asertividad','Sesgo cognitivo hacia "no puedo", "no lo merezco"','Dificultad para decir que no','Gestión inconsciente de entorno descalificador','Preparación inadecuada','Ansiedad elevada','Escaso autoconocimiento personal y deportivo','Desorganización','Sobreexigencia','Sobreidentificación con pensamientos negativos','Entorno irrespetuoso o descalificador'];
+    CON_QS.forEach(function(q){
+      var ans=conData[q.fid]||'';
+      if(ans)h+='<div class="qa-row"><div class="qa-q">'+q.n+'. '+q.q+'</div><div class="qa-a">'+ans+'</div></div>';
+    });
+    var sel=[];try{sel=JSON.parse(conData['cc_q8']||'[]');}catch(e){}
+    if(sel.length){
+      h+='<div class="qa-row"><div class="qa-q">8. Ítems seleccionados:</div>';
+      sel.forEach(function(idx){if(CON_ITEMS[idx])h+='<div class="qa-a" style="margin-bottom:3px;">☑ '+CON_ITEMS[idx]+'</div>';});
+      h+='</div>';
+    }
+    [{fid:'cc_q9',n:'9',q:'¿Qué necesitás hacer para mejorar estos aspectos?'},{fid:'cc_q10',n:'10',q:'¿Podés solo o necesitás ayuda? ¿De quién?'},{fid:'cc_extra',n:'Extra',q:'Agregado libre'}].forEach(function(q){
+      var ans=conData[q.fid]||'';
+      if(ans)h+='<div class="qa-row"><div class="qa-q">'+q.n+'. '+q.q+'</div><div class="qa-a">'+ans+'</div></div>';
+    });
 
   }else if(isEquip){
     var eqData={};
@@ -4234,6 +4272,208 @@ function renderEquipAdminView(ej, cid) {
     }
     h += '</tbody></table>';
   }
+  h += '</div>';
+  var el = document.getElementById(cid);
+  if(el) el.innerHTML = h;
+}
+
+
+
+/* ═══════════════════════════════════════════════
+   AMPLIACIÓN DE CONSCIENCIA — AUTOCONFIANZA
+   ═══════════════════════════════════════════════ */
+
+var CON_QUESTIONS = [
+  { fid:'cc_q1', n:'1️⃣', q:'¿Qué creés que piensa tu entorno sobre tus cualidades?' },
+  { fid:'cc_q2', n:'2️⃣', q:'¿Quién es la persona que más te ayuda a creer en vos mismo? ¿Por qué?' },
+  { fid:'cc_q3', n:'3️⃣', q:'¿Quién es la persona que menos ayuda a creer en vos mismo? ¿Por qué sucede eso?' },
+  { fid:'cc_q4', n:'4️⃣', q:'¿Cómo fue el juego de expectativas de confianza en tu ámbito familiar?' },
+  { fid:'cc_q5', n:'5️⃣', q:'¿Tu crianza fue favorecedora y generadora de confianza? ¿Por qué?' },
+  { fid:'cc_q6', n:'6️⃣', q:'¿Cómo dirías que fue tu crianza en relación a la construcción de confianza? (Tratá de no contestar solo desde los juicios "buena/mala", sino de describirla)' },
+  { fid:'cc_q7', n:'7️⃣', q:'¿Creés que necesitás enfocarte más en tu confianza estado o rasgo?' }
+];
+
+var CON_ITEMS = [
+  'Bajo nivel de asertividad.',
+  'Sesgo cognitivo hacia "no puedo", "no lo merezco".',
+  'Dificultad para decir que no.',
+  'Gestión inconsciente de entorno descalificador.',
+  'Preparación inadecuada.',
+  'Ansiedad elevada.',
+  'Escaso autoconocimiento personal y deportivo.',
+  'Desorganización.',
+  'Sobreexigencia.',
+  'Sobreidentificación con pensamientos negativos.',
+  'Entorno irrespetuoso o descalificador.'
+];
+
+function conGetData(lid) {
+  var draft = loadDraft(lid) || {};
+  var sub = (getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
+  var data = {};
+  if (Object.keys(draft).length) { data = draft; }
+  else if (sub && sub.respuestas) { sub.respuestas.forEach(function(r){ if(r.fid) data[r.fid]=r.respuesta||''; }); }
+  return data;
+}
+
+function conSaveDraft(lid) {
+  var data = {};
+  document.querySelectorAll('[data-con-fid]').forEach(function(el){
+    if (el.value !== undefined && el.value !== '') data[el.getAttribute('data-con-fid')] = el.value;
+  });
+  // checkboxes
+  var sel = [];
+  document.querySelectorAll('.con-cb:checked').forEach(function(cb){ sel.push(parseInt(cb.value)); });
+  data['cc_q8'] = JSON.stringify(sel);
+  saveDraft(lid, data);
+  updateSaveStatus('Borrador guardado','rgba(238,239,243,.5)');
+}
+
+function renderConcienciaExercise(lid) {
+  var data = conGetData(lid);
+  var alreadyDone = isDone(lid);
+  var sel8 = [];
+  try { sel8 = JSON.parse(data['cc_q8'] || '[]'); } catch(e) {}
+
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+
+  // Header
+  h += '<div class="tq-hdr-box">';
+  h += '<div class="ex-badge">🧠 Ampliación de Consciencia · Unidad 5</div>';
+  h += '<div class="tq-hdr-title">Autoconfianza — Ampliación de Consciencia</div>';
+  h += '<div class="tq-hdr-sub" style="margin-top:.5rem;line-height:1.75;">✏️ En esta plantilla tenés escritas las preguntas que plantea el video. Escribí tus respuestas con calma, siendo lo más honesto posible. Este ejercicio es una herramienta para autoconocerte y detectar puntos de trabajo de tu confianza en tu proceso como jugador.</div>';
+  h += '</div>';
+
+  // Questions 1-7
+  h += '<div style="padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:1.5rem;">';
+  CON_QUESTIONS.forEach(function(q) {
+    var val = data[q.fid] || '';
+    h += '<div class="con-q-block">';
+    h += '<p class="con-q-label"><span class="con-q-num">'+q.n+'</span> '+q.q+'</p>';
+    h += '<textarea class="con-ta" data-con-fid="'+q.fid+'" oninput="conSaveDraft(\''+lid+'\')" placeholder="Escribí tu respuesta...">'+val+'</textarea>';
+    h += '</div>';
+  });
+
+  // Question 8 — checkboxes
+  h += '<div class="con-q-block">';
+  h += '<p class="con-q-label"><span class="con-q-num">8️⃣</span> Si tuvieras que elegir los 3 ítems de esta lista que más te representan, ¿cuáles serían?</p>';
+  h += '<div class="con-items-grid">';
+  CON_ITEMS.forEach(function(item, i) {
+    var checked = sel8.indexOf(i) >= 0;
+    h += '<label class="con-item'+(checked?' checked':'')+'">';
+    h += '<input type="checkbox" class="cl-cb con-cb" value="'+i+'" '+(checked?'checked':'')+' onchange="this.closest(\'label\').classList.toggle(\'checked\',this.checked);conSaveDraft(\''+lid+'\')">';
+    h += '<span class="con-item-text">'+item+'</span>';
+    h += '</label>';
+  });
+  h += '</div></div>';
+
+  // Questions 9-10
+  [{fid:'cc_q9',n:'9️⃣',q:'¿Qué necesitás hacer para mejorar estos aspectos?'},
+   {fid:'cc_q10',n:'🔟',q:'¿Podés solo o necesitás ayuda? ¿De quién?'}
+  ].forEach(function(q) {
+    var val = data[q.fid] || '';
+    h += '<div class="con-q-block">';
+    h += '<p class="con-q-label"><span class="con-q-num">'+q.n+'</span> '+q.q+'</p>';
+    h += '<textarea class="con-ta" data-con-fid="'+q.fid+'" oninput="conSaveDraft(\''+lid+'\')" placeholder="Escribí tu respuesta...">'+val+'</textarea>';
+    h += '</div>';
+  });
+
+  // Cierre + campo libre
+  h += '<div style="background:rgba(232,49,42,.05);border-left:3px solid rgba(232,49,42,.35);padding:.9rem 1.1rem;border-radius:0 4px 4px 0;">';
+  h += '<p style="font-size:.82rem;color:var(--muted);line-height:1.75;margin-bottom:.75rem;">✏️ Gracias por abrirte y confiar. Cualquier cosa que quieras agregar al respecto es absolutamente bienvenida…</p>';
+  h += '<textarea class="con-ta" data-con-fid="cc_extra" oninput="conSaveDraft(\''+lid+'\')" placeholder="Agregado libre..." style="min-height:60px;">'+( data['cc_extra']||'' )+'</textarea>';
+  h += '</div>';
+
+  h += '</div>';
+
+  // Submit
+  h += '<div class="ex-submit-row">';
+  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="conSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
+  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '</div></div>';
+
+  document.getElementById('mc-body').innerHTML = h;
+}
+
+function conSubmit(lid) {
+  conSaveDraft(lid);
+  var user = USERS[S.user];
+  var answers = [];
+  document.querySelectorAll('[data-con-fid]').forEach(function(el){
+    answers.push({ fid:el.getAttribute('data-con-fid'), pregunta:el.getAttribute('data-con-fid'), respuesta:el.value });
+  });
+  // checkboxes
+  var sel = [];
+  document.querySelectorAll('.con-cb:checked').forEach(function(cb){ sel.push(parseInt(cb.value)); });
+  answers.push({ fid:'cc_q8', pregunta:'Ítems seleccionados (Q8)', respuesta: JSON.stringify(sel) });
+
+  var rec = { ts:Date.now(), fecha:new Date().toLocaleString('es-AR'),
+    jugador:user.name, usuario:S.user,
+    unidad:'Unidad 5', ejercicio:'Ampliacion de consciencia - Autoconfianza', lid:lid, respuestas:answers };
+  var saved = getLocalSubs();
+  var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
+  var isUpdate = idx >= 0;
+  if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+  localStorage.setItem('pp_submissions', JSON.stringify(saved));
+  markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
+  var btn = document.getElementById('btn-ex-'+lid);
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
+}
+
+/* ── CONCIENCIA ADMIN VIEW ─────────────────────── */
+function renderConcienciaAdminView(ej, cid) {
+  var resps = ej.respuestas || [];
+  var data = {};
+  resps.forEach(function(r){ if(r.fid) data[r.fid]=r.respuesta||''; });
+
+  var ALL_QS = CON_QUESTIONS.concat([
+    { fid:'cc_q9', n:'9️⃣', q:'¿Qué necesitás hacer para mejorar estos aspectos?' },
+    { fid:'cc_q10', n:'🔟', q:'¿Podés solo o necesitás ayuda? ¿De quién?' }
+  ]);
+
+  var h = '<div style="padding:.75rem;display:flex;flex-direction:column;gap:1rem;">';
+
+  ALL_QS.forEach(function(q) {
+    var ans = data[q.fid] || '';
+    if (!ans) return;
+    h += '<div style="border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:.85rem;">';
+    h += '<div style="font-size:.68rem;font-weight:700;color:var(--muted);margin-bottom:.35rem;">'+q.n+' '+q.q+'</div>';
+    h += '<div style="font-size:.84rem;line-height:1.65;white-space:pre-wrap;color:var(--text);">'+ans+'</div>';
+    h += '</div>';
+  });
+
+  // Q8 checkboxes
+  var sel = [];
+  try { sel = JSON.parse(data['cc_q8'] || '[]'); } catch(e) {}
+  if (sel.length) {
+    h += '<div style="border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:.85rem;">';
+    h += '<div style="font-size:.68rem;font-weight:700;color:var(--muted);margin-bottom:.5rem;">8️⃣ Ítems seleccionados:</div>';
+    sel.forEach(function(idx) {
+      if (CON_ITEMS[idx]) {
+        h += '<div style="display:flex;align-items:center;gap:.5rem;font-size:.82rem;margin-bottom:.3rem;">';
+        h += '<span style="color:var(--red);">☑</span><span>'+CON_ITEMS[idx]+'</span>';
+        h += '</div>';
+      }
+    });
+    h += '</div>';
+  }
+
+  // Extra
+  var extra = data['cc_extra'] || '';
+  if (extra) {
+    h += '<div>';
+    h += '<div style="font-size:.68rem;font-weight:700;color:var(--muted);margin-bottom:.35rem;">✏️ Agregado libre:</div>';
+    h += '<div style="font-size:.84rem;line-height:1.65;white-space:pre-wrap;color:var(--text);">'+extra+'</div>';
+    h += '</div>';
+  }
+
   h += '</div>';
   var el = document.getElementById(cid);
   if(el) el.innerHTML = h;
