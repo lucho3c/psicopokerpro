@@ -4395,6 +4395,7 @@ function renderConcienciaExercise(lid) {
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML = h;
+  setTimeout(function(){ injectAttachmentSection(lid); }, 150);
 }
 
 function conSubmit(lid) {
