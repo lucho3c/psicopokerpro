@@ -1839,7 +1839,7 @@ function showToast(msg) {
 
 
 var adminData=null,activeExIdx=-1;
-function showAdmin(){var usr=USERS[S.user];document.getElementById('nav-av3').textContent=usr.name[0].toUpperCase();showView('vadmin');fetchAdminData();}
+function showAdmin(){var usr=USERS[S.user];document.getElementById('nav-av3').textContent=usr.name[0].toUpperCase();showView('vadmin');loadAdminPanel();}
 function fetchAdminData(){
   var subs=getLocalSubs();
   buildAdminData(subs);
