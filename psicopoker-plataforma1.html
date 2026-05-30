@@ -549,15 +549,32 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 <div class="toast" id="toast"></div>
 <script>
 /* ATTACHMENTS */
+// Links use their own dedicated storage key — completely separate from exercise drafts
+function getStoredLinks(lid){
+  try{return JSON.parse(localStorage.getItem('pp_lnk_'+S.user+'_'+lid)||'[]');}catch(e){return [];}
+}
+function saveStoredLinks(lid,links){
+  localStorage.setItem('pp_lnk_'+S.user+'_'+lid,JSON.stringify(links));
+  if(DB)DB.ref('psicopoker/links/'+S.user+'/'+lid).set(links).catch(function(){});
+}
 function getAttachments(lid){
-  var draft=loadDraft(lid)||{},links=[],files=[];
-  try{links=JSON.parse(draft._attachLinks||'[]');}catch(e){}
+  var links=getStoredLinks(lid);
+  // Fallback: if no stored links, try to restore from last submission
+  if(!links.length){
+    var sub=(getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
+    if(sub&&sub.respuestas){
+      sub.respuestas.filter(function(r){return r.fid&&/^_link_\d+$/.test(r.fid)&&r.respuesta;})
+        .forEach(function(r){links.push({url:r.respuesta,desc:r.pregunta.replace(/^Link \d+( — )?/,'')});});
+      if(links.length)saveStoredLinks(lid,links);
+    }
+  }
+  var draft=loadDraft(lid)||{},files=[];
   try{files=JSON.parse(draft._attachFiles||'[]');}catch(e){}
   return{links:links,files:files};
 }
 function saveAttachments(lid,links,files){
+  saveStoredLinks(lid,links);
   var draft=loadDraft(lid)||{};
-  draft._attachLinks=JSON.stringify(links);
   draft._attachFiles=JSON.stringify(files);
   saveDraft(lid,draft);
 }
@@ -572,7 +589,7 @@ function injectAttachmentSection(lid){
   h+='<div class="attach-group"><div class="attach-group-label">Links</div>';
   h+='<div id="al-list-'+lid+'"></div>';
   h+='<div class="attach-row"><div class="attach-row-top">';
-  h+='<input type="url" id="al-url-'+lid+'" class="attach-input" placeholder="https://...">';
+  h+='<input type="text" id="al-url-'+lid+'" class="attach-input" placeholder="https://... (pegá el link completo)">';
   h+='<button class="attach-add-btn" onclick="attachSaveLink(\''+lid+'\')">+ Agregar</button>';
   h+='</div>';
   h+='<textarea id="al-desc-'+lid+'" class="attach-desc" placeholder="Que queres mostrar con este link? (opcional)"></textarea>';
@@ -677,53 +694,68 @@ function getAttachAnswers(lid){
   return answers;
 }
 function adminAttachHTML(resps){
-  var linkR=(resps||[]).filter(function(r){return r.fid&&r.fid.indexOf('_link_')===0&&r.respuesta;});
-  var fileR=(resps||[]).filter(function(r){return r.fid&&r.fid.indexOf('_file_')===0&&r.respuesta;});
+  var all=resps||[];
+  var linkR=all.filter(function(r){return r.fid&&/^_link_\d+$/.test(r.fid)&&r.respuesta;});
+  var fileR=all.filter(function(r){return r.fid&&/^_file_\d+$/.test(r.fid)&&r.respuesta;});
   if(!linkR.length&&!fileR.length)return '';
-  var h='<div style="margin-top:.75rem;border-top:1px solid var(--border);padding-top:.75rem;">';
+  var h='<div style="margin-top:.85rem;border-top:2px solid var(--border);padding-top:.85rem;">';
   if(linkR.length){
-    h+='<div class="sub-q"><div class="sub-ql" style="color:#3B82F6;">🔗 Links adjuntos</div>';
+    h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3B82F6;margin-bottom:.5rem;">🔗 Links adjuntos</div>';
     linkR.forEach(function(r){
-      var desc=r.pregunta.replace(/^Link \d+ - /,'').replace(/^Link \d+$/,'');
-      h+='<div style="margin:.25rem 0;font-size:.78rem;"><a href="'+r.respuesta+'" target="_blank" style="color:#93C5FD;">'+r.respuesta+'</a>';
-      if(desc)h+='<div style="font-size:.72rem;color:var(--muted);margin-top:.1rem;">'+desc+'</div>';
+      var desc=r.pregunta.replace(/^Link \d+( — | - )?/,'').replace(/^Link \d+$/,'');
+      var url=r.respuesta;
+      if(!/^https?:\/\//i.test(url))url='https://'+url;
+      h+='<div style="margin:.35rem 0;">';
+      h+='<a href="'+url+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.35rem;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);color:#93C5FD;font-size:.74rem;font-weight:600;padding:.3rem .75rem;border-radius:3px;text-decoration:none;word-break:break-all;">🔗 '+r.respuesta+'</a>';
+      if(desc)h+='<div style="font-size:.7rem;color:var(--muted);margin-top:.15rem;padding-left:.25rem;">'+desc+'</div>';
       h+='</div>';
     });
-    h+='</div>';
   }
   if(fileR.length){
-    h+='<div class="sub-q"><div class="sub-ql" style="color:#F59E0B;">📎 Archivos adjuntos</div>';
+    if(linkR.length)h+='<div style="margin-top:.6rem;"></div>';
+    h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#F59E0B;margin-bottom:.5rem;">📎 Archivos adjuntos</div>';
     fileR.forEach(function(r){
-      var desc=r.pregunta.replace(/^Archivo \d+ - /,'').replace(/^Archivo \d+$/,'');
-      h+='<div style="margin:.25rem 0;font-size:.78rem;color:var(--text);">📄 '+r.respuesta;
-      if(desc)h+='<div style="font-size:.72rem;color:var(--muted);margin-top:.1rem;">'+desc+'</div>';
+      var idx=r.fid.replace('_file_','');
+      var b64R=all.find(function(x){return x.fid==='_file_b64_'+idx;});
+      var desc=r.pregunta.replace(/^Archivo \d+( — | - )?/,'').replace(/^Archivo \d+$/,'');
+      h+='<div style="margin:.35rem 0;">';
+      if(b64R&&b64R.respuesta){
+        h+='<a href="'+b64R.respuesta+'" download="'+r.respuesta+'" style="display:inline-flex;align-items:center;gap:.35rem;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#FCD34D;font-size:.74rem;font-weight:600;padding:.3rem .75rem;border-radius:3px;text-decoration:none;">📄 '+r.respuesta+' ↓ Descargar</a>';
+      }else{
+        h+='<span style="font-size:.78rem;color:var(--muted);">📄 '+r.respuesta+'</span>';
+      }
+      if(desc)h+='<div style="font-size:.7rem;color:var(--muted);margin-top:.15rem;padding-left:.25rem;">'+desc+'</div>';
       h+='</div>';
     });
-    h+='</div>';
   }
   h+='</div>';
   return h;
 }
 function pdfAttachHTML(resps){
-  var linkR=(resps||[]).filter(function(r){return r.fid&&r.fid.indexOf('_link_')===0&&r.respuesta;});
-  var fileR=(resps||[]).filter(function(r){return r.fid&&r.fid.indexOf('_file_')===0&&r.respuesta;});
+  var all=resps||[];
+  var linkR=all.filter(function(r){return r.fid&&/^_link_\d+$/.test(r.fid)&&r.respuesta;});
+  var fileR=all.filter(function(r){return r.fid&&/^_file_\d+$/.test(r.fid)&&r.respuesta;});
   if(!linkR.length&&!fileR.length)return '';
-  var h='<div style="margin-top:10px;border-top:1px solid #e8e8e8;padding-top:8px;">';
+  var h='<div style="margin-top:14px;border-top:2px solid #e8e8e8;padding-top:10px;">';
   if(linkR.length){
-    h+='<div style="font-size:9px;font-weight:700;color:#2563EB;margin-bottom:4px;">🔗 Links adjuntos</div>';
+    h+='<div style="font-size:10px;font-weight:700;color:#1d4ed8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">Links adjuntos</div>';
     linkR.forEach(function(r){
-      var desc=r.pregunta.replace(/^Link \d+ - /,'').replace(/^Link \d+$/,'');
-      h+='<div style="font-size:9px;margin-bottom:3px;"><a href="'+r.respuesta+'" style="color:#2563EB;">'+r.respuesta+'</a>';
-      if(desc)h+='<span style="color:#666;margin-left:4px;">— '+desc+'</span>';
+      var desc=r.pregunta.replace(/^Link \d+( — | - )?/,'').replace(/^Link \d+$/,'');
+      var url=r.respuesta;
+      if(!/^https?:\/\//i.test(url))url='https://'+url;
+      h+='<div style="margin-bottom:5px;padding:5px 8px;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:0 3px 3px 0;">';
+      h+='<a href="'+url+'" style="color:#1d4ed8;font-size:10px;word-break:break-all;">🔗 '+r.respuesta+'</a>';
+      if(desc)h+='<div style="font-size:9px;color:#6b7280;margin-top:2px;">'+desc+'</div>';
       h+='</div>';
     });
   }
   if(fileR.length){
-    h+='<div style="font-size:9px;font-weight:700;color:#D97706;margin-top:4px;margin-bottom:4px;">📎 Archivos adjuntos</div>';
+    h+='<div style="font-size:10px;font-weight:700;color:#b45309;margin-bottom:6px;margin-top:8px;text-transform:uppercase;letter-spacing:.06em;">Archivos adjuntos</div>';
     fileR.forEach(function(r){
-      var desc=r.pregunta.replace(/^Archivo \d+ - /,'').replace(/^Archivo \d+$/,'');
-      h+='<div style="font-size:9px;margin-bottom:3px;">📄 '+r.respuesta;
-      if(desc)h+='<span style="color:#666;margin-left:4px;">— '+desc+'</span>';
+      var desc=r.pregunta.replace(/^Archivo \d+( — | - )?/,'').replace(/^Archivo \d+$/,'');
+      h+='<div style="margin-bottom:5px;padding:5px 8px;background:#fffbeb;border-left:3px solid #f59e0b;border-radius:0 3px 3px 0;">';
+      h+='<span style="font-size:10px;">📄 '+r.respuesta+'</span>';
+      if(desc)h+='<div style="font-size:9px;color:#6b7280;margin-top:2px;">'+desc+'</div>';
       h+='</div>';
     });
   }
