@@ -2257,34 +2257,42 @@ function buildExPDF(ej){
 
   }else if(isGps){
     var GPS_ROWS_PDF=[
-      {id:'sueno',label:'Sue\u00f1o visualizado',sub:'5 a\u00f1os m\u00e1ximo',color:'#f5f5f5'},
-      {id:'lp',label:'Objetivo Largo Plazo',sub:'2 a\u00f1os',color:'#dbeafe'},
-      {id:'mp',label:'Objetivo Mediano Plazo',sub:'1 a\u00f1o',color:'#fef9c3'},
-      {id:'cp',label:'Objetivo Corto Plazo',sub:'3 meses \u2014 Solo Rendimiento',color:'#dcfce7'}
+      {id:'sueno',label:'Sueño visualizado',sub:'5 años máximo',color:'#f5f5f5',accent:'#aaa'},
+      {id:'lp',label:'Objetivo Largo Plazo',sub:'2 años',color:'#dbeafe',accent:'#93c5fd'},
+      {id:'mp',label:'Objetivo Mediano Plazo',sub:'1 año',color:'#fef9c3',accent:'#fcd34d'},
+      {id:'cp',label:'Objetivo Corto Plazo',sub:'3 meses — Solo Rendimiento',color:'#dcfce7',accent:'#4ade80',sr:true}
     ];
+    function gpsPdfCount(d,rid){var max=2;Object.keys(d).forEach(function(k){var m=k.match(new RegExp('^gps_'+rid+'_(\\d+)_'));if(m)max=Math.max(max,parseInt(m[1]));});return max+1;}
     var gpsData={};
     resps.forEach(function(r){if(r.fid)gpsData[r.fid]=r.respuesta||'';});
-    h+='<div style="margin:0 0 6px;overflow:hidden;border:1px solid #e8e8e8;border-radius:4px;">';
+    h+='<div style="overflow:hidden;border:1px solid #e8e8e8;border-radius:4px;margin-bottom:6px;">';
     h+='<table style="width:100%;border-collapse:collapse;font-size:10px;">';
     h+='<thead><tr style="background:#f0f0f0;">';
-    h+='<th style="padding:6px 8px;font-weight:700;text-align:left;border:1px solid #ddd;width:18%;">Ruta</th>';
-    h+='<th style="padding:6px 8px;font-weight:700;text-align:left;border:1px solid #ddd;width:32%;">Objetivo espec\u00edfico y medible</th>';
-    h+='<th style="padding:6px 8px;font-weight:700;text-align:center;border:1px solid #ddd;width:14%;">Tipo</th>';
-    h+='<th style="padding:6px 8px;font-weight:700;text-align:center;border:1px solid #ddd;width:12%;">Deadline</th>';
-    h+='<th style="padding:6px 8px;font-weight:700;text-align:left;border:1px solid #ddd;width:24%;">Habr\u00e9 logrado la mitad cuando...</th>';
+    h+='<th style="padding:5px 7px;font-weight:700;border:1px solid #ddd;width:28px;text-align:center;">#</th>';
+    h+='<th style="padding:5px 7px;font-weight:700;text-align:left;border:1px solid #ddd;">Objetivo específico y medible</th>';
+    h+='<th style="padding:5px 7px;font-weight:700;text-align:center;border:1px solid #ddd;width:90px;">Tipo</th>';
+    h+='<th style="padding:5px 7px;font-weight:700;text-align:center;border:1px solid #ddd;width:80px;">Deadline</th>';
+    h+='<th style="padding:5px 7px;font-weight:700;text-align:left;border:1px solid #ddd;width:28%;">Habré logrado la mitad cuando...</th>';
     h+='</tr></thead><tbody>';
     GPS_ROWS_PDF.forEach(function(row){
-      var obj=gpsData['gps_'+row.id+'_obj']||'';
-      var tipo=gpsData['gps_'+row.id+'_tipo']||(row.id==='cp'?'Rendimiento':'');
-      var dl=gpsData['gps_'+row.id+'_dl']||'';
-      var pi=gpsData['gps_'+row.id+'_pi']||'';
-      h+='<tr style="background:'+row.color+';vertical-align:top;">';
-      h+='<td style="padding:8px;border:1px solid #ddd;font-weight:700;font-size:10px;"><div>'+row.label+'</div><div style="font-size:8px;color:#666;margin-top:2px;">'+row.sub+'</div></td>';
-      h+='<td style="padding:8px;border:1px solid #ddd;white-space:pre-wrap;line-height:1.5;">'+obj+'</td>';
-      h+='<td style="padding:8px;border:1px solid #ddd;text-align:center;font-weight:600;">'+tipo+'</td>';
-      h+='<td style="padding:8px;border:1px solid #ddd;text-align:center;">'+dl+'</td>';
-      h+='<td style="padding:8px;border:1px solid #ddd;white-space:pre-wrap;line-height:1.5;">'+pi+'</td>';
-      h+='</tr>';
+      h+='<tr><td colspan="5" style="padding:5px 8px;background:'+row.color+';border-bottom:2px solid '+row.accent+';border-top:1px solid #ddd;">';
+      h+='<strong style="font-size:10px;">'+row.label+'</strong><span style="font-size:8px;color:#666;margin-left:6px;">'+row.sub+'</span></td></tr>';
+      var count=gpsPdfCount(gpsData,row.id);
+      var hasAny=false;
+      for(var i=0;i<count;i++){
+        var fb='gps_'+row.id+'_'+i+'_';
+        var obj=gpsData[fb+'obj']||'',tipo=gpsData[fb+'tipo']||(row.sr?'Rendimiento':''),dl=gpsData[fb+'dl']||'',pi=gpsData[fb+'pi']||'';
+        if(!obj&&!tipo&&!dl&&!pi)continue;
+        hasAny=true;
+        h+='<tr style="background:'+row.color+';vertical-align:top;">';
+        h+='<td style="padding:5px;border:1px solid #ddd;text-align:center;font-weight:700;color:#666;">'+(i+1)+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #ddd;white-space:pre-wrap;line-height:1.5;">'+obj+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #ddd;text-align:center;font-weight:600;">'+tipo+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #ddd;text-align:center;">'+dl+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #ddd;white-space:pre-wrap;line-height:1.5;">'+pi+'</td>';
+        h+='</tr>';
+      }
+      if(!hasAny)h+='<tr style="background:'+row.color+'"><td colspan="5" style="padding:5px 8px;border:1px solid #ddd;color:#aaa;font-style:italic;font-size:9px;">Sin objetivos completados.</td></tr>';
     });
     h+='</tbody></table></div>';
 
@@ -3464,7 +3472,7 @@ var GPS_ROWS = [
     color:'rgba(34,197,94,.07)', accent:'rgba(34,197,94,.5)', textColor:'#4ADE80', soloRendimiento:true }
 ];
 
-function renderGPSExercise(lid) {
+function gpsGetData(lid) {
   var draft = loadDraft(lid) || {};
   var sub = (getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
   var data = {};
@@ -3473,7 +3481,213 @@ function renderGPSExercise(lid) {
   } else if (sub && sub.respuestas) {
     sub.respuestas.forEach(function(r){ if(r.fid) data[r.fid] = r.respuesta||''; });
   }
+  return data;
+}
+
+function gpsRowCount(data, routeId) {
+  // Find max index stored, default 3
+  var max = 2;
+  Object.keys(data).forEach(function(k) {
+    var m = k.match(new RegExp('^gps_'+routeId+'_(\\d+)_'));
+    if (m) max = Math.max(max, parseInt(m[1]));
+  });
+  return max + 1;
+}
+
+function gpsRowHTML(lid, row, idx, data, isNew) {
+  var fBase = 'gps_'+row.id+'_'+idx+'_';
+  var obj  = isNew ? '' : (data[fBase+'obj']  || '');
+  var tipo = isNew ? (row.soloRendimiento?'Rendimiento':'') : (data[fBase+'tipo'] || (row.soloRendimiento?'Rendimiento':''));
+  var dl   = isNew ? '' : (data[fBase+'dl']   || '');
+  var pi   = isNew ? '' : (data[fBase+'pi']   || '');
+  var num  = idx + 1;
+  var h = '<tr data-route="'+row.id+'" data-idx="'+idx+'" style="background:'+row.color+';border-bottom:1px solid var(--border);vertical-align:top;">';
+  h += '<td style="padding:.5rem .6rem;border-right:1px solid var(--border);text-align:center;vertical-align:middle;color:var(--dim);font-size:.7rem;font-weight:700;width:32px;">'+num+'</td>';
+  h += '<td style="padding:.45rem .6rem;border-right:1px solid var(--border);">';
+  h += '<textarea class="gps-ta" data-fid="'+fBase+'obj" oninput="gpsDraft(\''+lid+'\')" placeholder="Objetivo específico y medible..." style="border-left:2px solid '+row.accent+';">'+obj+'</textarea>';
+  h += '</td>';
+  h += '<td style="padding:.45rem .4rem;border-right:1px solid var(--border);text-align:center;">';
+  if (row.soloRendimiento) {
+    h += '<div style="font-size:.72rem;font-weight:700;color:'+row.textColor+';padding:.3rem .4rem;background:'+row.color+';border:1px solid '+row.accent+';border-radius:3px;text-align:center;">Rendimiento</div>';
+    h += '<input type="hidden" data-fid="'+fBase+'tipo" value="Rendimiento">';
+  } else {
+    h += '<select class="gps-sel" data-fid="'+fBase+'tipo" onchange="gpsDraft(\''+lid+'\')" style="border-color:'+row.accent+';">';
+    h += '<option value="">— tipo —</option>';
+    h += '<option value="Resultado"'+(tipo==='Resultado'?' selected':'')+'>Resultado</option>';
+    h += '<option value="Rendimiento"'+(tipo==='Rendimiento'?' selected':'')+'>Rendimiento</option>';
+    h += '</select>';
+  }
+  h += '</td>';
+  h += '<td style="padding:.45rem .4rem;border-right:1px solid var(--border);">';
+  h += '<input type="text" class="gps-input" data-fid="'+fBase+'dl" oninput="gpsDraft(\''+lid+'\')" placeholder="ej: Jun 2026" value="'+dl+'" style="border-color:'+row.accent+';">';
+  h += '</td>';
+  h += '<td style="padding:.45rem .6rem;">';
+  h += '<textarea class="gps-ta" data-fid="'+fBase+'pi" oninput="gpsDraft(\''+lid+'\')" placeholder="¿Qué habrás logrado a mitad del camino?" style="border-left:2px solid '+row.accent+';">'+pi+'</textarea>';
+  h += '</td>';
+  h += '</tr>';
+  return h;
+}
+
+function renderGPSExercise(lid) {
+  var data = gpsGetData(lid);
   var alreadyDone = isDone(lid);
+
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  h += '<div class="tq-hdr-box">';
+  h += '<div class="ex-badge">Planificación de Objetivos</div>';
+  h += '<div class="tq-hdr-title">GPS de Objetivos</div>';
+  h += '<div class="tq-hdr-sub" style="margin-top:.2rem;">Definí tu ruta de objetivos: sueño a 5 años, largo plazo, mediano plazo y corto plazo.</div>';
+  h += '</div>';
+
+  h += '<div style="overflow-x:auto;">';
+  h += '<table id="gps-table" style="width:100%;border-collapse:collapse;min-width:680px;">';
+  h += '<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
+  h += '<th style="padding:.65rem .6rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:32px;">#</th>';
+  h += '<th style="padding:.65rem 1rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);">Objetivo específico y medible</th>';
+  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:110px;">Tipo</th>';
+  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:100px;">Deadline</th>';
+  h += '<th style="padding:.65rem 1rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:28%;">Habré logrado la mitad cuando...</th>';
+  h += '</tr></thead><tbody id="gps-body">';
+
+  GPS_ROWS.forEach(function(row) {
+    var count = gpsRowCount(data, row.id);
+    // Section header row
+    h += '<tr style="border-bottom:1px solid var(--border);">';
+    h += '<td colspan="5" style="padding:.6rem 1rem;background:'+row.color+';border-bottom:2px solid '+row.accent+';">';
+    h += '<span style="font-size:.8rem;font-weight:800;color:'+row.textColor+';">'+row.label+'</span>';
+    h += '<span style="font-size:.68rem;color:var(--dim);margin-left:.6rem;">'+row.sub+'</span>';
+    if (row.soloRendimiento) h += '<span style="font-size:.62rem;font-weight:700;color:'+row.textColor+';opacity:.75;margin-left:.75rem;">★ Solo Rendimiento</span>';
+    h += '</td></tr>';
+    // Input rows
+    for (var i = 0; i < count; i++) {
+      h += gpsRowHTML(lid, row, i, data, false);
+    }
+    // Add button row
+    h += '<tr id="gps-add-'+row.id+'" style="border-bottom:2px solid var(--border);">';
+    h += '<td colspan="5" style="padding:.4rem .75rem;background:'+row.color+';text-align:left;">';
+    h += '<button onclick="gpsAddRow(\''+lid+'\',\''+row.id+'\')" style="background:none;border:1px dashed '+row.accent+';color:'+row.textColor+';font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;padding:.3rem .9rem;border-radius:3px;cursor:pointer;opacity:.8;transition:opacity .2s;" onmouseover="this.style.opacity=\'1\'" onmouseout="this.style.opacity=\'.8\'">+ Agregar objetivo</button>';
+    h += '</td></tr>';
+  });
+
+  h += '</tbody></table></div>';
+  h += '<div class="ex-submit-row">';
+  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="gpsSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
+  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '</div></div>';
+
+  document.getElementById('mc-body').innerHTML = h;
+}
+
+function gpsAddRow(lid, routeId) {
+  var row = GPS_ROWS.find(function(r){return r.id===routeId;});
+  if (!row) return;
+  var tbody = document.getElementById('gps-body');
+  var addRow = document.getElementById('gps-add-'+routeId);
+  if (!tbody || !addRow) return;
+  // Count existing rows for this route
+  var existing = tbody.querySelectorAll('[data-route="'+routeId+'"]');
+  var idx = existing.length;
+  var data = gpsGetData(lid);
+  var newTr = document.createElement('tbody');
+  newTr.innerHTML = gpsRowHTML(lid, row, idx, data, true);
+  var tr = newTr.firstChild;
+  tbody.insertBefore(tr, addRow);
+  gpsDraft(lid);
+}
+
+function gpsDraft(lid) {
+  var data = {};
+  document.querySelectorAll('[data-fid^="gps_"]').forEach(function(el) {
+    if (el.value) data[el.getAttribute('data-fid')] = el.value;
+  });
+  saveDraft(lid, data);
+  updateSaveStatus('Borrador guardado', 'rgba(238,239,243,.5)');
+}
+
+function gpsSubmit(lid) {
+  var user = USERS[S.user];
+  var answers = [];
+  GPS_ROWS.forEach(function(row) {
+    var rows = document.querySelectorAll('[data-route="'+row.id+'"]');
+    rows.forEach(function(tr, i) {
+      var fBase = 'gps_'+row.id+'_'+i+'_';
+      ['obj','tipo','dl','pi'].forEach(function(f) {
+        var el = tr.querySelector('[data-fid="'+fBase+f+'"]');
+        var val = el ? el.value : (f==='tipo'&&row.soloRendimiento ? 'Rendimiento' : '');
+        answers.push({ fid:fBase+f, pregunta:row.label+' #'+(i+1)+' — '+({obj:'Objetivo',tipo:'Tipo',dl:'Deadline',pi:'Punto intermedio'}[f]), respuesta:val });
+      });
+    });
+  });
+  var rec = { ts:Date.now(), fecha:new Date().toLocaleString('es-AR'),
+    jugador:user.name, usuario:S.user,
+    unidad:'Unidad 3', ejercicio:'GPS de Objetivos', lid:lid, respuestas:answers };
+  var saved = getLocalSubs();
+  var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
+  var isUpdate = idx >= 0;
+  if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+  localStorage.setItem('pp_submissions', JSON.stringify(saved));
+  markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
+  var btn = document.getElementById('btn-ex-'+lid);
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
+}
+
+/* ── GPS ADMIN VIEW ─────────────────────────── */
+function renderGPSAdminView(ej, cid) {
+  var resps = ej.respuestas || [];
+  var data = {};
+  resps.forEach(function(r){ if(r.fid) data[r.fid] = r.respuesta||''; });
+
+  var h = '<div style="padding:.75rem;overflow-x:auto;">';
+  h += '<table style="width:100%;border-collapse:collapse;min-width:600px;">';
+  h += '<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
+  h += '<th style="padding:.55rem .6rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:28px;">#</th>';
+  h += '<th style="padding:.55rem .85rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);">Objetivo</th>';
+  h += '<th style="padding:.55rem .4rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:100px;">Tipo</th>';
+  h += '<th style="padding:.55rem .4rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:90px;">Deadline</th>';
+  h += '<th style="padding:.55rem .85rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:28%;">Punto intermedio</th>';
+  h += '</tr></thead><tbody>';
+
+  GPS_ROWS.forEach(function(row) {
+    var count = gpsRowCount(data, row.id);
+    // Section header
+    h += '<tr><td colspan="5" style="padding:.55rem .85rem;background:'+row.color+';border-bottom:2px solid '+row.accent+';border-top:1px solid var(--border);">';
+    h += '<span style="font-size:.78rem;font-weight:800;color:'+row.textColor+';">'+row.label+'</span>';
+    h += '<span style="font-size:.65rem;color:var(--dim);margin-left:.5rem;">'+row.sub+'</span>';
+    h += '</td></tr>';
+    // Data rows
+    var hasAny = false;
+    for (var i = 0; i < count; i++) {
+      var fBase = 'gps_'+row.id+'_'+i+'_';
+      var obj  = data[fBase+'obj']  || '';
+      var tipo = data[fBase+'tipo'] || (row.soloRendimiento?'Rendimiento':'');
+      var dl   = data[fBase+'dl']   || '';
+      var pi   = data[fBase+'pi']   || '';
+      if (!obj && !tipo && !dl && !pi) continue;
+      hasAny = true;
+      h += '<tr style="background:'+row.color+';border-bottom:1px solid var(--border);vertical-align:top;">';
+      h += '<td style="padding:.6rem .5rem;border-right:1px solid var(--border);text-align:center;color:var(--dim);font-size:.7rem;font-weight:700;vertical-align:middle;">'+(i+1)+'</td>';
+      h += '<td style="padding:.6rem .85rem;border-right:1px solid var(--border);font-size:.82rem;line-height:1.6;white-space:pre-wrap;">'+obj+'</td>';
+      h += '<td style="padding:.6rem .4rem;border-right:1px solid var(--border);text-align:center;font-size:.78rem;font-weight:700;color:'+row.textColor+';">'+tipo+'</td>';
+      h += '<td style="padding:.6rem .4rem;border-right:1px solid var(--border);text-align:center;font-size:.78rem;">'+dl+'</td>';
+      h += '<td style="padding:.6rem .85rem;font-size:.82rem;line-height:1.6;white-space:pre-wrap;">'+pi+'</td>';
+      h += '</tr>';
+    }
+    if (!hasAny) {
+      h += '<tr style="background:'+row.color+';border-bottom:1px solid var(--border);"><td colspan="5" style="padding:.6rem .85rem;font-size:.75rem;color:var(--dim);font-style:italic;">Sin objetivos completados.</td></tr>';
+    }
+  });
+
+  h += '</tbody></table></div>';
+  var el = document.getElementById(cid);
+  if(el) el.innerHTML = h;
+}
 
   var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
 
