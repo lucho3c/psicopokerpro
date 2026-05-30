@@ -138,6 +138,32 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .btn-nxt{display:flex;align-items:center;gap:.45rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1.2rem;border-radius:4px;transition:all .2s;}
 .btn-nxt:hover{border-color:var(--red);color:var(--text);}
 
+
+
+/* ── PMT STYLES ────────────────────────────── */
+.pmt-section{margin-bottom:1rem;}
+.pmt-sec-header{display:flex;align-items:baseline;gap:.5rem;padding:.6rem 0 .45rem;border-bottom:2px solid rgba(232,49,42,.18);margin-bottom:.6rem;}
+.pmt-sec-num{font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--red);}
+.pmt-sec-title{font-size:.82rem;font-weight:700;color:var(--text);}
+.pmt-item{padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.pmt-item:last-child{border-bottom:none;}
+.pmt-item-top{display:flex;align-items:center;gap:.75rem;}
+.pmt-item-label{font-size:.82rem;font-weight:600;flex:1;color:var(--text);line-height:1.35;}
+.pmt-item-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
+.pmt-ibar-wrap{width:72px;}
+.pmt-ibar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
+.pmt-ibar-fill{height:100%;background:var(--red);border-radius:2px;transition:width .3s;}
+.pmt-item-score{font-size:.75rem;font-weight:800;min-width:22px;text-align:right;transition:color .2s;color:var(--dim);}
+.pmt-num-input{width:52px;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:700;padding:.35rem .4rem;border-radius:4px;outline:none;text-align:center;transition:border-color .2s;}
+.pmt-num-input:focus{border-color:var(--red);}
+.pmt-num-input::-webkit-inner-spin-button,.pmt-num-input::-webkit-outer-spin-button{opacity:.4;}
+.pmt-justif{width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.74rem;padding:.45rem .7rem;border-radius:4px;outline:none;resize:vertical;min-height:38px;margin-top:.4rem;transition:border-color .2s;line-height:1.5;}
+.pmt-justif:focus{border-color:rgba(255,255,255,.15);color:var(--text);}
+.pmt-justif::placeholder{color:var(--dim);}
+.pmt-divider{height:1px;background:var(--border);margin:1rem 0;}
+.pmt-low{color:#60A5FA !important;}
+.pmt-mid{color:#FCD34D !important;}
+.pmt-hi{color:#4ADE80 !important;}
 /* ── EXERCISE STYLES ── */
 .ex-wrap{background:var(--card);border:1px solid var(--border-r);border-top:2px solid var(--red);border-radius:5px;margin-bottom:1.5rem;overflow:hidden;}
 .ex-header{padding:1.1rem 1.25rem .9rem;border-bottom:1px solid var(--border);background:rgba(232,49,42,.04);}
@@ -287,6 +313,14 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .tq-range-table td{padding:.6rem .7rem;border:1px solid var(--border);vertical-align:top;line-height:1.55;}
 .tq-range-table td:first-child{font-weight:700;white-space:nowrap;background:var(--bg3);}
 .attach-section{border-top:2px solid var(--border);padding:1.1rem 1.25rem;background:var(--bg3);}
+.gps-ta{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.8rem;padding:.5rem .7rem;resize:vertical;min-height:72px;outline:none;transition:border-color .2s;line-height:1.6;}
+.gps-ta:focus{border-color:var(--red);background:rgba(255,255,255,.05);}
+.gps-ta::placeholder{color:var(--dim);}
+.gps-sel{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.75rem;padding:.45rem .6rem;border-radius:3px;outline:none;cursor:pointer;transition:border-color .2s;}
+.gps-sel:focus{border-color:var(--red);}
+.gps-input{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.78rem;padding:.45rem .6rem;border-radius:3px;outline:none;transition:border-color .2s;text-align:center;}
+.gps-input:focus{border-color:var(--red);}
+.gps-input::placeholder{color:var(--dim);font-size:.7rem;}
 .attach-title{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;}
 .attach-group{margin-bottom:1rem;}
 .attach-group-label{font-size:.65rem;font-weight:700;color:var(--muted);margin-bottom:.45rem;}
@@ -719,8 +753,8 @@ var C = [
       { id:'u1l1', title:'Registro una semana', driveId:'1m6A32xyvHp_rlCidxyP-Oi44O4vISflQ',
         ex:{ type:'grid', unit:'Unidad 1', name:'Registro una semana' } },
       { id:'u1l2', title:'Los 2 Desafios', driveId:'1FBh8vIHDuwcYMaAhRlgg6V5R-3xZ77Sk' },
-      { id:'u1l3', title:'Poker Mindset Test', driveId:'1FzCP7Tt9d54eqrmkKkenltP3tbhgheuy', ex:{ type:'form', unit:'Unidad 1', name:'Poker Mindset Test' } },
-      { id:'u1l4', title:'Inventario Psicologico de Ejecucion Deportiva', driveId:'1-3QE03f6XHNdn4Kt13TnTMrCZ0UQK0qY', ex:{ type:'form', unit:'Unidad 1', name:'IPED - Inventario Psicologico' } },
+      { id:'u1l3', title:'Poker Mindset Test', driveId:'1FzCP7Tt9d54eqrmkKkenltP3tbhgheuy', ex:{ type:'pmt', unit:'Unidad 1', name:'Poker Mindset Test' } },
+      { id:'u1l4', title:'Inventario Psicologico de Ejecucion Deportiva', driveId:'1-3QE03f6XHNdn4Kt13TnTMrCZ0UQK0qY', ex:{ type:'iped', unit:'Unidad 1', name:'IPED - Inventario Psicológico' } },
       { id:'u1l5', title:'Task and Ego Orientation in Sport Questionnaire', driveId:'10KJXOs20u_OLfV35EoLr5ZEzbWLUn6UL', ex:{ type:'teosq', unit:'Unidad 1', name:'TEOSQ' } },
       { id:'u1l6', title:'Primera Sesion 1 a 1', type:'session' }
     ]
@@ -745,7 +779,7 @@ var C = [
       { id:'u3l2', title:'Ejercicio 1 - Fantasia guiada', driveId:'1rOWd0v8kcNscStROKb5V9l7Ri6rSvDEb' },
       { id:'u3l3', title:'Ejercicio 2 - Dia ideal de tu vida en 5 anos', driveId:'19emLaGmkZZOzO-BXrjS6s2jEwk49nXda', ex:{ type:'form', unit:'Unidad 3', name:'Dia ideal de tu vida en 5 anos' } },
       { id:'u3l4', title:'Aspectos teoricos de la Motivacion', driveId:'1QmjY5YYbg0aDCmEfs6ar2YWrN8kFM_El' },
-      { id:'u3l5', title:'Ejercicio 3 - GPS', driveId:'', ex:{ type:'form', unit:'Unidad 3', name:'GPS de Objetivos' } },
+      { id:'u3l5', title:'Ejercicio 3 - GPS', driveId:'', ex:{ type:'gps', unit:'Unidad 3', name:'GPS de Objetivos' } },
       { id:'u3l6', title:'Ejercicio 4 - La Rutina Ganadora', driveId:'1COivUMh2sAcPa_jFKlmGO-izPCDcp64l', ex:{ type:'grid', unit:'Unidad 3', name:'Rutina Ganadora' } },
       { id:'u3l7', title:'Tercera sesion 1 a 1', type:'session' }
     ]
@@ -962,16 +996,9 @@ var EX_DEFS = {
   }
 ,
 
-  'u1l4':{ type:'form', unit:'Unidad 1', name:'IPED - Inventario Psicologico', sections:[{ title:'Items 1-11', questions:[{ fid:'u1l4_1', type:'scale', label:'1. Me veo mas como un perdedor que como un ganador durante la competencia.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_2', type:'scale', label:'2. Me enojo y me frustro durante las partidas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_3', type:'scale', label:'3. Me distraigo y pierdo mi concentracion durante las partidas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_4', type:'scale', label:'4. Antes de jugar me imagino ejecutando mis acciones y rindiendo perfectamente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_5', type:'scale', label:'5. Estoy muy motivado/a para dar lo mejor de mi en cada sesion.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_6', type:'scale', label:'6. Puedo mantener emociones positivas durante las partidas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_7', type:'scale', label:'7. Durante las partidas pienso positivamente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_8', type:'scale', label:'8. Creo en mi mismo/a como jugador.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_9', type:'scale', label:'9. Me pongo demasiado nervioso/a durante las sesiones.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_10', type:'scale', label:'10. En los momentos criticos siento que mi cabeza va demasiado rapido.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_11', type:'scale', label:'11. Practico mentalmente mis habilidades.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] }]},{ title:'Items 12-22', questions:[{ fid:'u1l4_12', type:'scale', label:'12. Trabajo y estudio duro gracias a los objetivos que me fije.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_13', type:'scale', label:'13. Disfruto durante las sesiones aunque me encuentre con dificultades.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_14', type:'scale', label:'14. Durante las partidas mantengo dialogos internos negativos.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_15', type:'scale', label:'15. Pierdo mi confianza facilmente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_16', type:'scale', label:'16. Los errores me hacen sentir y pensar negativamente sobre mi mismo.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_17', type:'scale', label:'17. Puedo controlar rapidamente mis emociones y recuperar la concentracion.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_18', type:'scale', label:'18. Para mi es facil pensar en imagenes acerca del poker.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_19', type:'scale', label:'19. No necesito que me empujen a estudiar duro. Yo soy mi mejor motivador.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_20', type:'scale', label:'20. Cuando las cosas se vuelven contra mi, tiendo a bajonearme emocionalmente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_21', type:'scale', label:'21. Pongo todo mi esfuerzo durante las sesiones, pase lo que pase.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_22', type:'scale', label:'22. Puedo rendir por encima de mi talento y mis habilidades.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] }]},{ title:'Items 23-32', questions:[{ fid:'u1l4_23', type:'scale', label:'23. Durante las sesiones siento tension fisica que me afecta.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_24', type:'scale', label:'24. Tengo momentos de desconcentracion durante las partidas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_25', type:'scale', label:'25. Antes de jugar me visualizo superando situaciones dificiles.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_26', type:'scale', label:'26. Daria lo que fuera por desarrollar todo mi potencial como jugador.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_27', type:'scale', label:'27. Estudio con una intensidad alta y positiva.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_28', type:'scale', label:'28. Controlando mi pensamiento puedo transformar estados negativos en positivos.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_29', type:'scale', label:'29. Soy un jugador fuerte mentalmente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_30', type:'scale', label:'30. Las situaciones incontrolables (bad beats, varianza) me hacen derrumbar.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_31', type:'scale', label:'31. Durante las sesiones pienso en errores pasados u oportunidades perdidas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_32', type:'scale', label:'32. Durante las sesiones utilizo imagenes mentales que me ayudan a rendir mejor.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] }]},{ title:'Items 33-42', questions:[{ fid:'u1l4_33', type:'scale', label:'33. Estoy aburrido/a y quemado/a con respecto al poker.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_34', type:'scale', label:'34. Las situaciones dificiles me suponen un desafio y me inspiran.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_35', type:'scale', label:'35. Mi coach diria de mi que tengo una buena actitud.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_36', type:'scale', label:'36. La imagen que proyecto es la de ser un luchador.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_37', type:'scale', label:'37. Puedo permanecer tranquilo/a durante las sesiones aunque aparezcan problemas.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_38', type:'scale', label:'38. Mi concentracion se rompe facilmente.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_39', type:'scale', label:'39. Cuando me visualizo jugando puedo ver y sentir las cosas de forma muy real.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_40', type:'scale', label:'40. Al despertar me siento entusiasmado/a con el estudio y la competencia.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_41', type:'scale', label:'41. Jugar al poker me aporta un sentido genuino de disfrute y realizacion.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] },{ fid:'u1l4_42', type:'scale', label:'42. Yo puedo convertir una crisis en una oportunidad.', options:['Casi nunca (1)','Pocas veces (2)','A veces si/no (3)','Muchas veces (4)','Casi siempre (5)'] }]}] },
+    'u1l4':{ type:'iped', unit:'Unidad 1', name:'IPED - Inventario Psicológico de Ejecución Deportiva' },
   'u1l5':{ type:'form', unit:'Unidad 1', name:'TEOSQ - Orientacion al Ego y la Tarea', sections:[{ title:'Las 13 afirmaciones', questions:[{ fid:'u1l5_1', type:'scale', label:'1. Yo me siento con mas exito en el poker cuando: ...soy el/la unico/a que puede hacer la jugada o habilidad en cuestion.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_2', type:'scale', label:'2. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad y me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_3', type:'scale', label:'3. Yo me siento con mas exito en el poker cuando: ...yo puedo hacerlo mejor que mis companeros/as.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_4', type:'scale', label:'4. Yo me siento con mas exito en el poker cuando: ...los otros no pueden hacerlo tan bien como yo.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_5', type:'scale', label:'5. Yo me siento con mas exito en el poker cuando: ...aprendo algo que es divertido.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_6', type:'scale', label:'6. Yo me siento con mas exito en el poker cuando: ...otros fallan y yo no.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_7', type:'scale', label:'7. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad esforzandome mucho.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_8', type:'scale', label:'8. Yo me siento con mas exito en el poker cuando: ...trabajo realmente duro.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_9', type:'scale', label:'9. Yo me siento con mas exito en el poker cuando: ...consigo mas resultados que todos.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_10', type:'scale', label:'10. Yo me siento con mas exito en el poker cuando: ...algo que aprendi me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_11', type:'scale', label:'11. Yo me siento con mas exito en el poker cuando: ...soy el/la mejor.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_12', type:'scale', label:'12. Yo me siento con mas exito en el poker cuando: ...noto que una habilidad que aprendi funciona.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_13', type:'scale', label:'13. Yo me siento con mas exito en el poker cuando: ...pongo todo lo que esta de mi parte.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] }]}] },
-  'u3l5':{ type:'form', unit:'Unidad 3', name:'GPS de Objetivos', sections:[
-    { title:'Tu ruta de objetivos', questions:[
-      { fid:'u3l5_1', label:'SUENO VISUALIZADO (5 anos): objetivo especifico y medible, tipo, deadline, punto intermedio' },
-      { fid:'u3l5_2', label:'OBJETIVO LARGO PLAZO (2 anos): objetivo, tipo, deadline, punto intermedio' },
-      { fid:'u3l5_3', label:'OBJETIVO MEDIANO PLAZO (1 ano): objetivo, tipo, deadline, punto intermedio' },
-      { fid:'u3l5_4', label:'OBJETIVO CORTO PLAZO (3 meses — SOLO de Rendimiento, no de Resultado): que podes controlar y medir?' }
-    ]}
-  ]},
+  'u3l5':{ type:'gps', unit:'Unidad 3', name:'GPS de Objetivos' },
   'u3l6':{ type:'grid', unit:'Unidad 3', name:'Rutina Ganadora',
     hours:['7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'],
     days:['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'],
@@ -1044,7 +1071,7 @@ var EX_DEFS = {
   ]},
 
 
-  'u1l3':{ type:'form', unit:'Unidad 1', name:'Poker Mindset Test', sections:[
+  'u1l3':{ type:'pmt', unit:'Unidad 1', name:'Poker Mindset Test', sections:[
     { title:'1. Tomar buenas decisiones (nota del 1 al 10)', questions:[
       { fid:'u1l3_1', label:'Conocer el juego: tu nota y por que' },
       { fid:'u1l3_2', label:'Constancia en el estudio: tu nota y por que' },
@@ -1140,13 +1167,11 @@ var EX_DEFS = {
     ]}
   ]},
   'u3l3':{ type:'form', unit:'Unidad 3', name:'Dia ideal de tu vida en 5 anos', sections:[
-    { title:'Tu dia ideal perfecto', questions:[
-      { fid:'u3l3_1', label:'Al despertar: que ves, quien esta contigo, donde estas, que tiempo hace?' },
-      { fid:'u3l3_2', label:'Como es tu manana? Actividades, estado de animo, con quien?' },
-      { fid:'u3l3_3', label:'Como es tu trabajo? Con quien, que estas creando, para quien, que obtienen?' },
-      { fid:'u3l3_4', label:'Como termina tu dia? Actividades, cena, conversaciones, relax' },
-      { fid:'u3l3_5', label:'Describe TODO lo que tus ojos veran y lo que tu cuerpo sentira. Dejate llevar.' }
-    ]}
+    { title:'¿Cómo sería un día ideal para vos una vez que te conviertas en esa persona?',
+      desc:'¿Qué ves cuando te despiertas, quién está contigo, qué estás desayunando? ¿Dónde estás? ¿Apartamento, casa, habitación de hotel? ¿Qué tiempo hace? ¿Estás cerca del océano, en la ciudad, rodeado de montañas? Recuerda, es tu día perfecto, ¡todo es posible! ¿Qué es lo siguiente? ¿Estás de vacaciones? ¿Vives aquí? ¿Vas a pie al trabajo? ¿Vas a salir a la naturaleza? ¿Tienes una oficina? ¿Estás pasando el rato en un estudio, una galería o simplemente haciendo cosas desde tu portátil? ¿Cómo es tu trabajo? ¿Con quién trabajas? ¿En equipo o solo? ¿Cómo trabajas? ¿Cómo es tu estado de ánimo? ¿Qué estás creando? ¿Para quién lo haces? ¿Qué obtienen estas personas (y qué obtienes tú) de esto? ¿Qué es lo siguiente? ¿Vas a ir a comer? ¿Al gimnasio? ¿Estás haciendo Yoga? ¿Dormir la siesta? ¿Juegos de video? ¿Tienes mucho tiempo para ti mismo? ¿Para la familia, la pareja, los amigos, los niños? ¿Cómo termina tu día? ¿Deporte? ¿Películas? ¿Alguna actividad? ¿Cenas en un restaurante o te cocinas a ti mismo? ¿Cómo es tu cocina? ¿Qué tipo de comida estás comiendo? ¿Qué es lo siguiente? ¿Tienes conversaciones interesantes con tu pareja, amigos? ¿Sales a bailar, te relajas afuera mirando las estrellas? Describe TODO lo que tus ojos verían y lo que tu cuerpo sentiría en tu día ideal.\n\nTené en cuenta que si al final de la descripción, no llorás... ¡Hay algo que está faltando!',
+      questions:[
+        { fid:'u3l3_1', label:'Tu descripción (opcional)' }
+      ]}
   ]},
   'u4l2':{ type:'form', unit:'Unidad 4', name:'Diagnostico actual de Rutina', sections:[
     { title:'Antes de la sesion', questions:[
@@ -1416,10 +1441,15 @@ function renderFormExercise(lid, def) {
     h += '<div class="ex-sec" id="' + secId + '">';
     h += '<div class="ex-sec-hdr" onclick="toggleExSec(\'' + secId + '\')">';
     h += '<div><p class="ex-sec-num">Seccion ' + (si+1) + ' de ' + def.sections.length + '</p>';
-    h += '<p class="ex-sec-title">' + sec.title + '</p></div>';
+    h += '<p class="ex-sec-title" style="' + (sec.desc ? 'font-size:1rem;font-weight:800;line-height:1.4;' : '') + '">' + sec.title + '</p></div>';
     h += '<div class="ex-sec-right"><div class="ex-sec-done" id="done-' + secId + '">&#10003;</div>';
     h += '<span class="ex-chevron">&#9660;</span></div></div>';
     h += '<div class="ex-sec-body">';
+    if (sec.desc) {
+      h += '<div style="background:rgba(232,49,42,.04);border-left:3px solid rgba(232,49,42,.3);padding:.85rem 1.1rem;margin-bottom:1.1rem;border-radius:0 4px 4px 0;">';
+      h += '<p style="font-size:.82rem;color:var(--muted);line-height:1.8;white-space:pre-line;">' + sec.desc + '</p>';
+      h += '</div>';
+    }
     sec.questions.forEach(function(q, qi) {
       var saved = draft && draft[q.fid] ? draft[q.fid] : '';
       var isReflex = q.fid.endsWith('rl');
@@ -1738,6 +1768,21 @@ function renderContent(unit, lid) {
       renderTEOSQExercise(lid);
       document.getElementById('mc').scrollTop = 0;
       return;
+    } else if (exType === 'pmt') {
+      document.getElementById('mc-body').innerHTML = body;
+      renderPMTExercise(lid);
+      document.getElementById('mc').scrollTop = 0;
+      return;
+    } else if (exType === 'iped') {
+      document.getElementById('mc-body').innerHTML = body;
+      renderIPEDExercise(lid);
+      document.getElementById('mc').scrollTop = 0;
+      return;
+    } else if (exType === 'gps') {
+      document.getElementById('mc-body').innerHTML = body;
+      renderGPSExercise(lid);
+      document.getElementById('mc').scrollTop = 0;
+      return;
     } else if (exType === 'grid') body += renderGridExercise(lid, def);
     else if (exType === 'form') body += renderFormExercise(lid, def);
   }
@@ -1802,76 +1847,6 @@ function showToast(msg) {
 }
 
 
-var adminData=null,activeExIdx=-1;
-function showAdmin(){var usr=USERS[S.user];document.getElementById('nav-av3').textContent=usr.name[0].toUpperCase();showView('vadmin');fetchAdminData();}
-function fetchAdminData(){
-  var subs=getLocalSubs();
-  buildAdminData(subs);
-  fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
-  .then(function(r){return r.json();})
-  .then(function(resp){
-    if(!resp.records||!resp.records.length)return;
-    var local=getLocalSubs(),keys={};
-    local.forEach(function(s){keys[(s.jugador||'')+'|'+(s.fecha||'')]=1;});
-    resp.records.forEach(function(rec){
-      var f=rec.fields,key=(f.Jugador||'')+'|'+(f.Fecha||'');
-      if(!keys[key]){
-        var resps=(f.Respuestas||'').split('\n\n---\n\n').map(function(b){var nl=b.indexOf('\n');return{pregunta:nl>-1?b.substring(0,nl):b,respuesta:nl>-1?b.substring(nl+1):''};});
-        local.push({ts:0,fecha:f.Fecha||'',jugador:f.Jugador||'',usuario:f.Usuario||'',unidad:f.Unidad||'',ejercicio:f.Ejercicio||'',respuestas:resps});
-      }
-    });
-    localStorage.setItem('pp_submissions',JSON.stringify(local));
-    buildAdminData(local);
-  }).catch(function(){});
-}
-function buildAdminData(subs){
-  var groups={};
-  subs.forEach(function(s){var k=(s.unidad||'')+' - '+(s.ejercicio||'');if(!groups[k])groups[k]={ejercicio:k,registros:[]};groups[k].registros.push(s);});
-  adminData=Object.values(groups);
-  if(!adminData.length){
-    document.getElementById('admin-ex-list').innerHTML='<div style="padding:1rem 1.1rem;font-size:.75rem;color:var(--dim);">Sin respuestas aun</div>';
-    document.getElementById('admin-content').innerHTML='<div style="text-align:center;padding:4rem 2rem;"><div style="font-size:2rem;opacity:.15;margin-bottom:1rem;">&#128203;</div><p style="font-size:.85rem;color:var(--muted);">Cuando los jugadores completen ejercicios apareceran aca.</p></div>';
-    return;
-  }
-  var h='';
-  adminData.forEach(function(ex,i){
-    var n=(ex.registros||[]).length,active=i===activeExIdx;
-    h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showAdminEx('+i+')">';
-    h+='<div class="aei-name">'+ex.ejercicio+'</div>';
-    h+='<div class="aei-count">'+n+' respuesta'+(n!==1?'s':'')+'</div></div>';
-  });
-  document.getElementById('admin-ex-list').innerHTML=h;
-  if(activeExIdx<0||activeExIdx>=adminData.length)showAdminEx(0);
-  else showAdminEx(activeExIdx);
-}
-function showAdminEx(idx){
-  activeExIdx=idx;
-  buildAdminData(getLocalSubs());
-  if(!adminData||!adminData[idx])return;
-  var ex=adminData[idx],registros=ex.registros||[],h='';
-  h+='<div style="margin-bottom:1.5rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.35rem;">'+ex.ejercicio+'</div>';
-  h+='<div style="font-size:1.1rem;font-weight:800;">'+registros.length+' respuesta'+(registros.length!==1?'s':'')+'</div></div>';
-  if(!registros.length){h+='<p style="color:var(--muted)">Sin respuestas aun.</p>';}
-  else{
-    var jugadores={};registros.forEach(function(r){jugadores[r.usuario||'?']=1;});
-    h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.75rem;">';
-    h+=sc('Respuestas',registros.length)+sc('Ultimo envio',(registros[0].fecha||'-').substring(0,16))+sc('Jugadores',Object.keys(jugadores).length);
-    h+='</div>';
-    registros.forEach(function(rec){
-      var nombre=rec.jugador||'?',usuario=rec.usuario||'',fecha=rec.fecha||'',resps=rec.respuestas||[];
-      h+='<div class="sub-card"><div class="sub-card-hdr">';
-      h+='<div class="sub-av">'+(nombre[0]||'?').toUpperCase()+'</div>';
-      h+='<div><div class="sub-name">'+nombre+'</div><div class="sub-meta">@'+usuario+' &middot; '+fecha+'</div></div>';
-      h+='<button class="sub-toggle" onclick="toggleSub(this)">Ver &#9660;</button>';
-      h+='</div><div class="sub-body" style="display:none;">';
-      resps.forEach(function(r){if(r.respuesta&&r.respuesta.trim()){h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';}});
-      h+='</div></div>';
-    });
-  }
-  document.getElementById('admin-content').innerHTML=h;
-}
-function sc(label,val){return'<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;"><div style="font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;">'+label+'</div><div style="font-size:1.3rem;font-weight:800;">'+val+'</div></div>';}
-function toggleSub(btn){var b=btn.closest('.sub-card').querySelector('.sub-body');var open=b.style.display!=='none';b.style.display=open?'none':'block';btn.innerHTML=open?'Ver &#9660;':'Ocultar &#9650;';}
 
 
 function restoreFromAirtable(usuario,cb){
@@ -1998,16 +1973,19 @@ function showPatient(usuario){
     var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
     exs.forEach(function(ej,idx){
       var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
-      var isTeosq=ej.lid==='u1l5'||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf('teosq')!==-1);
+      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);
       var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
       h+='<div class="sub-card">';
-      var btnLabel=isTeosq?'Ver detalle &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
+      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
       h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
       h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
       h+='<button class="sub-toggle">'+btnLabel+'</button></div>';
       h+='<div id="'+eid+'" style="display:none;border-top:1px solid var(--border);"></div>';
       h+='</div>';
-      if(isTeosq)teosqQueue.push({type:'teosq',eid:eid,ej:ej});
+      if(isPmt)teosqQueue.push({type:'pmt',eid:eid,ej:ej});
+      else if(isTeosq)teosqQueue.push({type:'teosq',eid:eid,ej:ej});
+      else if(isIped)teosqQueue.push({type:'iped',eid:eid,ej:ej});
+      else if(isGps)teosqQueue.push({type:'gps',eid:eid,ej:ej});
       else if(isGrid)teosqQueue.push({type:'grid',eid:eid,ej:ej});
       else teosqQueue.push({type:'form',eid:eid,ej:ej});
     });
@@ -2016,7 +1994,10 @@ function showPatient(usuario){
   h+='</div>';
   document.getElementById('admin-content').innerHTML=h;
   teosqQueue.forEach(function(item){
-    if(item.type==='teosq')renderTEOSQAdminView(item.ej,item.eid);
+    if(item.type==='pmt')renderPMTAdminView(item.ej,item.eid);
+    else if(item.type==='teosq')renderTEOSQAdminView(item.ej,item.eid);
+    else if(item.type==='iped')renderIPEDAdminView(item.ej,item.eid);
+    else if(item.type==='gps')renderGPSAdminView(item.ej,item.eid);
     else if(item.type==='grid')renderGridAdminView(item.ej,item.eid);
     else renderFormAdminView(item.ej,item.eid);
   });
@@ -2190,14 +2171,14 @@ function addPatient(){var name=document.getElementById('nu-name').value.trim();v
 function removePatient(u){if(!confirm('Eliminar a @'+u+'?'))return;var extra=getExtraUsers();delete extra[u];localStorage.setItem('pp_extra_users',JSON.stringify(extra));USERS=getAllUsers();renderUserTab();}
 
 /* ════ PDF GENERATION ════ */
-function pdfStyles(){return'@import url(\'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Montserrat\',Arial,sans-serif;font-size:11px;color:#1a1a2e;background:#fff;padding:0;line-height:1.6;}.page{max-width:760px;margin:0 auto;padding:32px 36px;}.hdr{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:16px;border-bottom:3px solid #E8312A;margin-bottom:24px;}.brand{display:flex;align-items:center;gap:10px;}.dot{width:18px;height:18px;border-radius:50%;background:#E8312A;flex-shrink:0;}.brand-name{font-size:16px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;}.brand-sub{font-size:9px;color:#666;letter-spacing:.1em;text-transform:uppercase;margin-top:1px;}.hdr-info{text-align:right;}.hdr-lbl{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.1em;}.hdr-val{font-size:13px;font-weight:700;}.hdr-date{font-size:10px;color:#666;margin-top:2px;}.sec-title{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#E8312A;padding:6px 10px;background:#fff5f5;border-left:3px solid #E8312A;margin:20px 0 12px;}.ex-block{margin-bottom:18px;border:1px solid #e8e8e8;border-radius:5px;overflow:hidden;}.ex-ttl{font-size:11px;font-weight:700;padding:8px 12px;background:#f8f8f8;border-bottom:1px solid #e8e8e8;display:flex;justify-content:space-between;}.ex-dt{font-size:9px;color:#999;font-weight:400;}.qa-row{padding:7px 12px;border-bottom:1px solid #f0f0f0;}.qa-row:last-child{border-bottom:none;}.qa-q{font-size:9px;font-weight:700;color:#666;margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em;}.qa-a{font-size:11px;color:#1a1a2e;line-height:1.55;}.gtable{width:100%;border-collapse:collapse;font-size:9px;margin:8px 12px;width:calc(100% - 24px);}.gtable th{background:#f0f0f0;padding:4px 5px;text-align:center;font-weight:700;border:1px solid #ddd;}.gtable td{padding:3px 5px;text-align:center;border:1px solid #ddd;}.gtable .hcol{font-weight:700;color:#666;text-align:left;background:#fafafa;}.gval{background:#fff0ee;border-radius:2px;padding:1px 4px;display:inline-block;font-weight:600;color:#c0392b;}.tscores{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 12px;}.tscore-box{border:1px solid #e8e8e8;border-radius:4px;padding:10px 12px;text-align:center;}.tscore-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:4px;}.tscore-val{font-size:22px;font-weight:800;color:#E8312A;}.tscore-lvl{font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;margin-top:4px;}.lvl-l{background:#e8f4ff;color:#2980b9;}.lvl-m{background:#fef9e7;color:#d68910;}.lvl-h{background:#eafaf1;color:#1e8449;}.profile-box{margin:8px 12px;padding:10px 12px;border-radius:4px;border-left:3px solid #E8312A;background:#fff5f5;}.profile-name{font-size:12px;font-weight:800;margin-bottom:4px;}.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}.stat-box{border:1px solid #eee;border-radius:4px;padding:10px 12px;text-align:center;}.stat-lbl{font-size:9px;color:#999;text-transform:uppercase;font-weight:700;margin-bottom:4px;}.stat-val{font-size:20px;font-weight:800;color:#E8312A;}.sumtable{width:100%;border-collapse:collapse;font-size:10px;margin-top:12px;}.sumtable th{background:#E8312A;color:#fff;padding:6px 10px;text-align:left;font-weight:700;}.sumtable td{padding:6px 10px;border-bottom:1px solid #eee;}.sumtable tr:nth-child(even) td{background:#fafafa;}.footer{margin-top:32px;padding-top:12px;border-top:1px solid #eee;font-size:9px;color:#aaa;text-align:center;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.page{padding:20px 24px;}.no-print{display:none;}}.print-btn{position:fixed;top:16px;right:16px;background:#E8312A;color:#fff;border:none;font-family:Montserrat,sans-serif;font-size:12px;font-weight:700;padding:10px 20px;border-radius:5px;cursor:pointer;z-index:999;box-shadow:0 2px 8px rgba(0,0,0,.2);}';}
+function pdfStyles(){return'@import url(\'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Montserrat\',Arial,sans-serif;font-size:11px;color:#1a1a2e;background:#fff;padding:0;line-height:1.6;}.page{max-width:760px;margin:0 auto;padding:32px 36px;}.hdr{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:16px;border-bottom:3px solid #E8312A;margin-bottom:24px;}.brand{display:flex;align-items:center;gap:10px;}.dot{width:18px;height:18px;border-radius:50%;background:#E8312A;flex-shrink:0;}.brand-name{font-size:16px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;}.brand-sub{font-size:9px;color:#666;letter-spacing:.1em;text-transform:uppercase;margin-top:1px;}.hdr-info{text-align:right;}.hdr-lbl{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.1em;}.hdr-val{font-size:13px;font-weight:700;}.hdr-date{font-size:10px;color:#666;margin-top:2px;}.sec-title{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#E8312A;padding:6px 10px;background:#fff5f5;border-left:3px solid #E8312A;margin:20px 0 12px;}.ex-block{margin-bottom:18px;border:1px solid #e8e8e8;border-radius:5px;overflow:hidden;}.ex-ttl{font-size:11px;font-weight:700;padding:8px 12px;background:#f8f8f8;border-bottom:1px solid #e8e8e8;display:flex;justify-content:space-between;}.ex-dt{font-size:9px;color:#999;font-weight:400;}.qa-row{padding:7px 12px;border-bottom:1px solid #f0f0f0;}.qa-row:last-child{border-bottom:none;}.qa-q{font-size:9px;font-weight:700;color:#666;margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em;}.qa-a{font-size:11px;color:#1a1a2e;line-height:1.55;white-space:pre-wrap;word-break:break-word;}.gtable{width:100%;border-collapse:collapse;font-size:9px;margin:8px 12px;width:calc(100% - 24px);}.gtable th{background:#f0f0f0;padding:4px 5px;text-align:center;font-weight:700;border:1px solid #ddd;}.gtable td{padding:3px 5px;text-align:center;border:1px solid #ddd;}.gtable .hcol{font-weight:700;color:#666;text-align:left;background:#fafafa;}.gval{background:#fff0ee;border-radius:2px;padding:1px 4px;display:inline-block;font-weight:600;color:#c0392b;}.tscores{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 12px;}.tscore-box{border:1px solid #e8e8e8;border-radius:4px;padding:10px 12px;text-align:center;}.tscore-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:4px;}.tscore-val{font-size:22px;font-weight:800;color:#E8312A;}.tscore-lvl{font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;margin-top:4px;}.lvl-l{background:#e8f4ff;color:#2980b9;}.lvl-m{background:#fef9e7;color:#d68910;}.lvl-h{background:#eafaf1;color:#1e8449;}.profile-box{margin:8px 12px;padding:10px 12px;border-radius:4px;border-left:3px solid #E8312A;background:#fff5f5;}.profile-name{font-size:12px;font-weight:800;margin-bottom:4px;}.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}.stat-box{border:1px solid #eee;border-radius:4px;padding:10px 12px;text-align:center;}.stat-lbl{font-size:9px;color:#999;text-transform:uppercase;font-weight:700;margin-bottom:4px;}.stat-val{font-size:20px;font-weight:800;color:#E8312A;}.sumtable{width:100%;border-collapse:collapse;font-size:10px;margin-top:12px;}.sumtable th{background:#E8312A;color:#fff;padding:6px 10px;text-align:left;font-weight:700;}.sumtable td{padding:6px 10px;border-bottom:1px solid #eee;}.sumtable tr:nth-child(even) td{background:#fafafa;}.footer{margin-top:32px;padding-top:12px;border-top:1px solid #eee;font-size:9px;color:#aaa;text-align:center;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.page{padding:20px 24px;}.no-print{display:none;}}.print-btn{position:fixed;top:16px;right:16px;background:#E8312A;color:#fff;border:none;font-family:Montserrat,sans-serif;font-size:12px;font-weight:700;padding:10px 20px;border-radius:5px;cursor:pointer;z-index:999;box-shadow:0 2px 8px rgba(0,0,0,.2);}';}
 
 function pdfLvlCls(v){if(!v)return'';if(v<=2.9)return'lvl-l';if(v<=4.2)return'lvl-m';return'lvl-h';}
 function pdfLvlLbl(v){if(!v)return'';if(v<=2.9)return'Baja';if(v<=4.2)return'Media';return'Alta';}
 
 function buildExPDF(ej){
   var resps=ej.respuestas||[];
-  var isTeosq=ej.lid==='u1l5'||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf('teosq')!==-1);
+  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);
   var isGrid=resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
 
@@ -2218,6 +2199,102 @@ function buildExPDF(ej){
     resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){
       h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';
     });
+
+  }else if(isPmt){
+    var pmtData={},pmtCap1=null,pmtCap2=null,pmtGlobal=null;
+    resps.forEach(function(r){
+      if(!r.fid)return;
+      if(r.fid==='pmt_cap1'){pmtCap1=parseFloat(r.respuesta);return;}
+      if(r.fid==='pmt_cap2'){pmtCap2=parseFloat(r.respuesta);return;}
+      if(r.fid==='pmt_global'){pmtGlobal=parseFloat(r.respuesta);return;}
+      pmtData[r.fid]=r.respuesta||'';
+    });
+    if(pmtCap1!==null||pmtCap2!==null||pmtGlobal!==null){
+      h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 12px 14px;">';
+      function pmtSc(label,val,color){var lvl=val===null?'—':val<4?'Bajo':val<7?'Medio':'Alto';var lvlCls=val===null?'':val<4?'lvl-l':val<7?'lvl-m':'lvl-h';return'<div class="tscore-box" style="border-top:3px solid '+color+';"><div class="tscore-lbl">'+label+'</div><div class="tscore-val" style="color:'+color+';">'+(val!==null?val.toFixed(2):'—')+'</div><div class="tscore-lvl '+lvlCls+'">'+(val!==null?lvl:'—')+'</div></div>';}
+      h+=pmtSc('Cap. de decision',pmtCap1,'#E8312A');
+      h+=pmtSc('Cap. de volumen',pmtCap2,'#D97706');
+      h+=pmtSc('Global Mindset',pmtGlobal,'#16A34A');
+      h+='</div>';
+    }
+    var pmtSecs=[{title:'1) Tomar buenas decisiones',items:PMT_ITEMS.sec1},{title:'2) Disponibilidad de recursos',items:PMT_ITEMS.sec2a},{title:'3) Administrarlos eficazmente',items:PMT_ITEMS.sec2b}];
+    pmtSecs.forEach(function(sec){
+      h+='<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#E8312A;padding:5px 12px 3px;background:#fff5f5;border-left:3px solid #E8312A;margin-top:6px;">'+sec.title+'</div>';
+      sec.items.forEach(function(it){
+        var nota=parseFloat(pmtData[it.fid+'_n'])||null;
+        var justif=pmtData[it.fid+'_j']||'';
+        var color=nota===null?'#aaa':nota<4?'#2563EB':nota<7?'#D97706':'#16A34A';
+        h+='<div class="qa-row"><div style="display:flex;align-items:center;gap:8px;"><span style="flex:1;font-size:11px;">'+it.label+'</span><span style="font-size:15px;font-weight:800;color:'+color+';min-width:22px;text-align:right;">'+(nota!==null?nota:'—')+'</span></div>';
+        if(justif)h+='<div style="font-size:10px;color:#666;margin-top:3px;padding-left:8px;border-left:2px solid #e5e7eb;line-height:1.5;">'+justif+'</div>';
+        h+='</div>';
+      });
+    });
+
+  }else if(isIped){
+    var ipedDataPdf={},ipedScoresPdf={};
+    resps.forEach(function(r){
+      if(!r.fid)return;
+      var sm=r.fid.match(/^iped_sc_(\w+)$/);if(sm){ipedScoresPdf[sm[1]]=parseInt(r.respuesta)||0;return;}
+    });
+    function ipedLvlPdf(sc){if(sc<=20)return{lbl:'Bajo',color:'#2563EB',bg:'#eff6ff'};if(sc<=26)return{lbl:'Bueno',color:'#D97706',bg:'#fffbeb'};return{lbl:'Excelente',color:'#16A34A',bg:'#f0fdf4'};}
+    var ISUBS=[{id:'ac',name:'Autoconfianza',color:'#2563EB'},{id:'can',name:'Control Afrontamiento Negativo',color:'#DC2626'},{id:'ca',name:'Control Atencional',color:'#D97706'},{id:'cvi',name:'Control Visuo-imaginativo',color:'#7C3AED'},{id:'nm',name:'Nivel Motivacional',color:'#DB2777'},{id:'ap',name:'Afrontamiento Positivo',color:'#16A34A'},{id:'cat',name:'Control Actitudinal',color:'#0891B2'}];
+    var IDESCS={ac:'Uno de los mejores pronosticos de exito competitivo. Relacionada con la ejecucion y estrategias para resolver situaciones del juego.',can:'Control de emociones negativas (miedo, ansiedad, rabia, frustracion). Esencial para el exito.',ca:'Habilidad de mantener la concentracion de forma continua, focalizando la atencion en los factores relevantes.',cvi:'Habilidad de visualizar vividamente. Facilita el aprendizaje y mejora de habilidades, concentracion y metas.',nm:'La motivacion determina la eleccion, intensidad, persistencia y rendimiento deportivo.',ap:'Habilidad de energetizarse con determinacion y positivismo. Lograr alta activacion con calma y bajo tension.',cat:'Refleja el habito de pensamiento. La actitud correcta afecta al control emocional y la focalizacion.'};
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 12px 14px;">';
+    ISUBS.forEach(function(sub){
+      var sc=ipedScoresPdf[sub.id]!==undefined?ipedScoresPdf[sub.id]:null;
+      var lv=sc!==null?ipedLvlPdf(sc):{lbl:'—',color:'#aaa',bg:'#fafafa'};
+      h+='<div style="border:1px solid #e8e8e8;border-top:3px solid '+sub.color+';border-radius:4px;padding:8px;text-align:center;"><div style="font-size:7px;font-weight:700;text-transform:uppercase;color:#666;margin-bottom:3px;">'+sub.name+'</div><div style="font-size:18px;font-weight:800;color:'+sub.color+';">'+(sc!==null?sc:'—')+'</div><div style="font-size:8px;font-weight:700;background:'+lv.bg+';color:'+lv.color+';border-radius:3px;padding:2px 5px;display:inline-block;margin-top:2px;">'+lv.lbl+'</div></div>';
+    });
+    h+='</div>';
+    h+='<div style="margin:0 12px 14px;border:1px solid #e8e8e8;border-radius:4px;overflow:hidden;">';
+    h+='<div style="background:#f8f8f8;padding:5px 10px;font-size:9px;font-weight:700;text-transform:uppercase;color:#666;border-bottom:1px solid #e8e8e8;">INTERPRETACION</div>';
+    ISUBS.forEach(function(sub){
+      var sc=ipedScoresPdf[sub.id]!==undefined?ipedScoresPdf[sub.id]:null;
+      var lv=sc!==null?ipedLvlPdf(sc):{lbl:'—',color:'#aaa',bg:'#fafafa'};
+      h+='<div style="padding:6px 10px;border-bottom:1px solid #f0f0f0;display:flex;gap:8px;align-items:flex-start;"><div style="flex:1;"><div style="font-size:10px;font-weight:700;color:#1a1a2e;margin-bottom:1px;">'+sub.name+'</div><div style="font-size:9px;color:#555;line-height:1.45;">'+IDESCS[sub.id]+'</div></div><div style="flex-shrink:0;font-size:13px;font-weight:800;color:'+sub.color+';min-width:20px;text-align:right;">'+(sc!==null?sc:'—')+'</div><div style="flex-shrink:0;"><span style="font-size:8px;font-weight:700;background:'+lv.bg+';color:'+lv.color+';border-radius:3px;padding:1px 5px;">'+lv.lbl+'</span></div></div>';
+    });
+    h+='</div>';
+
+  }else if(isGps){
+    var GPS_ROWS_PDF=[
+      {id:'sueno',label:'Sueño visualizado',sub:'5 años máximo',color:'#f5f5f5',accent:'#aaa'},
+      {id:'lp',label:'Objetivo Largo Plazo',sub:'2 años',color:'#dbeafe',accent:'#93c5fd'},
+      {id:'mp',label:'Objetivo Mediano Plazo',sub:'1 año',color:'#fef9c3',accent:'#fcd34d'},
+      {id:'cp',label:'Objetivo Corto Plazo',sub:'3 meses — Solo Rendimiento',color:'#dcfce7',accent:'#4ade80',sr:true}
+    ];
+    function gpsPdfCount(d,rid){var max=2;Object.keys(d).forEach(function(k){var m=k.match(new RegExp('^gps_'+rid+'_(\\d+)_'));if(m)max=Math.max(max,parseInt(m[1]));});return max+1;}
+    var gpsData={};
+    resps.forEach(function(r){if(r.fid)gpsData[r.fid]=r.respuesta||'';});
+    h+='<div style="overflow:hidden;border:1px solid #e8e8e8;border-radius:4px;margin-bottom:6px;">';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:10px;">';
+    h+='<thead><tr style="background:#f0f0f0;">';
+    h+='<th style="padding:5px 7px;font-weight:700;border:1px solid #ddd;width:28px;text-align:center;">#</th>';
+    h+='<th style="padding:5px 7px;font-weight:700;text-align:left;border:1px solid #ddd;">Objetivo específico y medible</th>';
+    h+='<th style="padding:5px 7px;font-weight:700;text-align:center;border:1px solid #ddd;width:90px;">Tipo</th>';
+    h+='<th style="padding:5px 7px;font-weight:700;text-align:center;border:1px solid #ddd;width:80px;">Deadline</th>';
+    h+='<th style="padding:5px 7px;font-weight:700;text-align:left;border:1px solid #ddd;width:28%;">Habré logrado la mitad cuando...</th>';
+    h+='</tr></thead><tbody>';
+    GPS_ROWS_PDF.forEach(function(row){
+      h+='<tr><td colspan="5" style="padding:5px 8px;background:'+row.color+';border-bottom:2px solid '+row.accent+';border-top:1px solid #ddd;">';
+      h+='<strong style="font-size:10px;">'+row.label+'</strong><span style="font-size:8px;color:#666;margin-left:6px;">'+row.sub+'</span></td></tr>';
+      var count=gpsPdfCount(gpsData,row.id);
+      var hasAny=false;
+      for(var i=0;i<count;i++){
+        var fb='gps_'+row.id+'_'+i+'_';
+        var obj=gpsData[fb+'obj']||'',tipo=gpsData[fb+'tipo']||(row.sr?'Rendimiento':''),dl=gpsData[fb+'dl']||'',pi=gpsData[fb+'pi']||'';
+        if(!obj&&!tipo&&!dl&&!pi)continue;
+        hasAny=true;
+        h+='<tr style="background:'+row.color+';vertical-align:top;">';
+        h+='<td style="padding:5px;border:1px solid #ddd;text-align:center;font-weight:700;color:#666;">'+(i+1)+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #ddd;white-space:pre-wrap;line-height:1.5;">'+obj+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #ddd;text-align:center;font-weight:600;">'+tipo+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #ddd;text-align:center;">'+dl+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #ddd;white-space:pre-wrap;line-height:1.5;">'+pi+'</td>';
+        h+='</tr>';
+      }
+      if(!hasAny)h+='<tr style="background:'+row.color+'"><td colspan="5" style="padding:5px 8px;border:1px solid #ddd;color:#aaa;font-style:italic;font-size:9px;">Sin objetivos completados.</td></tr>';
+    });
+    h+='</tbody></table></div>';
 
   }else if(isGrid){
     var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
@@ -2704,6 +2781,915 @@ function updateGridRows(lid){
   }
   tbody.innerHTML=rows;updateSaveStatus('Horario actualizado','#22C55E');
 }
+
+
+/* ════════════════════════════════════════════
+   PMT — POKER MINDSET TEST
+   ════════════════════════════════════════════ */
+
+var PMT_ITEMS = {
+  sec1: [
+    { fid:'u1l3_1',  label:'Conocer el juego' },
+    { fid:'u1l3_2',  label:'Constancia en el estudio' },
+    { fid:'u1l3_3',  label:'Actitud frente al aprendizaje' },
+    { fid:'u1l3_4',  label:'Estar centrado en mesa' }
+  ],
+  sec2a: [
+    { fid:'u1l3_5',  label:'Motivación auténtica' },
+    { fid:'u1l3_6',  label:'Entrenamiento físico' },
+    { fid:'u1l3_7',  label:'Alimentación' },
+    { fid:'u1l3_8',  label:'Descanso' },
+    { fid:'u1l3_9',  label:'Orden y prolijidad vincular' },
+    { fid:'u1l3_10', label:'Carga traumática elaborada' }
+  ],
+  sec2b: [
+    { fid:'u1l3_11', label:'Automatización de decisiones' },
+    { fid:'u1l3_12', label:'Buen uso de descansos' },
+    { fid:'u1l3_13', label:'Gestión emocional de errores' },
+    { fid:'u1l3_14', label:'Gestión emocional de aciertos' },
+    { fid:'u1l3_15', label:'Gestión emocional de la varianza' }
+  ]
+};
+
+var pmtLid = 'u1l3';
+
+function pmtGetN(fid) {
+  var el = document.getElementById('pmt-n-' + fid);
+  if (!el || el.value === '') return null;
+  var v = parseFloat(el.value);
+  return (isNaN(v) || v < 1 || v > 10) ? null : v;
+}
+
+function pmtAvg(items) {
+  var vals = items.map(function(it){ return pmtGetN(it.fid); }).filter(function(v){ return v !== null; });
+  if (!vals.length) return null;
+  return vals.reduce(function(a,b){return a+b;},0) / vals.length;
+}
+
+function pmtCalcScores() {
+  var cap1   = pmtAvg(PMT_ITEMS.sec1);
+  var avg2a  = pmtAvg(PMT_ITEMS.sec2a);
+  var avg2b  = pmtAvg(PMT_ITEMS.sec2b);
+  var cap2   = (avg2a !== null && avg2b !== null) ? (avg2a + avg2b) / 2 : null;
+  var global = (cap1 !== null && cap2 !== null) ? (cap1 + cap2) / 2 : null;
+  return { cap1: cap1, cap2: cap2, global: global };
+}
+
+function pmtLvl(v) {
+  if (v === null) return { lbl:'—', cls:'' };
+  if (v < 4) return { lbl:'Bajo (' + v.toFixed(2) + ')', cls:'tlvl-low' };
+  if (v < 7) return { lbl:'Medio (' + v.toFixed(2) + ')', cls:'tlvl-mid' };
+  return { lbl:'Alto (' + v.toFixed(2) + ')', cls:'tlvl-hi' };
+}
+
+function pmtUpdateResults() {
+  var s = pmtCalcScores();
+
+  // --- Tab 1: mini-bars per item ---
+  var all = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
+  all.forEach(function(it) {
+    var v = pmtGetN(it.fid);
+    var bar = document.getElementById('pmt-ibar-' + it.fid);
+    var lbl = document.getElementById('pmt-ilbl-' + it.fid);
+    if (bar) bar.style.width = (v !== null ? v * 10 : 0) + '%';
+    if (lbl) {
+      lbl.textContent = v !== null ? v : '—';
+      var cls = 'pmt-item-score';
+      if (v !== null) cls += v < 4 ? ' pmt-low' : v < 7 ? ' pmt-mid' : ' pmt-hi';
+      lbl.className = cls;
+    }
+  });
+
+  // Progress count
+  var filled = all.filter(function(it){ return pmtGetN(it.fid) !== null; }).length;
+  var pf = document.getElementById('ex-prog-pmt');
+  var pt = document.getElementById('ex-prog-txt-pmt');
+  if (pf) pf.style.width = Math.round(filled / all.length * 100) + '%';
+  if (pt) pt.textContent = filled + ' de ' + all.length + ' ítems completados';
+
+  // --- Tab 2: score cards ---
+  function setCard(prefix, val) {
+    var lvl = pmtLvl(val);
+    var vEl = document.getElementById('pmt-v-' + prefix);
+    var bEl = document.getElementById('pmt-b-' + prefix);
+    var lEl = document.getElementById('pmt-l-' + prefix);
+    if (vEl) { vEl.textContent = val !== null ? val.toFixed(2) : '—'; vEl.className = 'tq-sc-val ' + (val !== null ? (val < 4 ? 'pmt-low' : val < 7 ? 'pmt-mid' : 'pmt-hi') : ''); }
+    if (bEl) { bEl.style.width = (val !== null ? val / 10 * 100 : 0) + '%'; bEl.style.background = val !== null ? (val < 4 ? '#60A5FA' : val < 7 ? '#FCD34D' : '#4ADE80') : 'var(--border)'; }
+    if (lEl) { lEl.textContent = lvl.lbl; lEl.className = 'teosq-sc-lvl ' + lvl.cls; }
+  }
+  setCard('cap1', s.cap1);
+  setCard('cap2', s.cap2);
+  setCard('global', s.global);
+}
+
+function pmtTab(idx) {
+  [0,1].forEach(function(i) {
+    var t = document.getElementById('pmt-ttab-' + i);
+    var p = document.getElementById('pmt-tpane-' + i);
+    if (t) t.classList.toggle('on', i === idx);
+    if (p) p.classList.toggle('on', i === idx);
+  });
+  if (idx === 1) pmtUpdateResults();
+}
+
+function pmtSectionHTML(titleNum, titleText, items, draft) {
+  var h = '<div class="pmt-section">';
+  h += '<div class="pmt-sec-header">';
+  h += '<span class="pmt-sec-num">' + titleNum + '</span>';
+  h += '<span class="pmt-sec-title">' + titleText + '</span>';
+  h += '</div>';
+  items.forEach(function(it) {
+    var savedN = draft && draft[it.fid + '_n'] ? draft[it.fid + '_n'] : '';
+    var savedJ = draft && draft[it.fid + '_j'] ? draft[it.fid + '_j'] : '';
+    var barW   = savedN ? (parseFloat(savedN) * 10) + '%' : '0%';
+    var nCls   = savedN ? (parseFloat(savedN) < 4 ? 'pmt-low' : parseFloat(savedN) < 7 ? 'pmt-mid' : 'pmt-hi') : '';
+    h += '<div class="pmt-item">';
+    h += '<div class="pmt-item-top">';
+    h += '<span class="pmt-item-label">' + it.label + '</span>';
+    h += '<div class="pmt-item-right">';
+    h += '<div class="pmt-ibar-wrap"><div class="pmt-ibar"><div class="pmt-ibar-fill" id="pmt-ibar-' + it.fid + '" style="width:' + barW + '"></div></div></div>';
+    h += '<span class="pmt-item-score ' + nCls + '" id="pmt-ilbl-' + it.fid + '">' + (savedN || '—') + '</span>';
+    h += '<input class="pmt-num-input" type="number" id="pmt-n-' + it.fid + '" min="1" max="10" placeholder="—" value="' + savedN + '" oninput="pmtUpdateResults();pmtAutoSave();">';
+    h += '</div></div>';
+    h += '<textarea class="pmt-justif" id="pmt-j-' + it.fid + '" placeholder="¿Por qué esta nota? (opcional)" oninput="pmtAutoSave();">' + savedJ + '</textarea>';
+    h += '</div>';
+  });
+  h += '</div>';
+  return h;
+}
+
+function renderPMTExercise(lid) {
+  pmtLid = lid;
+  var draft = loadDraft(lid) || {};
+
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+
+  // Header
+  h += '<div class="tq-hdr-box">';
+  h += '<div class="ex-badge">Diagnóstico — Autoevaluación</div>';
+  h += '<div class="tq-hdr-title">Poker Mindset Test</div>';
+  h += '<div class="tq-hdr-sub">Ponete una nota del 1 al 10 en cada área. Los puntajes se calculan automáticamente.</div>';
+  h += '<div class="ex-prog-bar" style="margin-top:.75rem;"><div class="ex-prog-fill" id="ex-prog-pmt" style="width:0%"></div></div>';
+  h += '<p class="ex-prog-txt" id="ex-prog-txt-pmt">0 de 15 ítems completados</p>';
+  h += '</div>';
+
+  // Tabs
+  h += '<div class="teosq-tabs">';
+  h += '<div class="teosq-tab on" id="pmt-ttab-0" onclick="pmtTab(0)">1. Autoevaluación</div>';
+  h += '<div class="teosq-tab" id="pmt-ttab-1" onclick="pmtTab(1)">2. Resultados</div>';
+  h += '</div>';
+
+  // ── PANE 0: cuestionario ──────────────────
+  h += '<div class="teosq-pane on" id="pmt-tpane-0" style="padding:1.1rem 1.25rem;">';
+  h += pmtSectionHTML('1)', 'Tomar buenas decisiones', PMT_ITEMS.sec1, draft);
+  h += '<div class="pmt-divider"></div>';
+  h += pmtSectionHTML('2)', 'Tener buena disponibilidad de recursos', PMT_ITEMS.sec2a, draft);
+  h += '<div class="pmt-divider"></div>';
+  h += pmtSectionHTML('3)', 'Administrarlos eficazmente', PMT_ITEMS.sec2b, draft);
+  h += '</div>';
+
+  // ── PANE 1: resultados ────────────────────
+  h += '<div class="teosq-pane" id="pmt-tpane-1" style="padding:1.25rem;">';
+
+  // Dos cards de capacidad
+  h += '<div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">';
+  h += '<div class="tq-sc-card" style="border-top:3px solid var(--red);flex:1;min-width:140px;">';
+  h += '<div style="font-size:.58rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem;">Cap. de decisión</div>';
+  h += '<div class="tq-sc-val" id="pmt-v-cap1">—</div>';
+  h += '<div class="tq-sc-bar"><div class="tq-sc-fill" id="pmt-b-cap1" style="width:0%;background:var(--red)"></div></div>';
+  h += '<div class="teosq-sc-lvl" id="pmt-l-cap1">—</div></div>';
+  h += '<div class="tq-sc-card" style="border-top:3px solid #F59E0B;flex:1;min-width:140px;">';
+  h += '<div style="font-size:.58rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem;">Cap. de volumen</div>';
+  h += '<div class="tq-sc-val" id="pmt-v-cap2">—</div>';
+  h += '<div class="tq-sc-bar"><div class="tq-sc-fill" id="pmt-b-cap2" style="width:0%;background:#F59E0B"></div></div>';
+  h += '<div class="teosq-sc-lvl" id="pmt-l-cap2">—</div></div>';
+  h += '</div>';
+
+  // Global Mindset — destacado
+  h += '<div style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.22);border-top:3px solid var(--green);border-radius:6px;padding:1.1rem 1.25rem;text-align:center;">';
+  h += '<div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:.3rem;">Puntaje Global Mindset Actual</div>';
+  h += '<div class="tq-sc-val" id="pmt-v-global" style="font-size:2.8rem;">—</div>';
+  h += '<div class="tq-sc-bar" style="max-width:260px;margin:.6rem auto .4rem;"><div class="tq-sc-fill" id="pmt-b-global" style="width:0%;background:var(--green)"></div></div>';
+  h += '<div class="teosq-sc-lvl" id="pmt-l-global">—</div>';
+  h += '</div>';
+
+  h += '</div>'; // pane 1
+
+  // Submit
+  h += '<div class="ex-submit-row">';
+  h += '<button class="btn-ex-send" id="btn-ex-' + lid + '" onclick="pmtSubmit()">';
+  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  h += ' Enviar a Mauro</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '</div></div>';
+
+  document.getElementById('mc-body').innerHTML += h;
+  pmtUpdateResults();
+}
+
+function pmtAutoSave() {
+  var all = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
+  var data = {};
+  all.forEach(function(it) {
+    var ni = document.getElementById('pmt-n-' + it.fid);
+    var ji = document.getElementById('pmt-j-' + it.fid);
+    if (ni && ni.value !== '') data[it.fid + '_n'] = ni.value;
+    if (ji && ji.value.trim() !== '') data[it.fid + '_j'] = ji.value;
+  });
+  saveDraft(pmtLid, data);
+  updateSaveStatus('Borrador guardado', 'rgba(238,239,243,.5)');
+}
+
+function pmtSubmit() {
+  var s = pmtCalcScores();
+  var user = USERS[S.user];
+  var answers = [];
+  var all = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
+  all.forEach(function(it) {
+    var ni = document.getElementById('pmt-n-' + it.fid);
+    var ji = document.getElementById('pmt-j-' + it.fid);
+    answers.push({ fid: it.fid + '_n', pregunta: it.label + ' — nota', respuesta: ni ? (ni.value || '') : '' });
+    answers.push({ fid: it.fid + '_j', pregunta: it.label + ' — por qué', respuesta: ji ? ji.value.trim() : '' });
+  });
+  if (s.cap1   !== null) answers.push({ fid:'pmt_cap1',   pregunta:'Capacidad de decisión',  respuesta: s.cap1.toFixed(2) });
+  if (s.cap2   !== null) answers.push({ fid:'pmt_cap2',   pregunta:'Capacidad de volumen',   respuesta: s.cap2.toFixed(2) });
+  if (s.global !== null) answers.push({ fid:'pmt_global', pregunta:'Puntaje Global Mindset', respuesta: s.global.toFixed(2) });
+
+  var rec = { ts: Date.now(), fecha: new Date().toLocaleString('es-AR'),
+    jugador: user.name, usuario: S.user,
+    unidad: 'Unidad 1', ejercicio: 'Poker Mindset Test',
+    lid: pmtLid, respuestas: answers };
+  var saved = getLocalSubs();
+  var idx = saved.findIndex(function(x){ return x.usuario === S.user && x.lid === pmtLid; });
+  var isUpdate = idx >= 0;
+  if (isUpdate) { rec.airtableId = saved[idx].airtableId; saved[idx] = rec; }
+  else { saved.push(rec); }
+  localStorage.setItem('pp_submissions', JSON.stringify(saved));
+  markDoneL(pmtLid);
+  fbSaveSubmission(S.user, pmtLid, rec);
+  var btn = document.getElementById('btn-ex-' + pmtLid);
+  if (btn) { btn.textContent = isUpdate ? 'Actualizar envío' : 'Enviar a Mauro'; btn.style.background = 'var(--green)'; btn.disabled = false; }
+  updateSaveStatus('Enviado a Mauro', '#22C55E');
+  showToast(isUpdate ? 'Respuestas actualizadas!' : 'Enviado a Mauro!');
+  var unit = C.find(function(u){ return u.id === S.unitId; });
+  if (unit) renderSidebar(unit);
+  if (isUpdate && rec.airtableId) { updateAirtable(rec.airtableId, rec); }
+  else { createAirtable(rec, function(id){ if(id){ var s2=getLocalSubs(); var i2=s2.findIndex(function(x){return x.usuario===S.user&&x.lid===pmtLid;}); if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));} } }); }
+}
+
+/* ── PMT ADMIN VIEW ─────────────────────────── */
+function renderPMTAdminView(ej, cid) {
+  var resps = ej.respuestas || {};
+  var data = {}, cap1 = null, cap2 = null, global = null;
+  (ej.respuestas || []).forEach(function(r) {
+    if (!r.fid) return;
+    if (r.fid === 'pmt_cap1')   { cap1   = parseFloat(r.respuesta); return; }
+    if (r.fid === 'pmt_cap2')   { cap2   = parseFloat(r.respuesta); return; }
+    if (r.fid === 'pmt_global') { global = parseFloat(r.respuesta); return; }
+    data[r.fid] = r.respuesta || '';
+  });
+
+  var uid = cid.replace(/[^a-z0-9]/gi,'');
+
+  var h = '<div style="padding:.75rem;">';
+
+  // Tabs
+  h += '<div class="teosq-tabs">';
+  h += '<div class="teosq-tab on" id="admpt0_'+uid+'" onclick="admPmtTab(\''+uid+'\',0)" style="font-size:.65rem;">1. Ítems</div>';
+  h += '<div class="teosq-tab" id="admpt1_'+uid+'" onclick="admPmtTab(\''+uid+'\',1)" style="font-size:.65rem;">2. Puntajes</div>';
+  h += '</div>';
+
+  // Pane 0: items
+  h += '<div class="teosq-pane on" id="admpp0_'+uid+'" style="padding:.75rem 0;">';
+  var all = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
+  var secTitles = { 'u1l3_1':'1) Tomar buenas decisiones', 'u1l3_5':'2) Disponibilidad de recursos', 'u1l3_11':'3) Administrarlos eficazmente' };
+  all.forEach(function(it) {
+    if (secTitles[it.fid]) {
+      h += '<div style="font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);padding:.6rem .5rem .3rem;border-bottom:1px solid var(--border);margin-bottom:.35rem;">' + secTitles[it.fid] + '</div>';
+    }
+    var nota = parseFloat(data[it.fid + '_n']) || null;
+    var justif = data[it.fid + '_j'] || '';
+    var color = nota === null ? 'var(--dim)' : nota < 4 ? '#60A5FA' : nota < 7 ? '#FCD34D' : '#4ADE80';
+    var pct = nota !== null ? nota * 10 : 0;
+    h += '<div style="padding:.4rem .25rem;border-bottom:1px solid rgba(255,255,255,.04);">';
+    h += '<div style="display:flex;align-items:center;gap:.65rem;">';
+    h += '<span style="font-size:.76rem;flex:1;color:var(--text);">' + it.label + '</span>';
+    h += '<div style="width:70px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:2px;"></div></div>';
+    h += '<span style="font-size:.82rem;font-weight:800;color:'+color+';min-width:22px;text-align:right;">' + (nota !== null ? nota : '—') + '</span>';
+    h += '</div>';
+    if (justif) h += '<div style="font-size:.71rem;color:var(--muted);padding:.2rem .4rem;border-left:2px solid rgba(255,255,255,.08);margin-top:.25rem;line-height:1.5;">' + justif + '</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+
+  // Pane 1: puntajes
+  h += '<div class="teosq-pane" id="admpp1_'+uid+'" style="padding:1rem 0;">';
+  h += '<div style="display:flex;gap:.75rem;flex-wrap:wrap;">';
+  function admSc(label, val, color) {
+    var lvl = val === null ? '—' : val < 4 ? 'Bajo' : val < 7 ? 'Medio' : 'Alto';
+    var clr = val === null ? 'var(--dim)' : color;
+    return '<div class="tq-sc-card" style="border-top:3px solid '+clr+';flex:1;min-width:130px;">' +
+      '<div style="font-size:.57rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">'+label+'</div>' +
+      '<div class="tq-sc-val" style="color:'+clr+';">'+(val !== null ? val.toFixed(2) : '—')+'</div>' +
+      '<div class="tq-sc-bar"><div class="tq-sc-fill" style="width:'+(val!==null?val/10*100:0)+'%;background:'+clr+';"></div></div>' +
+      '<div style="font-size:.65rem;font-weight:700;color:'+clr+';">'+lvl+'</div>' +
+    '</div>';
+  }
+  h += admSc('Cap. de decisión', cap1, 'var(--red)');
+  h += admSc('Cap. de volumen', cap2, '#F59E0B');
+  h += admSc('Global Mindset', global, 'var(--green)');
+  h += '</div>';
+  h += '</div>';
+
+  h += '</div>';
+  var el = document.getElementById(cid);
+  if (el) el.innerHTML = h;
+}
+
+function admPmtTab(uid, idx) {
+  [0,1].forEach(function(i){
+    var t = document.getElementById('admpt'+i+'_'+uid);
+    var p = document.getElementById('admpp'+i+'_'+uid);
+    if(t) t.classList.toggle('on', i===idx);
+    if(p) p.classList.toggle('on', i===idx);
+  });
+}
+
+
+
+/* ═══════════════════════════════════════════════
+   IPED — INVENTARIO PSICOLÓGICO DE EJECUCIÓN DEPORTIVA
+   Hernández-Mendo, 2006 · Raimundi et al., 2016
+   ═══════════════════════════════════════════════ */
+var IPED_ITEMS=[
+  {n:1, t:'Me veo más como un perdedor que como un ganador durante las competencias o partidos.',inv:true},
+  {n:2, t:'Me enojo y me frustro durante las competencias o partidos.',inv:true},
+  {n:3, t:'Me distraigo y pierdo mi concentración durante las competencias o partidos.',inv:true},
+  {n:4, t:'Antes de jugar me imagino ejecutando mis acciones y rindiendo perfectamente.'},
+  {n:5, t:'Estoy muy motivado/a para dar lo mejor de mí en cada sesión.'},
+  {n:6, t:'Puedo mantener emociones positivas durante las competencias.'},
+  {n:7, t:'Durante las competencias o partidos pienso positivamente.'},
+  {n:8, t:'Creo en mí mismo/a como jugador.'},
+  {n:9, t:'Me pongo demasiado nervioso/a durante las sesiones.',inv:true},
+  {n:10,t:'En los momentos críticos siento que mi cabeza va demasiado rápido.',inv:true},
+  {n:11,t:'Practico mentalmente mis habilidades.'},
+  {n:12,t:'Trabajo y estudio duro gracias a los objetivos que me fijé.'},
+  {n:13,t:'Disfruto durante las sesiones, aunque me encuentre con dificultades.'},
+  {n:14,t:'Durante las partidas mantengo diálogos internos negativos.',inv:true},
+  {n:15,t:'Pierdo mi confianza fácilmente.',inv:true},
+  {n:16,t:'Los errores me hacen sentir y pensar negativamente sobre mí mismo.',inv:true},
+  {n:17,t:'Puedo controlar rápidamente mis emociones y recuperar la concentración.'},
+  {n:18,t:'Para mí es fácil pensar en imágenes acerca del poker.'},
+  {n:19,t:'No necesito que me empujen a estudiar duro. Yo soy mi mejor motivador.'},
+  {n:20,t:'Cuando las cosas se vuelven contra mí, tiendo a bajonearme emocionalmente.',inv:true},
+  {n:21,t:'Pongo todo mi esfuerzo durante las sesiones, pase lo que pase.'},
+  {n:22,t:'Puedo rendir por encima de mi talento y mis habilidades.'},
+  {n:23,t:'Durante las sesiones siento tensión física que me afecta.',inv:true},
+  {n:24,t:'Tengo momentos de desconcentración durante las partidas.',inv:true},
+  {n:25,t:'Antes de jugar me visualizo superando situaciones difíciles.'},
+  {n:26,t:'Daría lo que fuera por desarrollar todo mi potencial como jugador.'},
+  {n:27,t:'Estudio con una intensidad alta y positiva.'},
+  {n:28,t:'Controlando mi pensamiento puedo transformar estados de ánimo negativos en positivos.'},
+  {n:29,t:'Soy un jugador fuerte mentalmente.'},
+  {n:30,t:'Las situaciones incontrolables (bad beats, varianza) me hacen derrumbar.',inv:true},
+  {n:31,t:'Durante las sesiones pienso en errores pasados u oportunidades perdidas.',inv:true},
+  {n:32,t:'Durante las sesiones utilizo imágenes mentales que me ayudan a rendir mejor.'},
+  {n:33,t:'Estoy aburrido/a y quemado/a con respecto al poker.',inv:true},
+  {n:34,t:'Las situaciones difíciles me suponen un desafío y me inspiran.'},
+  {n:35,t:'Mi coach diría de mí que tengo una buena actitud.'},
+  {n:36,t:'La imagen que proyecto es la de ser un luchador.'},
+  {n:37,t:'Puedo permanecer tranquilo/a durante las sesiones aunque aparezcan problemas.'},
+  {n:38,t:'Mi concentración se rompe fácilmente.',inv:true},
+  {n:39,t:'Cuando me visualizo jugando, puedo ver y sentir las cosas de forma muy real.'},
+  {n:40,t:'Al despertar me siento entusiasmado/a con el estudio y la competencia.'},
+  {n:41,t:'Jugar al poker me aporta un sentido genuino de disfrute y realización.'},
+  {n:42,t:'Yo puedo convertir una crisis en una oportunidad.'}
+];
+
+var IPED_SUBSCALES=[
+  {id:'ac', name:'Autoconfianza',                     items:[1,8,15,22,29,36], color:'#3B82F6',
+   desc:'Uno de los mejores pronósticos de éxito competitivo. Relacionada con la ejecución y las estrategias para resolver diferentes situaciones del juego.'},
+  {id:'can',name:'Control de Afrontamiento Negativo', items:[2,9,16,23,30,37], color:'#E8312A',
+   desc:'Concierne al control de emociones negativas como miedo, ansiedad, rabia y frustración. Su control es esencial para el éxito; conviene mantenerse calmado, relajado y concentrado.'},
+  {id:'ca', name:'Control Atencional',                items:[3,10,17,24,31,38],color:'#F59E0B',
+   desc:'Habilidad de mantener la concentración de forma continua, focalizando la atención en los factores relevantes para la ejecución de la habilidad.'},
+  {id:'cvi',name:'Control Visuo-imaginativo',         items:[4,11,18,25,32,39],color:'#8B5CF6',
+   desc:'Habilidad de visualizar muy vívidamente. Facilita el aprendizaje, mejora las habilidades, las estrategias, la concentración y el establecimiento de metas.'},
+  {id:'nm', name:'Nivel Motivacional',                items:[5,12,19,26,33,40],color:'#EC4899',
+   desc:'La motivación determina la elección, la intensidad, la persistencia y el rendimiento. Incluye el entusiasmo genuino hacia la práctica y el estudio.'},
+  {id:'ap', name:'Afrontamiento Positivo',            items:[6,13,20,27,34,41],color:'#22C55E',
+   desc:'Habilidad de energetizarse con determinación y positivismo. Lograr altos niveles de activación experimentando calma, baja tensión y control de la atención.'},
+  {id:'cat',name:'Control Actitudinal',               items:[7,14,21,28,35,42],color:'#06B6D4',
+   desc:'Refleja el hábito de pensamiento del atleta. La actitud correcta afecta el control emocional, la focalización de la atención y todas las demás variables psicológicas.'}
+];
+
+var ipedAns={}, ipedLid=null;
+
+function ipedIScore(n,v){
+  var inv=[1,2,3,9,10,14,15,16,20,23,24,30,31,33,38];
+  return inv.indexOf(n)>=0?(6-v):v;
+}
+function ipedCalcScores(){
+  var scores={};
+  IPED_SUBSCALES.forEach(function(sub){
+    var total=0,filled=0;
+    sub.items.forEach(function(n){var v=ipedAns[n]||0;if(v>0){total+=ipedIScore(n,v);filled++;}});
+    scores[sub.id]=filled===6?total:null;
+  });
+  return scores;
+}
+function ipedLvl(score){
+  if(score===null)return{lbl:'—',cls:'',color:'var(--dim)'};
+  if(score<=20)return{lbl:'Bajo',cls:'tlvl-low',color:'#60A5FA'};
+  if(score<=26)return{lbl:'Bueno',cls:'tlvl-mid',color:'#FCD34D'};
+  return{lbl:'Excelente',cls:'tlvl-hi',color:'#4ADE80'};
+}
+
+function renderIPEDExercise(lid){
+  ipedLid=lid; ipedAns={};
+  var draft=loadDraft(lid);
+  var sub=(getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
+  if(draft){IPED_ITEMS.forEach(function(it){var v=draft['iped_'+it.n];if(v)ipedAns[it.n]=parseInt(v)||0;});}
+  else if(sub&&sub.respuestas){sub.respuestas.forEach(function(r){if(r.fid&&/^iped_\d+$/.test(r.fid)){var n=parseInt(r.fid.replace('iped_',''));if(!isNaN(n))ipedAns[n]=parseInt(r.respuesta)||0;}});}
+  var answered=Object.keys(ipedAns).length;
+  var alreadyDone=isDone(lid);
+  var LABELS=['Casi<br>nunca','Pocas<br>veces','A veces<br>sí/no','Muchas<br>veces','Casi<br>siempre'];
+
+  var h='<div class="ex-wrap">';
+
+  // Cabecera
+  h+='<div class="tq-hdr-box">';
+  h+='<div class="tq-hdr-title">INVENTARIO PSICOLÓGICO DE EJECUCIÓN DEPORTIVA (IPED)</div>';
+  h+='<div class="tq-hdr-sub" style="margin-top:.2rem;">Hernández-Mendo, 2006 &nbsp;·&nbsp; Raimundi et al., 2016 &nbsp;·&nbsp; Psicopoker</div>';
+  h+='<div style="margin-top:.5rem;font-size:.78rem;font-style:italic;color:var(--muted);">Respondé de la manera más honesta posible</div>';
+  h+='</div>';
+
+  // ── PANE 0: cuestionario ──
+  h+='<div id="iped-pane0" style="padding:0 0 .5rem;">';
+  h+='<div class="tq-table-wrap"><table class="tq-table"><thead><tr>';
+  h+='<th style="width:28px;">#</th><th style="text-align:left;">Ítem</th>';
+  LABELS.forEach(function(l){h+='<th>'+l+'</th>';});
+  h+='</tr></thead><tbody>';
+  IPED_ITEMS.forEach(function(item){
+    var v=ipedAns[item.n]||0;
+    h+='<tr class="'+(v?'tq-answered':'')+'" id="iped-row'+item.n+'">';
+    h+='<td><span style="font-weight:700;color:var(--dim);">'+item.n+'</span></td>';
+    h+='<td style="text-align:left;font-size:.82rem;line-height:1.5;padding:.6rem .5rem;">'+item.t+'</td>';
+    for(var i=1;i<=5;i++){
+      h+='<td class="'+(v===i?'tq-cell-sel':'')+'" id="iped-cell'+item.n+'_'+i+'">';
+      h+='<span class="tq-radio'+(v===i?' sel':'')+'" onclick="ipedSelect('+item.n+','+i+')" id="iped-r'+item.n+'_'+i+'">';
+      h+='<span class="tq-radio-dot"></span></span></td>';
+    }
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="ex-submit-row" style="margin-top:.85rem;">';
+  h+='<button class="btn-ex-send" id="iped-send-btn" onclick="ipedSubmit()" '+(answered<42?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
+  h+='<p class="ex-submit-note" id="iped-send-note" style="'+(answered>=42?'color:var(--green);':'')+'">'+( answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Mauro')+'</p>';
+  h+='</div></div>';
+
+  // ── PANE 1: resultados ──
+  h+='<div id="iped-pane1" style="padding:1.25rem;">';
+  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.25rem;">';
+  h+='<div style="background:var(--bg3);padding:.65rem 1rem;font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">PUNTAJES POR VARIABLE (máximo 30)</div>';
+  h+='<table style="width:100%;border-collapse:collapse;"><thead><tr>';
+  h+='<th style="text-align:left;padding:.5rem 1rem;font-size:.68rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg3);">Variable</th>';
+  h+='<th style="text-align:center;padding:.5rem;font-size:.68rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg3);width:80px;">Puntaje</th>';
+  h+='<th style="text-align:center;padding:.5rem;font-size:.68rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg3);width:100px;">Nivel</th>';
+  h+='</tr></thead><tbody>';
+  IPED_SUBSCALES.forEach(function(sub,i){
+    h+='<tr style="'+(i%2===0?'':'background:rgba(255,255,255,.02);')+'">';
+    h+='<td style="padding:.75rem 1rem;font-weight:700;font-size:.84rem;border-bottom:1px solid rgba(255,255,255,.04);"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+sub.color+';margin-right:.45rem;vertical-align:middle;"></span>'+sub.name+'</td>';
+    h+='<td style="text-align:center;border-bottom:1px solid rgba(255,255,255,.04);"><span id="iped-sc-'+sub.id+'" style="font-size:1.5rem;font-weight:800;color:var(--dim);">—</span></td>';
+    h+='<td style="text-align:center;border-bottom:1px solid rgba(255,255,255,.04);"><span class="teosq-sc-lvl" id="iped-lv-'+sub.id+'">—</span></td>';
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">';
+  IPED_SUBSCALES.forEach(function(sub){
+    h+='<div class="tq-sc-card" style="border-top:3px solid '+sub.color+';">';
+    h+='<div style="font-size:.57rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;">'+sub.name+'</div>';
+    h+='<div style="display:flex;align-items:baseline;gap:.3rem;">';
+    h+='<span id="iped-sv-'+sub.id+'" style="font-size:1.7rem;font-weight:800;color:var(--dim);">—</span>';
+    h+='<span style="font-size:.68rem;color:var(--dim);">/ 30</span></div>';
+    h+='<div class="tq-sc-bar"><div id="iped-bar-'+sub.id+'" class="tq-sc-fill" style="width:0%;background:'+sub.color+';"></div></div>';
+    h+='<div id="iped-sv2-'+sub.id+'" style="font-size:.65rem;font-weight:700;color:var(--dim);margin-top:.25rem;">—</div>';
+    h+='</div>';
+  });
+  h+='</div></div>';
+
+  // ── PANE 2: interpretación ──
+  h+='<div id="iped-pane2" style="padding:1.25rem;">';
+  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.25rem;">';
+  h+='<div style="background:var(--bg3);padding:.65rem 1rem;font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">RANGOS — Bajo (7–20) · Bueno (21–26) · Excelente (27–30)</div>';
+  IPED_SUBSCALES.forEach(function(sub,i){
+    h+='<div style="display:flex;align-items:stretch;border-bottom:'+(i<6?'1px solid var(--border)':'none')+';min-height:42px;">';
+    h+='<div style="flex:3;padding:.6rem 1rem;font-size:.82rem;font-weight:700;border-right:1px solid var(--border);display:flex;align-items:center;gap:.4rem;"><span style="width:8px;height:8px;border-radius:50%;background:'+sub.color+';flex-shrink:0;display:inline-block;"></span>'+sub.name+'</div>';
+    h+='<div id="iped-ic-'+sub.id+'-l" style="flex:1;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--dim);border-right:1px solid var(--border);">◯</div>';
+    h+='<div id="iped-ic-'+sub.id+'-m" style="flex:1;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--dim);border-right:1px solid var(--border);">◯</div>';
+    h+='<div id="iped-ic-'+sub.id+'-h" style="flex:1;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--dim);">◯</div>';
+    h+='</div>';
+  });
+  h+='</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">';
+  IPED_SUBSCALES.forEach(function(sub){
+    h+='<div class="tq-profile-card" id="iped-desc-'+sub.id+'" style="border-color:'+sub.color+'22;opacity:.55;">';
+    h+='<div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:'+sub.color+';margin-bottom:.3rem;">'+sub.name+'</div>';
+    h+='<div style="font-size:.72rem;color:var(--muted);line-height:1.55;margin-bottom:.4rem;">'+sub.desc+'</div>';
+    h+='<div class="tp-tag" id="iped-tag-'+sub.id+'" style="font-size:.6rem;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--dim);">Sin datos</div>';
+    h+='</div>';
+  });
+  h+='</div></div></div>';
+
+  document.getElementById('mc-body').innerHTML=h;
+  ipedUpdateResults();
+}
+
+function ipedTab(idx){
+  for(var i=0;i<3;i++){
+    var t=document.getElementById('iped-tab'+i);
+    var p=document.getElementById('iped-pane'+i);
+    if(t)t.classList.toggle('on',i===idx);
+    if(p)p.classList.toggle('on',i===idx);
+  }
+  if(idx>0)ipedUpdateResults();
+}
+
+function ipedSelect(n,val){
+  ipedAns[n]=val;
+  for(var i=1;i<=5;i++){
+    var r=document.getElementById('iped-r'+n+'_'+i);if(r)r.className='tq-radio';
+    var c=document.getElementById('iped-cell'+n+'_'+i);if(c)c.className='';
+  }
+  var sel=document.getElementById('iped-r'+n+'_'+val);if(sel)sel.className='tq-radio sel';
+  var cel=document.getElementById('iped-cell'+n+'_'+val);if(cel)cel.className='tq-cell-sel';
+  var row=document.getElementById('iped-row'+n);if(row)row.className='tq-answered';
+  var answered=Object.keys(ipedAns).length;
+  var btn=document.getElementById('iped-send-btn');if(btn)btn.disabled=answered<42;
+  var note=document.getElementById('iped-send-note');
+  if(note){note.textContent=answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Mauro';note.style.color=answered>=42?'var(--green)':'';}
+  var data={};IPED_ITEMS.forEach(function(it){if(ipedAns[it.n])data['iped_'+it.n]=ipedAns[it.n];});
+  saveDraft(ipedLid,data);
+  updateSaveStatus('Borrador guardado','rgba(238,239,243,.5)');
+  ipedUpdateResults();
+}
+
+function ipedUpdateResults(){
+  var scores=ipedCalcScores();
+  IPED_SUBSCALES.forEach(function(sub){
+    var sc=scores[sub.id];
+    var lv=ipedLvl(sc);
+    var sv=document.getElementById('iped-sc-'+sub.id);
+    if(sv){sv.textContent=sc!==null?sc:'—';sv.style.color=sc!==null?lv.color:'var(--dim)';}
+    var le=document.getElementById('iped-lv-'+sub.id);
+    if(le){le.textContent=lv.lbl;le.className='teosq-sc-lvl '+(sc!==null?lv.cls:'');}
+    var bar=document.getElementById('iped-bar-'+sub.id);if(bar)bar.style.width=(sc!==null?(sc/30*100):0)+'%';
+    var sv2=document.getElementById('iped-sv-'+sub.id);
+    if(sv2){sv2.textContent=sc!==null?sc:'—';sv2.style.color=sc!==null?lv.color:'var(--dim)';}
+    var sv3=document.getElementById('iped-sv2-'+sub.id);
+    if(sv3){sv3.textContent=sc!==null?lv.lbl:'—';sv3.style.color=sc!==null?lv.color:'var(--dim)';}
+    ['l','m','h'].forEach(function(k){
+      var el=document.getElementById('iped-ic-'+sub.id+'-'+k);
+      if(!el)return;
+      el.textContent='◯';el.style.color='var(--dim)';el.style.fontWeight='400';el.style.fontSize='.9rem';
+    });
+    if(sc!==null){
+      var ak=sc<=20?'l':sc<=26?'m':'h';
+      var ae=document.getElementById('iped-ic-'+sub.id+'-'+ak);
+      if(ae){ae.textContent='●';ae.style.color=lv.color;ae.style.fontWeight='800';ae.style.fontSize='1rem';}
+    }
+    var card=document.getElementById('iped-desc-'+sub.id);
+    if(card){card.style.opacity=sc!==null?'1':'.55';card.style.borderColor=sc!==null?sub.color+'66':sub.color+'22';}
+    var tag=document.getElementById('iped-tag-'+sub.id);
+    if(tag&&sc!==null){
+      tag.textContent=lv.lbl;
+      tag.style.background=sc<=20?'rgba(96,165,250,.1)':sc<=26?'rgba(252,211,77,.1)':'rgba(74,222,128,.1)';
+      tag.style.borderColor=lv.color+'55';tag.style.color=lv.color;
+    }
+  });
+}
+
+function ipedSubmit(){
+  var scores=ipedCalcScores();
+  var user=USERS[S.user];
+  var answers=[];
+  IPED_ITEMS.forEach(function(it){answers.push({fid:'iped_'+it.n,pregunta:it.t,respuesta:String(ipedAns[it.n]||0)});});
+  IPED_SUBSCALES.forEach(function(sub){var sc=scores[sub.id];if(sc!==null)answers.push({fid:'iped_sc_'+sub.id,pregunta:sub.name,respuesta:String(sc)});});
+  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,usuario:S.user,
+    unidad:'Unidad 1',ejercicio:'IPED - Inventario Psicológico',lid:ipedLid,respuestas:answers};
+  var saved=getLocalSubs();
+  var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===ipedLid;});
+  var isUpdate=idx>=0;
+  if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+  localStorage.setItem('pp_submissions',JSON.stringify(saved));
+  markDoneL(ipedLid);fbSaveSubmission(S.user,ipedLid,rec);
+  var btn=document.getElementById('iped-send-btn');
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';btn.disabled=false;}
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===ipedLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
+}
+
+/* ── IPED ADMIN VIEW ─────────────────────────── */
+function renderIPEDAdminView(ej,cid){
+  var resps=ej.respuestas||[],scores={},ans={};
+  resps.forEach(function(r){
+    if(!r.fid)return;
+    var sm=r.fid.match(/^iped_sc_(\w+)$/);if(sm){scores[sm[1]]=parseInt(r.respuesta)||0;return;}
+    var am=r.fid.match(/^iped_(\d+)$/);if(am){ans[parseInt(am[1])]=parseInt(r.respuesta)||0;}
+  });
+  var LABELS=['Casi<br>nunca','Pocas<br>veces','A veces<br>sí/no','Muchas<br>veces','Casi<br>siempre'];
+  var h='<div style="padding:.75rem;">';
+
+  // Score table
+  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.25rem;">';
+  h+='<div style="background:var(--bg3);padding:.65rem 1rem;font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">PUNTAJES POR VARIABLE</div>';
+  h+='<table style="width:100%;border-collapse:collapse;"><thead><tr>';
+  h+='<th style="text-align:left;padding:.5rem 1rem;font-size:.68rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg3);">Variable</th>';
+  h+='<th style="text-align:center;padding:.5rem;font-size:.68rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg3);width:80px;">Puntaje</th>';
+  h+='<th style="text-align:center;padding:.5rem;font-size:.68rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg3);width:110px;">Nivel</th>';
+  h+='</tr></thead><tbody>';
+  IPED_SUBSCALES.forEach(function(sub,i){
+    var sc=scores[sub.id]!==undefined?scores[sub.id]:null;
+    var lv=ipedLvl(sc);
+    h+='<tr style="'+(i%2===0?'':'background:rgba(255,255,255,.02);')+'">';
+    h+='<td style="padding:.7rem 1rem;font-weight:700;font-size:.82rem;border-bottom:1px solid rgba(255,255,255,.04);"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+sub.color+';margin-right:.4rem;vertical-align:middle;"></span>'+sub.name+'</td>';
+    h+='<td style="text-align:center;border-bottom:1px solid rgba(255,255,255,.04);"><span style="font-size:1.4rem;font-weight:800;color:'+lv.color+';">'+(sc!==null?sc:'—')+'</span></td>';
+    h+='<td style="text-align:center;border-bottom:1px solid rgba(255,255,255,.04);"><span class="teosq-sc-lvl '+(sc!==null?lv.cls:'')+'" style="color:'+lv.color+';">'+lv.lbl+'</span></td>';
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>';
+
+  // Visual bars
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem;">';
+  IPED_SUBSCALES.forEach(function(sub){
+    var sc=scores[sub.id]!==undefined?scores[sub.id]:null;
+    var lv=ipedLvl(sc);
+    h+='<div class="tq-sc-card" style="border-top:3px solid '+sub.color+';">';
+    h+='<div style="font-size:.57rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);">'+sub.name+'</div>';
+    h+='<div style="font-size:1.6rem;font-weight:800;color:'+lv.color+';">'+(sc!==null?sc:'—')+'</div>';
+    h+='<div class="tq-sc-bar"><div class="tq-sc-fill" style="width:'+(sc!==null?(sc/30*100):0)+'%;background:'+sub.color+';"></div></div>';
+    h+='<div style="font-size:.65rem;font-weight:700;color:'+lv.color+';">'+lv.lbl+'</div>';
+    h+='</div>';
+  });
+  h+='</div>';
+
+  // Read-only items table
+  h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;">RESPUESTAS</div>';
+  h+='<div class="tq-table-wrap"><table class="tq-table"><thead><tr>';
+  h+='<th style="width:28px;">#</th><th style="text-align:left;">Ítem</th>';
+  LABELS.forEach(function(l){h+='<th>'+l+'</th>';});
+  h+='</tr></thead><tbody>';
+  IPED_ITEMS.forEach(function(item){
+    var v=ans[item.n]||0;
+    h+='<tr class="'+(v?'tq-answered':'')+'"><td>'+item.n+'</td><td style="text-align:left;font-size:.78rem;padding:.5rem .4rem;">'+item.t+'</td>';
+    for(var i=1;i<=5;i++){
+      h+='<td class="'+(v===i?'tq-cell-sel':'')+'" style="pointer-events:none;">';
+      h+='<span class="tq-radio'+(v===i?' sel':'')+'" style="pointer-events:none;cursor:default;"><span class="tq-radio-dot"></span></span></td>';
+    }
+    h+='</tr>';
+  });
+  h+='</tbody></table></div></div>';
+  var el=document.getElementById(cid);if(el)el.innerHTML=h;
+}
+
+
+
+/* ═══════════════════════════════════════════════
+   GPS DE OBJETIVOS
+   ═══════════════════════════════════════════════ */
+
+var GPS_ROWS = [
+  { id:'sueno', label:'Sueño visualizado', sub:'5 años máximo',
+    color:'rgba(255,255,255,.05)', accent:'rgba(200,200,200,.35)', textColor:'var(--text)' },
+  { id:'lp',    label:'Objetivo Largo Plazo', sub:'2 años',
+    color:'rgba(59,130,246,.08)', accent:'rgba(59,130,246,.5)', textColor:'#93C5FD' },
+  { id:'mp',    label:'Objetivo Mediano Plazo', sub:'1 año',
+    color:'rgba(252,211,77,.07)', accent:'rgba(252,211,77,.5)', textColor:'#FCD34D' },
+  { id:'cp',    label:'Objetivo Corto Plazo', sub:'3 meses — Solo Rendimiento',
+    color:'rgba(34,197,94,.07)', accent:'rgba(34,197,94,.5)', textColor:'#4ADE80', soloRendimiento:true }
+];
+
+function gpsGetData(lid) {
+  var draft = loadDraft(lid) || {};
+  var sub = (getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
+  var data = {};
+  if (Object.keys(draft).length) {
+    data = draft;
+  } else if (sub && sub.respuestas) {
+    sub.respuestas.forEach(function(r){ if(r.fid) data[r.fid] = r.respuesta||''; });
+  }
+  return data;
+}
+
+function gpsRowCount(data, routeId) {
+  // Find max index stored, default 3
+  var max = 2;
+  Object.keys(data).forEach(function(k) {
+    var m = k.match(new RegExp('^gps_'+routeId+'_(\\d+)_'));
+    if (m) max = Math.max(max, parseInt(m[1]));
+  });
+  return max + 1;
+}
+
+function gpsRowHTML(lid, row, idx, data, isNew) {
+  var fBase = 'gps_'+row.id+'_'+idx+'_';
+  var obj  = isNew ? '' : (data[fBase+'obj']  || '');
+  var tipo = isNew ? (row.soloRendimiento?'Rendimiento':'') : (data[fBase+'tipo'] || (row.soloRendimiento?'Rendimiento':''));
+  var dl   = isNew ? '' : (data[fBase+'dl']   || '');
+  var pi   = isNew ? '' : (data[fBase+'pi']   || '');
+  var num  = idx + 1;
+  var h = '<tr data-route="'+row.id+'" data-idx="'+idx+'" style="background:'+row.color+';border-bottom:1px solid var(--border);vertical-align:top;">';
+  h += '<td style="padding:.5rem .6rem;border-right:1px solid var(--border);text-align:center;vertical-align:middle;color:var(--dim);font-size:.7rem;font-weight:700;width:32px;">'+num+'</td>';
+  h += '<td style="padding:.45rem .6rem;border-right:1px solid var(--border);">';
+  h += '<textarea class="gps-ta" data-fid="'+fBase+'obj" oninput="gpsDraft(\''+lid+'\')" placeholder="Objetivo específico y medible..." style="border-left:2px solid '+row.accent+';">'+obj+'</textarea>';
+  h += '</td>';
+  h += '<td style="padding:.45rem .4rem;border-right:1px solid var(--border);text-align:center;">';
+  if (row.soloRendimiento) {
+    h += '<div style="font-size:.72rem;font-weight:700;color:'+row.textColor+';padding:.3rem .4rem;background:'+row.color+';border:1px solid '+row.accent+';border-radius:3px;text-align:center;">Rendimiento</div>';
+    h += '<input type="hidden" data-fid="'+fBase+'tipo" value="Rendimiento">';
+  } else {
+    h += '<select class="gps-sel" data-fid="'+fBase+'tipo" onchange="gpsDraft(\''+lid+'\')" style="border-color:'+row.accent+';">';
+    h += '<option value="">— tipo —</option>';
+    h += '<option value="Resultado"'+(tipo==='Resultado'?' selected':'')+'>Resultado</option>';
+    h += '<option value="Rendimiento"'+(tipo==='Rendimiento'?' selected':'')+'>Rendimiento</option>';
+    h += '</select>';
+  }
+  h += '</td>';
+  h += '<td style="padding:.45rem .4rem;border-right:1px solid var(--border);">';
+  h += '<input type="text" class="gps-input" data-fid="'+fBase+'dl" oninput="gpsDraft(\''+lid+'\')" placeholder="ej: Jun 2026" value="'+dl+'" style="border-color:'+row.accent+';">';
+  h += '</td>';
+  h += '<td style="padding:.45rem .6rem;">';
+  h += '<textarea class="gps-ta" data-fid="'+fBase+'pi" oninput="gpsDraft(\''+lid+'\')" placeholder="¿Qué habrás logrado a mitad del camino?" style="border-left:2px solid '+row.accent+';">'+pi+'</textarea>';
+  h += '</td>';
+  h += '</tr>';
+  return h;
+}
+
+function renderGPSExercise(lid) {
+  var data = gpsGetData(lid);
+  var alreadyDone = isDone(lid);
+
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  h += '<div class="tq-hdr-box">';
+  h += '<div class="ex-badge">Planificación de Objetivos</div>';
+  h += '<div class="tq-hdr-title">GPS de Objetivos</div>';
+  h += '<div class="tq-hdr-sub" style="margin-top:.2rem;">Definí tu ruta de objetivos: sueño a 5 años, largo plazo, mediano plazo y corto plazo.</div>';
+  h += '</div>';
+
+  h += '<div style="overflow-x:auto;">';
+  h += '<table id="gps-table" style="width:100%;border-collapse:collapse;min-width:680px;">';
+  h += '<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
+  h += '<th style="padding:.65rem .6rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:32px;">#</th>';
+  h += '<th style="padding:.65rem 1rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);">Objetivo específico y medible</th>';
+  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:110px;">Tipo</th>';
+  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:100px;">Deadline</th>';
+  h += '<th style="padding:.65rem 1rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:28%;">Habré logrado la mitad cuando...</th>';
+  h += '</tr></thead><tbody id="gps-body">';
+
+  GPS_ROWS.forEach(function(row) {
+    var count = gpsRowCount(data, row.id);
+    // Section header row
+    h += '<tr style="border-bottom:1px solid var(--border);">';
+    h += '<td colspan="5" style="padding:.6rem 1rem;background:'+row.color+';border-bottom:2px solid '+row.accent+';">';
+    h += '<span style="font-size:.8rem;font-weight:800;color:'+row.textColor+';">'+row.label+'</span>';
+    h += '<span style="font-size:.68rem;color:var(--dim);margin-left:.6rem;">'+row.sub+'</span>';
+    if (row.soloRendimiento) h += '<span style="font-size:.62rem;font-weight:700;color:'+row.textColor+';opacity:.75;margin-left:.75rem;">★ Solo Rendimiento</span>';
+    h += '</td></tr>';
+    // Input rows
+    for (var i = 0; i < count; i++) {
+      h += gpsRowHTML(lid, row, i, data, false);
+    }
+    // Add button row
+    h += '<tr id="gps-add-'+row.id+'" style="border-bottom:2px solid var(--border);">';
+    h += '<td colspan="5" style="padding:.4rem .75rem;background:'+row.color+';text-align:left;">';
+    h += '<button onclick="gpsAddRow(\''+lid+'\',\''+row.id+'\')" style="background:none;border:1px dashed '+row.accent+';color:'+row.textColor+';font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;padding:.3rem .9rem;border-radius:3px;cursor:pointer;opacity:.8;transition:opacity .2s;" onmouseover="this.style.opacity=\'1\'" onmouseout="this.style.opacity=\'.8\'">+ Agregar objetivo</button>';
+    h += '</td></tr>';
+  });
+
+  h += '</tbody></table></div>';
+  h += '<div class="ex-submit-row">';
+  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="gpsSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
+  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '</div></div>';
+
+  document.getElementById('mc-body').innerHTML = h;
+}
+
+function gpsAddRow(lid, routeId) {
+  var row = GPS_ROWS.find(function(r){return r.id===routeId;});
+  if (!row) return;
+  var tbody = document.getElementById('gps-body');
+  var addRow = document.getElementById('gps-add-'+routeId);
+  if (!tbody || !addRow) return;
+  // Count existing rows for this route
+  var existing = tbody.querySelectorAll('[data-route="'+routeId+'"]');
+  var idx = existing.length;
+  var data = gpsGetData(lid);
+  var newTr = document.createElement('tbody');
+  newTr.innerHTML = gpsRowHTML(lid, row, idx, data, true);
+  var tr = newTr.firstChild;
+  tbody.insertBefore(tr, addRow);
+  gpsDraft(lid);
+}
+
+function gpsDraft(lid) {
+  var data = {};
+  document.querySelectorAll('[data-fid^="gps_"]').forEach(function(el) {
+    if (el.value) data[el.getAttribute('data-fid')] = el.value;
+  });
+  saveDraft(lid, data);
+  updateSaveStatus('Borrador guardado', 'rgba(238,239,243,.5)');
+}
+
+function gpsSubmit(lid) {
+  var user = USERS[S.user];
+  var answers = [];
+  GPS_ROWS.forEach(function(row) {
+    var rows = document.querySelectorAll('[data-route="'+row.id+'"]');
+    rows.forEach(function(tr, i) {
+      var fBase = 'gps_'+row.id+'_'+i+'_';
+      ['obj','tipo','dl','pi'].forEach(function(f) {
+        var el = tr.querySelector('[data-fid="'+fBase+f+'"]');
+        var val = el ? el.value : (f==='tipo'&&row.soloRendimiento ? 'Rendimiento' : '');
+        answers.push({ fid:fBase+f, pregunta:row.label+' #'+(i+1)+' — '+({obj:'Objetivo',tipo:'Tipo',dl:'Deadline',pi:'Punto intermedio'}[f]), respuesta:val });
+      });
+    });
+  });
+  var rec = { ts:Date.now(), fecha:new Date().toLocaleString('es-AR'),
+    jugador:user.name, usuario:S.user,
+    unidad:'Unidad 3', ejercicio:'GPS de Objetivos', lid:lid, respuestas:answers };
+  var saved = getLocalSubs();
+  var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
+  var isUpdate = idx >= 0;
+  if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+  localStorage.setItem('pp_submissions', JSON.stringify(saved));
+  markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
+  var btn = document.getElementById('btn-ex-'+lid);
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
+}
+
+/* ── GPS ADMIN VIEW ─────────────────────────── */
+function renderGPSAdminView(ej, cid) {
+  var resps = ej.respuestas || [];
+  var data = {};
+  resps.forEach(function(r){ if(r.fid) data[r.fid] = r.respuesta||''; });
+
+  var h = '<div style="padding:.75rem;overflow-x:auto;">';
+  h += '<table style="width:100%;border-collapse:collapse;min-width:600px;">';
+  h += '<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
+  h += '<th style="padding:.55rem .6rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:28px;">#</th>';
+  h += '<th style="padding:.55rem .85rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);">Objetivo</th>';
+  h += '<th style="padding:.55rem .4rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:100px;">Tipo</th>';
+  h += '<th style="padding:.55rem .4rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:90px;">Deadline</th>';
+  h += '<th style="padding:.55rem .85rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:28%;">Punto intermedio</th>';
+  h += '</tr></thead><tbody>';
+
+  GPS_ROWS.forEach(function(row) {
+    var count = gpsRowCount(data, row.id);
+    // Section header
+    h += '<tr><td colspan="5" style="padding:.55rem .85rem;background:'+row.color+';border-bottom:2px solid '+row.accent+';border-top:1px solid var(--border);">';
+    h += '<span style="font-size:.78rem;font-weight:800;color:'+row.textColor+';">'+row.label+'</span>';
+    h += '<span style="font-size:.65rem;color:var(--dim);margin-left:.5rem;">'+row.sub+'</span>';
+    h += '</td></tr>';
+    // Data rows
+    var hasAny = false;
+    for (var i = 0; i < count; i++) {
+      var fBase = 'gps_'+row.id+'_'+i+'_';
+      var obj  = data[fBase+'obj']  || '';
+      var tipo = data[fBase+'tipo'] || (row.soloRendimiento?'Rendimiento':'');
+      var dl   = data[fBase+'dl']   || '';
+      var pi   = data[fBase+'pi']   || '';
+      if (!obj && !tipo && !dl && !pi) continue;
+      hasAny = true;
+      h += '<tr style="background:'+row.color+';border-bottom:1px solid var(--border);vertical-align:top;">';
+      h += '<td style="padding:.6rem .5rem;border-right:1px solid var(--border);text-align:center;color:var(--dim);font-size:.7rem;font-weight:700;vertical-align:middle;">'+(i+1)+'</td>';
+      h += '<td style="padding:.6rem .85rem;border-right:1px solid var(--border);font-size:.82rem;line-height:1.6;white-space:pre-wrap;">'+obj+'</td>';
+      h += '<td style="padding:.6rem .4rem;border-right:1px solid var(--border);text-align:center;font-size:.78rem;font-weight:700;color:'+row.textColor+';">'+tipo+'</td>';
+      h += '<td style="padding:.6rem .4rem;border-right:1px solid var(--border);text-align:center;font-size:.78rem;">'+dl+'</td>';
+      h += '<td style="padding:.6rem .85rem;font-size:.82rem;line-height:1.6;white-space:pre-wrap;">'+pi+'</td>';
+      h += '</tr>';
+    }
+    if (!hasAny) {
+      h += '<tr style="background:'+row.color+';border-bottom:1px solid var(--border);"><td colspan="5" style="padding:.6rem .85rem;font-size:.75rem;color:var(--dim);font-style:italic;">Sin objetivos completados.</td></tr>';
+    }
+  });
+
+  h += '</tbody></table></div>';
+  var el = document.getElementById(cid);
+  if(el) el.innerHTML = h;
+}
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('ip').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
