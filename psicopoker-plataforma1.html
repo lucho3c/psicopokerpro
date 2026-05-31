@@ -1532,17 +1532,21 @@ var EX_DEFS = {
     ]}
   ]},
   'u7l2':{ type:'form', unit:'Unidad 7', name:'Conectando con tu Reserva Natural', sections:[
-    { title:'Tu relacion con el descanso', questions:[
-      { fid:'u7l2_1', label:'Como estas manejando tus descansos ultimamente?' },
-      { fid:'u7l2_2', label:'Tenes espacios de ocio reales o sientes culpa al desconectarte?' },
-      { fid:'u7l2_3', label:'Cuando fue la ultima vez que hiciste algo valioso fuera del poker, solo porque si?' }
+    { title:'🌿 Conectando con tu reserva natural',
+      desc:'⚠️ Respondé estas preguntas solo después de haber hecho la visualización del video.\n\nSin abandonar la energía que lograste en la visualización, respondé con honestidad:',
+      questions:[
+        { fid:'u7l2_1', label:'🔹 ¿Cómo estás manejando tus descansos últimamente?' },
+        { fid:'u7l2_2', label:'🔹 ¿Tenés espacios de ocio reales o sentís culpa al desconectarte?' },
+        { fid:'u7l2_3', label:'🔹 ¿Cuándo fue la última vez que hiciste algo que vos considerás valioso fuera del póker, solo porque sí, sin buscar productividad ni rendimiento?' }
     ]},
-    { title:'Tu reserva natural', questions:[
-      { fid:'u7l2_4', label:'Como es tu reserva natural? Que aparecio en la visualizacion del video?' },
-      { fid:'u7l2_5', label:'Cuales son los espacios, actividades y vinculos que te ayudan a conectar con ella?' },
-      { fid:'u7l2_6', label:'Que sientes cuando estas en contacto con esa parte tuya?' },
-      { fid:'u7l2_7', label:'Que la amenaza hoy? Que cosas podrian estar daniandola?' },
-      { fid:'u7l2_8', label:'Disena un plan simple de proteccion para que esa parte siga viva y accessible.' }
+    { title:'Explorando tu reserva natural',
+      desc:'Hay una parte de vos que no fue moldeada por la exigencia, el resultado ni la mirada externa. Esa parte sigue viva adentro tuyo, aunque a veces la tengas olvidada. Esa es tu reserva natural.',
+      questions:[
+        { fid:'u7l2_4', label:'🔹 ¿Cómo es tu reserva natural? ¿Qué apareció en la visualización?' },
+        { fid:'u7l2_5', label:'🔹 ¿Cuáles son los espacios, actividades, vínculos, actitudes tuyas que te ayudan a conectar con tu reserva natural?' },
+        { fid:'u7l2_6', label:'🔹 ¿Qué sentís cuando estás en contacto con esa parte tuya?' },
+        { fid:'u7l2_7', label:'🔹 ¿Qué la amenaza hoy en día? ¿Qué cosas podrían estar dañando esa reserva?' },
+        { fid:'u7l2_8', label:'🔹 ¿Qué podrías hacer para protegerla?', note:'Diseñá un plan simple de protección para que esa parte siga viva, accesible y fértil.' }
     ]}
   ]},
   'u7l3':{ type:'form', unit:'Unidad 7', name:'Dia Wu Wei', sections:[
@@ -1694,6 +1698,7 @@ function renderFormExercise(lid, def) {
       h += '<div class="ex-q ' + (isReflex ? 'ex-q-reflex' : '') + '">';
       if (isReflex) h += '<p class="ex-q-reflex-label">Reflexion libre</p>';
       h += '<p class="ex-ql">' + q.label + '</p>';
+      if (q.note) h += '<p style="font-size:.75rem;color:var(--dim);font-style:italic;margin:-.2rem 0 .45rem;">' + q.note + '</p>';
       if (q.type === 'scale') {
         h += '<select class="ex-select" data-fid="' + q.fid + '" oninput="triggerAutoSave(\'' + lid + '\');markSecProgress(\'' + secId + '\',\'' + lid + '\')">';
         h += '<option value="">- elegir -</option>';
