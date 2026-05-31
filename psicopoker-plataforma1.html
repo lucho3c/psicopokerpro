@@ -3335,14 +3335,8 @@ function renderPMTExercise(lid) {
   h += '<p class="ex-prog-txt" id="ex-prog-txt-pmt">0 de 15 ítems completados</p>';
   h += '</div>';
 
-  // Tabs
-  h += '<div class="teosq-tabs">';
-  h += '<div class="teosq-tab on" id="pmt-ttab-0" onclick="pmtTab(0)">1. Autoevaluación</div>';
-  h += '<div class="teosq-tab" id="pmt-ttab-1" onclick="pmtTab(1)">2. Resultados</div>';
-  h += '</div>';
-
   // ── PANE 0: cuestionario ──────────────────
-  h += '<div class="teosq-pane on" id="pmt-tpane-0" style="padding:1.1rem 1.25rem;">';
+  h += '<div id="pmt-tpane-0" style="padding:1.1rem 1.25rem;">';
   h += pmtSectionHTML('1)', 'Tomar buenas decisiones', PMT_ITEMS.sec1, draft);
   h += '<div class="pmt-divider"></div>';
   h += pmtSectionHTML('2)', 'Tener buena disponibilidad de recursos', PMT_ITEMS.sec2a, draft);
@@ -3351,7 +3345,7 @@ function renderPMTExercise(lid) {
   h += '</div>';
 
   // ── PANE 1: resultados ────────────────────
-  h += '<div class="teosq-pane" id="pmt-tpane-1" style="padding:1.25rem;">';
+  h += '<div id="pmt-tpane-1" style="padding:1.25rem;">';
 
   // Dos cards de capacidad
   h += '<div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">';
@@ -3426,7 +3420,7 @@ function pmtSubmit() {
   var isUpdate = idx >= 0;
   if (isUpdate) { rec.airtableId = saved[idx].airtableId; saved[idx] = rec; }
   else { saved.push(rec); }
-    getAttachAnswers(lid).forEach(function(a){answers.push(a);});
+  getAttachAnswers(pmtLid).forEach(function(a){answers.push(a);});
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(pmtLid);
   fbSaveSubmission(S.user, pmtLid, rec);
@@ -3785,7 +3779,7 @@ function ipedSubmit(){
   var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===ipedLid;});
   var isUpdate=idx>=0;
   if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
-    getAttachAnswers(lid).forEach(function(a){answers.push(a);});
+  getAttachAnswers(ipedLid).forEach(function(a){answers.push(a);});
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   markDoneL(ipedLid);fbSaveSubmission(S.user,ipedLid,rec);
   var btn=document.getElementById('iped-send-btn');
