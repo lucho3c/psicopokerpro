@@ -379,6 +379,40 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .con-item.checked .con-item-text{font-weight:600;color:var(--text);}
 .con-item.checked::before{content:'☑';color:var(--red);font-size:.9rem;flex-shrink:0;}
 .con-item:not(.checked)::before{content:'☐';color:var(--dim);font-size:.9rem;flex-shrink:0;}
+/* Cajas 4 */
+.caj-paso{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.caj-paso-hdr{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;}
+.caj-paso-num{font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:var(--red);color:#fff;padding:.18rem .55rem;border-radius:3px;}
+.caj-paso-icon{font-size:1.1rem;}
+.caj-paso-title{font-size:.95rem;font-weight:800;}
+.caj-paso-desc{font-size:.8rem;color:var(--muted);line-height:1.65;margin-bottom:.85rem;}
+.caj-qblock{margin-bottom:.9rem;}
+.caj-qlabel{font-size:.84rem;font-weight:600;margin-bottom:.4rem;line-height:1.5;}
+.caj-ta{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;padding:.6rem .8rem;border-radius:4px;resize:vertical;min-height:60px;outline:none;transition:border-color .2s;line-height:1.6;}
+.caj-ta:focus{border-color:var(--red);}
+.caj-ta::placeholder{color:var(--dim);}
+.caj-sliders{display:flex;flex-direction:column;gap:.5rem;margin:.4rem 0 .75rem;}
+.caj-slider-row{display:flex;align-items:center;gap:.75rem;}
+.caj-slider-label{font-size:.78rem;color:var(--text);width:110px;flex-shrink:0;}
+.caj-range{flex:1;accent-color:var(--red);}
+.caj-slider-val{font-size:.9rem;font-weight:800;color:var(--red);min-width:32px;text-align:right;}
+.caj-table{width:100%;border-collapse:collapse;min-width:480px;}
+.caj-table thead tr{background:var(--bg3);border-bottom:2px solid var(--border);}
+.caj-table th{padding:.6rem .85rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);}
+.caj-table tbody tr{border-bottom:1px solid rgba(255,255,255,.04);}
+.caj-table tbody tr:hover{background:rgba(255,255,255,.02);}
+.caj-th-cell{padding:.65rem .85rem;font-size:.84rem;border-right:1px solid var(--border);vertical-align:middle;}
+.caj-input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.82rem;padding:.4rem .65rem;border-radius:3px;outline:none;transition:border-color .2s;}
+.caj-input:focus{border-color:var(--red);}
+.caj-input::placeholder{color:var(--dim);}
+.caj-rule{display:flex;align-items:baseline;gap:.5rem;padding:.6rem .75rem;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:4px;margin-bottom:.5rem;flex-wrap:wrap;line-height:1.9;}
+.caj-rule-num{font-size:.75rem;font-weight:800;color:var(--red);flex-shrink:0;}
+.caj-rule-text{font-size:.82rem;color:var(--text);display:flex;align-items:baseline;flex-wrap:wrap;gap:.2rem;flex:1;}
+.caj-inline-input{background:transparent;border:none;border-bottom:2px solid var(--red);color:var(--red);font-family:'Montserrat',sans-serif;font-size:.84rem;font-weight:700;width:52px;text-align:center;outline:none;padding:.1rem .2rem;}
+.caj-admin-paso-hdr{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);padding:.4rem .5rem;background:rgba(232,49,42,.06);border-left:3px solid var(--red);margin-bottom:.6rem;}
+.caj-admin-q{margin-bottom:.55rem;}
+.caj-admin-ql{font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:.2rem;}
+.caj-admin-a{font-size:.82rem;color:var(--text);line-height:1.6;white-space:pre-wrap;}
 .attach-title{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;}
 .attach-group{margin-bottom:1rem;}
 .attach-group-label{font-size:.65rem;font-weight:700;color:var(--muted);margin-bottom:.45rem;}
@@ -822,9 +856,15 @@ function pdfAttachHTML(resps){
   if(fileR.length){
     h+='<div style="font-size:10px;font-weight:700;color:#b45309;margin-bottom:6px;margin-top:8px;text-transform:uppercase;letter-spacing:.06em;">Archivos adjuntos</div>';
     fileR.forEach(function(r){
+      var idx=r.fid.replace('_file_','');
+      var b64R=all.find(function(x){return x.fid==='_file_b64_'+idx;});
       var desc=r.pregunta.replace(/^Archivo \d+( — | - )?/,'').replace(/^Archivo \d+$/,'');
       h+='<div style="margin-bottom:5px;padding:5px 8px;background:#fffbeb;border-left:3px solid #f59e0b;border-radius:0 3px 3px 0;">';
-      h+='<span style="font-size:10px;">📄 '+r.respuesta+'</span>';
+      if(b64R&&b64R.respuesta){
+        h+='<a href="'+b64R.respuesta+'" download="'+r.respuesta+'" style="display:inline-flex;align-items:center;gap:5px;color:#b45309;font-size:10px;font-weight:600;text-decoration:none;">📄 '+r.respuesta+' &darr; Descargar</a>';
+      }else{
+        h+='<span style="font-size:10px;">📄 '+r.respuesta+'</span>';
+      }
       if(desc)h+='<div style="font-size:9px;color:#6b7280;margin-top:2px;">'+desc+'</div>';
       h+='</div>';
     });
@@ -1038,7 +1078,7 @@ var C = [
       { id:'u6l3', title:'Ejercicio 1 - Descubriendo mi Patron Inconsciente', driveId:'1ObLVgHl0UXsxYq1Dyth3bErtg7VtSB3w',
         ex:{ type:'form', unit:'Unidad 6', name:'Patron Inconsciente' } },
       { id:'u6l4', title:'Gestion Profesional del Dinero', driveId:'1BHaViyzy5LRr52w6MJit8iHRES1_fksN' },
-      { id:'u6l5', title:'Ejercicio 2: Las 4 Cajas', driveId:'', ex:{ type:'form', unit:'Unidad 6', name:'Las 4 Cajas' } },
+      { id:'u6l5', title:'Ejercicio 2: Las 4 Cajas', driveId:'', noVideo:true, ex:{ type:'cajas4', unit:'Unidad 6', name:'Las 4 Cajas' } },
       { id:'u6l6', title:'Sexta sesion 1 a 1', type:'session' }
     ]
   },
@@ -1483,26 +1523,7 @@ var EX_DEFS = {
       { fid:'u5l5_7', label:'"Cuando dudo de mi, elijo recordar que..." — completalo con tus palabras. Se realista.' }
     ]}
   ]},
-  'u6l5':{ type:'form', unit:'Unidad 6', name:'Las 4 Cajas', sections:[
-    { title:'Radiografia actual', questions:[
-      { fid:'u6l5_1', label:'Hoy tenes separadas tus cajas o todo tu dinero esta junto en una sola cuenta?' },
-      { fid:'u6l5_2', label:'Sabes cuanto necesitas por mes para vivir bien (no solo sobrevivir)?' },
-      { fid:'u6l5_3', label:'Tenes algun registro de tus gastos?' },
-      { fid:'u6l5_4', label:'Como te sientes hoy con tu situacion financiera? (del 1 al 100)' }
-    ]},
-    { title:'Tus 4 cajas y sus montos', questions:[
-      { fid:'u6l5_5', label:'BANKROLL: monto objetivo y monto actual. Cuanto necesitas para sentirte protegido de la varianza?' },
-      { fid:'u6l5_6', label:'GASTOS MENSUALES: monto objetivo y monto actual. Cuanto necesitas mensualmente para vivir comodo?' },
-      { fid:'u6l5_7', label:'LIFEROLL: cuantos meses quieres cubiertos? Monto objetivo y monto actual.' },
-      { fid:'u6l5_8', label:'AHORROS / INVERSIONES: monto objetivo y monto actual.' }
-    ]},
-    { title:'Tus reglas de distribucion', questions:[
-      { fid:'u6l5_9', label:'Regla 1: cuando mi bankroll este por debajo del __%, voy a asignar al menos __% de mis ingresos.' },
-      { fid:'u6l5_10', label:'Regla 2: cuando mi liferoll este por debajo de __ meses, voy a priorizarlo.' },
-      { fid:'u6l5_11', label:'Regla 3: cuando tenga mas del __% de mis cajas cubiertas, destino __% a ahorro/disfrute.' },
-      { fid:'u6l5_12', label:'Regla personalizada adicional (si la necesitas)' }
-    ]}
-  ]},
+  'u6l5':{ type:'cajas4', unit:'Unidad 6', name:'Las 4 Cajas' },
   'u7l1':{ type:'form', unit:'Unidad 7', name:'El lugar del poker en mi vida', sections:[
     { title:'Diagnostico de tus distintos seres', questions:[
       { fid:'u7l1_1', label:'Hace el dibujo de circulos que muestra como estan distribuidos actualmente tus distintos seres (jugador, estudiante, hijo/a, amigo/a, pareja, deportista, etc.). Describe como quedo ese dibujo.' },
@@ -2020,6 +2041,11 @@ function renderContent(unit, lid) {
       renderConcienciaExercise(lid);
       document.getElementById('mc').scrollTop = 0;
       return;
+    } else if (exType === 'cajas4') {
+      document.getElementById('mc-body').innerHTML = body;
+      renderCajas4Exercise(lid);
+      document.getElementById('mc').scrollTop = 0;
+      return;
     } else if (exType === 'grid') body += renderGridExercise(lid, def);
     else if (exType === 'form') body += renderFormExercise(lid, def);
   }
@@ -2210,10 +2236,10 @@ function showPatient(usuario){
     var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
     exs.forEach(function(ej,idx){
       var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
-      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);
+      var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);var isCaj=ej.lid==="u6l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("4 cajas")!==-1);
       var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
       h+='<div class="sub-card">';
-      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isCon?'Ver respuestas &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
+      var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isCon?'Ver respuestas &#9660;':isCaj?'Ver detalle &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
       h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
       h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
       h+='<button class="sub-toggle">'+btnLabel+'</button></div>';
@@ -2226,6 +2252,7 @@ function showPatient(usuario){
       else if(isCl)teosqQueue.push({type:'checklist',eid:eid,ej:ej});
       else if(isEquip)teosqQueue.push({type:'equip',eid:eid,ej:ej});
       else if(isCon)teosqQueue.push({type:'conciencia',eid:eid,ej:ej});
+      else if(isCaj)teosqQueue.push({type:'cajas4',eid:eid,ej:ej});
       else if(isGrid)teosqQueue.push({type:'grid',eid:eid,ej:ej});
       else teosqQueue.push({type:'form',eid:eid,ej:ej});
     });
@@ -2241,6 +2268,7 @@ function showPatient(usuario){
     else if(item.type==='checklist')renderChecklistAdminView(item.ej,item.eid);
     else if(item.type==='equip')renderEquipAdminView(item.ej,item.eid);
     else if(item.type==='conciencia')renderConcienciaAdminView(item.ej,item.eid);
+    else if(item.type==='cajas4')renderCajas4AdminView(item.ej,item.eid);
     else if(item.type==='grid')renderGridAdminView(item.ej,item.eid);
     else renderFormAdminView(item.ej,item.eid);
   });
@@ -2406,7 +2434,7 @@ function pdfLvlLbl(v){if(!v)return'';if(v<=2.9)return'Baja';if(v<=4.2)return'Med
 
 function buildExPDF(ej){
   var resps=ej.respuestas||[];
-  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);
+  var isPmt=ej.lid==="u1l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);var isCaj=ej.lid==="u6l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("4 cajas")!==-1);
   var isGrid=resps.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
 
@@ -2482,6 +2510,49 @@ function buildExPDF(ej){
       h+='<div style="padding:6px 10px;border-bottom:1px solid #f0f0f0;display:flex;gap:8px;align-items:flex-start;"><div style="flex:1;"><div style="font-size:10px;font-weight:700;color:#1a1a2e;margin-bottom:1px;">'+sub.name+'</div><div style="font-size:9px;color:#555;line-height:1.45;">'+IDESCS[sub.id]+'</div></div><div style="flex-shrink:0;font-size:13px;font-weight:800;color:'+sub.color+';min-width:20px;text-align:right;">'+(sc!==null?sc:'—')+'</div><div style="flex-shrink:0;"><span style="font-size:8px;font-weight:700;background:'+lv.bg+';color:'+lv.color+';border-radius:3px;padding:1px 5px;">'+lv.lbl+'</span></div></div>';
     });
     h+='</div>';
+
+  }else if(isCaj){
+    var cajData={};
+    (resps||[]).forEach(function(r){if(r.fid&&r.fid.indexOf('_file_')<0&&r.fid.indexOf('_link_')<0)cajData[r.fid]=r.respuesta||'';});
+    function cv(fid){return cajData[fid]||'';}
+    var CPDF=[{id:'bankroll',label:'Bankroll'},{id:'gastos',label:'Gastos mensuales'},{id:'liferoll',label:'Liferoll'},{id:'ahorros',label:'Ahorros'}];
+    // Paso 1
+    var p1qs=[['caj_p1_1','¿Tenés separadas tus cajas?'],['caj_p1_2','¿Cuánto necesitás por mes?'],['caj_p1_3','¿Registro de gastos?']];
+    var hasP1=p1qs.some(function(q){return cv(q[0]);});
+    if(hasP1){
+      h+='<div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#E8312A;padding:5px 10px 3px;background:#fff5f5;border-left:3px solid #E8312A;margin-bottom:4px;">Paso 1 — Radiografía actual</div>';
+      p1qs.forEach(function(q){if(cv(q[0]))h+='<div class="qa-row"><div class="qa-q">'+q[1]+'</div><div class="qa-a">'+cv(q[0])+'</div></div>';});
+      var sl=[['caj_p1_t','Tranquilo/a'],['caj_p1_a','Ansioso/a'],['caj_p1_d','Desorganizado/a'],['caj_p1_e','Evitativo/a']];
+      var sVals=sl.filter(function(s){return cv(s[0]);}).map(function(s){return s[1]+': '+cv(s[0])+'/100';});
+      if(sVals.length)h+='<div class="qa-row"><div class="qa-q">Situación financiera</div><div class="qa-a">'+sVals.join(' · ')+'</div></div>';
+      if(cv('caj_p1_extra'))h+='<div class="qa-row"><div class="qa-q">Comentario</div><div class="qa-a">'+cv('caj_p1_extra')+'</div></div>';
+    }
+    // Pasos 2 & 3
+    h+='<div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#E8312A;padding:5px 10px 3px;background:#fff5f5;border-left:3px solid #E8312A;margin:6px 0 4px;">Estructura de Cajas</div>';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:10px;margin-bottom:6px;">';
+    h+='<thead><tr style="background:#f0f0f0;"><th style="padding:5px 7px;border:1px solid #ddd;width:20%;">Caja</th><th style="padding:5px 7px;border:1px solid #ddd;">Objetivo (P2)</th><th style="padding:5px 7px;border:1px solid #ddd;">Actual</th><th style="padding:5px 7px;border:1px solid #ddd;">Objetivo (P3)</th><th style="padding:5px 7px;border:1px solid #ddd;text-align:center;">%</th></tr></thead><tbody>';
+    CPDF.forEach(function(c,i){
+      var obj2=cv('caj_obj2_'+c.id),act=cv('caj_act_'+c.id),obj3=cv('caj_obj_'+c.id)||obj2;
+      var pct='—',color='#666';
+      if(act&&obj3&&parseFloat(obj3)){var p=Math.min(Math.round(parseFloat(act)/parseFloat(obj3)*100),999);pct=p+'%';color=p<30?'#dc2626':p<70?'#d97706':'#16a34a';}
+      h+='<tr style="'+(i%2?'background:#fafafa;':'')+'">';
+      h+='<td style="padding:5px 7px;border:1px solid #e8e8e8;font-weight:700;">'+c.label+'</td>';
+      h+='<td style="padding:5px 7px;border:1px solid #e8e8e8;">'+(obj2||'—')+'</td>';
+      h+='<td style="padding:5px 7px;border:1px solid #e8e8e8;">'+(act||'—')+'</td>';
+      h+='<td style="padding:5px 7px;border:1px solid #e8e8e8;">'+(obj3||'—')+'</td>';
+      h+='<td style="padding:5px 7px;border:1px solid #e8e8e8;text-align:center;font-weight:800;color:'+color+';">'+pct+'</td>';
+      h+='</tr>';
+    });
+    h+='</tbody></table>';
+    // Paso 4 reglas
+    var r1a=cv('caj_r1_0'),r1b=cv('caj_r1_1'),r2=cv('caj_r2_0'),r3a=cv('caj_r3_0'),r3b=cv('caj_r3_1');
+    if(r1a||r1b||r2||r3a||r3b||cv('caj_reglas_extra')){
+      h+='<div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#E8312A;padding:5px 10px 3px;background:#fff5f5;border-left:3px solid #E8312A;margin-bottom:4px;">Paso 4 — Reglas</div>';
+      if(r1a||r1b)h+='<div class="qa-row"><div class="qa-a">Bankroll por debajo del <b>'+(r1a||'__')+'%</b> → asignar al menos <b>'+(r1b||'__')+'%</b> de ingresos.</div></div>';
+      if(r2)h+='<div class="qa-row"><div class="qa-a">Liferoll por debajo de <b>'+r2+' meses</b> → priorizar.</div></div>';
+      if(r3a||r3b)h+='<div class="qa-row"><div class="qa-a">Más del <b>'+(r3a||'__')+'%</b> cubierto → destinar <b>'+(r3b||'__')+'%</b> a ahorro/disfrute.</div></div>';
+      if(cv('caj_reglas_extra'))h+='<div class="qa-row"><div class="qa-q">Reglas extra</div><div class="qa-a">'+cv('caj_reglas_extra')+'</div></div>';
+    }
 
   }else if(isCon){
     var conData={};
@@ -4633,6 +4704,301 @@ function renderConcienciaAdminView(ej, cid) {
     h += adminAttachHTML(ej.respuestas||[],ej.usuario,ej.lid);
   var el = document.getElementById(cid);
   if(el) el.innerHTML = h;
+}
+
+
+
+/* ═══════════════════════════════════════════════
+   LAS 4 CAJAS — PSICOLOGÍA DEL DINERO
+   ═══════════════════════════════════════════════ */
+
+var CAJAS_DEF = [
+  { id:'bankroll',  label:'Bankroll',          desc:'Tu capital de juego. ¿Cuánto necesitás para sentirte protegido de la varianza y las malas rachas?' },
+  { id:'gastos',    label:'Gastos mensuales',  desc:'¿Cuánto dinero necesitás mensualmente para vivir cómodo/a?' },
+  { id:'liferoll',  label:'Liferoll',          desc:'¿Cuántos meses te gustaría tener cubiertos para vivir y trabajar tranquilo? Multiplicá por tus gastos.' },
+  { id:'ahorros',   label:'Ahorros',           desc:'Esta es la caja con la que vas a construir tu patrimonio.' }
+];
+
+function cajasGetData(lid) {
+  var draft = loadDraft(lid)||{};
+  var sub = (getLocalSubs()||[]).find(function(s){return s.usuario===S.user&&s.lid===lid;});
+  var data = {};
+  if (Object.keys(draft).length) { data = draft; }
+  else if (sub && sub.respuestas) { sub.respuestas.forEach(function(r){ if(r.fid) data[r.fid]=r.respuesta||''; }); }
+  return data;
+}
+
+function cajasSaveDraft(lid) {
+  var data = loadDraft(lid)||{};
+  document.querySelectorAll('[data-caj]').forEach(function(el){ data[el.getAttribute('data-caj')]=el.value; });
+  saveDraft(lid, data);
+  updateSaveStatus('Borrador guardado','rgba(238,239,243,.5)');
+  cajasUpdatePct();
+}
+
+function cajasUpdatePct() {
+  CAJAS_DEF.forEach(function(caja) {
+    var actEl = document.getElementById('caj-act-'+caja.id);
+    var objEl = document.getElementById('caj-obj-'+caja.id);
+    var pctEl = document.getElementById('caj-pct-'+caja.id);
+    if (!pctEl) return;
+    var act = parseFloat((actEl?actEl.value:'')||0)||0;
+    var obj = parseFloat((objEl?objEl.value:'')||0)||0;
+    if (!obj) { pctEl.textContent='—'; pctEl.style.background='rgba(255,255,255,.05)'; pctEl.style.color='var(--dim)'; return; }
+    var pct = Math.min(Math.round(act/obj*100),999);
+    var color = pct < 30 ? '#EF4444' : pct < 70 ? '#F59E0B' : '#22C55E';
+    var bg    = pct < 30 ? 'rgba(239,68,68,.12)' : pct < 70 ? 'rgba(245,158,11,.12)' : 'rgba(34,197,94,.12)';
+    pctEl.textContent = pct+'%';
+    pctEl.style.color = color;
+    pctEl.style.background = bg;
+  });
+  // Sync monto objetivo from paso 2 to paso 3
+  CAJAS_DEF.forEach(function(caja) {
+    var srcObj = document.getElementById('caj-obj2-'+caja.id);
+    var dstObj = document.getElementById('caj-obj-'+caja.id);
+    if (srcObj && dstObj && srcObj.value && !dstObj.value) dstObj.value = srcObj.value;
+  });
+}
+
+function renderCajas4Exercise(lid) {
+  var data = cajasGetData(lid);
+  var alreadyDone = isDone(lid);
+  function v(fid){ return data[fid]||''; }
+
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  h += '<div class="tq-hdr-box">';
+  h += '<div class="ex-badge">💼 Profesionalizando el Mindset · Unidad 6</div>';
+  h += '<div class="tq-hdr-title">Las 4 Cajas — Definí y llenÁ tu estructura financiera</div>';
+  h += '</div>';
+
+  // ── PASO 1: Radiografía actual ──────────────────────────────
+  h += cajasPaso('1','🔍','Radiografía actual','Respondé con sinceridad:');
+
+  var q1s = [
+    {fid:'caj_p1_1', q:'¿Hoy tenés separadas tus "cajas" o todo tu dinero está junto en una sola cuenta o billetera?'},
+    {fid:'caj_p1_2', q:'¿Sabés cuánto necesitás por mes para vivir bien (no solo sobrevivir)?'},
+    {fid:'caj_p1_3', q:'¿Tenés algún registro de tus gastos o simplemente vas viendo en el mes?'},
+  ];
+  q1s.forEach(function(q){
+    h += '<div class="caj-qblock">';
+    h += '<p class="caj-qlabel">🔹 '+q.q+'</p>';
+    h += '<textarea class="caj-ta" data-caj="'+q.fid+'" oninput="cajasSaveDraft(\''+lid+'\')" placeholder="Tu respuesta...">'+v(q.fid)+'</textarea>';
+    h += '</div>';
+  });
+
+  h += '<div class="caj-qblock">';
+  h += '<p class="caj-qlabel">🔹 ¿Cómo te sentís hoy con tu situación financiera? <span style="color:var(--dim);font-size:.75rem;">(del 1 al 100)</span></p>';
+  h += '<div class="caj-sliders">';
+  [['caj_p1_t','Tranquilo/a'],['caj_p1_a','Ansioso/a'],['caj_p1_d','Desorganizado/a'],['caj_p1_e','Evitativo/a']].forEach(function(pair){
+    var val = parseInt(v(pair[0]))||0;
+    h += '<div class="caj-slider-row">';
+    h += '<span class="caj-slider-label">'+pair[1]+'</span>';
+    h += '<input type="range" class="caj-range" min="0" max="100" value="'+val+'" data-caj="'+pair[0]+'" oninput="cajasSaveDraft(\''+lid+'\');document.getElementById(\'sv-'+pair[0]+'\').textContent=this.value">';
+    h += '<span class="caj-slider-val" id="sv-'+pair[0]+'">'+val+'</span>';
+    h += '</div>';
+  });
+  h += '</div>';
+  h += '<textarea class="caj-ta" data-caj="caj_p1_extra" oninput="cajasSaveDraft(\''+lid+'\')" placeholder="Agregá lo que quieras expresar...">'+v('caj_p1_extra')+'</textarea>';
+  h += '</div>';
+  h += '</div>'; // paso
+
+  // ── PASO 2: Definí tu estructura mínima ────────────────────
+  h += cajasPaso('2','🧩','Definí tu estructura mínima','Estimá tus montos ideales por caja. Si ya tenés experiencia y querés agregar cajas, este es un buen momento. Si no, mantenerlo simple.');
+
+  h += '<div style="overflow-x:auto;margin-bottom:.5rem;">';
+  h += '<table class="caj-table"><thead><tr>';
+  h += '<th style="width:20%;">Caja</th><th>¿Qué incluye?</th><th style="width:22%;">Monto objetivo</th>';
+  h += '</tr></thead><tbody>';
+  CAJAS_DEF.forEach(function(caja){
+    h += '<tr><td class="caj-th-cell"><strong>'+caja.label+'</strong></td>';
+    h += '<td style="font-size:.8rem;color:var(--muted);padding:.65rem .85rem;line-height:1.55;">'+caja.desc+'</td>';
+    h += '<td style="padding:.5rem .75rem;"><input type="text" class="caj-input" id="caj-obj2-'+caja.id+'" data-caj="caj_obj2_'+caja.id+'" oninput="cajasSaveDraft(\''+lid+'\')" placeholder="$..." value="'+v('caj_obj2_'+caja.id)+'"></td>';
+    h += '</tr>';
+  });
+  h += '</tbody></table></div>';
+  h += '</div>';
+
+  // ── PASO 3: Monto actual vs objetivo ───────────────────────
+  h += cajasPaso('3','📦','¿Cuánto tiene cada caja? ¿Y cuánto le falta?','Completá con lo que ya estimaste en el Paso 2. El % se calcula automáticamente.');
+
+  h += '<div style="overflow-x:auto;margin-bottom:.5rem;">';
+  h += '<table class="caj-table"><thead><tr>';
+  h += '<th style="width:20%;">Caja</th><th style="width:26%;">Monto actual</th><th style="width:26%;">Monto objetivo</th><th style="width:18%;">% alcanzado</th>';
+  h += '</tr></thead><tbody>';
+  CAJAS_DEF.forEach(function(caja){
+    var act = v('caj_act_'+caja.id);
+    var obj = v('caj_obj_'+caja.id) || v('caj_obj2_'+caja.id);
+    var pct = '—'; var color='var(--dim)'; var bg='rgba(255,255,255,.05)';
+    if (act && obj && parseFloat(obj)) {
+      var p = Math.min(Math.round(parseFloat(act)/parseFloat(obj)*100),999);
+      pct = p+'%';
+      color = p<30?'#EF4444':p<70?'#F59E0B':'#22C55E';
+      bg    = p<30?'rgba(239,68,68,.12)':p<70?'rgba(245,158,11,.12)':'rgba(34,197,94,.12)';
+    }
+    h += '<tr><td class="caj-th-cell"><strong>'+caja.label+'</strong></td>';
+    h += '<td style="padding:.5rem .75rem;"><input type="text" class="caj-input" id="caj-act-'+caja.id+'" data-caj="caj_act_'+caja.id+'" oninput="cajasSaveDraft(\''+lid+'\')" placeholder="$ actual" value="'+act+'"></td>';
+    h += '<td style="padding:.5rem .75rem;"><input type="text" class="caj-input" id="caj-obj-'+caja.id+'" data-caj="caj_obj_'+caja.id+'" oninput="cajasSaveDraft(\''+lid+'\')" placeholder="$ objetivo" value="'+obj+'"></td>';
+    h += '<td style="padding:.5rem .75rem;text-align:center;"><span id="caj-pct-'+caja.id+'" style="font-size:.9rem;font-weight:800;padding:.2rem .6rem;border-radius:4px;background:'+bg+';color:'+color+';">'+pct+'</span></td>';
+    h += '</tr>';
+  });
+  h += '</tbody></table></div>';
+  h += '<div style="font-size:.68rem;color:var(--dim);padding:.3rem .5rem;display:flex;gap:1rem;">';
+  h += '<span style="color:#EF4444;">● Menos del 30%</span><span style="color:#F59E0B;">● Entre 30% y 70%</span><span style="color:#22C55E;">● Más del 70%</span>';
+  h += '</div></div>';
+
+  // ── PASO 4: Reglas ──────────────────────────────────────────
+  h += cajasPaso('4','💸','Tus reglas para llenar las cajas','Completá las siguientes frases para establecer tus <strong>principios de decisión</strong>:');
+
+  var rules = [
+    {id:'r1', tpl:['Cuando mi bankroll esté por debajo del ','% voy a asignar al menos ','% de mis ingresos a esa caja.']},
+    {id:'r2', tpl:['Cuando mi liferoll esté por debajo de ',' meses cubiertos voy a priorizarlo hasta llegar a ese número.']},
+    {id:'r3', tpl:['Cuando tenga más del ','% de mis cajas cubiertas voy a permitirme destinar ','% a ahorro/inversión o disfrute.']}
+  ];
+  rules.forEach(function(rule, ri){
+    h += '<div class="caj-rule">';
+    h += '<span class="caj-rule-num">'+(ri+1)+'</span><span class="caj-rule-text">';
+    rule.tpl.forEach(function(seg, si){
+      h += '<span>'+seg+'</span>';
+      if (si < rule.tpl.length - 1) {
+        h += '<input type="text" class="caj-inline-input" data-caj="caj_'+rule.id+'_'+si+'" oninput="cajasSaveDraft(\''+lid+'\')" value="'+v('caj_'+rule.id+'_'+si)+'">';
+      }
+    });
+    h += '</span></div>';
+  });
+  h += '<p style="font-size:.73rem;color:var(--dim);margin:.75rem 0 .5rem;font-style:italic;">📝 Si necesitás modificar o agregar reglas, hacelo acá:</p>';
+  h += '<textarea class="caj-ta" data-caj="caj_reglas_extra" oninput="cajasSaveDraft(\''+lid+'\')" placeholder="Tus reglas personalizadas...">'+v('caj_reglas_extra')+'</textarea>';
+  h += '</div>';
+
+  // ── PASO 5: Excel ───────────────────────────────────────────
+  h += cajasPaso('5','📊','Llevá tus reglas al Excel','');
+  h += '<div style="background:rgba(232,49,42,.05);border-left:3px solid rgba(232,49,42,.3);padding:.9rem 1.1rem;border-radius:0 4px 4px 0;font-size:.82rem;color:var(--muted);line-height:1.75;">';
+  h += 'Ya definiste el estado actual de tus cajas y las reglas que querés seguir.<br>';
+  h += 'Ahora es momento de <strong style="color:var(--text);">bajarlo a una plantilla de trabajo simple y empezar a operar con conciencia.</strong><br><br>';
+  h += 'Abrí el Excel de "Las 4 Cajas" y completá:<br>';
+  h += '• El <strong>monto actual</strong> y el <strong>objetivo</strong> de cada caja.<br>';
+  h += '• El <strong>% alcanzado</strong> se calcula automáticamente con los colores del semáforo:<br>';
+  h += '<div style="margin:.4rem 0 .4rem 1rem;display:flex;flex-direction:column;gap:.2rem;">';
+  h += '<span>🔴 Menos del 30%</span><span>🟡 Entre 30% y 70%</span><span>🟢 Más del 70%</span>';
+  h += '</div>';
+  h += '• Basándote en eso, <strong>usá tus reglas personales</strong> para definir cómo vas a distribuir tu próximo ingreso.';
+  h += '</div></div>';
+
+  // Submit
+  h += '<div class="ex-submit-row">';
+  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="cajas4Submit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
+  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '</div></div>';
+
+  document.getElementById('mc-body').innerHTML = h;
+  cajasUpdatePct();
+  setTimeout(function(){ injectAttachmentSection(lid); }, 150);
+}
+
+function cajasPaso(num, icon, title, desc) {
+  return '<div class="caj-paso">' +
+    '<div class="caj-paso-hdr"><span class="caj-paso-num">Paso '+num+'</span>' +
+    '<span class="caj-paso-icon">'+icon+'</span>' +
+    '<span class="caj-paso-title">'+title+'</span></div>' +
+    (desc ? '<p class="caj-paso-desc">'+desc+'</p>' : '');
+}
+
+function cajas4Submit(lid) {
+  cajasSaveDraft(lid);
+  var user = USERS[S.user];
+  var answers = [];
+  document.querySelectorAll('[data-caj]').forEach(function(el){
+    answers.push({fid:el.getAttribute('data-caj'), pregunta:el.getAttribute('data-caj'), respuesta:el.value||''});
+  });
+  getAttachAnswers(lid).forEach(function(a){answers.push(a);});
+  var rec = {ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),
+    jugador:user.name,usuario:S.user,unidad:'Unidad 6',ejercicio:'Las 4 Cajas',lid:lid,respuestas:answers};
+  var saved=getLocalSubs();
+  var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});
+  var isUpdate=idx>=0;
+  if(isUpdate){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+  localStorage.setItem('pp_submissions',JSON.stringify(saved));
+  markDoneL(lid);fbSaveSubmission(S.user,lid,rec);
+  var btn=document.getElementById('btn-ex-'+lid);
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Mauro','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+  if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
+  else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
+}
+
+/* ── CAJAS4 ADMIN VIEW ───────────────────────── */
+function renderCajas4AdminView(ej, cid) {
+  var resps=ej.respuestas||[];
+  var data={};resps.forEach(function(r){if(r.fid)data[r.fid]=r.respuesta||'';});
+  function v(fid){return data[fid]||'';}
+
+  var h='<div style="padding:.75rem;display:flex;flex-direction:column;gap:1.25rem;">';
+
+  // Paso 1
+  h+='<div><div class="caj-admin-paso-hdr">Paso 1 — Radiografía actual</div>';
+  [['caj_p1_1','¿Tenés separadas tus cajas?'],['caj_p1_2','¿Sabés cuánto necesitás por mes?'],['caj_p1_3','¿Tenés registro de gastos?']].forEach(function(q){
+    if(!v(q[0]))return;
+    h+='<div class="caj-admin-q"><div class="caj-admin-ql">'+q[1]+'</div><div class="caj-admin-a">'+v(q[0])+'</div></div>';
+  });
+  var sliders=[['caj_p1_t','Tranquilo/a'],['caj_p1_a','Ansioso/a'],['caj_p1_d','Desorganizado/a'],['caj_p1_e','Evitativo/a']];
+  var hasSliders=sliders.some(function(s){return v(s[0]);});
+  if(hasSliders){
+    h+='<div class="caj-admin-q"><div class="caj-admin-ql">Situación financiera:</div><div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.3rem;">';
+    sliders.forEach(function(s){
+      var val=v(s[0]);if(!val)return;
+      var color=parseInt(val)<40?'#4ADE80':parseInt(val)<70?'#FCD34D':'#EF4444';
+      h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:.35rem .65rem;text-align:center;min-width:90px;">';
+      h+='<div style="font-size:.65rem;color:var(--dim);">'+s[1]+'</div>';
+      h+='<div style="font-size:1.2rem;font-weight:800;color:'+color+';">'+val+'</div></div>';
+    });
+    h+='</div></div>';
+  }
+  if(v('caj_p1_extra'))h+='<div class="caj-admin-q"><div class="caj-admin-ql">Comentario extra</div><div class="caj-admin-a">'+v('caj_p1_extra')+'</div></div>';
+  h+='</div>';
+
+  // Paso 2 + 3 combined table
+  h+='<div><div class="caj-admin-paso-hdr">Pasos 2 & 3 — Estructura de cajas</div>';
+  h+='<table style="width:100%;border-collapse:collapse;font-size:.8rem;">';
+  h+='<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
+  ['Caja','Objetivo (Paso 2)','Actual','Objetivo (Paso 3)','% alcanzado'].forEach(function(th){
+    h+='<th style="padding:.5rem .75rem;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);text-align:left;border-right:1px solid var(--border);">'+th+'</th>';
+  });
+  h+='</tr></thead><tbody>';
+  CAJAS_DEF.forEach(function(caja,i){
+    var obj2=v('caj_obj2_'+caja.id), act=v('caj_act_'+caja.id), obj3=v('caj_obj_'+caja.id)||obj2;
+    var pct='—',color='var(--dim)';
+    if(act&&obj3&&parseFloat(obj3)){var p=Math.min(Math.round(parseFloat(act)/parseFloat(obj3)*100),999);pct=p+'%';color=p<30?'#EF4444':p<70?'#F59E0B':'#22C55E';}
+    var stripe=i%2===0?'':'background:rgba(255,255,255,.02);';
+    h+='<tr style="'+stripe+';border-bottom:1px solid rgba(255,255,255,.04);">';
+    h+='<td style="padding:.6rem .75rem;font-weight:700;border-right:1px solid var(--border);">'+caja.label+'</td>';
+    h+='<td style="padding:.6rem .75rem;border-right:1px solid var(--border);">'+( obj2||'—' )+'</td>';
+    h+='<td style="padding:.6rem .75rem;border-right:1px solid var(--border);">'+( act||'—' )+'</td>';
+    h+='<td style="padding:.6rem .75rem;border-right:1px solid var(--border);">'+( obj3||'—' )+'</td>';
+    h+='<td style="padding:.6rem .75rem;text-align:center;font-weight:800;color:'+color+';">'+pct+'</td>';
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>';
+
+  // Paso 4
+  var hasRules=['r1_0','r1_1','r2_0','r3_0','r3_1','reglas_extra'].some(function(k){return v('caj_'+k);});
+  if(hasRules){
+    h+='<div><div class="caj-admin-paso-hdr">Paso 4 — Reglas</div>';
+    var r1a=v('caj_r1_0'),r1b=v('caj_r1_1');
+    if(r1a||r1b)h+='<div class="caj-admin-q"><div class="caj-admin-a">Cuando mi bankroll esté por debajo del <strong>'+( r1a||'__' )+'%</strong>, voy a asignar al menos <strong>'+( r1b||'__' )+'%</strong> de mis ingresos.</div></div>';
+    var r2=v('caj_r2_0');
+    if(r2)h+='<div class="caj-admin-q"><div class="caj-admin-a">Cuando mi liferoll esté por debajo de <strong>'+r2+' meses</strong>, voy a priorizarlo.</div></div>';
+    var r3a=v('caj_r3_0'),r3b=v('caj_r3_1');
+    if(r3a||r3b)h+='<div class="caj-admin-q"><div class="caj-admin-a">Cuando tenga más del <strong>'+( r3a||'__' )+'%</strong> cubierto, destinaré <strong>'+( r3b||'__' )+'%</strong> a ahorro/disfrute.</div></div>';
+    if(v('caj_reglas_extra'))h+='<div class="caj-admin-q"><div class="caj-admin-ql">Reglas extra</div><div class="caj-admin-a">'+v('caj_reglas_extra')+'</div></div>';
+    h+='</div>';
+  }
+
+  h += adminAttachHTML(resps,ej.usuario,ej.lid);
+  h+='</div>';
+  var el=document.getElementById(cid);if(el)el.innerHTML=h;
 }
 
 
