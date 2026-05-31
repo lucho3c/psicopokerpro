@@ -2194,6 +2194,12 @@ function adminTab(tab){
   if(vu){vu.style.display=tab==='usuarios'?'flex':'none';if(tab==='usuarios')renderUserTab();}
 }
 
+function showAdmin(){
+  USERS=getAllUsers();
+  var nav=document.getElementById('nav-av3');
+  if(nav)nav.textContent=USERS[S.user].name[0].toUpperCase();
+  showView('vadmin');adminTab('pacientes');loadAdminPanel();
+}
 function loadAdminPanel(){
   renderAdminPanel(getLocalSubs());
   fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
