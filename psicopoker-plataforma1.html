@@ -2553,6 +2553,31 @@ function buildExPDF(ej){
       if(r3a||r3b)h+='<div class="qa-row"><div class="qa-a">Más del <b>'+(r3a||'__')+'%</b> cubierto → destinar <b>'+(r3b||'__')+'%</b> a ahorro/disfrute.</div></div>';
       if(cv('caj_reglas_extra'))h+='<div class="qa-row"><div class="qa-q">Reglas extra</div><div class="qa-a">'+cv('caj_reglas_extra')+'</div></div>';
     }
+    // Paso 5 — cuadro Excel
+    var P5PDF=[{id:'bankroll',label:'Bankroll'},{id:'liferoll',label:'Liferoll'},{id:'ahorros',label:'Ahorros/inversiones'}];
+    var hasP5PDF=P5PDF.some(function(c){return cv('caj_act_'+c.id)||cv('caj_obj2_'+c.id);});
+    if(hasP5PDF){
+      h+='<div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#E8312A;padding:5px 10px 3px;background:#fff5f5;border-left:3px solid #E8312A;margin:6px 0 4px;">Paso 5 — Cuadro de trabajo</div>';
+      h+='<table style="width:100%;border-collapse:collapse;font-size:10px;margin-bottom:6px;">';
+      h+='<thead><tr style="background:#f0f0f0;"><th style="padding:5px 7px;border:1px solid #ddd;">Caja</th><th style="padding:5px 7px;border:1px solid #ddd;">Monto actual</th><th style="padding:5px 7px;border:1px solid #ddd;">Meta deseada</th><th style="padding:5px 7px;border:1px solid #ddd;text-align:center;">%</th></tr></thead><tbody>';
+      P5PDF.forEach(function(c,i){
+        var act=cv('caj_act_'+c.id),meta=cv('caj_obj2_'+c.id);
+        var pct='—',color='#666';
+        if(act&&meta&&parseFloat(meta)){var p=Math.min(Math.round(parseFloat(act)/parseFloat(meta)*100),999);pct=p+'%';color=p<30?'#dc2626':p<70?'#d97706':'#16a34a';}
+        h+='<tr style="'+(i%2?'background:#fafafa;':'')+'">';
+        h+='<td style="padding:5px 7px;border:1px solid #e8e8e8;font-weight:700;">'+c.label+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #e8e8e8;">'+(act||'—')+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #e8e8e8;">'+(meta||'—')+'</td>';
+        h+='<td style="padding:5px 7px;border:1px solid #e8e8e8;text-align:center;font-weight:800;color:'+color+';">'+pct+'</td>';
+        h+='</tr>';
+      });
+      h+='</tbody></table>';
+      var r1ap=cv('caj_r1_0'),r1bp=cv('caj_r1_1'),r2p=cv('caj_r2_0'),r3ap=cv('caj_r3_0'),r3bp=cv('caj_r3_1'),r4p=cv('caj_regla4');
+      if(r1ap||r1bp)h+='<div class="qa-row"><div class="qa-a">Regla 1: Bankroll &lt;'+( r1ap||'__' )+'% → asignar '+( r1bp||'__' )+'% ingresos</div></div>';
+      if(r2p)h+='<div class="qa-row"><div class="qa-a">Regla 2: Liferoll &lt;'+r2p+' meses → priorizar</div></div>';
+      if(r3ap||r3bp)h+='<div class="qa-row"><div class="qa-a">Regla 3: &gt;'+( r3ap||'__' )+'% cubiertas → destinar '+( r3bp||'__' )+'% ahorro</div></div>';
+      if(r4p)h+='<div class="qa-row"><div class="qa-a">Regla 4: '+r4p+'</div></div>';
+    }
 
   }else if(isCon){
     var conData={};
@@ -4737,20 +4762,38 @@ function cajasSaveDraft(lid) {
 }
 
 function cajasUpdatePct() {
+  // Paso 3 table
   CAJAS_DEF.forEach(function(caja) {
     var actEl = document.getElementById('caj-act-'+caja.id);
     var objEl = document.getElementById('caj-obj-'+caja.id);
     var pctEl = document.getElementById('caj-pct-'+caja.id);
+    if (pctEl) {
+      var act = parseFloat((actEl?actEl.value:'')||0)||0;
+      var obj = parseFloat((objEl?objEl.value:'')||0)||0;
+      if (!obj) { pctEl.textContent='—'; pctEl.style.background='rgba(255,255,255,.05)'; pctEl.style.color='var(--dim)'; }
+      else {
+        var pct = Math.min(Math.round(act/obj*100),999);
+        pctEl.textContent=pct+'%';
+        pctEl.style.color=pct<30?'#EF4444':pct<70?'#F59E0B':'#22C55E';
+        pctEl.style.background=pct<30?'rgba(239,68,68,.12)':pct<70?'rgba(245,158,11,.12)':'rgba(34,197,94,.12)';
+      }
+    }
+  });
+  // Paso 5 table (Bankroll, Liferoll, Ahorros)
+  ['bankroll','liferoll','ahorros'].forEach(function(id) {
+    var actEl = document.getElementById('caj5-act-'+id);
+    var metaEl= document.getElementById('caj5-meta-'+id);
+    var pctEl = document.getElementById('caj5-pct-'+id);
     if (!pctEl) return;
-    var act = parseFloat((actEl?actEl.value:'')||0)||0;
-    var obj = parseFloat((objEl?objEl.value:'')||0)||0;
-    if (!obj) { pctEl.textContent='—'; pctEl.style.background='rgba(255,255,255,.05)'; pctEl.style.color='var(--dim)'; return; }
-    var pct = Math.min(Math.round(act/obj*100),999);
-    var color = pct < 30 ? '#EF4444' : pct < 70 ? '#F59E0B' : '#22C55E';
-    var bg    = pct < 30 ? 'rgba(239,68,68,.12)' : pct < 70 ? 'rgba(245,158,11,.12)' : 'rgba(34,197,94,.12)';
-    pctEl.textContent = pct+'%';
-    pctEl.style.color = color;
-    pctEl.style.background = bg;
+    var act  = parseFloat((actEl?actEl.value:'')||0)||0;
+    var meta = parseFloat((metaEl?metaEl.value:'')||0)||0;
+    if (!meta) { pctEl.textContent='—'; pctEl.style.background='rgba(255,255,255,.05)'; pctEl.style.color='var(--dim)'; }
+    else {
+      var pct = Math.min(Math.round(act/meta*100),999);
+      pctEl.textContent=pct+'%';
+      pctEl.style.color=pct<30?'#EF4444':pct<70?'#F59E0B':'#22C55E';
+      pctEl.style.background=pct<30?'rgba(239,68,68,.12)':pct<70?'rgba(245,158,11,.12)':'rgba(34,197,94,.12)';
+    }
   });
   // Sync monto objetivo from paso 2 to paso 3
   CAJAS_DEF.forEach(function(caja) {
@@ -4869,19 +4912,62 @@ function renderCajas4Exercise(lid) {
   h += '<textarea class="caj-ta" data-caj="caj_reglas_extra" oninput="cajasSaveDraft(\''+lid+'\')" placeholder="Tus reglas personalizadas...">'+v('caj_reglas_extra')+'</textarea>';
   h += '</div>';
 
-  // ── PASO 5: Excel ───────────────────────────────────────────
-  h += cajasPaso('5','📊','Llevá tus reglas al Excel','');
-  h += '<div style="background:rgba(232,49,42,.05);border-left:3px solid rgba(232,49,42,.3);padding:.9rem 1.1rem;border-radius:0 4px 4px 0;font-size:.82rem;color:var(--muted);line-height:1.75;">';
-  h += 'Ya definiste el estado actual de tus cajas y las reglas que querés seguir.<br>';
-  h += 'Ahora es momento de <strong style="color:var(--text);">bajarlo a una plantilla de trabajo simple y empezar a operar con conciencia.</strong><br><br>';
-  h += 'Abrí el Excel de "Las 4 Cajas" y completá:<br>';
-  h += '• El <strong>monto actual</strong> y el <strong>objetivo</strong> de cada caja.<br>';
-  h += '• El <strong>% alcanzado</strong> se calcula automáticamente con los colores del semáforo:<br>';
-  h += '<div style="margin:.4rem 0 .4rem 1rem;display:flex;flex-direction:column;gap:.2rem;">';
-  h += '<span>🔴 Menos del 30%</span><span>🟡 Entre 30% y 70%</span><span>🟢 Más del 70%</span>';
+  // ── PASO 5: Cuadro de trabajo ───────────────────────────────
+  h += cajasPaso('5','📊','Llevá tus reglas al siguiente cuadro:','');
+
+  // Table: Bankroll, Liferoll, Ahorros (matching Excel)
+  var CAJAS_P5 = [
+    { id:'bankroll', label:'Bankroll',             actFid:'caj_act_bankroll',  metaFid:'caj_obj2_bankroll'  },
+    { id:'liferoll', label:'Liferoll',             actFid:'caj_act_liferoll',  metaFid:'caj_obj2_liferoll'  },
+    { id:'ahorros',  label:'Ahorros / inversiones',actFid:'caj_act_ahorros',   metaFid:'caj_obj2_ahorros'   }
+  ];
+
+  h += '<div style="overflow-x:auto;margin-bottom:1rem;">';
+  h += '<table class="caj-table"><thead><tr>';
+  h += '<th style="width:24%;">Caja</th><th style="width:26%;">Monto actual</th><th style="width:26%;">Meta deseada</th><th style="width:18%;">% alcanzado</th>';
+  h += '</tr></thead><tbody>';
+  CAJAS_P5.forEach(function(caja) {
+    var act  = v(caja.actFid);
+    var meta = v(caja.metaFid);
+    var pct  = '—'; var color='var(--dim)'; var bg='rgba(255,255,255,.05)';
+    if (act && meta && parseFloat(meta)) {
+      var p = Math.min(Math.round(parseFloat(act)/parseFloat(meta)*100),999);
+      pct = p+'%';
+      color = p<30?'#EF4444':p<70?'#F59E0B':'#22C55E';
+      bg    = p<30?'rgba(239,68,68,.12)':p<70?'rgba(245,158,11,.12)':'rgba(34,197,94,.12)';
+    }
+    h += '<tr><td class="caj-th-cell"><strong>'+caja.label+'</strong></td>';
+    h += '<td style="padding:.5rem .75rem;"><input type="text" class="caj-input" id="caj5-act-'+caja.id+'" data-caj="'+caja.actFid+'" oninput="cajasSaveDraft(\''+lid+'\')" placeholder="$ actual" value="'+act+'"></td>';
+    h += '<td style="padding:.5rem .75rem;"><input type="text" class="caj-input" id="caj5-meta-'+caja.id+'" data-caj="'+caja.metaFid+'" oninput="cajasSaveDraft(\''+lid+'\')" placeholder="$ meta" value="'+meta+'"></td>';
+    h += '<td style="padding:.5rem .75rem;text-align:center;"><span id="caj5-pct-'+caja.id+'" style="font-size:.9rem;font-weight:800;padding:.2rem .6rem;border-radius:4px;background:'+bg+';color:'+color+';">'+pct+'</span></td>';
+    h += '</tr>';
+  });
+  h += '</tbody></table></div>';
+  h += '<div style="font-size:.68rem;color:var(--dim);padding:.2rem .5rem .85rem;display:flex;gap:1rem;">';
+  h += '<span style="color:#EF4444;">● Menos del 30%</span><span style="color:#F59E0B;">● Entre 30% y 70%</span><span style="color:#22C55E;">● Más del 70%</span>';
   h += '</div>';
-  h += '• Basándote en eso, <strong>usá tus reglas personales</strong> para definir cómo vas a distribuir tu próximo ingreso.';
-  h += '</div></div>';
+
+  // Rules (connected to Paso 4 fids)
+  h += '<div style="font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;">Mis reglas</div>';
+  var rulesP5 = [
+    {id:'r1', tpl:['Regla 1: Cuando mi bankroll esté por debajo del ','%, voy a asignar al menos ','% de mis ingresos a esa caja.']},
+    {id:'r2', tpl:['Regla 2: Cuando mi liferoll esté por debajo de ',' meses cubiertos, voy a priorizarlo.']},
+    {id:'r3', tpl:['Regla 3: Cuando tenga más del ','% de mis cajas cubiertas, voy a destinar ','% a ahorro/disfrute.']},
+    {id:'r4', tpl:['Regla 4: ']}
+  ];
+  rulesP5.forEach(function(rule, ri) {
+    h += '<div class="caj-rule">';
+    rule.tpl.forEach(function(seg, si) {
+      h += '<span>'+seg+'</span>';
+      if (si < rule.tpl.length - 1 || rule.id === 'r4') {
+        var fid = rule.id === 'r4' ? 'caj_regla4' : 'caj_'+rule.id+'_'+si;
+        var width = rule.id === 'r4' ? '200px' : '52px';
+        h += '<input type="text" class="caj-inline-input" style="width:'+width+';" data-caj="'+fid+'" oninput="cajasSaveDraft(\''+lid+'\')" value="'+v(fid)+'">';
+      }
+    });
+    h += '</div>';
+  });
+  h += '</div>';
 
   // Submit
   h += '<div class="ex-submit-row">';
@@ -4993,6 +5079,37 @@ function renderCajas4AdminView(ej, cid) {
     var r3a=v('caj_r3_0'),r3b=v('caj_r3_1');
     if(r3a||r3b)h+='<div class="caj-admin-q"><div class="caj-admin-a">Cuando tenga más del <strong>'+( r3a||'__' )+'%</strong> cubierto, destinaré <strong>'+( r3b||'__' )+'%</strong> a ahorro/disfrute.</div></div>';
     if(v('caj_reglas_extra'))h+='<div class="caj-admin-q"><div class="caj-admin-ql">Reglas extra</div><div class="caj-admin-a">'+v('caj_reglas_extra')+'</div></div>';
+    h+='</div>';
+  }
+
+  // Paso 5 — cuadro Excel
+  var P5=[{id:'bankroll',label:'Bankroll'},{id:'liferoll',label:'Liferoll'},{id:'ahorros',label:'Ahorros / inversiones'}];
+  var hasP5=P5.some(function(c){return v('caj_act_'+c.id)||v('caj_obj2_'+c.id);});
+  if(hasP5||v('caj_regla4')){
+    h+='<div><div class="caj-admin-paso-hdr">Paso 5 — Cuadro de trabajo</div>';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:.8rem;margin-bottom:.65rem;">';
+    h+='<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
+    ['Caja','Monto actual','Meta deseada','% alcanzado'].forEach(function(th){h+='<th style="padding:.45rem .7rem;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);text-align:left;border-right:1px solid var(--border);">'+th+'</th>';});
+    h+='</tr></thead><tbody>';
+    P5.forEach(function(c,i){
+      var act=v('caj_act_'+c.id),meta=v('caj_obj2_'+c.id);
+      var pct='—',color='var(--dim)';
+      if(act&&meta&&parseFloat(meta)){var p=Math.min(Math.round(parseFloat(act)/parseFloat(meta)*100),999);pct=p+'%';color=p<30?'#EF4444':p<70?'#F59E0B':'#22C55E';}
+      h+='<tr style="'+(i%2?'background:rgba(255,255,255,.02);':'')+';border-bottom:1px solid rgba(255,255,255,.04);">';
+      h+='<td style="padding:.55rem .7rem;font-weight:700;border-right:1px solid var(--border);">'+c.label+'</td>';
+      h+='<td style="padding:.55rem .7rem;border-right:1px solid var(--border);">'+(act||'—')+'</td>';
+      h+='<td style="padding:.55rem .7rem;border-right:1px solid var(--border);">'+(meta||'—')+'</td>';
+      h+='<td style="padding:.55rem .7rem;text-align:center;font-weight:800;color:'+color+';">'+pct+'</td>';
+      h+='</tr>';
+    });
+    h+='</tbody></table>';
+    if(v('caj_r1_0')||v('caj_r2_0')||v('caj_r3_0')||v('caj_regla4')){
+      var r1a2=v('caj_r1_0'),r1b2=v('caj_r1_1'),r2b=v('caj_r2_0'),r3a2=v('caj_r3_0'),r3b2=v('caj_r3_1'),r4=v('caj_regla4');
+      if(r1a2||r1b2)h+='<div class="caj-admin-q"><div class="caj-admin-a">Regla 1: Bankroll por debajo del <b>'+(r1a2||'__')+'%</b> → asignar al menos <b>'+(r1b2||'__')+'%</b></div></div>';
+      if(r2b)h+='<div class="caj-admin-q"><div class="caj-admin-a">Regla 2: Liferoll por debajo de <b>'+r2b+' meses</b></div></div>';
+      if(r3a2||r3b2)h+='<div class="caj-admin-q"><div class="caj-admin-a">Regla 3: Más del <b>'+(r3a2||'__')+'%</b> cubierto → destinar <b>'+(r3b2||'__')+'%</b></div></div>';
+      if(r4)h+='<div class="caj-admin-q"><div class="caj-admin-a">Regla 4: '+r4+'</div></div>';
+    }
     h+='</div>';
   }
 
