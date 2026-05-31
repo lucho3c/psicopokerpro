@@ -554,6 +554,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
       <button id="btn-tab-pacientes" onclick="adminTab('pacientes')" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Ejercicios</button>
       <button id="btn-tab-usuarios" onclick="adminTab('usuarios')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Pacientes</button>
       <button onclick="loadAdminPanel()" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">&#8635; Actualizar</button>
+      <button onclick="resetAllData()" style="background:transparent;border:1px solid rgba(239,68,68,.4);color:#EF4444;font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;margin-left:.5rem;">⚠️ Resetear datos</button>
       <button onclick="generateGeneralReport()" style="display:flex;align-items:center;gap:.35rem;background:var(--red-dim);border:1px solid var(--border-r);color:var(--red);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:3px;cursor:pointer;"><svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Informe General</button>
     </div>
     <div class="tnav-r"><div class="uav" id="nav-av3"></div><button class="btn-sm" onclick="doLogout()">Salir</button></div>
@@ -965,8 +966,6 @@ function generateMyFullPDF(){
   openPDF('Programa Completo — '+user.name,h);
 }
 
-function resetAllData(){if(!confirm('ATENCION: Borrar TODOS los ejercicios de TODOS los pacientes. No se puede deshacer. ¿Confirmar?'))return;if(!confirm('Segunda confirmacion: ¿Borrar todo?'))return;var keys=Object.keys(localStorage);keys.forEach(function(k){if(k==='pp_submissions'||k.startsWith('pp_p_')||k.startsWith('pp_draft_'))localStorage.removeItem(k);});adminData=[];activePatient=null;var plist=document.getElementById('admin-patient-list');if(plist)plist.innerHTML='<div style="padding:1rem;font-size:.75rem;color:var(--dim);">Limpiando...</div>';clearAirtableAll(function(n){showToast('Reset: '+n+' registros borrados');loadAdminPanel();});}
-function clearAirtableAll(cb,done){done=done||0;fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}}).then(function(r){return r.json();}).then(function(resp){if(!resp.records||!resp.records.length){cb(done);return;}var ids=resp.records.map(function(r){return r.id;}),batches=[],tmp=ids.slice();while(tmp.length)batches.push(tmp.splice(0,10));var finished=0;batches.forEach(function(batch){var qs=batch.map(function(id){return'records[]='+encodeURIComponent(id);}).join('&');fetch(AIRTABLE_URL+'?'+qs,{method:'DELETE',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}}).then(function(){if(++finished===batches.length)clearAirtableAll(cb,done+resp.records.length);}).catch(function(){if(++finished===batches.length)clearAirtableAll(cb,done+resp.records.length);});});}).catch(function(){cb(done);});}
 function autoHeight(el){el.style.height='auto';el.style.height=Math.max(30,el.scrollHeight)+'px';}
 function autoHeightAll(){document.querySelectorAll('.gcell').forEach(function(el){autoHeight(el);});}
 
@@ -2141,10 +2140,49 @@ var adminData=null,activePatient=null;
 
 function isAdmin(){return S.user&&USERS[S.user]&&USERS[S.user].role==='admin';}
 
-function showAdmin(){
-  USERS=getAllUsers();
-  document.getElementById('nav-av3').textContent=USERS[S.user].name[0].toUpperCase();
-  showView('vadmin');adminTab('pacientes');loadAdminPanel();
+function resetAllData() {
+  // First confirmation
+  if (!confirm('⚠️ ATENCIÓN\n\nEstás a punto de borrar TODAS las respuestas, progresos y drafts de TODOS los pacientes.\n\nEsta acción no se puede deshacer.\n\n¿Estás seguro?')) return;
+  // Second confirmation with typed phrase
+  var phrase = prompt('Para confirmar, escribí exactamente:\n\nBORRAR TODO');
+  if (phrase !== 'BORRAR TODO') { alert('Cancelado — el texto no coincide.'); return; }
+
+  // Clear localStorage (keep pp_extra_users)
+  var keysToDelete = [];
+  for (var i = 0; i < localStorage.length; i++) {
+    var k = localStorage.key(i);
+    if (k && k.startsWith('pp_') && k !== 'pp_extra_users') keysToDelete.push(k);
+  }
+  keysToDelete.forEach(function(k){ localStorage.removeItem(k); });
+
+  // Clear Firebase
+  if (typeof DB !== 'undefined' && DB) {
+    DB.ref('psicopoker').remove().catch(function(){});
+  }
+
+  // Clear Airtable records
+  clearAirtableAll(function(n){ if(n>0) console.log('Airtable: '+n+' registros borrados'); });
+
+  alert('✅ Datos reseteados. La plataforma está lista para publicar.');
+  loadAdminPanel();
+}
+
+function clearAirtableAll(cb,done){
+  done=done||0;
+  fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
+    .then(function(r){return r.json();})
+    .then(function(resp){
+      if(!resp.records||!resp.records.length){cb(done);return;}
+      var ids=resp.records.map(function(r){return r.id;}),batches=[],tmp=ids.slice();
+      while(tmp.length)batches.push(tmp.splice(0,10));
+      var finished=0;
+      batches.forEach(function(batch){
+        var qs=batch.map(function(id){return'records[]='+encodeURIComponent(id);}).join('&');
+        fetch(AIRTABLE_URL+'?'+qs,{method:'DELETE',headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
+          .then(function(){if(++finished===batches.length)clearAirtableAll(cb,done+resp.records.length);})
+          .catch(function(){if(++finished===batches.length)clearAirtableAll(cb,done+resp.records.length);});
+      });
+    }).catch(function(){cb(done);});
 }
 
 function adminTab(tab){
@@ -2156,6 +2194,12 @@ function adminTab(tab){
   if(vu){vu.style.display=tab==='usuarios'?'flex':'none';if(tab==='usuarios')renderUserTab();}
 }
 
+function showAdmin(){
+  USERS=getAllUsers();
+  var nav=document.getElementById('nav-av3');
+  if(nav)nav.textContent=USERS[S.user].name[0].toUpperCase();
+  showView('vadmin');adminTab('pacientes');loadAdminPanel();
+}
 function loadAdminPanel(){
   renderAdminPanel(getLocalSubs());
   fetch(AIRTABLE_URL+'?pageSize=100',{headers:{'Authorization':'Bearer '+AIRTABLE_TOKEN}})
