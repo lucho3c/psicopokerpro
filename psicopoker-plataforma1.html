@@ -772,10 +772,8 @@ function getAttachAnswers(lid){
     answers.push({fid:'_link_'+i,pregunta:'Link '+(i+1)+(item.desc?' — '+item.desc:''),respuesta:item.url});
   });
   at.files.forEach(function(item,i){
+    // Only store filename — base64 lives in Firebase, fetched on demand by Mauro
     answers.push({fid:'_file_'+i,pregunta:'Archivo '+(i+1)+(item.desc?' — '+item.desc:''),respuesta:item.name});
-    // Include b64 so admin can download without Firebase
-    var b64=localStorage.getItem('pp_attach_'+S.user+'_'+lid+'_'+item.name)||'';
-    if(b64)answers.push({fid:'_file_b64_'+i,pregunta:'_b64',respuesta:b64});
   });
   return answers;
 }
@@ -817,18 +815,11 @@ function adminAttachHTML(resps,userId,lid){
     h+='<div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#F59E0B;margin-bottom:.5rem;">📎 Archivos adjuntos</div>';
     fileR.forEach(function(r){
       var idx=r.fid.replace('_file_','');
-      var b64R=all.find(function(x){return x.fid==='_file_b64_'+idx;});
       var desc=r.pregunta.replace(/^Archivo \d+( — | - )?/,'').replace(/^Archivo \d+$/,'');
       var uStr=userId||'';
       var lStr=lid||'';
       h+='<div style="margin:.35rem 0;">';
-      if(b64R&&b64R.respuesta){
-        // Has base64 in submission — direct download
-        h+='<a href="'+b64R.respuesta+'" download="'+r.respuesta+'" style="display:inline-flex;align-items:center;gap:.35rem;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:#FCD34D;font-size:.74rem;font-weight:600;padding:.3rem .75rem;border-radius:3px;text-decoration:none;">📄 '+r.respuesta+' ↓ Descargar</a>';
-      }else{
-        // No b64 in submission — fetch from Firebase
-        h+='<button onclick="adminDownloadFile(\''+uStr+'\',\''+lStr+'\','+idx+',\''+r.respuesta+'\')" style="display:inline-flex;align-items:center;gap:.35rem;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:#FCD34D;font-size:.74rem;font-weight:600;padding:.3rem .75rem;border-radius:3px;cursor:pointer;font-family:Montserrat,sans-serif;">📄 '+r.respuesta+' ↓ Descargar</button>';
-      }
+      h+='<button onclick="adminDownloadFile(\''+uStr+'\',\''+lStr+'\','+idx+',\''+r.respuesta+'\')" style="display:inline-flex;align-items:center;gap:.35rem;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:#FCD34D;font-size:.74rem;font-weight:600;padding:.3rem .75rem;border-radius:3px;cursor:pointer;font-family:Montserrat,sans-serif;">📄 '+r.respuesta+' ↓ Descargar</button>';
       if(desc)h+='<div style="font-size:.7rem;color:var(--muted);margin-top:.15rem;padding-left:.25rem;">'+desc+'</div>';
       h+='</div>';
     });
@@ -857,15 +848,9 @@ function pdfAttachHTML(resps){
   if(fileR.length){
     h+='<div style="font-size:10px;font-weight:700;color:#b45309;margin-bottom:6px;margin-top:8px;text-transform:uppercase;letter-spacing:.06em;">Archivos adjuntos</div>';
     fileR.forEach(function(r){
-      var idx=r.fid.replace('_file_','');
-      var b64R=all.find(function(x){return x.fid==='_file_b64_'+idx;});
       var desc=r.pregunta.replace(/^Archivo \d+( — | - )?/,'').replace(/^Archivo \d+$/,'');
       h+='<div style="margin-bottom:5px;padding:5px 8px;background:#fffbeb;border-left:3px solid #f59e0b;border-radius:0 3px 3px 0;">';
-      if(b64R&&b64R.respuesta){
-        h+='<a href="'+b64R.respuesta+'" download="'+r.respuesta+'" style="display:inline-flex;align-items:center;gap:5px;color:#b45309;font-size:10px;font-weight:600;text-decoration:none;">📄 '+r.respuesta+' &darr; Descargar</a>';
-      }else{
-        h+='<span style="font-size:10px;">📄 '+r.respuesta+'</span>';
-      }
+      h+='<span style="font-size:10px;font-weight:600;">📄 '+r.respuesta+'</span>';
       if(desc)h+='<div style="font-size:9px;color:#6b7280;margin-top:2px;">'+desc+'</div>';
       h+='</div>';
     });
