@@ -827,20 +827,20 @@ function adminAttachHTML(resps,userId,lid){
   h+='</div>';
   return h;
 }
-function pdfAttachHTML(resps){
+function pdfAttachHTML(resps,usuario,lid){
   var all=resps||[];
   var linkR=all.filter(function(r){return r.fid&&/^_link_\d+$/.test(r.fid)&&r.respuesta;});
   var fileR=all.filter(function(r){return r.fid&&/^_file_\d+$/.test(r.fid)&&r.respuesta;});
   if(!linkR.length&&!fileR.length)return '';
+  var FB_BASE='https://psicopoker-pro-default-rtdb.firebaseio.com/psicopoker/files/';
   var h='<div style="margin-top:14px;border-top:2px solid #e8e8e8;padding-top:10px;">';
   if(linkR.length){
     h+='<div style="font-size:10px;font-weight:700;color:#1d4ed8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">Links adjuntos</div>';
     linkR.forEach(function(r){
       var desc=r.pregunta.replace(/^Link \d+( — | - )?/,'').replace(/^Link \d+$/,'');
-      var url=r.respuesta;
-      if(!/^https?:\/\//i.test(url))url='https://'+url;
+      var url=r.respuesta;if(!/^https?:\/\//i.test(url))url='https://'+url;
       h+='<div style="margin-bottom:5px;padding:5px 8px;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:0 3px 3px 0;">';
-      h+='<a href="'+url+'" style="color:#1d4ed8;font-size:10px;word-break:break-all;">🔗 '+r.respuesta+'</a>';
+      h+='<a href="'+url+'" target="_blank" style="color:#1d4ed8;font-size:10px;word-break:break-all;">🔗 '+r.respuesta+'</a>';
       if(desc)h+='<div style="font-size:9px;color:#6b7280;margin-top:2px;">'+desc+'</div>';
       h+='</div>';
     });
@@ -848,9 +848,14 @@ function pdfAttachHTML(resps){
   if(fileR.length){
     h+='<div style="font-size:10px;font-weight:700;color:#b45309;margin-bottom:6px;margin-top:8px;text-transform:uppercase;letter-spacing:.06em;">Archivos adjuntos</div>';
     fileR.forEach(function(r){
+      var idx=r.fid.replace('_file_','');
+      var name=r.respuesta;
       var desc=r.pregunta.replace(/^Archivo \d+( — | - )?/,'').replace(/^Archivo \d+$/,'');
+      var fbUrl=FB_BASE+(usuario||'')+'/'+(lid||'')+'/'+idx+'.json';
+      var safeName=name.replace(/'/g,"\\'");
+      var dlFn="(function(){fetch('"+fbUrl+"').then(function(r){return r.json();}).then(function(d){if(!d||!d.b64){alert('Archivo no disponible en el servidor');return;}var a=document.createElement('a');a.href=d.b64;a.download='"+safeName+"';document.body.appendChild(a);a.click();document.body.removeChild(a);}).catch(function(){alert('Error al descargar el archivo');});})()";
       h+='<div style="margin-bottom:5px;padding:5px 8px;background:#fffbeb;border-left:3px solid #f59e0b;border-radius:0 3px 3px 0;">';
-      h+='<span style="font-size:10px;font-weight:600;">📄 '+r.respuesta+'</span>';
+      h+='<button onclick="'+dlFn+'" style="background:rgba(245,158,11,.15);border:1px solid #f59e0b;color:#b45309;font-size:10px;font-weight:600;padding:3px 10px;border-radius:3px;cursor:pointer;">📄 '+name+' ↓ Descargar</button>';
       if(desc)h+='<div style="font-size:9px;color:#6b7280;margin-top:2px;">'+desc+'</div>';
       h+='</div>';
     });
@@ -2777,7 +2782,7 @@ function buildExPDF(ej){
     }
   }
 
-  h += pdfAttachHTML(resps);
+  h += pdfAttachHTML(resps,ej.usuario,ej.lid);
   h+='</div>';
   return h;
 }
