@@ -3093,6 +3093,7 @@ function renderTEOSQExercise(lid){
   document.getElementById('mc-body').innerHTML=h;
   tqUpdateProgress();
   tqUpdateResults();
+  setTimeout(function(){injectAttachmentSection(teosqLid);},150);
 }
 
 function tqTab(idx){for(var i=0;i<3;i++){var t=document.getElementById('ttab'+i);var p=document.getElementById('tpane'+i);if(t)t.classList.toggle('on',i===idx);if(p)p.classList.toggle('on',i===idx);}if(idx>0)tqUpdateResults();}
@@ -3426,6 +3427,7 @@ function renderPMTExercise(lid) {
 
   document.getElementById('mc-body').innerHTML += h;
   pmtUpdateResults();
+  setTimeout(function(){injectAttachmentSection(pmtLid);},150);
 }
 
 function pmtAutoSave() {
@@ -3746,6 +3748,7 @@ function renderIPEDExercise(lid){
 
   document.getElementById('mc-body').innerHTML=h;
   ipedUpdateResults();
+  setTimeout(function(){injectAttachmentSection(lid);},150);
 }
 
 function ipedTab(idx){
@@ -4023,6 +4026,7 @@ function renderGPSExercise(lid) {
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML = h;
+  setTimeout(function(){injectAttachmentSection(lid);},150);
 }
 
 function gpsAddRow(lid, routeId) {
@@ -4308,6 +4312,7 @@ function renderChecklistExercise(lid) {
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML = h;
+  setTimeout(function(){injectAttachmentSection(lid);},150);
 }
 
 function clSubmit(lid) {
@@ -4501,6 +4506,7 @@ function renderEquipExercise(lid) {
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML = h;
+  setTimeout(function(){injectAttachmentSection(lid);},150);
 }
 
 function equipSubmit(lid) {
