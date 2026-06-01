@@ -2344,7 +2344,7 @@ function renderGridAdminView(ej,cid){
   var resps=ej.respuestas||[];
   var DAYS=['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'];
   var gridCells=resps.filter(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
-  var reflCells=resps.filter(function(r){return r.fid&&!/^g_/.test(r.fid)&&r.fid!=='_startHour'&&r.fid!=='_endHour';});
+  var reflCells=resps.filter(function(r){return r.fid&&!/^g_/.test(r.fid)&&r.fid!=='_startHour'&&r.fid!=='_endHour'&&!/^_link_/.test(r.fid)&&!/^_file_/.test(r.fid);});
   var sched={};
   gridCells.forEach(function(r){
     var m=r.fid.match(/^g_(\d+)_(\d+)$/);if(!m)return;
@@ -2380,6 +2380,7 @@ function renderGridAdminView(ej,cid){
       reflCells.forEach(function(r){if(r.respuesta&&r.respuesta.trim())h+='<div class="sub-q"><div class="sub-ql">'+(r.pregunta||'')+'</div><div class="sub-ans">'+r.respuesta+'</div></div>';});
     }
   }
+  h += adminAttachHTML(resps,ej.usuario,ej.lid);
   h+='</div>';
   var el=document.getElementById(cid);if(el)el.innerHTML=h;
 }
