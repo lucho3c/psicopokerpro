@@ -1220,6 +1220,7 @@ var USERS_BASE = {
   demo:   { pass: 'demo123',   name: 'Player Demo' }
 };
 function getExtraUsers(){try{return JSON.parse(localStorage.getItem('pp_extra_users')||'{}');}catch(e){return{};}}
+function getPsyWA(username){var u=USERS[username]||{};var psy=(u.psy||'mauro').toLowerCase();return psy==='arturo'?'+5492236332535':'+5492235620126';}
 function getAllUsers(){var all=Object.assign({},USERS_BASE);var extra=getExtraUsers();Object.keys(extra).forEach(function(k){all[k]=extra[k];});return all;}
 var USERS=getAllUsers();
 
@@ -1238,7 +1239,8 @@ var C = [
     img:'img/Bienvenida.jpeg',
     lessons:[
       { id:'bv1', title:'Video de bienvenida', driveId:'1YZFeE1fB70ul_ZDE3ZQDRb_QWnDry0Z9' },
-      { id:'bv2', title:'Sobre los ejercicios', driveId:'1u8dPUs2BDn8KuSdhSqNxQtLwNmM1TRZe' }
+      { id:'bv2', title:'Sobre los ejercicios', driveId:'1u8dPUs2BDn8KuSdhSqNxQtLwNmM1TRZe' },
+      { id:'bv3', title:'Cuestionario', noVideo:true, ex:{ type:'form', unit:'Bienvenida', name:'Cuestionario de Bienvenida' } }
     ]
   },
   { id:'u1', num:1, badge:'Unidad 1', title:'Diagnostico',
@@ -1341,6 +1343,7 @@ var C = [
       { id:'u8l2', title:'Revision de tu primera sesion', note:'Pedimela y te mando el link ;)', noVideo:true, ex:{ type:'form', unit:'Unidad 8', name:'Revision de tu primera sesion' } },
       { id:'u8l3', title:'Evaluacion Final Mindset', driveId:'', noVideo:true, ex:{ type:'pmt', unit:'Unidad 8', name:'Poker Mindset Test' } },
       { id:'u8l4', title:'Ejercicio final: Visualizacion de cierre', driveId:'1gJ4uX4QE4vTLXdRufi3jxLQq9AXyaiio', ex:{ type:'form', unit:'Unidad 8', name:'Registro de la Visualizacion de Cierre' } },
+      { id:'u8l6', title:'Cuestionario final', noVideo:true, ex:{ type:'form', unit:'Unidad 8', name:'Cuestionario Final del Programa' } },
       { id:'u8l5', title:'Octava y ultima sesion 1 a 1', type:'session' }
     ]
   },
@@ -1467,6 +1470,56 @@ function tryAirtable(rec){
    EXERCISE DEFINITIONS
    ═══════════════════════════════════════════════ */
 var EX_DEFS = {
+  'u8l6':{ type:'form', unit:'Unidad 8', name:'Cuestionario Final del Programa', sections:[
+    { title:'Experiencia general', questions:[
+      { fid:'u8l6_1', type:'scale', label:'¿Cómo valorás el programa en general?', options:['1','2','3','4','5','6','7','8','9','10'] },
+      { fid:'u8l6_2', label:'¿Qué fue lo más valioso del programa para vos?' },
+      { fid:'u8l6_3', label:'¿Hubo algo que esperabas y no encontraste?' }
+    ]},
+    { title:'Resultados percibidos', questions:[
+      { fid:'u8l6_4', label:'¿Qué cambió en tu juego o en tu cabeza desde que empezaste?' },
+      { fid:'u8l6_5', type:'scale', label:'¿Sentís que el programa cumplió lo que prometía?', options:['Sí','Parcialmente','No'] },
+      { fid:'u8l6_5b', label:'¿Por qué? (explicá tu respuesta anterior)' }
+    ]},
+    { title:'Contenido y estructura', questions:[
+      { fid:'u8l6_6', label:'¿Hubo alguna unidad o ejercicio que no entendiste bien o que sentiste que faltaba desarrollo?' },
+      { fid:'u8l6_7', label:'¿Qué sacarías del programa?' },
+      { fid:'u8l6_8', label:'¿Qué agregarías?' }
+    ]},
+    { title:'Plataforma y experiencia digital', questions:[
+      { fid:'u8l6_9', type:'scale', label:'¿La plataforma fue fácil de usar?', options:['1 — Muy difícil','2','3','4','5 — Muy fácil'] },
+      { fid:'u8l6_10', label:'¿Tuviste algún problema técnico o algo que te generó fricción?' }
+    ]},
+    { title:'Vínculo con el psicólogo', questions:[
+      { fid:'u8l6_11', label:'¿La comunicación con tu psicólogo fue clara y accesible?' },
+      { fid:'u8l6_12', label:'¿Sentiste que tus preguntas o dudas fueron atendidas?' },
+      { fid:'u8l6_13', label:'¿Hay algo que cambiarías de cómo se manejó el acompañamiento?' }
+    ]},
+    { title:'Cierre y recomendación', questions:[
+      { fid:'u8l6_14', type:'scale', label:'¿Recomendarías el programa? (0 = definitivamente no · 10 = definitivamente sí)', options:['0','1','2','3','4','5','6','7','8','9','10'] },
+      { fid:'u8l6_15', label:'¿A qué tipo de player se lo recomendarías?' },
+      { fid:'u8l6_16', label:'¿Querés dejarnos algún comentario libre?' }
+    ]}
+  ]},
+  'bv3':{ type:'form', unit:'Bienvenida', name:'Cuestionario de Bienvenida', sections:[
+    { title:'Sobre vos', questions:[
+      { fid:'bv3_1', label:'1. ¿Cuántos años tenés?' },
+      { fid:'bv3_2', type:'scale', label:'2. ¿Con qué frecuencia jugás actualmente?', options:['Diario','Varios días por semana','Fines de semana','Ocasionalmente'] },
+      { fid:'bv3_3', label:'3. ¿En qué formato jugás?' }
+    ]},
+    { title:'Tu situación actual', questions:[
+      { fid:'bv3_4', type:'scale', label:'4. ¿Cuál es tu principal fuente de ingresos hoy?', options:['Poker exclusivamente','Poker + trabajo','Trabajo principal con poker secundario'] },
+      { fid:'bv3_5', type:'scale', label:'5. ¿Qué es lo que más te frena para avanzar?', options:['Tilt','Gestión del bankroll','Dudas sobre si puedo vivir del poker','Falta de estructura','Otro'] },
+      { fid:'bv3_5b', label:'Si elegiste "Otro" en la pregunta anterior, ¿cuál es?', note:'Completar solo si aplica.' },
+      { fid:'bv3_6', type:'scale', label:'6. ¿Tenés alguna experiencia previa con psicología, coaching o trabajo mental?', options:['Sí','No','Algo'] }
+    ]},
+    { title:'Cómo llegaste y qué esperás', questions:[
+      { fid:'bv3_7', type:'scale', label:'7. ¿Cómo nos conociste?', options:['YouTube','Instagram','Un referido','Otro'] },
+      { fid:'bv3_7b', label:'Si fue por un referido o elegiste "Otro", completá acá.' },
+      { fid:'bv3_8', label:'8. ¿Por qué ahora? ¿Qué pasó últimamente que te hizo dar este paso?' },
+      { fid:'bv3_9', label:'9. ¿Qué esperás del programa?' }
+    ]}
+  ]},
   'u1l1': {
     type: 'grid',
     unit: 'Unidad 1', name: 'Registro una semana',
@@ -2272,9 +2325,11 @@ function renderContent(unit, lid) {
 
   // SESSION
   if (lesson.type === 'session') {
+    var _wa=getPsyWA(S.user);
+    var _waMsg=encodeURIComponent('Hola! Quiero agendar mi sesión del programa.');
     body += '<div class="sesbox"><h3>Sesion 1 a 1 con tu psicologo</h3>';
     body += '<p>Agenda tu sesion personalizada.</p>';
-    body += '<a href="https://calendly.com/lucho-torres8/30min" target="_blank" class="btn-ses">&#128197; Agendar mi sesion</a></div>';
+    body += '<a href="https://wa.me/'+_wa+'?text='+_waMsg+'" target="_blank" class="btn-ses">&#128197; Agendar mi sesion</a></div>';
   }
 
   // INTERACTIVE EXERCISE
@@ -2736,16 +2791,24 @@ function renderUserTab(){
   h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Usuario</label><input id="nu-user" type="text" placeholder="carlos_r" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
   h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Contrasena</label><input id="nu-pass" type="text" placeholder="poker2025" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
   h+='</div>';
+  h+='<div style="margin-bottom:.9rem;">';
+  h+='<label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Psicólogo asignado</label>';
+  h+='<div style="display:flex;gap:.6rem;">';
+  h+='<label style="display:flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border:1px solid var(--border);border-radius:4px;cursor:pointer;font-size:.8rem;font-weight:600;background:var(--bg2);transition:border-color .15s;" id="lbl-psy-mauro">';
+  h+='<input type="radio" name="nu-psy" value="mauro" id="nu-psy-mauro" checked style="accent-color:var(--red);"> Mauro</label>';
+  h+='<label style="display:flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border:1px solid var(--border);border-radius:4px;cursor:pointer;font-size:.8rem;font-weight:600;background:var(--bg2);transition:border-color .15s;" id="lbl-psy-arturo">';
+  h+='<input type="radio" name="nu-psy" value="arturo" id="nu-psy-arturo" style="accent-color:var(--red);"> Arturo</label>';
+  h+='</div></div>';
   h+='<button onclick="addPatient()" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;cursor:pointer;">+ Agregar Paciente</button>';
   h+='<span id="nu-msg" style="font-size:.75rem;margin-left:1rem;color:var(--green);display:none;">Guardado!</span></div>';
   h+='<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;">';
-  h+='<div style="padding:.75rem 1.25rem;background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:grid;grid-template-columns:1fr 120px 150px 80px;gap:.5rem;"><span>Nombre</span><span>Usuario</span><span>Contrasena</span><span>Accion</span></div>';
-  Object.keys(all).forEach(function(u){var p=all[u];if(p.role==='admin')return;var isExtra=!!extra[u];h+='<div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 120px 150px 80px;gap:.5rem;align-items:center;"><span style="font-size:.82rem;font-weight:600;">'+p.name+'</span><span style="font-size:.78rem;color:var(--muted);">@'+u+'</span><span style="font-size:.78rem;color:var(--muted);font-family:monospace;">'+p.pass+'</span>'+(isExtra?'<button onclick="removePatient(\''+u+'\')" style="background:transparent;border:1px solid rgba(232,49,42,.3);color:rgba(232,49,42,.7);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;padding:.3rem .6rem;border-radius:3px;cursor:pointer;">Eliminar</button>':'<span style="font-size:.65rem;color:var(--dim);">fijo</span>')+'</div>';});
+  h+='<div style="padding:.75rem 1.25rem;background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:grid;grid-template-columns:1fr 100px 130px 80px 70px;gap:.5rem;"><span>Nombre</span><span>Usuario</span><span>Contraseña</span><span>Psicólogo</span><span>Acción</span></div>';
+  Object.keys(all).forEach(function(u){var p=all[u];if(p.role==='admin')return;var isExtra=!!extra[u];var psyName=p.psy==='arturo'?'Arturo':'Mauro';var psyColor=p.psy==='arturo'?'#7C3AED':'#0891B2';h+='<div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 100px 130px 80px 70px;gap:.5rem;align-items:center;"><span style="font-size:.82rem;font-weight:600;">'+p.name+'</span><span style="font-size:.78rem;color:var(--muted);">@'+u+'</span><span style="font-size:.78rem;color:var(--muted);font-family:monospace;">'+p.pass+'</span><span style="font-size:.72rem;font-weight:700;color:'+psyColor+';">'+psyName+'</span>'+(isExtra?'<button onclick="removePatient(\''+u+'\')" style="background:transparent;border:1px solid rgba(232,49,42,.3);color:rgba(232,49,42,.7);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;padding:.3rem .6rem;border-radius:3px;cursor:pointer;">Eliminar</button>':'<span style="font-size:.65rem;color:var(--dim);">fijo</span>')+'</div>';});
   h+='</div></div>';
   var vu=document.getElementById('admin-view-usuarios');if(vu)vu.innerHTML=h;
 }
 
-function addPatient(){var name=document.getElementById('nu-name').value.trim();var user=document.getElementById('nu-user').value.trim().toLowerCase().replace(/\s+/g,'_');var pass=document.getElementById('nu-pass').value.trim();if(!name||!user||!pass){alert('Completa todos los campos');return;}var extra=getExtraUsers();extra[user]={name:name,pass:pass};localStorage.setItem('pp_extra_users',JSON.stringify(extra));USERS=getAllUsers();document.getElementById('nu-name').value='';document.getElementById('nu-user').value='';document.getElementById('nu-pass').value='';var msg=document.getElementById('nu-msg');msg.style.display='inline';setTimeout(function(){msg.style.display='none';},2500);renderUserTab();}
+function addPatient(){var name=document.getElementById('nu-name').value.trim();var user=document.getElementById('nu-user').value.trim().toLowerCase().replace(/\s+/g,'_');var pass=document.getElementById('nu-pass').value.trim();var psyEl=document.querySelector('input[name="nu-psy"]:checked');var psy=psyEl?psyEl.value:'mauro';if(!name||!user||!pass){alert('Completa todos los campos');return;}var extra=getExtraUsers();extra[user]={name:name,pass:pass,psy:psy};localStorage.setItem('pp_extra_users',JSON.stringify(extra));USERS=getAllUsers();document.getElementById('nu-name').value='';document.getElementById('nu-user').value='';document.getElementById('nu-pass').value='';var msg=document.getElementById('nu-msg');msg.style.display='inline';setTimeout(function(){msg.style.display='none';},2500);renderUserTab();}
 function removePatient(u){if(!confirm('Eliminar a @'+u+'?'))return;var extra=getExtraUsers();delete extra[u];localStorage.setItem('pp_extra_users',JSON.stringify(extra));USERS=getAllUsers();renderUserTab();}
 
 /* ════ PDF GENERATION ════ */
