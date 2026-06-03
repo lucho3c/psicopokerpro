@@ -1843,7 +1843,6 @@ function doSubmit(lid){
   var def=EX_DEFS[lid];if(!def)return;
   var btn=document.getElementById('btn-ex-'+lid);
   if(btn){exBtnSetState(btn,'sending');}
-  try{
   collectAndSave(lid);
   var user=USERS[S.user];
   var answers=[];
@@ -1890,7 +1889,6 @@ function doSubmit(lid){
   var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
-  }catch(e){console.error('doSubmit:',e);if(btn)exBtnSetState(btn,'idle');showToast('Error al enviar. Intentá de nuevo.');}
 }
 
 /* ═══════════════════════════════════════════════
@@ -3242,7 +3240,6 @@ function tqSubmit(){
   var s=tqCalc();if(!s.ego||!s.tar)return;
   var _tqBtn=document.getElementById('tq-send-btn');
   if(_tqBtn)exBtnSetState(_tqBtn,'sending');
-  try{
     var user=USERS[S.user],answers=[];
     TEOSQ_ITEMS.forEach(function(item){answers.push({fid:'teosq_'+item.n,pregunta:item.t,respuesta:String(teosqAns[item.n]||'')});});
     answers.push({fid:'teosq_ego',pregunta:'SCORE Orientacion al Ego',respuesta:s.ego.toFixed(2)});
@@ -3259,7 +3256,6 @@ function tqSubmit(){
     updateSaveStatus('Enviado a Psicopoker','#22C55E');showToast('TEOSQ enviado a Psicopoker!');
     var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
     if(rec.airtableId){updateAirtable(rec.airtableId,rec);}else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
-  }catch(e){console.error('tqSubmit error:',e);if(_tqBtn)exBtnSetState(_tqBtn,'idle');showToast('Error al enviar. Intentá de nuevo.');}
 }
 
 /* ════ GRID CUSTOMIZABLE ════ */
@@ -3528,7 +3524,6 @@ function pmtSubmit() {
   }
   if (alertEl) alertEl.classList.remove('show');
   var _pmtBtn=document.getElementById('btn-ex-'+pmtLid);if(_pmtBtn)exBtnSetState(_pmtBtn,'sending');
-  try{
   var s = pmtCalcScores();
   var user = USERS[S.user];
   var answers = [];
@@ -3564,7 +3559,6 @@ function pmtSubmit() {
   if (unit) renderSidebar(unit);
   if (isUpdate && rec.airtableId) { updateAirtable(rec.airtableId, rec); }
   else { createAirtable(rec, function(id){ if(id){ var s2=getLocalSubs(); var i2=s2.findIndex(function(x){return x.usuario===S.user&&x.lid===pmtLid;}); if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));} } }); }
-  }catch(e){console.error('pmtSubmit error:',e);var _b=document.getElementById('btn-ex-'+pmtLid);if(_b)exBtnSetState(_b,'idle');showToast('Error al enviar. Intentá de nuevo.');}
 }
 
 /* ── PMT ADMIN VIEW ─────────────────────────── */
@@ -3905,7 +3899,6 @@ function ipedUpdateResults(){
 
 function ipedSubmit(){
   var _ipedBtn=document.getElementById('iped-send-btn');if(_ipedBtn)exBtnSetState(_ipedBtn,'sending');
-  try{
   var scores=ipedCalcScores();
   var user=USERS[S.user];
   var answers=[];
@@ -3927,7 +3920,6 @@ function ipedSubmit(){
   var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===ipedLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
-  }catch(e){console.error('ipedSubmit:',e);var _b=document.getElementById('iped-send-btn');if(_b)exBtnSetState(_b,'idle');showToast('Error al enviar. Intentá de nuevo.');}
 }
 
 /* ── IPED ADMIN VIEW ─────────────────────────── */
@@ -4149,7 +4141,6 @@ function gpsDraft(lid) {
 
 function gpsSubmit(lid) {
   var _gpsBtn=document.getElementById('btn-ex-'+lid);if(_gpsBtn)exBtnSetState(_gpsBtn,'sending');
-  try{
   var user = USERS[S.user];
   var answers = [];
   GPS_ROWS.forEach(function(row) {
@@ -4181,7 +4172,6 @@ function gpsSubmit(lid) {
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
-  }catch(e){console.error('gpsSubmit:',e);var _b=document.getElementById('btn-ex-'+lid);if(_b)exBtnSetState(_b,'idle');showToast('Error al enviar. Intent\u00e1 de nuevo.');}
 
 
 /* ── GPS ADMIN VIEW ─────────────────────────── */
@@ -4413,7 +4403,6 @@ function renderChecklistExercise(lid) {
 
 function clSubmit(lid) {
   var _clBtn=document.getElementById('btn-ex-'+lid);if(_clBtn)exBtnSetState(_clBtn,'sending');
-  try{
   clSaveDraft(lid);
   var user = USERS[S.user];
   var answers = [];
@@ -4454,7 +4443,6 @@ function clSubmit(lid) {
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
-  }catch(e){console.error('clSubmit:',e);var _b=document.getElementById('btn-ex-'+lid);if(_b)exBtnSetState(_b,'idle');showToast('Error al enviar. Intent\u00e1 de nuevo.');}
 
 
 /* ── CHECKLIST ADMIN VIEW ─────────────────────── */
@@ -5138,7 +5126,6 @@ function cajasPaso(num, icon, title, desc) {
 
 function cajas4Submit(lid) {
   var _cajBtn=document.getElementById('btn-ex-'+lid);if(_cajBtn)exBtnSetState(_cajBtn,'sending');
-  try{
   cajasSaveDraft(lid);
   var user = USERS[S.user];
   var answers = [];
@@ -5162,7 +5149,6 @@ function cajas4Submit(lid) {
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
-  }catch(e){console.error('cajas4Submit:',e);var _b=document.getElementById('btn-ex-'+lid);if(_b)exBtnSetState(_b,'idle');showToast('Error al enviar. Intent\u00e1 de nuevo.');}
 
 
 /* ── CAJAS4 ADMIN VIEW ───────────────────────── */
