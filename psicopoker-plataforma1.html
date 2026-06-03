@@ -2761,22 +2761,100 @@ function buildExPDF(ej){
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
 
   if(isTeosq){
-    var ego=null,tar=null,perf=null;
+    var ego=null,tar=null,perf=null,teosqAnsP={};
     resps.forEach(function(r){
-      if(r.fid==='teosq_ego')ego=parseFloat(r.respuesta);
-      if(r.fid==='teosq_tar')tar=parseFloat(r.respuesta);
-      if(r.fid==='teosq_perfil')perf=r.respuesta;
+      if(!r.fid)return;
+      if(r.fid==='teosq_ego'){ego=parseFloat(r.respuesta);return;}
+      if(r.fid==='teosq_tar'){tar=parseFloat(r.respuesta);return;}
+      if(r.fid==='teosq_perfil'){perf=r.respuesta;return;}
+      var m=r.fid.match(/^teosq_(\d+)$/);if(m)teosqAnsP[parseInt(m[1])]=parseInt(r.respuesta)||0;
     });
+    var SCALE_PDF=['Tot. Desacuerdo','En Desacuerdo','Ni / ni','De Acuerdo','Tot. Acuerdo'];
+    function tLvl(s){if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',color:'#2563EB',bg:'#eff6ff'};if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',color:'#D97706',bg:'#fffbeb'};return{lbl:'Alta ('+s.toFixed(2)+')',color:'#16A34A',bg:'#f0fdf4'};}
+    // ── Scores ──
     if(ego!==null&&tar!==null){
-      h+='<div class="tscores">';
-      h+='<div class="tscore-box"><div class="tscore-lbl">Orientacion al Ego</div><div class="tscore-val">'+ego.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(ego)+'">'+pdfLvlLbl(ego)+'</div></div>';
-      h+='<div class="tscore-box"><div class="tscore-lbl">Orientacion a la Tarea</div><div class="tscore-val">'+tar.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(tar)+'">'+pdfLvlLbl(tar)+'</div></div>';
+      var el=tLvl(ego),tl=tLvl(tar);
+      h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 12px 14px;">';
+      h+='<div style="border:1px solid #e8e8e8;border-top:3px solid #E8312A;border-radius:5px;padding:10px 12px;text-align:center;">';
+      h+='<div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#666;margin-bottom:4px;">Orientación al Ego</div>';
+      h+='<div style="font-size:28px;font-weight:800;color:#E8312A;line-height:1;">'+ego.toFixed(2)+'</div>';
+      h+='<div style="font-size:9px;font-weight:700;background:'+el.bg+';color:'+el.color+';border-radius:3px;padding:2px 8px;display:inline-block;margin-top:5px;">'+el.lbl+'</div>';
+      h+='</div>';
+      h+='<div style="border:1px solid #e8e8e8;border-top:3px solid #16A34A;border-radius:5px;padding:10px 12px;text-align:center;">';
+      h+='<div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#666;margin-bottom:4px;">Orientación a la Tarea</div>';
+      h+='<div style="font-size:28px;font-weight:800;color:#16A34A;line-height:1;">'+tar.toFixed(2)+'</div>';
+      h+='<div style="font-size:9px;font-weight:700;background:'+tl.bg+';color:'+tl.color+';border-radius:3px;padding:2px 8px;display:inline-block;margin-top:5px;">'+tl.lbl+'</div>';
+      h+='</div>';
+      h+='</div>';
+      // ── Gráfico de barras (SVG adaptado a fondo blanco) ──
+      h+='<div style="margin:0 12px 14px;border:1px solid #e8e8e8;border-radius:5px;padding:10px;background:#f8f8f8;">';
+      h+='<div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:8px;">Gráfico de orientación</div>';
+      var W=400,H=180,ml=50,mr=20,mt=12,mb=55,ch=H-mt-mb,cw=W-ml-mr;
+      function yPx2(v){return mt+ch-(v/5)*ch;}
+      function scColor(v){if(v<=2.9)return'#2563EB';if(v<=4.2)return'#D97706';return'#16A34A';}
+      var cx1=ml+cw/4,cx2=ml+cw*3/4,bw=65,svgS='';
+      for(var gi=0;gi<=5;gi++){var gy=yPx2(gi);svgS+='<line x1="'+ml+'" y1="'+gy+'" x2="'+(W-mr)+'" y2="'+gy+'" stroke="#e5e7eb" stroke-width="1"/>';svgS+='<text x="'+(ml-5)+'" y="'+(gy+4)+'" text-anchor="end" fill="#9ca3af" font-family="Montserrat,sans-serif" font-size="8">'+gi+'.0</text>';}
+      svgS+='<line x1="'+ml+'" y1="'+mt+'" x2="'+ml+'" y2="'+(H-mb)+'" stroke="#d1d5db" stroke-width="1"/>';
+      svgS+='<line x1="'+ml+'" y1="'+(H-mb)+'" x2="'+(W-mr)+'" y2="'+(H-mb)+'" stroke="#d1d5db" stroke-width="1"/>';
+      function pdfBar(cx,val,color,line1,line2){
+        var bh=(val/5)*ch,bx=cx-bw/2,by2=yPx2(val);
+        var r='<rect x="'+bx+'" y="'+by2+'" width="'+bw+'" height="'+bh+'" rx="3" fill="'+color+'" opacity="0.85"/>';
+        r+='<text x="'+cx+'" y="'+(by2-5)+'" text-anchor="middle" fill="'+color+'" font-family="Montserrat,sans-serif" font-size="11" font-weight="700">'+val.toFixed(2)+'</text>';
+        r+='<text x="'+cx+'" y="'+(H-mb+14)+'" text-anchor="middle" fill="#374151" font-family="Montserrat,sans-serif" font-size="8" font-weight="700">'+line1+'</text>';
+        if(line2)r+='<text x="'+cx+'" y="'+(H-mb+24)+'" text-anchor="middle" fill="#374151" font-family="Montserrat,sans-serif" font-size="8" font-weight="700">'+line2+'</text>';
+        return r;
+      }
+      svgS+=pdfBar(cx1,ego,scColor(ego),'ORIENTACION','AL EGO');
+      svgS+=pdfBar(cx2,tar,scColor(tar),'ORIENTACION','A LA TAREA');
+      h+='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;max-width:400px;display:block;margin:0 auto;">'+svgS+'</svg>';
       h+='</div>';
     }
-    if(perf)h+='<div class="profile-box"><div class="profile-name">Perfil: '+perf+'</div></div>';
-    resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){
-      h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';
+    // ── Perfil ──
+    if(perf){
+      var PROFS_PDF=[{name:'Tarea alta / Ego baja',icon:'🟢',tag:'Perfil favorable',tagColor:'#16A34A',tagBg:'#f0fdf4'},{name:'Ego alta / Tarea baja',icon:'🔥',tag:'Incompatible con Mindset Ganador',tagColor:'#DC2626',tagBg:'#fef2f2'},{name:'Ego alta / Tarea alta',icon:'🧩',tag:'Perfil complejo',tagColor:'#D97706',tagBg:'#fffbeb'},{name:'Ego baja / Tarea baja',icon:'💤',tag:'Requiere atención urgente',tagColor:'#DC2626',tagBg:'#fef2f2'}];
+      h+='<div style="margin:0 12px 14px;border:1px solid #e8e8e8;border-radius:5px;overflow:hidden;">';
+      h+='<div style="background:#f8f8f8;padding:5px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;border-bottom:1px solid #e8e8e8;">Perfil de orientación</div>';
+      h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px;">';
+      PROFS_PDF.forEach(function(p){
+        var isA=perf&&perf.indexOf(p.name)!==-1;
+        h+='<div style="border:1px solid '+(isA?'#d1d5db':'#e8e8e8')+';border-radius:4px;padding:8px;background:'+(isA?'#fff':'#fafafa')+';opacity:'+(isA?'1':'.45')+';font-size:.7rem;">';
+        h+='<div style="font-size:.9rem;margin-bottom:3px;">'+p.icon+'</div>';
+        h+='<div style="font-size:10px;font-weight:800;color:#1a1a2e;margin-bottom:2px;">'+p.name+'</div>';
+        h+='<div style="font-size:8px;font-weight:700;background:'+p.tagBg+';color:'+p.tagColor+';border-radius:3px;padding:2px 5px;display:inline-block;">'+p.tag+'</div>';
+        h+='</div>';
+      });
+      h+='</div></div>';
+    }
+    // ── Tabla con las 13 respuestas ──
+    h+='<div style="margin:0 12px 6px;border:1px solid #e8e8e8;border-radius:5px;overflow:hidden;">';
+    h+='<div style="background:#f8f8f8;padding:5px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;border-bottom:1px solid #e8e8e8;">Cuestionario — 13 ítems</div>';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:9px;">';
+    h+='<thead><tr style="background:#f0f0f0;">';
+    h+='<th style="padding:4px 6px;border:1px solid #e0e0e0;text-align:left;width:24px;">#</th>';
+    h+='<th style="padding:4px 6px;border:1px solid #e0e0e0;text-align:left;">Yo me siento con más éxito cuando...</th>';
+    h+='<th style="padding:4px 6px;border:1px solid #e0e0e0;text-align:center;width:14px;">Cat.</th>';
+    SCALE_PDF.forEach(function(l){h+='<th style="padding:4px 3px;border:1px solid #e0e0e0;text-align:center;font-size:7px;min-width:36px;">'+l+'</th>';});
+    h+='</tr></thead><tbody>';
+    TEOSQ_ITEMS.forEach(function(item,i){
+      var v=teosqAnsP[item.n]||0;
+      var catColor=item.cat==='E'?'#E8312A':'#16A34A';
+      var rowBg=i%2===0?'#fff':'#fafafa';
+      h+='<tr style="background:'+rowBg+';">';
+      h+='<td style="padding:4px 6px;border:1px solid #e8e8e8;font-weight:700;color:#666;">'+item.n+'</td>';
+      h+='<td style="padding:4px 6px;border:1px solid #e8e8e8;line-height:1.4;">'+item.t+'</td>';
+      h+='<td style="padding:4px 6px;border:1px solid #e8e8e8;text-align:center;font-weight:800;font-size:8px;color:'+catColor+';">'+item.cat+'</td>';
+      for(var ci=1;ci<=5;ci++){
+        var sel=v===ci;
+        h+='<td style="padding:4px 3px;border:1px solid #e8e8e8;text-align:center;background:'+(sel?'#EFF6FF':'')+';">';
+        h+='<div style="width:12px;height:12px;border-radius:50%;border:2px solid '+(sel?'#E8312A':'#d1d5db')+';background:'+(sel?'#E8312A':'#fff')+';margin:0 auto;display:flex;align-items:center;justify-content:center;">';
+        if(sel)h+='<div style="width:4px;height:4px;border-radius:50%;background:#fff;"></div>';
+        h+='</div></td>';
+      }
+      h+='</tr>';
     });
+    h+='</tbody></table>';
+    h+='<div style="padding:5px 10px;background:#f8f8f8;border-top:1px solid #e8e8e8;font-size:7px;color:#888;">E = Orientación al Ego &nbsp;·&nbsp; R = Orientación a la Tarea</div>';
+    h+='</div>';
 
   }else if(isPmt){
     var pmtData={},pmtCap1=null,pmtCap2=null,pmtGlobal=null;
