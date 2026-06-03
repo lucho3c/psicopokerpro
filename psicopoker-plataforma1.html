@@ -4064,7 +4064,7 @@ function renderGPSExercise(lid) {
   h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
   h += '</div></div>';
 
-  document.getElementById('mc-body').innerHTML = h;
+  document.getElementById('mc-body').innerHTML += h;
   setTimeout(function(){injectAttachmentSection(lid);},150);
 }
 
@@ -4350,7 +4350,7 @@ function renderChecklistExercise(lid) {
   h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
   h += '</div></div>';
 
-  document.getElementById('mc-body').innerHTML = h;
+  document.getElementById('mc-body').innerHTML += h;
   setTimeout(function(){injectAttachmentSection(lid);},150);
 }
 
@@ -4544,7 +4544,7 @@ function renderEquipExercise(lid) {
   h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
   h += '</div></div>';
 
-  document.getElementById('mc-body').innerHTML = h;
+  document.getElementById('mc-body').innerHTML += h;
   setTimeout(function(){injectAttachmentSection(lid);},150);
 }
 
