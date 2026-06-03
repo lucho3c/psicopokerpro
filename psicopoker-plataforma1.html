@@ -69,7 +69,49 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .l-secure span{font-size:.6rem;color:rgba(255,255,255,.17);font-weight:400;}
 .lerr{background:rgba(232,49,42,.1);border:1px solid var(--border-r);color:#ff8080;font-size:.72rem;padding:.5rem .85rem;border-radius:6px;margin-bottom:.85rem;display:none;}
 .lerr.show{display:block;}
-#vdash{overflow-y:auto;background:var(--bg);}
+/* ── DASHBOARD LEFT SIDEBAR ───────────────── */
+.dash-layout{display:flex;flex:1;overflow:hidden;}
+.dash-sidenav{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.25rem 0;gap:.25rem;overflow-y:auto;}
+.dash-sidenav-btn{display:flex;align-items:center;gap:.65rem;padding:.7rem 1.25rem;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:none;border:none;width:100%;text-align:left;cursor:pointer;transition:color .2s,background .2s;border-left:2px solid transparent;}
+.dash-sidenav-btn:hover{color:var(--text);background:rgba(255,255,255,.04);}
+.dash-sidenav-btn.active{color:var(--text);background:rgba(232,49,42,.08);border-left-color:var(--red);}
+.dash-sidenav-btn.disabled{color:var(--dim);cursor:not-allowed;opacity:.5;}
+.dash-sidenav-btn svg{flex-shrink:0;}
+.dash-sidenav-sep{height:1px;background:var(--border);margin:.5rem 1.25rem;}
+.dash-main{flex:1;overflow-y:auto;}
+/* ── MIS EJERCICIOS VIEW ──────────────────── */
+#vdash{background:var(--bg);}
+.exv-wrap{max-width:860px;margin:0 auto;padding:2rem 2.5rem 3rem;}
+.exv-hdr{margin-bottom:1.75rem;}
+.exv-hdr h2{font-size:1.2rem;font-weight:800;margin-bottom:.3rem;}
+.exv-hdr p{font-size:.8rem;color:var(--muted);}
+.exv-unit{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1rem;}
+.exv-unit-hdr{display:flex;align-items:center;gap:1rem;padding:.9rem 1.25rem;background:var(--card);cursor:pointer;transition:background .2s;user-select:none;}
+.exv-unit-hdr:hover{background:var(--card2);}
+.exv-unit-badge{font-size:.58rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;background:var(--red);color:#fff;padding:.2rem .6rem;border-radius:3px;flex-shrink:0;}
+.exv-unit-badge.done{background:rgba(34,197,94,.18);color:var(--green);}
+.exv-unit-title{font-size:.88rem;font-weight:700;flex:1;}
+.exv-unit-count{font-size:.7rem;color:var(--muted);flex-shrink:0;}
+.exv-unit-chevron{color:var(--dim);transition:transform .25s;flex-shrink:0;}
+.exv-unit-chevron.open{transform:rotate(180deg);}
+.exv-unit-body{display:none;border-top:1px solid var(--border);}
+.exv-unit-body.open{display:block;}
+.exv-exercise{padding:.85rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.04);}
+.exv-exercise:last-child{border-bottom:none;}
+.exv-ex-name{font-size:.82rem;font-weight:700;margin-bottom:.5rem;}
+.exv-ex-empty{font-size:.78rem;color:var(--dim);padding:1rem 1.25rem;font-style:italic;}
+.exv-qa-row{margin-bottom:.45rem;}
+.exv-qa-q{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.15rem;}
+.exv-qa-a{font-size:.82rem;color:var(--text);line-height:1.55;white-space:pre-wrap;word-break:break-word;}
+.exv-unit-foot{padding:.75rem 1.25rem;background:var(--bg3);display:flex;justify-content:flex-end;border-top:1px solid var(--border);}
+.exv-dl-btn{display:flex;align-items:center;gap:.4rem;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.38rem .9rem;border-radius:3px;cursor:pointer;transition:all .2s;}
+.exv-dl-btn:hover{border-color:var(--red);color:var(--text);}
+/* ── INFORME FINAL VIEW ───────────────────── */
+.inf-wrap{max-width:600px;margin:0 auto;padding:3rem 2.5rem;text-align:center;}
+.inf-lock{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;color:var(--dim);}
+.inf-title{font-size:1.15rem;font-weight:800;margin-bottom:.5rem;color:var(--dim);}
+.inf-desc{font-size:.83rem;color:var(--dim);line-height:1.75;max-width:380px;margin:0 auto;}
+@media(max-width:900px){.dash-sidenav{display:none;}}
 .dash-hdr{padding:1.75rem 0;border-bottom:1px solid var(--border);background:var(--bg2);}
 .dash-hdr-in{max-width:1160px;margin:0 auto;padding:0 2.5rem;}
 .dash-hdr h1{font-size:1.35rem;font-weight:800;margin-bottom:.2rem;}
@@ -539,7 +581,6 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
       <div class="uav" id="nav-av"></div>
       <span class="uname" id="nav-nm"></span>
       <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Psicopoker</button>
-      <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Psicopoker</button>
       <button id="btn-dl-full" onclick="generateMyFullPDF()" style="display:none;align-items:center;gap:.4rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .85rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Mi programa</button>
       <button class="btn-sm" onclick="doLogout()">Salir</button>
     </div>
@@ -554,7 +595,51 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
       </div>
     </div>
   </div>
-  <div class="ugrid-wrap"><div class="ugrid" id="ugrid"></div></div>
+  <div class="dash-layout">
+    <!-- Left sidebar nav -->
+    <nav class="dash-sidenav">
+      <button class="dash-sidenav-btn active" id="sidenav-unidades" onclick="dashNav('unidades')">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
+        Mis unidades
+      </button>
+      <button class="dash-sidenav-btn" id="sidenav-ejercicios" onclick="dashNav('ejercicios')">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 3.5h10M2 7h7M2 10.5h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Mis ejercicios
+      </button>
+      <div class="dash-sidenav-sep"></div>
+      <button class="dash-sidenav-btn disabled" id="sidenav-informe" title="Disponible al finalizar el programa">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="6" width="10" height="7" rx="1.2" stroke="currentColor" stroke-width="1.3"/><path d="M4.5 6V4.5a2.5 2.5 0 015 0V6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="7" cy="9.5" r=".8" fill="currentColor"/></svg>
+        Informe final
+      </button>
+    </nav>
+    <!-- Main content area -->
+    <div class="dash-main" id="dash-main">
+      <!-- UNIDADES panel -->
+      <div id="dash-panel-unidades">
+        <div class="ugrid-wrap"><div class="ugrid" id="ugrid"></div></div>
+      </div>
+      <!-- MIS EJERCICIOS panel -->
+      <div id="dash-panel-ejercicios" style="display:none;">
+        <div class="exv-wrap">
+          <div class="exv-hdr">
+            <h2>Mis ejercicios</h2>
+            <p>Revisá las respuestas de los ejercicios que completaste en cada unidad.</p>
+          </div>
+          <div id="exv-list"></div>
+        </div>
+      </div>
+      <!-- INFORME FINAL panel -->
+      <div id="dash-panel-informe" style="display:none;">
+        <div class="inf-wrap">
+          <div class="inf-lock">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></svg>
+          </div>
+          <p class="inf-title">Informe final no disponible</p>
+          <p class="inf-desc">Tu informe final estará disponible una vez que Arturo o Mauro lo hayan preparado al completar el programa. Volví a revisar esta sección cuando finalices todas las unidades.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="vcls" class="view">
@@ -1004,7 +1089,7 @@ function generateMyFullPDF(){
   var seen={};subs.forEach(function(e){var k=e.lid||e.ejercicio;if(!seen[k]||(e.ts||0)>(seen[k].ts||0))seen[k]=e;});
   var unique=Object.values(seen);
   if(!unique.length){showToast('No hay ejercicios completados todavia');return;}
-  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8','Unidad 9'];
   function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
   var byUnit={};unique.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
   var sortedUnits=Object.keys(byUnit).sort(function(a,b){return unitIdx(a)-unitIdx(b);});
@@ -1013,6 +1098,114 @@ function generateMyFullPDF(){
   sortedUnits.forEach(function(unit){h+='<div class="sec-title">'+unit+'</div>';byUnit[unit].forEach(function(ej){h+=buildExPDF(ej);});});
   h+='<div class="footer">Psicopoker · '+new Date().toLocaleString('es-AR')+'</div></div>';
   openPDF('Programa Completo — '+user.name,h);
+}
+
+function dashNav(section) {
+  var panels = ['unidades','ejercicios','informe'];
+  panels.forEach(function(p) {
+    var panel = document.getElementById('dash-panel-'+p);
+    var btn = document.getElementById('sidenav-'+p);
+    if (panel) panel.style.display = p === section ? 'block' : 'none';
+    if (btn && !btn.classList.contains('disabled')) {
+      if (p === section) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  });
+  if (section === 'ejercicios') renderMisEjercicios();
+}
+
+function renderMisEjercicios() {
+  var subs = getLocalSubs().filter(function(s){ return s.usuario === S.user; });
+  var seen = {};
+  subs.forEach(function(e){ var k=e.lid||e.ejercicio; if(!seen[k]||(e.ts||0)>(seen[k].ts||0)) seen[k]=e; });
+  var unique = Object.values(seen);
+  var UNIT_ORDER = ['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8','Unidad 9'];
+  function unitIdx(u){ var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());}); return i===-1?99:i; }
+  var container = document.getElementById('exv-list');
+  if (!container) return;
+  if (!unique.length) {
+    container.innerHTML = '<p style="font-size:.83rem;color:var(--dim);padding:1.5rem 0;font-style:italic;">Todav\u00eda no completaste ning\u00fan ejercicio.</p>';
+    return;
+  }
+  var byUnit = {};
+  unique.forEach(function(e){ var u=e.unidad||'Sin unidad'; if(!byUnit[u]) byUnit[u]=[]; byUnit[u].push(e); });
+  var sortedUnits = Object.keys(byUnit).sort(function(a,b){ return unitIdx(a)-unitIdx(b); });
+  var h = '';
+  var renderQueue = [];
+  sortedUnits.forEach(function(unitName, ui) {
+    var exercises = byUnit[unitName];
+    var unitId = 'exvu_' + ui;
+    h += '<div class="exv-unit">';
+    h += '<div class="exv-unit-hdr" onclick="toggleExvUnit(\'' + unitId + '\')">';
+    h += '<span class="exv-unit-badge done">' + unitName + '</span>';
+    h += '<span class="exv-unit-title">' + exercises.length + ' ejercicio' + (exercises.length!==1?'s':'') + ' completado' + (exercises.length!==1?'s':'') + '</span>';
+    h += '<svg id="chev-' + unitId + '" class="exv-unit-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    h += '</div>';
+    h += '<div class="exv-unit-body" id="body-' + unitId + '" style="display:none;">';
+    exercises.forEach(function(ej, ei) {
+      var eid = 'myex_' + ui + '_' + ei;
+      var isPmt=ej.lid==="u1l3"||ej.lid==="u8l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);
+      var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);
+      var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);
+      var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);
+      var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);
+      var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);
+      var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);
+      var isCaj=ej.lid==="u6l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("4 cajas")!==-1);
+      var isGrid=(ej.respuestas||[]).some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
+      var btnLabel=isPmt||isTeosq||isIped||isCaj?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isCon?'Ver respuestas &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
+      h += '<div class="sub-card">';
+      h += '<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\'' + eid + '\',this)">';
+      h += '<div style="flex:1;"><div class="sub-name">' + (ej.ejercicio||ej.lid||'Ejercicio') + '</div><div class="sub-meta">' + (ej.fecha||'') + '</div></div>';
+      h += '<button class="sub-toggle">' + btnLabel + '</button></div>';
+      h += '<div id="' + eid + '" style="display:none;border-top:1px solid var(--border);"></div>';
+      h += '</div>';
+      renderQueue.push({eid:eid, ej:ej, isPmt:isPmt, isTeosq:isTeosq, isIped:isIped, isGps:isGps, isCl:isCl, isEquip:isEquip, isCon:isCon, isCaj:isCaj, isGrid:isGrid});
+    });
+    h += '<div class="exv-unit-foot">';
+    h += '<button class="exv-dl-btn" onclick="downloadUnitExercisesPDF(\'' + unitName + '\')">';
+    h += '<svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+    h += ' Descargar PDF</button>';
+    h += '</div>';
+    h += '</div></div>';
+  });
+  container.innerHTML = h;
+  // Now render each exercise using the EXACT same admin view functions
+  renderQueue.forEach(function(item) {
+    if(item.isPmt) renderPMTAdminView(item.ej, item.eid);
+    else if(item.isTeosq) renderTEOSQAdminView(item.ej, item.eid);
+    else if(item.isIped) renderIPEDAdminView(item.ej, item.eid);
+    else if(item.isGps) renderGPSAdminView(item.ej, item.eid);
+    else if(item.isCl) renderChecklistAdminView(item.ej, item.eid);
+    else if(item.isEquip) renderEquipAdminView(item.ej, item.eid);
+    else if(item.isCon) renderConcienciaAdminView(item.ej, item.eid);
+    else if(item.isCaj) renderCajas4AdminView(item.ej, item.eid);
+    else if(item.isGrid) renderGridAdminView(item.ej, item.eid);
+    else renderFormAdminView(item.ej, item.eid);
+  });
+}
+
+function toggleExvUnit(id) {
+  var body = document.getElementById('body-'+id);
+  var chev = document.getElementById('chev-'+id);
+  if (!body) return;
+  var open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  if (chev) chev.classList.toggle('open', !open);
+}
+
+function downloadUnitExercisesPDF(unitName) {
+  var subs = getLocalSubs().filter(function(s){ return s.usuario===S.user && s.unidad===unitName; });
+  var seen = {};
+  subs.forEach(function(e){ var k=e.lid||e.ejercicio; if(!seen[k]||(e.ts||0)>(seen[k].ts||0)) seen[k]=e; });
+  var unique = Object.values(seen);
+  var user = USERS[S.user];
+  if (!unique.length) { showToast('No hay ejercicios completados en '+unitName); return; }
+  var h = '<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div><div class="hdr-info"><div class="hdr-lbl">'+unitName+'</div><div class="hdr-val">'+user.name+'</div><div class="hdr-date">'+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
+  h += '<div class="sec-title">'+unitName+' — Ejercicios completados</div>';
+  unique.forEach(function(ej){ h += buildExPDF(ej); });
+  h += '<div class="footer">Psicopoker · '+new Date().toLocaleString('es-AR')+'</div></div>';
+  openPDF(unitName+' — '+user.name, h);
 }
 
 function autoHeight(el){el.style.height='auto';el.style.height=Math.max(30,el.scrollHeight)+'px';}
@@ -1958,7 +2151,7 @@ function showDash(){
   document.getElementById('dgreet').textContent='Bienvenido, '+usr.name.split(' ')[0]+' \u{1F44B}';
   var ab=document.getElementById('btn-admin');
   if(ab)ab.style.display=isAdmin()?'inline-flex':'none';
-  renderDash();showView('vdash');
+  renderDash();showView('vdash');dashNav('unidades');
   var dlFull=document.getElementById('btn-dl-full');
   if(dlFull)dlFull.style.display=isAdmin()?'none':'flex';
 }
@@ -2331,7 +2524,7 @@ function showPatient(usuario){
   renderPatientList(document.getElementById('admin-search')?document.getElementById('admin-search').value:'');
   var patient=adminData.find(function(p){return p.usuario===usuario;});
   if(!patient)return;
-  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8','Unidad 9'];
   function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
   var byUnit={};
   patient.ejercicios.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
@@ -2903,7 +3096,7 @@ function pdfPatientHeader(patient,sortedUnits){
 
 function generatePatientPDF(usuario){
   var patient=adminData.find(function(p){return p.usuario===usuario;});if(!patient)return;
-  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8','Unidad 9'];
   function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
   var byUnit={};patient.ejercicios.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
   var sortedUnits=Object.keys(byUnit).sort(function(a,b){return unitIdx(a)-unitIdx(b);});
@@ -2927,7 +3120,7 @@ function generateUnitPDF(usuario,unit){
 
 function generateGeneralReport(){
   if(!adminData||!adminData.length){showToast('Sin datos para el informe');return;}
-  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8','Unidad 9'];
   function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
   var totalEjs=0;adminData.forEach(function(p){totalEjs+=p.ejercicios.length;});
   var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
@@ -3163,7 +3356,7 @@ function renderTEOSQExercise(lid){
 
   h+='</div></div></div>';
 
-  document.getElementById('mc-body').innerHTML=h;
+  document.getElementById('mc-body').innerHTML += h;
   tqUpdateProgress();
   tqUpdateResults();
   setTimeout(function(){injectAttachmentSection(teosqLid);},150);
@@ -3444,6 +3637,7 @@ function pmtSectionHTML(titleNum, titleText, items, draft) {
 function renderPMTExercise(lid) {
   pmtLid = lid;
   var draft = loadDraft(lid) || {};
+  var alreadyDone = isDone(lid);
 
   var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
 
@@ -3842,7 +4036,7 @@ function renderIPEDExercise(lid){
   });
   h+='</div></div></div>';
 
-  document.getElementById('mc-body').innerHTML=h;
+  document.getElementById('mc-body').innerHTML += h;
   ipedUpdateResults();
   setTimeout(function(){injectAttachmentSection(lid);},150);
 }
@@ -4796,7 +4990,7 @@ function renderConcienciaExercise(lid) {
   h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
-  document.getElementById('mc-body').innerHTML = h;
+  document.getElementById('mc-body').innerHTML += h;
   setTimeout(function(){ injectAttachmentSection(lid); }, 150);
 }
 
