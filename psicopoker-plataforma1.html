@@ -2092,6 +2092,7 @@ function renderContent(unit, lid) {
       return;
     } else if (exType === 'gps') {
       document.getElementById('mc-body').innerHTML = body;
+      var _oldGps=document.getElementById('gps-fullwidth-wrap');if(_oldGps)_oldGps.remove();
       renderGPSExercise(lid);
       document.getElementById('mc').scrollTop = 0;
       return;
@@ -3431,7 +3432,7 @@ function renderPMTExercise(lid) {
   pmtLid = lid;
   var draft = loadDraft(lid) || {};
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
 
   // Header
   h += '<div class="tq-hdr-box">';
@@ -4063,7 +4064,7 @@ function renderGPSExercise(lid) {
   var data = gpsGetData(lid);
   var alreadyDone = isDone(lid);
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">Planificación de Objetivos</div>';
   h += '<div class="tq-hdr-title">GPS de Objetivos</div>';
@@ -4108,7 +4109,13 @@ function renderGPSExercise(lid) {
   h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
-  document.getElementById('mc-body').innerHTML += h;
+  // Inject GPS full-width outside mc-body
+  var _mcEl = document.getElementById('mc');
+  var _gpsWrap = document.createElement('div');
+  _gpsWrap.id = 'gps-fullwidth-wrap';
+  _gpsWrap.style.cssText = 'width:100%;flex-shrink:0;padding:0;';
+  _gpsWrap.innerHTML = h;
+  _mcEl.appendChild(_gpsWrap);
   setTimeout(function(){injectAttachmentSection(lid);},150);
 }
 
@@ -4319,7 +4326,7 @@ function renderChecklistExercise(lid) {
   var data = clGetData(lid);
   var alreadyDone = isDone(lid);
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">Ejercicio 2 · Unidad 4</div>';
   h += '<div class="tq-hdr-title">Diseñá tu Checklist Pre-Sesión Personalizado</div>';
@@ -4553,7 +4560,7 @@ function renderEquipExercise(lid) {
   var count = Math.max(equipRowCount(data), 14); // min 14 rows like Excel
   var alreadyDone = isDone(lid);
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">Planificación · Unidad 4</div>';
   h += '<div class="tq-hdr-title">Equipamiento Indispensable</div>';
@@ -4717,7 +4724,7 @@ function renderConcienciaExercise(lid) {
   var sel8 = [];
   try { sel8 = JSON.parse(data['cc_q8'] || '[]'); } catch(e) {}
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
 
   // Header
   h += '<div class="tq-hdr-box">';
@@ -4942,7 +4949,7 @@ function renderCajas4Exercise(lid) {
   var alreadyDone = isDone(lid);
   function v(fid){ return data[fid]||''; }
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">💼 Profesionalizando el Mindset · Unidad 6</div>';
   h += '<div class="tq-hdr-title">Las 4 Cajas — Definí y llenÁ tu estructura financiera</div>';
