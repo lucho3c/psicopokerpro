@@ -162,7 +162,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .pmt-section{margin-bottom:1rem;}
 .pmt-sec-header{display:flex;align-items:baseline;gap:.5rem;padding:.6rem 0 .45rem;border-bottom:2px solid rgba(232,49,42,.18);margin-bottom:.6rem;}
 .pmt-sec-num{font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--red);}
-.pmt-sec-title{font-size:.82rem;font-weight:700;color:var(--text);}
+.pmt-sec-title{font-size:1.07rem;font-weight:700;color:var(--red);}
 .pmt-item{padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .pmt-item:last-child{border-bottom:none;}
 .pmt-item-top{display:flex;align-items:center;gap:.75rem;}
@@ -528,8 +528,8 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     <div class="tnav-r">
       <div class="uav" id="nav-av"></div>
       <span class="uname" id="nav-nm"></span>
-      <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Mauro</button>
-      <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Mauro</button>
+      <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Psicopoker</button>
+      <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Psicopoker</button>
       <button id="btn-dl-full" onclick="generateMyFullPDF()" style="display:none;align-items:center;gap:.4rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .85rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Mi programa</button>
       <button class="btn-sm" onclick="doLogout()">Salir</button>
     </div>
@@ -1696,7 +1696,7 @@ function renderGridExercise(lid, def) {
   var alreadyDone=isDone(lid);
   h+='<div class="ex-submit-row"><button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="doSubmit(\''+lid+'\')" '+(alreadyDone?'style="background:var(--green);"':'')+'>'+
   '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'+
-  ' '+(alreadyDone?'Actualizar envio':'Enviar a Mauro')+'</button>'+
+  ' '+(alreadyDone?'Actualizar envio':'Enviar a Psicopoker')+'</button>'+
   '<p class="ex-submit-note">Se guarda automaticamente mientras escribis</p></div></div>';
   return h;
 }
@@ -1758,8 +1758,8 @@ function renderFormExercise(lid, def) {
   h += '<div class="ex-submit-row">';
   h += '<button class="btn-ex-send" id="btn-ex-' + lid + '" onclick="doSubmit(\'' + lid + '\')">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' Enviar a Mauro</button>';
-  h += '<p class="ex-submit-note">Se enviara a la planilla de seguimiento de Mauro</p>';
+  h += ' Enviar a Psicopoker</button>';
+  h += '<p class="ex-submit-note">Se enviara a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   window['_exQ_' + lid] = allQ;
@@ -1851,10 +1851,10 @@ function doSubmit(lid){
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   markDoneL(lid);
   fbSaveSubmission(S.user,lid,rec);
-  updateSaveStatus('Enviado a Mauro','#22C55E');
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
   var isUpdate=idx>=0;
-  if(btn){btn.textContent=isUpdate?'Actualizar envio':'Enviar a Mauro';btn.style.background='#22C55E';btn.disabled=false;}
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){btn.textContent=isUpdate?'Actualizar envio':'Enviar a Psicopoker';btn.style.background='#22C55E';btn.disabled=false;}
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
@@ -3011,8 +3011,8 @@ function renderTEOSQExercise(lid){
 
   /* Botón enviar */
   h+='<div class="ex-submit-row" style="margin-top:.85rem;">';
-  h+='<button class="btn-ex-send" id="tq-send-btn" onclick="tqSubmit()" '+(answered<13?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+(alreadyDone?'Actualizar env\u00edo':'Enviar a Mauro')+'</button>';
-  h+='<p class="ex-submit-note" id="tq-send-note" style="'+(answered>=13?'color:var(--green);':'')+'">'+( answered<13 ? 'Respond\u00e9 las '+(13-answered)+' preguntas restantes' : 'Tus respuestas ser\u00e1n enviadas a Mauro')+'</p>';
+  h+='<button class="btn-ex-send" id="tq-send-btn" onclick="tqSubmit()" '+(answered<13?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+(alreadyDone?'Actualizar env\u00edo':'Enviar a Psicopoker')+'</button>';
+  h+='<p class="ex-submit-note" id="tq-send-note" style="'+(answered>=13?'color:var(--green);':'')+'">'+( answered<13 ? 'Respond\u00e9 las '+(13-answered)+' preguntas restantes' : 'Tus respuestas ser\u00e1n enviadas a Psicopoker')+'</p>';
   h+='</div></div>';
 
   /* ══ PANE 2 — Resultados ══ */
@@ -3158,7 +3158,7 @@ function tqSelect(n,val){
   saveDraft(teosqLid,data);
   updateSaveStatus('Borrador guardado','#22C55E');
 }
-function tqUpdateProgress(){var count=Object.keys(teosqAns).length;var pf=document.getElementById('tq-prog-fill');var pn=document.getElementById('tq-prog-n');var btn=document.getElementById('tq-send-btn');var note=document.getElementById('tq-send-note');if(pf)pf.style.width=(count/13*100)+'%';if(pn)pn.textContent=count;if(btn)btn.disabled=(count<13);if(note){note.textContent=count<13?'Responde las '+(13-count)+' preguntas restantes':'Tus respuestas seran enviadas a Mauro';note.style.color=count<13?'var(--dim)':'var(--green)';}}
+function tqUpdateProgress(){var count=Object.keys(teosqAns).length;var pf=document.getElementById('tq-prog-fill');var pn=document.getElementById('tq-prog-n');var btn=document.getElementById('tq-send-btn');var note=document.getElementById('tq-send-note');if(pf)pf.style.width=(count/13*100)+'%';if(pn)pn.textContent=count;if(btn)btn.disabled=(count<13);if(note){note.textContent=count<13?'Responde las '+(13-count)+' preguntas restantes':'Tus respuestas serán enviadas a Psicopoker';note.style.color=count<13?'var(--dim)':'var(--green)';}}
 function tqCalc(){var ei=[1,3,4,6,9,11],ti=[2,5,7,8,10,12,13],eS=0,eC=0,tS=0,tC=0;ei.forEach(function(n){if(teosqAns[n]){eS+=teosqAns[n];eC++;}});ti.forEach(function(n){if(teosqAns[n]){tS+=teosqAns[n];tC++;}});return{ego:eC===6?Math.round(eS/6*100)/100:null,tar:tC===7?Math.round(tS/7*100)/100:null};}
 function tqLevel(s){if(s===null)return{lbl:'—',cls:''};if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',cls:'tlvl-low'};if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',cls:'tlvl-mid'};return{lbl:'Alta ('+s.toFixed(2)+')',cls:'tlvl-hi'};}
 function tqUpdateResults(){
@@ -3231,7 +3231,7 @@ function tqSubmit(){
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   markDoneL(teosqLid);
   var btn=document.getElementById('tq-send-btn');if(btn){btn.textContent='Actualizar envio';btn.style.background='var(--green)';btn.disabled=false;}
-  updateSaveStatus('Enviado a Mauro','#22C55E');showToast('TEOSQ enviado a Mauro!');
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');showToast('TEOSQ enviado a Psicopoker!');
   var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(rec.airtableId){updateAirtable(rec.airtableId,rec);}else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
@@ -3460,8 +3460,8 @@ function renderPMTExercise(lid) {
   h += '<div class="ex-submit-row">';
   h += '<button class="btn-ex-send" id="btn-ex-' + lid + '" onclick="pmtSubmit()">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' Enviar a Mauro</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += ' Enviar a Psicopoker</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML += h;
@@ -3511,9 +3511,9 @@ function pmtSubmit() {
   markDoneL(pmtLid);
   fbSaveSubmission(S.user, pmtLid, rec);
   var btn = document.getElementById('btn-ex-' + pmtLid);
-  if (btn) { btn.textContent = isUpdate ? 'Actualizar envío' : 'Enviar a Mauro'; btn.style.background = 'var(--green)'; btn.disabled = false; }
-  updateSaveStatus('Enviado a Mauro', '#22C55E');
-  showToast(isUpdate ? 'Respuestas actualizadas!' : 'Enviado a Mauro!');
+  if (btn) { btn.textContent = isUpdate ? 'Actualizar envío' : 'Enviar a Psicopoker'; btn.style.background = 'var(--green)'; btn.disabled = false; }
+  updateSaveStatus('Enviado a Psicopoker', '#22C55E');
+  showToast(isUpdate ? 'Respuestas actualizadas!' : 'Enviado a Psicopoker!');
   var unit = C.find(function(u){ return u.id === S.unitId; });
   if (unit) renderSidebar(unit);
   if (isUpdate && rec.airtableId) { updateAirtable(rec.airtableId, rec); }
@@ -3728,8 +3728,8 @@ function renderIPEDExercise(lid){
   });
   h+='</tbody></table></div>';
   h+='<div class="ex-submit-row" style="margin-top:.85rem;">';
-  h+='<button class="btn-ex-send" id="iped-send-btn" onclick="ipedSubmit()" '+(answered<42?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h+='<p class="ex-submit-note" id="iped-send-note" style="'+(answered>=42?'color:var(--green);':'')+'">'+( answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Mauro')+'</p>';
+  h+='<button class="btn-ex-send" id="iped-send-btn" onclick="ipedSubmit()" '+(answered<42?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+(alreadyDone?'Actualizar envío':'Enviar a Psicopoker')+'</button>';
+  h+='<p class="ex-submit-note" id="iped-send-note" style="'+(answered>=42?'color:var(--green);':'')+'">'+( answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Psicopoker')+'</p>';
   h+='</div></div>';
 
   // ── PANE 1: resultados ──
@@ -3812,7 +3812,7 @@ function ipedSelect(n,val){
   var answered=Object.keys(ipedAns).length;
   var btn=document.getElementById('iped-send-btn');if(btn)btn.disabled=answered<42;
   var note=document.getElementById('iped-send-note');
-  if(note){note.textContent=answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Mauro';note.style.color=answered>=42?'var(--green)':'';}
+  if(note){note.textContent=answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Psicopoker';note.style.color=answered>=42?'var(--green)':'';}
   var data=loadDraft(ipedLid)||{};IPED_ITEMS.forEach(function(it){data['iped_'+it.n]=ipedAns[it.n]||0;});
   saveDraft(ipedLid,data);
   updateSaveStatus('Borrador guardado','rgba(238,239,243,.5)');
@@ -3870,9 +3870,9 @@ function ipedSubmit(){
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   markDoneL(ipedLid);fbSaveSubmission(S.user,ipedLid,rec);
   var btn=document.getElementById('iped-send-btn');
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';btn.disabled=false;}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Psicopoker';btn.style.background='var(--green)';btn.disabled=false;}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===ipedLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
@@ -4060,8 +4060,8 @@ function renderGPSExercise(lid) {
   h += '<div class="ex-submit-row">';
   h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="gpsSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML += h;
@@ -4119,9 +4119,9 @@ function gpsSubmit(lid) {
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Psicopoker';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
@@ -4346,8 +4346,8 @@ function renderChecklistExercise(lid) {
   h += '<div class="ex-submit-row">';
   h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="clSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML += h;
@@ -4388,9 +4388,9 @@ function clSubmit(lid) {
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Psicopoker';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
@@ -4540,8 +4540,8 @@ function renderEquipExercise(lid) {
   h += '<div class="ex-submit-row">';
   h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="equipSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML += h;
@@ -4566,9 +4566,9 @@ function equipSubmit(lid) {
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Psicopoker';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
@@ -4723,8 +4723,8 @@ function renderConcienciaExercise(lid) {
   h += '<div class="ex-submit-row">';
   h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="conSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML = h;
@@ -4754,9 +4754,9 @@ function conSubmit(lid) {
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Psicopoker';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
@@ -5057,8 +5057,8 @@ function renderCajas4Exercise(lid) {
   h += '<div class="ex-submit-row">';
   h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="cajas4Submit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML += h;
@@ -5091,9 +5091,9 @@ function cajas4Submit(lid) {
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   markDoneL(lid);fbSaveSubmission(S.user,lid,rec);
   var btn=document.getElementById('btn-ex-'+lid);
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Psicopoker';btn.style.background='var(--green)';}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
