@@ -2023,6 +2023,9 @@ function siHtml(l) {
    CONTENT RENDERER
    ═══════════════════════════════════════════════ */
 function renderContent(unit, lid) {
+  // Clean up GPS full-width wrap if navigating away
+  var _gw = document.getElementById('gps-fullwidth-wrap');
+  if (_gw) _gw.remove();
   var all = (unit.lessons || []).concat(unit.extra || []);
   var lesson = all.find(function(l) { return l.id === lid; });
   if (!lesson) return;
