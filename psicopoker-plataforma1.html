@@ -340,7 +340,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .tq-range-table td{padding:.6rem .7rem;border:1px solid var(--border);vertical-align:top;line-height:1.55;}
 .tq-range-table td:first-child{font-weight:700;white-space:nowrap;background:var(--bg3);}
 .attach-section{border-top:none;margin-top:1.5rem;padding:1.1rem 1.25rem;background:var(--bg3);border-radius:8px;border:1px solid var(--border);}.attach-subtitle{font-size:.7rem;color:var(--muted);font-weight:400;margin-bottom:.9rem;margin-top:.25rem;line-height:1.5;}
-.gps-ta{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.8rem;padding:.5rem .7rem;resize:vertical;min-height:72px;outline:none;transition:border-color .2s;line-height:1.6;}
+.gps-ta{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.8rem;padding:.5rem .7rem;resize:vertical;min-height:100px;outline:none;transition:border-color .2s;line-height:1.6;}
 .gps-ta:focus{border-color:var(--red);background:rgba(255,255,255,.05);}
 .gps-ta::placeholder{color:var(--dim);}
 .gps-sel{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.75rem;padding:.45rem .6rem;border-radius:3px;outline:none;cursor:pointer;transition:border-color .2s;}
@@ -3431,7 +3431,7 @@ function renderPMTExercise(lid) {
   pmtLid = lid;
   var draft = loadDraft(lid) || {};
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
 
   // Header
   h += '<div class="tq-hdr-box">';
@@ -4063,21 +4063,21 @@ function renderGPSExercise(lid) {
   var data = gpsGetData(lid);
   var alreadyDone = isDone(lid);
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">Planificación de Objetivos</div>';
   h += '<div class="tq-hdr-title">GPS de Objetivos</div>';
   h += '<div class="tq-hdr-sub" style="margin-top:.2rem;">Definí tu ruta de objetivos: sueño a 5 años, largo plazo, mediano plazo y corto plazo.</div>';
   h += '</div>';
 
-  h += '<div style="overflow-x:auto;">';
-  h += '<table id="gps-table" style="width:100%;border-collapse:collapse;min-width:680px;">';
+  h += '<div style="overflow-x:auto;padding:0 1.25rem;">';
+  h += '<table id="gps-table" style="width:100%;border-collapse:collapse;table-layout:fixed;">';
   h += '<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
-  h += '<th style="padding:.65rem .6rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:32px;">#</th>';
+  h += '<th style="padding:.65rem .6rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:28px;">#</th>';
   h += '<th style="padding:.65rem 1rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);">Objetivo específico y medible</th>';
-  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:110px;">Tipo</th>';
-  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:100px;">Deadline</th>';
-  h += '<th style="padding:.65rem 1rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:28%;">Habré logrado la mitad cuando...</th>';
+  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:120px;">Tipo</th>';
+  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:110px;">Deadline</th>';
+  h += '<th style="padding:.65rem 1rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:35%;">Habré logrado la mitad cuando...</th>';
   h += '</tr></thead><tbody id="gps-body">';
 
   GPS_ROWS.forEach(function(row) {
@@ -4319,7 +4319,7 @@ function renderChecklistExercise(lid) {
   var data = clGetData(lid);
   var alreadyDone = isDone(lid);
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">Ejercicio 2 · Unidad 4</div>';
   h += '<div class="tq-hdr-title">Diseñá tu Checklist Pre-Sesión Personalizado</div>';
@@ -4553,7 +4553,7 @@ function renderEquipExercise(lid) {
   var count = Math.max(equipRowCount(data), 14); // min 14 rows like Excel
   var alreadyDone = isDone(lid);
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">Planificación · Unidad 4</div>';
   h += '<div class="tq-hdr-title">Equipamiento Indispensable</div>';
@@ -4717,7 +4717,7 @@ function renderConcienciaExercise(lid) {
   var sel8 = [];
   try { sel8 = JSON.parse(data['cc_q8'] || '[]'); } catch(e) {}
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
 
   // Header
   h += '<div class="tq-hdr-box">';
@@ -4942,7 +4942,7 @@ function renderCajas4Exercise(lid) {
   var alreadyDone = isDone(lid);
   function v(fid){ return data[fid]||''; }
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);margin-left:-2rem;margin-right:-2rem;border-radius:0;border-left:none;border-right:none;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">💼 Profesionalizando el Mindset · Unidad 6</div>';
   h += '<div class="tq-hdr-title">Las 4 Cajas — Definí y llenÁ tu estructura financiera</div>';
