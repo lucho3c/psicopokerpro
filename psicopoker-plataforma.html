@@ -1220,6 +1220,7 @@ var USERS_BASE = {
   demo:   { pass: 'demo123',   name: 'Player Demo' }
 };
 function getExtraUsers(){try{return JSON.parse(localStorage.getItem('pp_extra_users')||'{}');}catch(e){return{};}}
+function getPsyWA(username){var u=USERS[username]||{};var psy=(u.psy||'mauro').toLowerCase();return psy==='arturo'?'+5492236332535':'+5492235620126';}
 function getAllUsers(){var all=Object.assign({},USERS_BASE);var extra=getExtraUsers();Object.keys(extra).forEach(function(k){all[k]=extra[k];});return all;}
 var USERS=getAllUsers();
 
@@ -1234,114 +1235,116 @@ var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwSzutBgkhSewW10ecoA8S
    ═══════════════════════════════════════════════ */
 var C = [
   { id:'bv', num:0, badge:'Intro', title:'Bienvenida',
-    desc:'Antes de empezar, mira los videos introductorios del programa.',
+    desc:'Antes de empezar, mirá los videos introductorios del programa.',
     img:'img/Bienvenida.jpeg',
     lessons:[
       { id:'bv1', title:'Video de bienvenida', driveId:'1YZFeE1fB70ul_ZDE3ZQDRb_QWnDry0Z9' },
-      { id:'bv2', title:'Sobre los ejercicios', driveId:'1u8dPUs2BDn8KuSdhSqNxQtLwNmM1TRZe' }
+      { id:'bv2', title:'Sobre los ejercicios', driveId:'1u8dPUs2BDn8KuSdhSqNxQtLwNmM1TRZe' },
+      { id:'bv3', title:'Cuestionario', noVideo:true, ex:{ type:'form', unit:'Bienvenida', name:'Cuestionario de Bienvenida' } }
     ]
   },
-  { id:'u1', num:1, badge:'Unidad 1', title:'Diagnostico',
-    desc:'Diagnosticar no es juzgar, es animarte a ver con claridad donde estas hoy.',
+  { id:'u1', num:1, badge:'Unidad 1', title:'Diagnóstico',
+    desc:'Diagnosticar no es juzgar, es animarte a ver con claridad dónde estás hoy.',
     img:'img/UNIDAD1.jpeg',
     lessons:[
       { id:'u1l1', title:'Registro una semana', driveId:'1m6A32xyvHp_rlCidxyP-Oi44O4vISflQ',
         ex:{ type:'grid', unit:'Unidad 1', name:'Registro una semana' } },
       { id:'u1l2', title:'Los 2 Desafios', driveId:'1FBh8vIHDuwcYMaAhRlgg6V5R-3xZ77Sk' },
       { id:'u1l3', title:'Poker Mindset Test', driveId:'1FzCP7Tt9d54eqrmkKkenltP3tbhgheuy', ex:{ type:'pmt', unit:'Unidad 1', name:'Poker Mindset Test' } },
-      { id:'u1l4', title:'Inventario Psicologico de Ejecucion Deportiva', driveId:'1-3QE03f6XHNdn4Kt13TnTMrCZ0UQK0qY', ex:{ type:'iped', unit:'Unidad 1', name:'IPED - Inventario Psicológico' } },
+      { id:'u1l4', title:'Inventario Psicológico de Ejecución Deportiva', driveId:'1-3QE03f6XHNdn4Kt13TnTMrCZ0UQK0qY', ex:{ type:'iped', unit:'Unidad 1', name:'IPED - Inventario Psicológico' } },
       { id:'u1l5', title:'Task and Ego Orientation in Sport Questionnaire', driveId:'10KJXOs20u_OLfV35EoLr5ZEzbWLUn6UL', ex:{ type:'teosq', unit:'Unidad 1', name:'TEOSQ' } },
-      { id:'u1l6', title:'Primera Sesion 1 a 1', type:'session' }
+      { id:'u1l6', title:'Primera sesión 1 a 1', type:'session' }
     ]
   },
   { id:'u2', num:2, badge:'Unidad 2', title:'Mindset Ganador e Identidad Profesional',
-    desc:'No vas a jugar como un profesional hasta que no te sientas uno.',
+    desc:'No vas a jugar como un profesional hasta que te sientas uno.',
     img:'img/UNIDAD2.jpeg',
     lessons:[
       { id:'u2l1', title:'Mindset Ganador e Identidad Profesional', driveId:'1A9SPlE8nOtSjKFqTouvEuxSGqCAZg0Ev', ex:{ type:'form', unit:'Unidad 2', name:'Mindset Ganador e Identidad' } },
       { id:'u2l2', title:'Ejercicio 2 - Achicando la varianza', driveId:'1qoOOPBIozbpMqBoTa-JHAwBnmHwTpi5Y', ex:{ type:'form', unit:'Unidad 2', name:'Achicando la Varianza' } },
       { id:'u2l3', title:'Ejercicio 3 - Estudio sobre el alto rendimiento', driveId:'1264k6a1dHVkiPF0ac7jD0sXh6vh6q3vN', ex:{ type:'form', unit:'Unidad 2', name:'Estudio sobre el Alto Rendimiento' } },
       { id:'u2l4', title:'Ejercicio 4 - Estudio a un referente cercano', driveId:'1Wa94Ys8OS2K4iOQ4olkJf6WHjcShUGPk', ex:{ type:'form', unit:'Unidad 2', name:'Estudio a un Referente Cercano' } },
-      { id:'u2l5', title:'Ejercicio 5 - Dia de alto Rendimiento', driveId:'1HgytPAyWz6kkix7fGepM-RQ9Yc87-67v', ex:{ type:'form', unit:'Unidad 2', name:'Dia de Alto Rendimiento' } },
-      { id:'u2l6', title:'Segunda sesion 1 a 1', type:'session' }
+      { id:'u2l5', title:'Ejercicio 5 - Día de Alto Rendimiento', driveId:'1HgytPAyWz6kkix7fGepM-RQ9Yc87-67v', ex:{ type:'form', unit:'Unidad 2', name:'Día de Alto Rendimiento' } },
+      { id:'u2l6', title:'Segunda sesión 1 a 1', type:'session' }
     ]
   },
-  { id:'u3', num:3, badge:'Unidad 3', title:'Metas Alineadas',
-    desc:'Es mejor tener un mal plan que no tener un plan. Hagamos uno bueno.',
+  { id:'u3', num:3, badge:'Unidad 3', title:'Metas alineadas',
+    desc:'Es mejor tener un mal plan que no tener ninguno. Hagamos uno bueno.',
     img:'img/UNIDAD3.jpeg',
     lessons:[
-      { id:'u3l1', title:'Introduccion a la Unidad 3', driveId:'1IzRz8HkZ9iQVFr3qACxjL6RAYiLNYdTE' },
-      { id:'u3l2', title:'Ejercicio 1 - Fantasia guiada', driveId:'1rOWd0v8kcNscStROKb5V9l7Ri6rSvDEb' },
-      { id:'u3l3', title:'Ejercicio 2 - Dia ideal de tu vida en 5 anos', driveId:'19emLaGmkZZOzO-BXrjS6s2jEwk49nXda', ex:{ type:'form', unit:'Unidad 3', name:'Dia ideal de tu vida en 5 anos' } },
-      { id:'u3l4', title:'Aspectos teoricos de la Motivacion', driveId:'1QmjY5YYbg0aDCmEfs6ar2YWrN8kFM_El' },
+      { id:'u3l1', title:'Introducción a la Unidad 3', driveId:'1IzRz8HkZ9iQVFr3qACxjL6RAYiLNYdTE' },
+      { id:'u3l2', title:'Ejercicio 1 - Fantasía guiada', driveId:'1rOWd0v8kcNscStROKb5V9l7Ri6rSvDEb' },
+      { id:'u3l3', title:'Ejercicio 2 - Día ideal de tu vida en 5 años', driveId:'19emLaGmkZZOzO-BXrjS6s2jEwk49nXda', ex:{ type:'form', unit:'Unidad 3', name:'Día ideal de tu vida en 5 años' } },
+      { id:'u3l4', title:'Aspectos teóricos de la Motivación', driveId:'1QmjY5YYbg0aDCmEfs6ar2YWrN8kFM_El' },
       { id:'u3l5', title:'Ejercicio 3 - GPS', driveId:'1yQH1m2l1VinAl2QyETlKN9IAmMQjXkE4', ex:{ type:'gps', unit:'Unidad 3', name:'GPS de Objetivos' } },
       { id:'u3l6', title:'Ejercicio 4 - La Rutina Ganadora', driveId:'1COivUMh2sAcPa_jFKlmGO-izPCDcp64l', ex:{ type:'grid', unit:'Unidad 3', name:'Rutina Ganadora' } },
-      { id:'u3l7', title:'Tercera sesion 1 a 1', type:'session' }
+      { id:'u3l7', title:'Tercera sesión 1 a 1', type:'session' }
     ]
   },
   { id:'u4', num:4, badge:'Unidad 4', title:'La Sesion',
-    desc:'El primer rival es tu falta de preparacion, despues viene el field.',
+    desc:'El primer rival es tu falta de preparación, después viene el field.',
     img:'img/UNIDAD4.jpeg',
     lessons:[
-      { id:'u4l1', title:'Introduccion a la Unidad 4', driveId:'1eP5aH8uma_TKtXQFdEBHGrHI_xNL2qaw' },
-      { id:'u4l2', title:'Ejercicio 1 - Diagnostico actual de Rutina', driveId:'1aH-P66U8JMvKmPVncZTwnx59XSkcUShO', ex:{ type:'form', unit:'Unidad 4', name:'Diagnostico actual de Rutina' } },
+      { id:'u4l1', title:'Introducción a la Unidad 4', driveId:'1eP5aH8uma_TKtXQFdEBHGrHI_xNL2qaw' },
+      { id:'u4l2', title:'Ejercicio 1 - Diagnóstico actual de Rutina', driveId:'1aH-P66U8JMvKmPVncZTwnx59XSkcUShO', ex:{ type:'form', unit:'Unidad 4', name:'Diagnóstico actual de Rutina' } },
       { id:'u4l3', title:'Explicacion Set and Setting', driveId:'1Ht5hktVXVED6jA01l-FCMjVlbvr-xNfE' },
-      { id:'u4l4', title:'Ejercicio 2 - Disena tu Checklist pre-sesion', driveId:'1zqUW-dbpmTEY8ODj6Hc4_fyfLEvRyW9Y', ex:{ type:'checklist', unit:'Unidad 4', name:'Checklist pre-sesion' } },
+      { id:'u4l4', title:'Ejercicio 2 - Diseñá tu Checklist pre-sesión', driveId:'1zqUW-dbpmTEY8ODj6Hc4_fyfLEvRyW9Y', ex:{ type:'checklist', unit:'Unidad 4', name:'Checklist pre-sesión' } },
       { id:'u4l5', title:'Ejercicio 3 - Disponibilidad Emocional', driveId:'1At-1tyZ0_mj5NiUdoY72B6MpW7ASfoth' },
       { id:'u4l6', title:'Explicacion de lo Cognitivo/Conductual', driveId:'1qYvqHwnvWuglfZemkmbVDS_mKWDJzAOQ' },
-      { id:'u4l7', title:'Ejercicio 4 - Disena tu Rutina', driveId:'1OA8pe-_JX6tKJ1gzgBF4Hr07IK4JsmoC', ex:{ type:'form', unit:'Unidad 4', name:'Disena tu Rutina de Sesion' } },
-      { id:'u4l8', title:'Ejercicio Final - La Sesion Ganadora', driveId:'1-jDWUmblxnx7R0g_kPj4WaEVQ5nNDz99', ex:{ type:'form', unit:'Unidad 4', name:'La Sesion Ganadora' } },
-      { id:'u4l9', title:'Cuarta sesion 1 a 1', type:'session' }
+      { id:'u4l7', title:'Ejercicio 4 - Diseñá tu Rutina', driveId:'1OA8pe-_JX6tKJ1gzgBF4Hr07IK4JsmoC', ex:{ type:'form', unit:'Unidad 4', name:'Diseñá tu Rutina de Sesión' } },
+      { id:'u4l8', title:'Ejercicio Final - La Sesión Ganadora', driveId:'1-jDWUmblxnx7R0g_kPj4WaEVQ5nNDz99', ex:{ type:'form', unit:'Unidad 4', name:'La Sesión Ganadora' } },
+      { id:'u4l9', title:'Cuarta sesión 1 a 1', type:'session' }
     ],
     extra:[
       { id:'u4e1', title:'Equipamiento', noVideo:true, ex:{ type:'equip', unit:'Unidad 4', name:'Equipamiento Indispensable' } },
-      { id:'u4e2', title:'Descansos', noVideo:true, ex:{ type:'form', unit:'Unidad 4', name:'Gestion de Descansos' } }
+      { id:'u4e2', title:'Descansos', noVideo:true, ex:{ type:'form', unit:'Unidad 4', name:'Gestión de Descansos' } }
     ]
   },
   { id:'u5', num:5, badge:'Unidad 5', title:'Proceso: Confianza y la Ansiedad',
     desc:'El profesional no es el que nunca se pierde, es el que siempre vuelve.',
     img:'img/UNIDAD5.jpeg',
     lessons:[
-      { id:'u5l1', title:'Introduccion', driveId:'1GqYhgbT9TODP7oxwfLUHrxjGUwE7IyUL' },
+      { id:'u5l1', title:'Introducción', driveId:'1GqYhgbT9TODP7oxwfLUHrxjGUwE7IyUL' },
       { id:'u5l2', title:'Proceso y Ansiedad', driveId:'1JBwKg_CyfdEUkCorLqUdu7F1NfT003Z_', ex:{ type:'form', unit:'Unidad 5', name:'Reconociendo otro proceso' } },
-      { id:'u5l3', title:'Autoconfianza. Teoria y ampliacion de consciencia', driveId:'1okNjfKuqiABD3TSEx2O0HR4AI0qtE8dU', ex:{ type:'conciencia', unit:'Unidad 5', name:'Ampliacion de consciencia - Autoconfianza' } },
+      { id:'u5l3', title:'Autoconfianza. Teoría y ampliación de consciencia', driveId:'1okNjfKuqiABD3TSEx2O0HR4AI0qtE8dU', ex:{ type:'conciencia', unit:'Unidad 5', name:'Ampliación de consciencia — Autoconfianza' } },
       { id:'u5l4', title:'Como mejorar la Autoconfianza', driveId:'15-LTZsMge3oVHiwjeagzKQWau0Ss2XA9' },
       { id:'u5l5', title:'Ejercicio 2 - Mi Caja de Confianza', driveId:'1aAYpix1pPzhXM9LEFn8uvox2vLmaTnDk', ex:{ type:'form', unit:'Unidad 5', name:'Mi Caja de Confianza' } },
-      { id:'u5l6', title:'Quinta sesion 1 a 1', type:'session' }
+      { id:'u5l6', title:'Quinta sesión 1 a 1', type:'session' }
     ]
   },
   { id:'u6', num:6, badge:'Unidad 6', title:'La Psicologia del Dinero',
-    desc:'Es imposible que puedas hacer tuyo el dinero con el que no te identificas.',
+    desc:'Es imposible que puedas hacer tuyo el dinero con el que no te identificás.',
     img:'img/UNIDAD6.jpeg',
     lessons:[
-      { id:'u6l1', title:'Introduccion', driveId:'1Z9_7yA7YtET_TodKwR97Vn1CiXH8Jqg8' },
-      { id:'u6l2', title:'Descubriendo mi Patron Inconsciente', driveId:'10wnzriLYVegrGMZE39Rz7bJkl5JYEWoC' },
-      { id:'u6l3', title:'Ejercicio 1 - Descubriendo mi Patron Inconsciente', driveId:'1ObLVgHl0UXsxYq1Dyth3bErtg7VtSB3w',
-        ex:{ type:'form', unit:'Unidad 6', name:'Patron Inconsciente' } },
-      { id:'u6l4', title:'Gestion Profesional del Dinero', driveId:'1BHaViyzy5LRr52w6MJit8iHRES1_fksN' },
+      { id:'u6l1', title:'Introducción', driveId:'1Z9_7yA7YtET_TodKwR97Vn1CiXH8Jqg8' },
+      { id:'u6l2', title:'Descubriendo mi Patrón Inconsciente', driveId:'10wnzriLYVegrGMZE39Rz7bJkl5JYEWoC' },
+      { id:'u6l3', title:'Ejercicio 1 - Descubriendo mi Patrón Inconsciente', driveId:'1ObLVgHl0UXsxYq1Dyth3bErtg7VtSB3w',
+        ex:{ type:'form', unit:'Unidad 6', name:'Patrón Inconsciente' } },
+      { id:'u6l4', title:'Gestión Profesional del Dinero', driveId:'1BHaViyzy5LRr52w6MJit8iHRES1_fksN' },
       { id:'u6l5', title:'Ejercicio 2: Las 4 Cajas', driveId:'1DERa-xaDanL2Iou0C2gq48afqxhumvmO', ex:{ type:'cajas4', unit:'Unidad 6', name:'Las 4 Cajas' } },
-      { id:'u6l6', title:'Sexta sesion 1 a 1', type:'session' }
+      { id:'u6l6', title:'Sexta sesión 1 a 1', type:'session' }
     ]
   },
   { id:'u7', num:7, badge:'Unidad 7', title:'Vida fuera del Poker',
-    desc:'El player se monta sobre lo mas valioso de tu vida: tu persona.',
+    desc:'El player se construye sobre lo más valioso de tu vida: tu persona.',
     img:'img/UNIDAD7.jpeg',
     lessons:[
       { id:'u7l1', title:'Unidad 7', driveId:'1iHqmv91WJqSlWFDVwK_oSJIm3d3dsCbY', ex:{ type:'form', unit:'Unidad 7', name:'El lugar del poker en mi vida' } },
       { id:'u7l2', title:'Ejercicio 2 - Conectando con tu Reserva Natural', driveId:'1dFFYGW-HVT6keWkYa14TDlLluRFo60-N', ex:{ type:'form', unit:'Unidad 7', name:'Conectando con tu Reserva Natural' } },
-      { id:'u7l3', title:'Ejercicio 3 - Dia Wu Wei', driveId:'1JUJ2Z2YGzEAcUfyvmSsvPK_o2VsVbYPD', ex:{ type:'form', unit:'Unidad 7', name:'Dia Wu Wei' } },
-      { id:'u7l4', title:'Septima sesion 1 a 1', type:'session' }
+      { id:'u7l3', title:'Ejercicio 3 - Día Wu Wei', driveId:'1JUJ2Z2YGzEAcUfyvmSsvPK_o2VsVbYPD', ex:{ type:'form', unit:'Unidad 7', name:'Día Wu Wei' } },
+      { id:'u7l4', title:'Séptima sesión 1 a 1', type:'session' }
     ]
   },
-  { id:'u8', num:8, badge:'Unidad 8', title:'Evaluacion y Cierre',
-    desc:'Cerras un proceso y abris una nueva forma de jugar, pensar y vivir.',
+  { id:'u8', num:8, badge:'Unidad 8', title:'Evaluación y Cierre',
+    desc:'Cerrás un proceso y abrís una nueva forma de jugar, pensar y vivir.',
     img:'img/UNIDAD8.jpeg',
     lessons:[
-      { id:'u8l1', title:'Introduccion a la Unidad 8', driveId:'1oYiiLfyftlB7_23hjrNAIdv9XuluVFLf' },
-      { id:'u8l2', title:'Revision de tu primera sesion', note:'Pedimela y te mando el link ;)', noVideo:true, ex:{ type:'form', unit:'Unidad 8', name:'Revision de tu primera sesion' } },
-      { id:'u8l3', title:'Evaluacion Final Mindset', driveId:'', noVideo:true, ex:{ type:'pmt', unit:'Unidad 8', name:'Poker Mindset Test' } },
-      { id:'u8l4', title:'Ejercicio final: Visualizacion de cierre', driveId:'1gJ4uX4QE4vTLXdRufi3jxLQq9AXyaiio', ex:{ type:'form', unit:'Unidad 8', name:'Registro de la Visualizacion de Cierre' } },
-      { id:'u8l5', title:'Octava y ultima sesion 1 a 1', type:'session' }
+      { id:'u8l1', title:'Introducción a la Unidad 8', driveId:'1oYiiLfyftlB7_23hjrNAIdv9XuluVFLf' },
+      { id:'u8l2', title:'Revisión de tu primera sesión', note:'Pedímela y te mando el link ;)', noVideo:true, ex:{ type:'form', unit:'Unidad 8', name:'Revisión de tu primera sesión' } },
+      { id:'u8l3', title:'Evaluación Final Mindset', driveId:'', noVideo:true, ex:{ type:'pmt', unit:'Unidad 8', name:'Poker Mindset Test' } },
+      { id:'u8l4', title:'Ejercicio final: Visualización de cierre', driveId:'1gJ4uX4QE4vTLXdRufi3jxLQq9AXyaiio', ex:{ type:'form', unit:'Unidad 8', name:'Registro de la Visualización de Cierre' } },
+      { id:'u8l6', title:'Cuestionario final', noVideo:true, ex:{ type:'form', unit:'Unidad 8', name:'Cuestionario Final del Programa' } },
+      { id:'u8l5', title:'Octava y última sesión 1 a 1', type:'session' }
     ]
   },
   { id:'u9', num:9, badge:'Unidad 9', title:'La visualización',
@@ -1467,63 +1470,113 @@ function tryAirtable(rec){
    EXERCISE DEFINITIONS
    ═══════════════════════════════════════════════ */
 var EX_DEFS = {
+  'u8l6':{ type:'form', unit:'Unidad 8', name:'Cuestionario Final del Programa', sections:[
+    { title:'Experiencia general', questions:[
+      { fid:'u8l6_1', type:'scale', label:'¿Cómo valorás el programa en general?', options:['1','2','3','4','5','6','7','8','9','10'] },
+      { fid:'u8l6_2', label:'¿Qué fue lo más valioso del programa para vos?' },
+      { fid:'u8l6_3', label:'¿Hubo algo que esperabas y no encontraste?' }
+    ]},
+    { title:'Resultados percibidos', questions:[
+      { fid:'u8l6_4', label:'¿Qué cambió en tu juego o en tu cabeza desde que empezaste?' },
+      { fid:'u8l6_5', type:'scale', label:'¿Sentís que el programa cumplió lo que prometía?', options:['Sí','Parcialmente','No'] },
+      { fid:'u8l6_5b', label:'¿Por qué? (explicá tu respuesta anterior)' }
+    ]},
+    { title:'Contenido y estructura', questions:[
+      { fid:'u8l6_6', label:'¿Hubo alguna unidad o ejercicio que no entendiste bien o que sentiste que faltaba desarrollo?' },
+      { fid:'u8l6_7', label:'¿Qué sacarías del programa?' },
+      { fid:'u8l6_8', label:'¿Qué agregarías?' }
+    ]},
+    { title:'Plataforma y experiencia digital', questions:[
+      { fid:'u8l6_9', type:'scale', label:'¿La plataforma fue fácil de usar?', options:['1 — Muy difícil','2','3','4','5 — Muy fácil'] },
+      { fid:'u8l6_10', label:'¿Tuviste algún problema técnico o algo que te generó fricción?' }
+    ]},
+    { title:'Vínculo con el psicólogo', questions:[
+      { fid:'u8l6_11', label:'¿La comunicación con tu psicólogo fue clara y accesible?' },
+      { fid:'u8l6_12', label:'¿Sentiste que tus preguntas o dudas fueron atendidas?' },
+      { fid:'u8l6_13', label:'¿Hay algo que cambiarías de cómo se manejó el acompañamiento?' }
+    ]},
+    { title:'Cierre y recomendación', questions:[
+      { fid:'u8l6_14', type:'scale', label:'¿Recomendarías el programa? (0 = definitivamente no · 10 = definitivamente sí)', options:['0','1','2','3','4','5','6','7','8','9','10'] },
+      { fid:'u8l6_15', label:'¿A qué tipo de player se lo recomendarías?' },
+      { fid:'u8l6_16', label:'¿Querés dejarnos algún comentario libre?' }
+    ]}
+  ]},
+  'bv3':{ type:'form', unit:'Bienvenida', name:'Cuestionario de Bienvenida', sections:[
+    { title:'Sobre vos', questions:[
+      { fid:'bv3_1', label:'1. ¿Cuántos años tenés?' },
+      { fid:'bv3_2', type:'scale', label:'2. ¿Con qué frecuencia jugás actualmente?', options:['Diario','Varios días por semana','Fines de semana','Ocasionalmente'] },
+      { fid:'bv3_3', label:'3. ¿En qué formato jugás?' }
+    ]},
+    { title:'Tu situación actual', questions:[
+      { fid:'bv3_4', type:'scale', label:'4. ¿Cuál es tu principal fuente de ingresos hoy?', options:['Poker exclusivamente','Poker + trabajo','Trabajo principal con poker secundario'] },
+      { fid:'bv3_5', type:'scale', label:'5. ¿Qué es lo que más te frena para avanzar?', options:['Tilt','Gestión del bankroll','Dudas sobre si puedo vivir del poker','Falta de estructura','Otro'] },
+      { fid:'bv3_5b', label:'Si elegiste "Otro" en la pregunta anterior, ¿cuál es?', note:'Completá solo si aplica.' },
+      { fid:'bv3_6', type:'scale', label:'6. ¿Tenés alguna experiencia previa con psicología, coaching o trabajo mental?', options:['Sí','No','Algo'] }
+    ]},
+    { title:'Cómo llegaste y qué esperás', questions:[
+      { fid:'bv3_7', type:'scale', label:'7. ¿Cómo nos conociste?', options:['YouTube','Instagram','Un referido','Otro'] },
+      { fid:'bv3_7b', label:'Si fue por un referido o elegiste "Otro", completá acá.' },
+      { fid:'bv3_8', label:'8. ¿Por qué ahora? ¿Qué pasó últimamente que te hizo dar este paso?' },
+      { fid:'bv3_9', label:'9. ¿Qué esperás del programa?' }
+    ]}
+  ]},
   'u1l1': {
     type: 'grid',
     unit: 'Unidad 1', name: 'Registro una semana',
     hours: ['7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'],
     days: ['Lunes','Martes','Mierc.','Jueves','Viernes','Sabado','Domingo'],
     reflexion: [
-      { fid:'r1', label:'Que es lo que mas te llamo la atencion?' },
-      { fid:'r2', label:'En donde estas invirtiendo mas tu tiempo?' },
-      { fid:'r3', label:'Que te genero tomar consciencia de que haces con tu tiempo?' }
+      { fid:'r1', label:'¿Qué es lo que más te llamó la atención?' },
+      { fid:'r2', label:'¿En dónde estás invirtiendo mas tu tiempo?' },
+      { fid:'r3', label:'¿Qué te generó tomar consciencia de que haces con tu tiempo?' }
     ]
   },
   'u6l3': {
     type: 'form',
-    unit: 'Unidad 6', name: 'Patron Inconsciente',
+    unit: 'Unidad 6', name: 'Patrón Inconsciente',
     sections: [
       { title: 'Creencias heredadas sobre el dinero', questions: [
         { fid:'s1q1', label:'Escribi tres frases tipicas que escuchabas en tu familia sobre el dinero' },
-        { fid:'s1q2', label:'Como hablaban tus padres o familiares sobre la gente con dinero?' },
-        { fid:'s1q3', label:'Que miedos o preocupaciones tenian respecto al dinero?' },
-        { fid:'s1rl', label:'Reflexion libre: todo lo que te surja sobre lo que aprendiste en tu infancia' }
+        { fid:'s1q2', label:'¿Cómo hablaban tus padres o familiares sobre la gente con dinero?' },
+        { fid:'s1q3', label:'¿Qué miedos o preocupaciones tenían respecto al dinero?' },
+        { fid:'s1rl', label:'Reflexión libre: todo lo que te surja sobre lo que aprendiste en tu infancia' }
       ]},
       { title: 'Modelos de referencia', questions: [
-        { fid:'s2q1', label:'Que aspectos de la relacion de tus padres con el dinero crees que copiaste?' },
-        { fid:'s2q2', label:'Que otros referentes adoptaste (tios, amigos, figuras publicas)?' },
-        { fid:'s2q3', label:'Cuales fueron los mensajes mas fuertes que internalizaste sobre el dinero?' },
-        { fid:'s2rl', label:'Reflexion libre: modelos financieros que te parecen sanos, cosas que quisieras cambiar' }
+        { fid:'s2q1', label:'¿Qué aspectos de la relación de tus padres con el dinero crees que copiaste?' },
+        { fid:'s2q2', label:'¿Qué otros referentes adoptaste (tios, amigos, figuras publicas)?' },
+        { fid:'s2q3', label:'¿Cuáles fueron los mensajes más fuertes que internalizaste sobre el dinero?' },
+        { fid:'s2rl', label:'Reflexión libre: modelos financieros que te parecen sanos, cosas que quisieras cambiar' }
       ]},
       { title: 'Experiencias clave con el dinero', questions: [
-        { fid:'s3q1', label:'Que experiencias tuviste en tu casa de origen respecto al dinero?' },
-        { fid:'s3q2', label:'Hubo momentos de crisis o abundancia repentina? Como te impactaron?' },
-        { fid:'s3q3', label:'Como crees que esos momentos afectaron tu manera de manejar dinero hoy?' },
-        { fid:'s3rl', label:'Reflexion libre: algun momento de tu historia financiera que te haya marcado' }
+        { fid:'s3q1', label:'¿Qué experiencias tuviste en tu casa de origen respecto al dinero?' },
+        { fid:'s3q2', label:'¿Hubo momentos de crisis o abundancia repentina? Como te impactaron?' },
+        { fid:'s3q3', label:'¿Cómo creés que esos momentos afectaron tu manera de manejar dinero hoy?' },
+        { fid:'s3rl', label:'Reflexión libre: algun momento de tu historia financiera que te haya marcado' }
       ]},
       { title: 'Tu patron financiero actual', questions: [
-        { fid:'s4q1', label:'Cual fue el maximo dinero que lograste ganar en un mes y en un ano? Y el minimo?' },
-        { fid:'s4q2', label:'Que pasa cuando ganas mas de lo que esperabas? Lo conservas o lo gastas rapido?' },
-        { fid:'s4q3', label:'Como crees que se gana dinero? Debe costar esfuerzo extremo o puede venir fluido?' },
-        { fid:'s4rl', label:'Reflexion libre: como te sentis despues de escribir esto' }
+        { fid:'s4q1', label:'¿Cuál fue el máximo dinero que lograste ganar en un mes y en un ano? Y el minimo?' },
+        { fid:'s4q2', label:'¿Qué pasa cuando ganás más de lo que esperabas? Lo conservas o lo gastas rapido?' },
+        { fid:'s4q3', label:'¿Cómo creés que se gana dinero? Debe costar esfuerzo extremo o puede venir fluido?' },
+        { fid:'s4rl', label:'Reflexión libre: como te sentis despues de escribir esto' }
       ]},
       { title: 'Dinero y poker', questions: [
-        { fid:'s5q1', label:'Tenes una separacion clara entre banca y dinero personal?' },
-        { fid:'s5q2', label:'Como reaccionas despues de una gran ganancia? Y despues de una gran perdida?' },
-        { fid:'s5q3', label:'Ves el poker como un medio para conseguir libertad financiera? Tenes un plan claro?' },
-        { fid:'s5rl', label:'Reflexion libre: en que podrias mejorar la relacion entre tu mentalidad financiera y el poker' }
+        { fid:'s5q1', label:'¿Tenés una separación clara entre banca y dinero personal?' },
+        { fid:'s5q2', label:'¿Cómo reaccionás después de una gran ganancia? Y despues de una gran perdida?' },
+        { fid:'s5q3', label:'¿Ves el póker como un medio para conseguir libertad financiera? Tenes un plan claro?' },
+        { fid:'s5rl', label:'Reflexión libre: en que podrias mejorar la relacion entre tu mentalidad financiera y el poker' }
       ]},
-      { title: 'Reflexion final', questions: [
-        { fid:'s6q1', label:'Cuales de tus creencias actuales sobre el dinero te estan obstaculizando?' },
-        { fid:'s6q2', label:'Que pensamientos o patrones te ayudan a manejar mejor tu dinero?' },
-        { fid:'s6q3', label:'Si pudieras cambiar un solo aspecto de tu mentalidad financiera, cual seria?' },
-        { fid:'s6rl', label:'Reflexion libre: cualquier otro pensamiento que te haya surgido en el ejercicio' }
+      { title: 'Reflexión final', questions: [
+        { fid:'s6q1', label:'¿Cuáles de tus creencias actuales sobre el dinero te estan obstaculizando?' },
+        { fid:'s6q2', label:'¿Qué pensamientos o patrones te ayudan a manejar mejor tu dinero?' },
+        { fid:'s6q3', label:'¿Si pudieras cambiar un solo aspecto de tu mentalidad financiera, cual seria?' },
+        { fid:'s6rl', label:'Reflexión libre: cualquier otro pensamiento que te haya surgido en el ejercicio' }
       ]}
     ]
   }
 ,
 
     'u1l4':{ type:'iped', unit:'Unidad 1', name:'IPED - Inventario Psicológico de Ejecución Deportiva' },
-  'u1l5':{ type:'form', unit:'Unidad 1', name:'TEOSQ - Orientacion al Ego y la Tarea', sections:[{ title:'Las 13 afirmaciones', questions:[{ fid:'u1l5_1', type:'scale', label:'1. Yo me siento con mas exito en el poker cuando: ...soy el/la unico/a que puede hacer la jugada o habilidad en cuestion.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_2', type:'scale', label:'2. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad y me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_3', type:'scale', label:'3. Yo me siento con mas exito en el poker cuando: ...yo puedo hacerlo mejor que mis companeros/as.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_4', type:'scale', label:'4. Yo me siento con mas exito en el poker cuando: ...los otros no pueden hacerlo tan bien como yo.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_5', type:'scale', label:'5. Yo me siento con mas exito en el poker cuando: ...aprendo algo que es divertido.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_6', type:'scale', label:'6. Yo me siento con mas exito en el poker cuando: ...otros fallan y yo no.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_7', type:'scale', label:'7. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad esforzandome mucho.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_8', type:'scale', label:'8. Yo me siento con mas exito en el poker cuando: ...trabajo realmente duro.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_9', type:'scale', label:'9. Yo me siento con mas exito en el poker cuando: ...consigo mas resultados que todos.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_10', type:'scale', label:'10. Yo me siento con mas exito en el poker cuando: ...algo que aprendi me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_11', type:'scale', label:'11. Yo me siento con mas exito en el poker cuando: ...soy el/la mejor.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_12', type:'scale', label:'12. Yo me siento con mas exito en el poker cuando: ...noto que una habilidad que aprendi funciona.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_13', type:'scale', label:'13. Yo me siento con mas exito en el poker cuando: ...pongo todo lo que esta de mi parte.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] }]}] },
+  'u1l5':{ type:'form', unit:'Unidad 1', name:'TEOSQ - Orientación al Ego y la Tarea', sections:[{ title:'Las 13 afirmaciones', questions:[{ fid:'u1l5_1', type:'scale', label:'1. Yo me siento con mas exito en el poker cuando: ...soy el/la unico/a que puede hacer la jugada o habilidad en cuestion.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_2', type:'scale', label:'2. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad y me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_3', type:'scale', label:'3. Yo me siento con mas exito en el poker cuando: ...yo puedo hacerlo mejor que mis companeros/as.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_4', type:'scale', label:'4. Yo me siento con mas exito en el poker cuando: ...los otros no pueden hacerlo tan bien como yo.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_5', type:'scale', label:'5. Yo me siento con mas exito en el poker cuando: ...aprendo algo que es divertido.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_6', type:'scale', label:'6. Yo me siento con mas exito en el poker cuando: ...otros fallan y yo no.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_7', type:'scale', label:'7. Yo me siento con mas exito en el poker cuando: ...aprendo una nueva habilidad esforzandome mucho.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_8', type:'scale', label:'8. Yo me siento con mas exito en el poker cuando: ...trabajo realmente duro.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_9', type:'scale', label:'9. Yo me siento con mas exito en el poker cuando: ...consigo mas resultados que todos.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_10', type:'scale', label:'10. Yo me siento con mas exito en el poker cuando: ...algo que aprendi me impulsa a practicar mas.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_11', type:'scale', label:'11. Yo me siento con mas exito en el poker cuando: ...soy el/la mejor.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_12', type:'scale', label:'12. Yo me siento con mas exito en el poker cuando: ...noto que una habilidad que aprendi funciona.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] },{ fid:'u1l5_13', type:'scale', label:'13. Yo me siento con mas exito en el poker cuando: ...pongo todo lo que esta de mi parte.', options:['Totalmente en Desacuerdo','En Desacuerdo','Ni de acuerdo ni en desacuerdo','De Acuerdo','Totalmente de Acuerdo'] }]}] },
   'u3l5':{ type:'gps', unit:'Unidad 3', name:'GPS de Objetivos' },
   'u3l6':{ type:'grid', unit:'Unidad 3', name:'Rutina Ganadora',
     hours:['7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'],
@@ -1536,7 +1589,7 @@ var EX_DEFS = {
     ]
   },
   'u4e1':{ type:'equip', unit:'Unidad 4', name:'Equipamiento Indispensable' },
-  'u4e2':{ type:'form', unit:'Unidad 4', name:'Gestion de Descansos', sections:[
+  'u4e2':{ type:'form', unit:'Unidad 4', name:'Gestión de Descansos', sections:[
     { title:'Cash / Spins', questions:[
       { fid:'u4e2_c1', label:'Descanso 1: acciones indispensables' },
       { fid:'u4e2_c2', label:'Descanso 2: acciones indispensables' },
@@ -1552,7 +1605,7 @@ var EX_DEFS = {
       { fid:'u4e2_m5', label:'Descanso 5: acciones indispensables' }
     ]}
   ]},
-  'u4l8':{ type:'form', unit:'Unidad 4', name:'La Sesion Ganadora', sections:[
+  'u4l8':{ type:'form', unit:'Unidad 4', name:'La Sesión Ganadora', sections:[
     { title:'ANTES de la sesion', questions:[
       { fid:'u4l8_1', label:'Las 12 horas previas: que tenes en orden, que evitas, que te resta energia' },
       { fid:'u4l8_2', label:'Warm-up: como te preparas mental, fisica y emocionalmente' },
@@ -1571,14 +1624,14 @@ var EX_DEFS = {
       { fid:'u4l8_9', label:'Si hiciste tu poster en Canva/Miro/a mano, describe su contenido o pega el link aca' }
     ]}
   ]},
-  'u8l4':{ type:'form', unit:'Unidad 8', name:'Registro de la Visualizacion de Cierre', sections:[
+  'u8l4':{ type:'form', unit:'Unidad 8', name:'Registro de la Visualización de Cierre', sections:[
     { title:'Escritura libre', questions:[
       { fid:'u8l4_1', label:'Escribi cualquier pensamiento, emocion o imagen que te haya surgido durante la visualizacion.' }
     ]},
-    { title:'Que te llevas del curso', questions:[
-      { fid:'u8l4_2', label:'Lo mas valioso aprendido: conceptos, habitos o herramientas que mas impacto tuvieron' },
-      { fid:'u8l4_3', label:'Lo mas dificil: que fue lo que mas te costo? Como se relaciona con tus caracteristicas?' },
-      { fid:'u8l4_4', label:'Principales desafios superados: que aspectos de tu mentalidad o disciplina cambiaron?' },
+    { title:'Qué te llevás del curso', questions:[
+      { fid:'u8l4_2', label:'Lo más valioso aprendido: conceptos, habitos o herramientas que mas impacto tuvieron' },
+      { fid:'u8l4_3', label:'Lo más difícil: que fue lo que mas te costo? Como se relaciona con tus caracteristicas?' },
+      { fid:'u8l4_4', label:'Principales desafíos superados: que aspectos de tu mentalidad o disciplina cambiaron?' },
       { fid:'u8l4_5', label:'Que todavia cuesta: aspectos que no pudiste modificar o pudiste en menor medida' }
     ]}
   ]},
@@ -1586,130 +1639,130 @@ var EX_DEFS = {
 
   'u1l3':{ type:'pmt', unit:'Unidad 1', name:'Poker Mindset Test', sections:[
     { title:'1. Tomar buenas decisiones (nota del 1 al 10)', questions:[
-      { fid:'u1l3_1', label:'Conocer el juego: tu nota y por que' },
-      { fid:'u1l3_2', label:'Constancia en el estudio: tu nota y por que' },
-      { fid:'u1l3_3', label:'Actitud frente al aprendizaje: tu nota y por que' },
-      { fid:'u1l3_4', label:'Estar centrado en mesa: tu nota y por que' }
+      { fid:'u1l3_1', label:'Conocer el juego: tu nota y por qué' },
+      { fid:'u1l3_2', label:'Constancia en el estudio: tu nota y por qué' },
+      { fid:'u1l3_3', label:'Actitud frente al aprendizaje: tu nota y por qué' },
+      { fid:'u1l3_4', label:'Estar centrado en mesa: tu nota y por qué' }
     ]},
     { title:'2. Hacerlo durante las horas necesarias (nota del 1 al 10)', questions:[
-      { fid:'u1l3_5', label:'Motivacion autentica: tu nota y por que' },
-      { fid:'u1l3_6', label:'Entrenamiento fisico: tu nota y por que' },
-      { fid:'u1l3_7', label:'Alimentacion: tu nota y por que' },
-      { fid:'u1l3_8', label:'Descanso: tu nota y por que' },
-      { fid:'u1l3_9', label:'Orden y prolijidad vincular: tu nota y por que' },
-      { fid:'u1l3_10', label:'Carga traumatica elaborada: tu nota y por que' }
+      { fid:'u1l3_5', label:'Motivación auténtica: tu nota y por qué' },
+      { fid:'u1l3_6', label:'Entrenamiento físico: tu nota y por qué' },
+      { fid:'u1l3_7', label:'Alimentación: tu nota y por qué' },
+      { fid:'u1l3_8', label:'Descanso: tu nota y por qué' },
+      { fid:'u1l3_9', label:'Orden y prolijidad vincular: tu nota y por qué' },
+      { fid:'u1l3_10', label:'Carga traumática elaborada: tu nota y por qué' }
     ]},
     { title:'3. Administrarlos eficazmente (nota del 1 al 10)', questions:[
-      { fid:'u1l3_11', label:'Automatizacion de decisiones: tu nota y por que' },
-      { fid:'u1l3_12', label:'Buen uso de descansos: tu nota y por que' },
-      { fid:'u1l3_13', label:'Gestion emocional de errores: tu nota y por que' },
-      { fid:'u1l3_14', label:'Gestion emocional de aciertos: tu nota y por que' },
-      { fid:'u1l3_15', label:'Gestion emocional de la varianza: tu nota y por que' }
+      { fid:'u1l3_11', label:'Automatización de decisiones: tu nota y por que' },
+      { fid:'u1l3_12', label:'Buen uso de descansos: tu nota y por qué' },
+      { fid:'u1l3_13', label:'Gestión emocional de errores: tu nota y por qué' },
+      { fid:'u1l3_14', label:'Gestión emocional de aciertos: tu nota y por qué' },
+      { fid:'u1l3_15', label:'Gestión emocional de la varianza: tu nota y por qué' }
     ]}
   ]},
   'u2l1':{ type:'form', unit:'Unidad 2', name:'Mindset Ganador e Identidad', sections:[
     { title:'Identidad profesional', questions:[
-      { fid:'u2l1_1', label:'Podrias decirle a un deportista de alto rendimiento "yo tambien soy un profesional"? En que te apoyas? Que cambios necesitas?' },
-      { fid:'u2l1_2', label:'3 aspectos de tu vida que te acercan al SI y 3 que te acercan al NO' },
-      { fid:'u2l1_3', label:'Reflexion libre' }
+      { fid:'u2l1_1', label:'¿Podrías decirle a un deportista de alto rendimiento "yo tambien soy un profesional"? En que te apoyas? Que cambios necesitas?' },
+      { fid:'u2l1_2', label:'3 aspectos de tu vida que te acercan al SÍ y 3 que te acercan al NO' },
+      { fid:'u2l1_3', label:'Reflexión libre' }
     ]},
-    { title:'Autogestion y estructura', questions:[
-      { fid:'u2l1_4', label:'Tenes espacios fijos de estudio/grind que defenderiass como una consulta medica?' },
-      { fid:'u2l1_5', label:'Tu rutina semanal te haria sentir orgullo si alguien que admiras la revisara?' },
-      { fid:'u2l1_rl', label:'Reflexion libre — autogestion' }
+    { title:'Autogestión y estructura', questions:[
+      { fid:'u2l1_4', label:'¿Tenés espacios fijos de estudio/grind que defenderiass como una consulta medica?' },
+      { fid:'u2l1_5', label:'¿Tu rutina semanal te haria sentir orgullo si alguien que admiras la revisara?' },
+      { fid:'u2l1_rl', label:'Reflexión libre — autogestion' }
     ]},
-    { title:'Largo plazo y proposito', questions:[
-      { fid:'u2l1_6', label:'Estas usando la libertad que te da el poker para crecer o te esta debilitando?' },
-      { fid:'u2l1_7', label:'Si seguiS haciendo las cosas como ahora, como vas a estar en 5 anos?' },
-      { fid:'u2l1_rl2', label:'Reflexion libre' }
+    { title:'Largo plazo y propósito', questions:[
+      { fid:'u2l1_6', label:'¿Estás usando la libertad que te da el poker para crecer o te esta debilitando?' },
+      { fid:'u2l1_7', label:'¿Si seguís haciendo las cosas como ahora, como vas a estar en 5 anos?' },
+      { fid:'u2l1_rl2', label:'Reflexión libre' }
     ]}
   ]},
   'u2l2':{ type:'form', unit:'Unidad 2', name:'Achicando la Varianza', sections:[
     { title:'Control interno vs externo', questions:[
-      { fid:'u2l2_1', label:'Que cosas en tu carrera NO dependen de vos? Cuanto tiempo y energia les dedicas?' },
-      { fid:'u2l2_2', label:'Que cosas dependen exclusivamente de vos? Que nivel de tiempo y calidad les dedicas?' },
-      { fid:'u2l2_3', label:'Elige 2 aspectos que no podes controlar y mas energia consumen. Como seria tu vida si pudieras soltarlos?' },
-      { fid:'u2l2_4', label:'Elige 2 aspectos que si podes controlar pero desatendes. Que impacto tendrian si los ejecutaras con calidad?' }
+      { fid:'u2l2_1', label:'¿Qué cosas en tu carrera NO dependen de vos? Cuanto tiempo y energia les dedicas?' },
+      { fid:'u2l2_2', label:'¿Qué cosas dependen exclusivamente de vos? Que nivel de tiempo y calidad les dedicas?' },
+      { fid:'u2l2_3', label:'Elegí 2 aspectos que no podés controlar y mas energia consumen. Como seria tu vida si pudieras soltarlos?' },
+      { fid:'u2l2_4', label:'Elegí 2 aspectos que sí podés controlar pero desatendes. Que impacto tendrian si los ejecutaras con calidad?' }
     ]},
     { title:'Visualizacion', questions:[
-      { fid:'u2l2_5', label:'Ponete 15 minutos. Visualiza la version tuya que ya incorporo estos cambios. Como es esa version?' }
+      { fid:'u2l2_5', label:'¿Ponete 15 minutos. Visualiza la version tuya que ya incorporo estos cambios. Como es esa version?' }
     ]}
   ]},
   'u2l3':{ type:'form', unit:'Unidad 2', name:'Estudio sobre el Alto Rendimiento', sections:[
-    { title:'Analisis del deportista', questions:[
-      { fid:'u2l3_1', label:'Deportista o profesional elegido, disciplina y fuente de informacion' },
-      { fid:'u2l3_2', label:'Como estructura su dia a dia? Rutinas, horarios, planificacion' },
-      { fid:'u2l3_3', label:'Como maneja el descanso y recuperacion?' },
-      { fid:'u2l3_4', label:'Que hace para mejorar su mentalidad? Visualizacion, coaches, etc.' },
-      { fid:'u2l3_5', label:'Como maneja la presion y los momentos dificiles?' },
-      { fid:'u2l3_6', label:'Que lo hace diferente a los demas?' }
+    { title:'Análisis del deportista', questions:[
+      { fid:'u2l3_1', label:'Deportista o profesional elegido, disciplina y fuente de información' },
+      { fid:'u2l3_2', label:'¿Cómo estructura su día a día? Rutinas, horarios, planificacion' },
+      { fid:'u2l3_3', label:'¿Cómo maneja el descanso y recuperación?' },
+      { fid:'u2l3_4', label:'¿Qué hace para mejorar su mentalidad? Visualizacion, coaches, etc.' },
+      { fid:'u2l3_5', label:'¿Cómo maneja la presión y los momentos difíciles?' },
+      { fid:'u2l3_6', label:'¿Qué lo hace diferente a los demás?' }
     ]},
-    { title:'Comparacion personal', questions:[
-      { fid:'u2l3_7', label:'En que aspectos ya me parezco a este profesional?' },
-      { fid:'u2l3_8', label:'En que aspectos soy distinto y deberia mejorar?' },
-      { fid:'u2l3_9', label:'Si este deportista jugara al poker, que haria diferente a lo que hago yo?' },
-      { fid:'u2l3_10', label:'Que deberia estabilizar en mi vida para reducir la varianza?' },
+    { title:'Comparación personal', questions:[
+      { fid:'u2l3_7', label:'¿En qué aspectos ya me parezco a este profesional?' },
+      { fid:'u2l3_8', label:'¿En qué aspectos soy distinto y debería mejorar?' },
+      { fid:'u2l3_9', label:'¿Si este deportista jugara al póker, que haria diferente a lo que hago yo?' },
+      { fid:'u2l3_10', label:'¿Qué debería estabilizar en mi vida para reducir la varianza?' },
       { fid:'u2l3_rl', label:'Conclusiones generales' }
     ]}
   ]},
   'u2l4':{ type:'form', unit:'Unidad 2', name:'Estudio a un Referente Cercano', sections:[
-    { title:'Analisis del jugador', questions:[
-      { fid:'u2l4_1', label:'Jugador elegido, modalidad, stakes y fuente de informacion' },
-      { fid:'u2l4_2', label:'Como estructura su dia a dia en relacion al poker?' },
-      { fid:'u2l4_3', label:'Cuanto tiempo dedica al estudio y como lo hace?' },
-      { fid:'u2l4_4', label:'Como maneja su banca y finanzas?' },
-      { fid:'u2l4_5', label:'Como maneja las malas rachas y la presion?' },
-      { fid:'u2l4_6', label:'Que hace diferente a la mayoria de los jugadores?' }
+    { title:'Análisis del jugador', questions:[
+      { fid:'u2l4_1', label:'Jugador elegido, modalidad, stakes y fuente de información' },
+      { fid:'u2l4_2', label:'¿Cómo estructura su día a día en relación al póker?' },
+      { fid:'u2l4_3', label:'¿Cuánto tiempo dedica al estudio y cómo lo hace?' },
+      { fid:'u2l4_4', label:'¿Cómo maneja su banca y finanzas?' },
+      { fid:'u2l4_5', label:'¿Cómo maneja las malas rachas y la presión?' },
+      { fid:'u2l4_6', label:'¿Qué hace diferente a la mayoría de los jugadores?' }
     ]},
-    { title:'Comparacion y aprendizajes', questions:[
-      { fid:'u2l4_7', label:'En que aspectos ya me parezco a este jugador?' },
-      { fid:'u2l4_8', label:'En que aspectos soy distinto y deberia mejorar?' },
-      { fid:'u2l4_9', label:'En que aspectos no me gustaria parecerme nunca?' },
-      { fid:'u2l4_10', label:'Que consejo me dio? Que es lo mas importante que aprendi?' },
+    { title:'Comparación y aprendizajes', questions:[
+      { fid:'u2l4_7', label:'¿En qué aspectos ya me parezco a este jugador?' },
+      { fid:'u2l4_8', label:'¿En qué aspectos soy distinto y debería mejorar?' },
+      { fid:'u2l4_9', label:'¿En qué aspectos no me gustaría parecerme nunca?' },
+      { fid:'u2l4_10', label:'¿Qué consejo me dio? Que es lo mas importante que aprendi?' },
       { fid:'u2l4_rl', label:'Conclusiones generales' }
     ]}
   ]},
-  'u2l5':{ type:'form', unit:'Unidad 2', name:'Dia de Alto Rendimiento', sections:[
-    { title:'Bitacora del dia', questions:[
-      { fid:'u2l5_1', label:'Que cosas hice hoy que normalmente no hago?' },
-      { fid:'u2l5_2', label:'Como me senti habitando esta version profesional de mi?' },
-      { fid:'u2l5_3', label:'Que partes de este dia me gustaria mantener en mi rutina diaria?' },
-      { fid:'u2l5_4', label:'Que tan lejos estoy de vivir asi todos los dias? (del 1 al 10)' },
-      { fid:'u2l5_5', label:'Que excusas o resistencias aparecieron hoy? Como las manage?' },
-      { fid:'u2l5_6', label:'Que aprendi de este experimento?' }
+  'u2l5':{ type:'form', unit:'Unidad 2', name:'Día de Alto Rendimiento', sections:[
+    { title:'Bitácora del día', questions:[
+      { fid:'u2l5_1', label:'¿Qué cosas hice hoy que normalmente no hago?' },
+      { fid:'u2l5_2', label:'¿Cómo me sentí habitando esta versión profesional de mí?' },
+      { fid:'u2l5_3', label:'¿Qué partes de este día me gustaría mantener en mi rutina diaria?' },
+      { fid:'u2l5_4', label:'¿Qué tan lejos estoy de vivir así todos los días? (del 1 al 10)' },
+      { fid:'u2l5_5', label:'¿Qué excusas o resistencias aparecieron hoy? Como las manage?' },
+      { fid:'u2l5_6', label:'¿Qué aprendí de este experimento?' }
     ]}
   ]},
-  'u3l3':{ type:'form', unit:'Unidad 3', name:'Dia ideal de tu vida en 5 anos', sections:[
+  'u3l3':{ type:'form', unit:'Unidad 3', name:'Día ideal de tu vida en 5 años', sections:[
     { title:'¿Cómo sería un día ideal para vos una vez que te conviertas en esa persona?',
       desc:'¿Qué ves cuando te despiertas, quién está contigo, qué estás desayunando? ¿Dónde estás? ¿Apartamento, casa, habitación de hotel? ¿Qué tiempo hace? ¿Estás cerca del océano, en la ciudad, rodeado de montañas? Recuerda, es tu día perfecto, ¡todo es posible! ¿Qué es lo siguiente? ¿Estás de vacaciones? ¿Vives aquí? ¿Vas a pie al trabajo? ¿Vas a salir a la naturaleza? ¿Tienes una oficina? ¿Estás pasando el rato en un estudio, una galería o simplemente haciendo cosas desde tu portátil? ¿Cómo es tu trabajo? ¿Con quién trabajas? ¿En equipo o solo? ¿Cómo trabajas? ¿Cómo es tu estado de ánimo? ¿Qué estás creando? ¿Para quién lo haces? ¿Qué obtienen estas personas (y qué obtienes tú) de esto? ¿Qué es lo siguiente? ¿Vas a ir a comer? ¿Al gimnasio? ¿Estás haciendo Yoga? ¿Dormir la siesta? ¿Juegos de video? ¿Tienes mucho tiempo para ti mismo? ¿Para la familia, la pareja, los amigos, los niños? ¿Cómo termina tu día? ¿Deporte? ¿Películas? ¿Alguna actividad? ¿Cenas en un restaurante o te cocinas a ti mismo? ¿Cómo es tu cocina? ¿Qué tipo de comida estás comiendo? ¿Qué es lo siguiente? ¿Tienes conversaciones interesantes con tu pareja, amigos? ¿Sales a bailar, te relajas afuera mirando las estrellas? Describe TODO lo que tus ojos verían y lo que tu cuerpo sentiría en tu día ideal.\n\nTené en cuenta que si al final de la descripción, no llorás... ¡Hay algo que está faltando!',
       questions:[
         { fid:'u3l3_1', label:'Tu descripción (opcional)' }
       ]}
   ]},
-  'u4l2':{ type:'form', unit:'Unidad 4', name:'Diagnostico actual de Rutina', sections:[
+  'u4l2':{ type:'form', unit:'Unidad 4', name:'Diagnóstico actual de Rutina', sections:[
     { title:'Antes de la sesion', questions:[
-      { fid:'u4l2_1', label:'Tenes alguna rutina clara antes de empezar a jugar?' },
-      { fid:'u4l2_2', label:'Cuanto tiempo antes de jugar empeczas a prepararte?' },
-      { fid:'u4l2_3', label:'Haces algun warm-up mental o emocional? Que tan sagrado es para vos?' },
-      { fid:'u4l2_4', label:'Usas algun gesto o ritual para marcar el inicio?' }
+      { fid:'u4l2_1', label:'¿Tenés alguna rutina clara antes de empezar a jugar?' },
+      { fid:'u4l2_2', label:'¿Cuánto tiempo antes de jugar empezás a prepararte?' },
+      { fid:'u4l2_3', label:'¿Hacés algún warm-up mental o emocional? Que tan sagrado es para vos?' },
+      { fid:'u4l2_4', label:'¿Usás algún gesto o ritual para marcar el inicio?' }
     ]},
     { title:'Durante la sesion', questions:[
-      { fid:'u4l2_5', label:'Tenes alguna tecnica para volver al eje si te desconcentras o tiltas?' },
-      { fid:'u4l2_6', label:'Como manejas los descansos? Estan planificados?' }
+      { fid:'u4l2_5', label:'¿Tenés alguna técnica para volver al eje si te desconcentras o tiltas?' },
+      { fid:'u4l2_6', label:'¿Cómo manejás los descansos? Estan planificados?' }
     ]},
     { title:'Despues de la sesion', questions:[
-      { fid:'u4l2_7', label:'Haces algo para cerrar la sesion de forma consciente?' },
-      { fid:'u4l2_8', label:'Te tomas algun momento para reflexionar sobre como jugaste?' },
-      { fid:'u4l2_9', label:'Tenes alguna actividad que te ayude a volver al modo vida?' }
+      { fid:'u4l2_7', label:'¿Hacés algo para cerrar la sesión de forma consciente?' },
+      { fid:'u4l2_8', label:'¿Te tomás algún momento para reflexionar sobre como jugaste?' },
+      { fid:'u4l2_9', label:'¿Tenés alguna actividad que te ayude a volver al modo vida?' }
     ]},
-    { title:'Reflexion final', questions:[
-      { fid:'u4l2_10', label:'De que te diste cuenta haciendo este trabajo?' },
-      { fid:'u4l2_11', label:'Que parte de tu rutina actual esta mas solida?' },
-      { fid:'u4l2_12', label:'Que parte esta menos consolidada? Que impacto tendria mejorarla?' }
+    { title:'Reflexión final', questions:[
+      { fid:'u4l2_10', label:'¿De qué te diste cuenta haciendo este trabajo?' },
+      { fid:'u4l2_11', label:'¿Qué parte de tu rutina actual esta mas solida?' },
+      { fid:'u4l2_12', label:'¿Qué parte está menos consolidada? Que impacto tendria mejorarla?' }
     ]}
   ]},
-  'u4l4':{ type:'checklist', unit:'Unidad 4', name:'Checklist pre-sesion' },
-  'u4l7':{ type:'form', unit:'Unidad 4', name:'Disena tu Rutina de Sesion', sections:[
+  'u4l4':{ type:'checklist', unit:'Unidad 4', name:'Checklist pre-sesión' },
+  'u4l7':{ type:'form', unit:'Unidad 4', name:'Diseñá tu Rutina de Sesión', sections:[
     { title:'Antes de la sesion', questions:[
       { fid:'u4l7_1', label:'Las 12 horas antes: que necesitas en orden, que evitas, que te resta energia?' },
       { fid:'u4l7_2', label:'Warm-up: como te preparas mental, fisica y emocionalmente?' },
@@ -1779,10 +1832,10 @@ var EX_DEFS = {
         { fid:'u5l2_p6c', label:'✍️ Cada vez que me salga del proceso por ansiedad, mi manera de volver va a ser:' }
     ]}
   ]},
-  'u5l3':{ type:'conciencia', unit:'Unidad 5', name:'Ampliacion de consciencia - Autoconfianza' },
+  'u5l3':{ type:'conciencia', unit:'Unidad 5', name:'Ampliación de consciencia — Autoconfianza' },
   'u5l5':{ type:'form', unit:'Unidad 5', name:'Mi Caja de Confianza', sections:[
     { title:'Anclajes internos', questions:[
-      { fid:'u5l5_1', label:'3 situaciones en las que lograste algo dificil y te sentiste orgulloso. Que hiciste bien? Que fortalezas usaste?' },
+      { fid:'u5l5_1', label:'3 situaciones en las que lograste algo difícil y te sentiste orgulloso. ¿Qué hiciste bien? ¿Qué fortalezas usaste?' },
       { fid:'u5l5_2', label:'2 decisiones importantes de tu carrera que hoy agradeces haber tomado' },
       { fid:'u5l5_3', label:'1 frase o pensamiento que te potencie. Algo que te marcó.' }
     ]},
@@ -1821,7 +1874,7 @@ var EX_DEFS = {
         { fid:'u7l2_8', label:'🔹 ¿Qué podrías hacer para protegerla?', note:'Diseñá un plan simple de protección para que esa parte siga viva, accesible y fértil.' }
     ]}
   ]},
-  'u7l3':{ type:'form', unit:'Unidad 7', name:'Dia Wu Wei', sections:[
+  'u7l3':{ type:'form', unit:'Unidad 7', name:'Día Wu Wei', sections:[
     { title:'🌿 Un día para hacer nada',
       desc:'En un mundo que valora el hacer constante, tomarte un día para no hacer es casi un acto revolucionario. Pero también es una forma de recuperar tu centro, y recordar que tu valor no depende de tu productividad.',
       questions:[
@@ -1842,7 +1895,7 @@ var EX_DEFS = {
         { fid:'u7l3_4', label:'✍️' }
     ]}
   ]},
-  'u8l2':{ type:'form', unit:'Unidad 8', name:'Revision de tu primera sesion', sections:[
+  'u8l2':{ type:'form', unit:'Unidad 8', name:'Revisión de tu primera sesión', sections:[
     { title:'Revisión de tu Primera Sesión',
       desc:'Este ejercicio tiene como objetivo que observes tu propia evolución comparando tu estado al inicio del curso con el presente.\n\n📹 Volvé a ver la grabación de tu primera sesión. Observá tu tono de voz, tus expresiones, las palabras que usaste y cómo te describías como jugador y persona en ese momento.',
       questions:[]
@@ -1962,7 +2015,7 @@ function renderFormExercise(lid, def) {
       var saved = draft && draft[q.fid] ? draft[q.fid] : '';
       var isReflex = q.fid.endsWith('rl');
       h += '<div class="ex-q ' + (isReflex ? 'ex-q-reflex' : '') + '">';
-      if (isReflex) h += '<p class="ex-q-reflex-label">Reflexion libre</p>';
+      if (isReflex) h += '<p class="ex-q-reflex-label">Reflexión libre</p>';
       h += '<p class="ex-ql">' + q.label + '</p>';
       if (q.note) h += '<p style="font-size:.75rem;color:var(--dim);font-style:italic;margin:-.2rem 0 .45rem;">' + q.note + '</p>';
       if (q.type === 'scale') {
@@ -2018,7 +2071,7 @@ function navExSec(lid, idx) {
   var pfill = document.getElementById('ex-prog-' + lid);
   var ptxt = document.getElementById('ex-prog-txt-' + lid);
   if (pfill) pfill.style.width = pct + '%';
-  if (ptxt) ptxt.textContent = 'Seccion ' + (idx + 1) + ' de ' + def.sections.length;
+  if (ptxt) ptxt.textContent = 'Sección ' + (idx + 1) + ' de ' + def.sections.length;
 }
 
 function markSecProgress(secId, lid) {
@@ -2272,9 +2325,11 @@ function renderContent(unit, lid) {
 
   // SESSION
   if (lesson.type === 'session') {
+    var _wa=getPsyWA(S.user);
+    var _waMsg=encodeURIComponent('Hola! Quiero agendar mi sesión del programa.');
     body += '<div class="sesbox"><h3>Sesion 1 a 1 con tu psicologo</h3>';
     body += '<p>Agenda tu sesion personalizada.</p>';
-    body += '<a href="https://calendly.com/lucho-torres8/30min" target="_blank" class="btn-ses">&#128197; Agendar mi sesion</a></div>';
+    body += '<a href="https://wa.me/'+_wa+'?text='+_waMsg+'" target="_blank" class="btn-ses">&#128197; Agendar mi sesion</a></div>';
   }
 
   // INTERACTIVE EXERCISE
@@ -2736,16 +2791,24 @@ function renderUserTab(){
   h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Usuario</label><input id="nu-user" type="text" placeholder="carlos_r" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
   h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Contrasena</label><input id="nu-pass" type="text" placeholder="poker2025" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
   h+='</div>';
+  h+='<div style="margin-bottom:.9rem;">';
+  h+='<label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Psicólogo asignado</label>';
+  h+='<div style="display:flex;gap:.6rem;">';
+  h+='<label style="display:flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border:1px solid var(--border);border-radius:4px;cursor:pointer;font-size:.8rem;font-weight:600;background:var(--bg2);transition:border-color .15s;" id="lbl-psy-mauro">';
+  h+='<input type="radio" name="nu-psy" value="mauro" id="nu-psy-mauro" checked style="accent-color:var(--red);"> Mauro</label>';
+  h+='<label style="display:flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border:1px solid var(--border);border-radius:4px;cursor:pointer;font-size:.8rem;font-weight:600;background:var(--bg2);transition:border-color .15s;" id="lbl-psy-arturo">';
+  h+='<input type="radio" name="nu-psy" value="arturo" id="nu-psy-arturo" style="accent-color:var(--red);"> Arturo</label>';
+  h+='</div></div>';
   h+='<button onclick="addPatient()" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;cursor:pointer;">+ Agregar Paciente</button>';
   h+='<span id="nu-msg" style="font-size:.75rem;margin-left:1rem;color:var(--green);display:none;">Guardado!</span></div>';
   h+='<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;">';
-  h+='<div style="padding:.75rem 1.25rem;background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:grid;grid-template-columns:1fr 120px 150px 80px;gap:.5rem;"><span>Nombre</span><span>Usuario</span><span>Contrasena</span><span>Accion</span></div>';
-  Object.keys(all).forEach(function(u){var p=all[u];if(p.role==='admin')return;var isExtra=!!extra[u];h+='<div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 120px 150px 80px;gap:.5rem;align-items:center;"><span style="font-size:.82rem;font-weight:600;">'+p.name+'</span><span style="font-size:.78rem;color:var(--muted);">@'+u+'</span><span style="font-size:.78rem;color:var(--muted);font-family:monospace;">'+p.pass+'</span>'+(isExtra?'<button onclick="removePatient(\''+u+'\')" style="background:transparent;border:1px solid rgba(232,49,42,.3);color:rgba(232,49,42,.7);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;padding:.3rem .6rem;border-radius:3px;cursor:pointer;">Eliminar</button>':'<span style="font-size:.65rem;color:var(--dim);">fijo</span>')+'</div>';});
+  h+='<div style="padding:.75rem 1.25rem;background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:grid;grid-template-columns:1fr 100px 130px 80px 70px;gap:.5rem;"><span>Nombre</span><span>Usuario</span><span>Contraseña</span><span>Psicólogo</span><span>Acción</span></div>';
+  Object.keys(all).forEach(function(u){var p=all[u];if(p.role==='admin')return;var isExtra=!!extra[u];var psyName=p.psy==='arturo'?'Arturo':'Mauro';var psyColor=p.psy==='arturo'?'#7C3AED':'#0891B2';h+='<div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 100px 130px 80px 70px;gap:.5rem;align-items:center;"><span style="font-size:.82rem;font-weight:600;">'+p.name+'</span><span style="font-size:.78rem;color:var(--muted);">@'+u+'</span><span style="font-size:.78rem;color:var(--muted);font-family:monospace;">'+p.pass+'</span><span style="font-size:.72rem;font-weight:700;color:'+psyColor+';">'+psyName+'</span>'+(isExtra?'<button onclick="removePatient(\''+u+'\')" style="background:transparent;border:1px solid rgba(232,49,42,.3);color:rgba(232,49,42,.7);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;padding:.3rem .6rem;border-radius:3px;cursor:pointer;">Eliminar</button>':'<span style="font-size:.65rem;color:var(--dim);">fijo</span>')+'</div>';});
   h+='</div></div>';
   var vu=document.getElementById('admin-view-usuarios');if(vu)vu.innerHTML=h;
 }
 
-function addPatient(){var name=document.getElementById('nu-name').value.trim();var user=document.getElementById('nu-user').value.trim().toLowerCase().replace(/\s+/g,'_');var pass=document.getElementById('nu-pass').value.trim();if(!name||!user||!pass){alert('Completa todos los campos');return;}var extra=getExtraUsers();extra[user]={name:name,pass:pass};localStorage.setItem('pp_extra_users',JSON.stringify(extra));USERS=getAllUsers();document.getElementById('nu-name').value='';document.getElementById('nu-user').value='';document.getElementById('nu-pass').value='';var msg=document.getElementById('nu-msg');msg.style.display='inline';setTimeout(function(){msg.style.display='none';},2500);renderUserTab();}
+function addPatient(){var name=document.getElementById('nu-name').value.trim();var user=document.getElementById('nu-user').value.trim().toLowerCase().replace(/\s+/g,'_');var pass=document.getElementById('nu-pass').value.trim();var psyEl=document.querySelector('input[name="nu-psy"]:checked');var psy=psyEl?psyEl.value:'mauro';if(!name||!user||!pass){alert('Completa todos los campos');return;}var extra=getExtraUsers();extra[user]={name:name,pass:pass,psy:psy};localStorage.setItem('pp_extra_users',JSON.stringify(extra));USERS=getAllUsers();document.getElementById('nu-name').value='';document.getElementById('nu-user').value='';document.getElementById('nu-pass').value='';var msg=document.getElementById('nu-msg');msg.style.display='inline';setTimeout(function(){msg.style.display='none';},2500);renderUserTab();}
 function removePatient(u){if(!confirm('Eliminar a @'+u+'?'))return;var extra=getExtraUsers();delete extra[u];localStorage.setItem('pp_extra_users',JSON.stringify(extra));USERS=getAllUsers();renderUserTab();}
 
 /* ════ PDF GENERATION ════ */
@@ -4719,7 +4782,7 @@ function clSubmit(lid) {
 
   var rec = { ts:Date.now(), fecha:new Date().toLocaleString('es-AR'),
     jugador:user.name, usuario:S.user,
-    unidad:'Unidad 4', ejercicio:'Checklist pre-sesion', lid:lid, respuestas:answers };
+    unidad:'Unidad 4', ejercicio:'Checklist pre-sesión', lid:lid, respuestas:answers };
   var saved = getLocalSubs();
   var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
   var isUpdate = idx >= 0;
@@ -5086,7 +5149,7 @@ function conSubmit(lid) {
 
   var rec = { ts:Date.now(), fecha:new Date().toLocaleString('es-AR'),
     jugador:user.name, usuario:S.user,
-    unidad:'Unidad 5', ejercicio:'Ampliacion de consciencia - Autoconfianza', lid:lid, respuestas:answers };
+    unidad:'Unidad 5', ejercicio:'Ampliación de consciencia — Autoconfianza', lid:lid, respuestas:answers };
   var saved = getLocalSubs();
   var idx = saved.findIndex(function(s){ return s.usuario===S.user&&s.lid===lid; });
   var isUpdate = idx >= 0;
