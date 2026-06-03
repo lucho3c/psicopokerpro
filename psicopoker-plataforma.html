@@ -69,7 +69,49 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .l-secure span{font-size:.6rem;color:rgba(255,255,255,.17);font-weight:400;}
 .lerr{background:rgba(232,49,42,.1);border:1px solid var(--border-r);color:#ff8080;font-size:.72rem;padding:.5rem .85rem;border-radius:6px;margin-bottom:.85rem;display:none;}
 .lerr.show{display:block;}
-#vdash{overflow-y:auto;background:var(--bg);}
+/* ── DASHBOARD LEFT SIDEBAR ───────────────── */
+.dash-layout{display:flex;flex:1;overflow:hidden;}
+.dash-sidenav{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.25rem 0;gap:.25rem;overflow-y:auto;}
+.dash-sidenav-btn{display:flex;align-items:center;gap:.65rem;padding:.7rem 1.25rem;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:none;border:none;width:100%;text-align:left;cursor:pointer;transition:color .2s,background .2s;border-left:2px solid transparent;}
+.dash-sidenav-btn:hover{color:var(--text);background:rgba(255,255,255,.04);}
+.dash-sidenav-btn.active{color:var(--text);background:rgba(232,49,42,.08);border-left-color:var(--red);}
+.dash-sidenav-btn.disabled{color:var(--dim);cursor:not-allowed;opacity:.5;}
+.dash-sidenav-btn svg{flex-shrink:0;}
+.dash-sidenav-sep{height:1px;background:var(--border);margin:.5rem 1.25rem;}
+.dash-main{flex:1;overflow-y:auto;}
+/* ── MIS EJERCICIOS VIEW ──────────────────── */
+#vdash{background:var(--bg);}
+.exv-wrap{max-width:860px;margin:0 auto;padding:2rem 2.5rem 3rem;}
+.exv-hdr{margin-bottom:1.75rem;}
+.exv-hdr h2{font-size:1.2rem;font-weight:800;margin-bottom:.3rem;}
+.exv-hdr p{font-size:.8rem;color:var(--muted);}
+.exv-unit{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1rem;}
+.exv-unit-hdr{display:flex;align-items:center;gap:1rem;padding:.9rem 1.25rem;background:var(--card);cursor:pointer;transition:background .2s;user-select:none;}
+.exv-unit-hdr:hover{background:var(--card2);}
+.exv-unit-badge{font-size:.58rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;background:var(--red);color:#fff;padding:.2rem .6rem;border-radius:3px;flex-shrink:0;}
+.exv-unit-badge.done{background:rgba(34,197,94,.18);color:var(--green);}
+.exv-unit-title{font-size:.88rem;font-weight:700;flex:1;}
+.exv-unit-count{font-size:.7rem;color:var(--muted);flex-shrink:0;}
+.exv-unit-chevron{color:var(--dim);transition:transform .25s;flex-shrink:0;}
+.exv-unit-chevron.open{transform:rotate(180deg);}
+.exv-unit-body{display:none;border-top:1px solid var(--border);}
+.exv-unit-body.open{display:block;}
+.exv-exercise{padding:.85rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.04);}
+.exv-exercise:last-child{border-bottom:none;}
+.exv-ex-name{font-size:.82rem;font-weight:700;margin-bottom:.5rem;}
+.exv-ex-empty{font-size:.78rem;color:var(--dim);padding:1rem 1.25rem;font-style:italic;}
+.exv-qa-row{margin-bottom:.45rem;}
+.exv-qa-q{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.15rem;}
+.exv-qa-a{font-size:.82rem;color:var(--text);line-height:1.55;white-space:pre-wrap;word-break:break-word;}
+.exv-unit-foot{padding:.75rem 1.25rem;background:var(--bg3);display:flex;justify-content:flex-end;border-top:1px solid var(--border);}
+.exv-dl-btn{display:flex;align-items:center;gap:.4rem;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.38rem .9rem;border-radius:3px;cursor:pointer;transition:all .2s;}
+.exv-dl-btn:hover{border-color:var(--red);color:var(--text);}
+/* ── INFORME FINAL VIEW ───────────────────── */
+.inf-wrap{max-width:600px;margin:0 auto;padding:3rem 2.5rem;text-align:center;}
+.inf-lock{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;color:var(--dim);}
+.inf-title{font-size:1.15rem;font-weight:800;margin-bottom:.5rem;color:var(--dim);}
+.inf-desc{font-size:.83rem;color:var(--dim);line-height:1.75;max-width:380px;margin:0 auto;}
+@media(max-width:900px){.dash-sidenav{display:none;}}
 .dash-hdr{padding:1.75rem 0;border-bottom:1px solid var(--border);background:var(--bg2);}
 .dash-hdr-in{max-width:1160px;margin:0 auto;padding:0 2.5rem;}
 .dash-hdr h1{font-size:1.35rem;font-weight:800;margin-bottom:.2rem;}
@@ -162,7 +204,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .pmt-section{margin-bottom:1rem;}
 .pmt-sec-header{display:flex;align-items:baseline;gap:.5rem;padding:.6rem 0 .45rem;border-bottom:2px solid rgba(232,49,42,.18);margin-bottom:.6rem;}
 .pmt-sec-num{font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--red);}
-.pmt-sec-title{font-size:.82rem;font-weight:700;color:var(--text);}
+.pmt-sec-title{font-size:1.07rem;font-weight:700;color:var(--red);}
 .pmt-item{padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
 .pmt-item:last-child{border-bottom:none;}
 .pmt-item-top{display:flex;align-items:center;gap:.75rem;}
@@ -215,9 +257,18 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .ex-ta:focus{border-color:var(--red);}
 .ex-ta::placeholder{color:var(--dim);}
 .ex-submit-row{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.25rem;background:rgba(232,49,42,.03);border-top:1px solid var(--border);}
-.btn-ex-send{display:flex;align-items:center;gap:.45rem;background:var(--red);color:#fff;border:none;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;transition:background .2s;flex-shrink:0;}
+.btn-ex-send{display:flex;align-items:center;gap:.45rem;background:var(--red);color:#fff;border:none;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;transition:background .2s,opacity .2s;flex-shrink:0;cursor:pointer;}
 .btn-ex-send:hover{background:var(--red-h);}
-.btn-ex-send:disabled{opacity:.6;cursor:default;}
+.btn-ex-send:disabled{opacity:.5;cursor:default;}
+.btn-ex-send.state-sent{background:var(--green);}
+.btn-ex-send.state-sent:hover{background:#16A34A;}
+.btn-ex-send.state-modified{background:var(--red);}
+.btn-ex-send.state-sending{background:rgba(34,197,94,.45);cursor:default;pointer-events:none;}
+.pmt-alert{background:rgba(232,49,42,.08);border:1px solid rgba(232,49,42,.35);border-radius:6px;padding:.65rem 1rem;margin:.75rem 1.25rem 0;display:none;align-items:flex-start;gap:.6rem;}
+.pmt-alert.show{display:flex;}
+.pmt-alert-icon{font-size:.95rem;flex-shrink:0;margin-top:1px;}
+.pmt-alert-text{font-size:.75rem;color:#ff8080;line-height:1.55;}
+.pmt-alert-text strong{display:block;font-size:.76rem;margin-bottom:.2rem;color:#ffaaaa;}
 .ex-submit-note{font-size:.7rem;color:var(--dim);}
 .ex-reflex{padding:1.1rem 1.25rem;border-top:1px solid var(--border);background:rgba(232,49,42,.03);}
 .ex-reflex-title{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.85rem;}
@@ -330,8 +381,8 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .tq-range-table th{background:var(--bg3);padding:.5rem .7rem;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);text-align:left;}
 .tq-range-table td{padding:.6rem .7rem;border:1px solid var(--border);vertical-align:top;line-height:1.55;}
 .tq-range-table td:first-child{font-weight:700;white-space:nowrap;background:var(--bg3);}
-.attach-section{border-top:2px solid var(--border);padding:1.1rem 1.25rem;background:var(--bg3);}
-.gps-ta{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.8rem;padding:.5rem .7rem;resize:vertical;min-height:72px;outline:none;transition:border-color .2s;line-height:1.6;}
+.attach-section{border-top:none;margin-top:1.5rem;padding:1.1rem 1.25rem;background:var(--bg3);border-radius:8px;border:1px solid var(--border);}.attach-subtitle{font-size:.7rem;color:var(--muted);font-weight:400;margin-bottom:.9rem;margin-top:.25rem;line-height:1.5;}
+.gps-ta{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:.8rem;padding:.5rem .7rem;resize:vertical;min-height:100px;outline:none;transition:border-color .2s;line-height:1.6;}
 .gps-ta:focus{border-color:var(--red);background:rgba(255,255,255,.05);}
 .gps-ta::placeholder{color:var(--dim);}
 .gps-sel{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:.75rem;padding:.45rem .6rem;border-radius:3px;outline:none;cursor:pointer;transition:border-color .2s;}
@@ -440,7 +491,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .attach-input:focus{border-color:var(--red);}
 .attach-desc{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.76rem;padding:.4rem .75rem;border-radius:4px;outline:none;resize:none;height:46px;line-height:1.4;transition:border-color .2s;}
 .attach-desc:focus{border-color:var(--red);}
-.attach-add-btn{background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;padding:.45rem .85rem;border-radius:4px;cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0;}
+.attach-add-btn{background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;padding:.45rem .85rem;border-radius:4px;cursor:pointer;white-space:nowrap;transition:all .15s;margin-top:.35rem;display:inline-block;}
 .attach-add-btn:hover{border-color:var(--red);color:var(--text);}
 .attach-item{display:flex;align-items:flex-start;gap:.6rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:.55rem .8rem;margin-bottom:.35rem;}
 .attach-item-icon{font-size:.9rem;flex-shrink:0;margin-top:1px;}
@@ -457,6 +508,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .attach-pending{display:flex;flex-direction:column;gap:.35rem;padding:.65rem .85rem;background:rgba(232,49,42,.04);border:1px dashed var(--border-r);border-radius:4px;margin-bottom:.4rem;}
 .attach-pending-name{font-size:.76rem;font-weight:600;}
 .attach-note{font-size:.65rem;color:var(--dim);margin-top:.3rem;}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -528,8 +580,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     <div class="tnav-r">
       <div class="uav" id="nav-av"></div>
       <span class="uname" id="nav-nm"></span>
-      <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Mauro</button>
-      <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Mauro</button>
+      <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Psicopoker</button>
       <button id="btn-dl-full" onclick="generateMyFullPDF()" style="display:none;align-items:center;gap:.4rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .85rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Mi programa</button>
       <button class="btn-sm" onclick="doLogout()">Salir</button>
     </div>
@@ -544,7 +595,51 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
       </div>
     </div>
   </div>
-  <div class="ugrid-wrap"><div class="ugrid" id="ugrid"></div></div>
+  <div class="dash-layout">
+    <!-- Left sidebar nav -->
+    <nav class="dash-sidenav">
+      <button class="dash-sidenav-btn active" id="sidenav-unidades" onclick="dashNav('unidades')">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
+        Mis unidades
+      </button>
+      <button class="dash-sidenav-btn" id="sidenav-ejercicios" onclick="dashNav('ejercicios')">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 3.5h10M2 7h7M2 10.5h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Mis ejercicios
+      </button>
+      <div class="dash-sidenav-sep"></div>
+      <button class="dash-sidenav-btn disabled" id="sidenav-informe" title="Disponible al finalizar el programa">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="6" width="10" height="7" rx="1.2" stroke="currentColor" stroke-width="1.3"/><path d="M4.5 6V4.5a2.5 2.5 0 015 0V6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="7" cy="9.5" r=".8" fill="currentColor"/></svg>
+        Informe final
+      </button>
+    </nav>
+    <!-- Main content area -->
+    <div class="dash-main" id="dash-main">
+      <!-- UNIDADES panel -->
+      <div id="dash-panel-unidades">
+        <div class="ugrid-wrap"><div class="ugrid" id="ugrid"></div></div>
+      </div>
+      <!-- MIS EJERCICIOS panel -->
+      <div id="dash-panel-ejercicios" style="display:none;">
+        <div class="exv-wrap">
+          <div class="exv-hdr">
+            <h2>Mis ejercicios</h2>
+            <p>Revisá las respuestas de los ejercicios que completaste en cada unidad.</p>
+          </div>
+          <div id="exv-list"></div>
+        </div>
+      </div>
+      <!-- INFORME FINAL panel -->
+      <div id="dash-panel-informe" style="display:none;">
+        <div class="inf-wrap">
+          <div class="inf-lock">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></svg>
+          </div>
+          <p class="inf-title">Informe final no disponible</p>
+          <p class="inf-desc">Tu informe final estará disponible una vez que Arturo o Mauro lo hayan preparado al completar el programa. Volví a revisar esta sección cuando finalices todas las unidades.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="vcls" class="view">
@@ -600,15 +695,15 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     </div>
     <div style="display:flex;align-items:center;gap:.5rem;">
       <span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.25rem .65rem;border-radius:3px;">Panel Admin</span>
-      <button id="btn-tab-pacientes" onclick="adminTab('pacientes')" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Ejercicios</button>
-      <button id="btn-tab-usuarios" onclick="adminTab('usuarios')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Pacientes</button>
+      <button id="btn-tab-players" onclick="adminTab('players')" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Ejercicios</button>
+      <button id="btn-tab-usuarios" onclick="adminTab('usuarios')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">Players</button>
       <button onclick="loadAdminPanel()" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;">&#8635; Actualizar</button>
       <button onclick="resetAllData()" style="background:transparent;border:1px solid rgba(239,68,68,.4);color:#EF4444;font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;margin-left:.5rem;">⚠️ Resetear datos</button>
       <button onclick="generateGeneralReport()" style="display:flex;align-items:center;gap:.35rem;background:var(--red-dim);border:1px solid var(--border-r);color:var(--red);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:3px;cursor:pointer;"><svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Informe General</button>
     </div>
     <div class="tnav-r"><div class="uav" id="nav-av3"></div><button class="btn-sm" onclick="doLogout()">Salir</button></div>
   </div>
-  <div id="admin-view-pacientes" style="display:flex;flex:1;overflow:hidden;">
+  <div id="admin-view-players" style="display:flex;flex:1;overflow:hidden;">
     <div id="admin-sidebar" style="width:260px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;">
       <div style="padding:.85rem 1rem .6rem;">
         <div style="position:relative;">
@@ -618,7 +713,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
           <svg style="position:absolute;left:.65rem;top:50%;transform:translateY(-50%);opacity:.35;" width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M9 9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
       </div>
-      <div style="padding:.2rem 1rem .4rem;font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);">Pacientes</div>
+      <div style="padding:.2rem 1rem .4rem;font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);">Players</div>
       <div id="admin-patient-list" style="flex:1;overflow-y:auto;"></div>
     </div>
     <div style="flex:1;overflow-y:auto;background:var(--bg);">
@@ -670,14 +765,14 @@ function injectAttachmentSection(lid){
   var at=getAttachments(lid);
   var h='<div id="attach-sec-'+lid+'" class="attach-section">';
   h+='<div class="attach-title">Adjuntos</div>';
+  h+='<div class="attach-subtitle">Estos campos son opcionales por si necesitás compartir alguna URL o archivo.</div>';
   // Links
   h+='<div class="attach-group"><div class="attach-group-label">Links</div>';
   h+='<div id="al-list-'+lid+'"></div>';
-  h+='<div class="attach-row"><div class="attach-row-top">';
-  h+='<input type="text" id="al-url-'+lid+'" class="attach-input" placeholder="https://... (pegá el link completo)">';
+  h+='<div class="attach-row">';
+  h+='<input type="text" id="al-url-'+lid+'" class="attach-input" placeholder="https://... (pegá el link completo)" style="margin-bottom:.35rem;">';
+  h+='<textarea id="al-desc-'+lid+'" class="attach-desc" placeholder="¿Qué querés mostrar con este link? (opcional)"></textarea>';
   h+='<button class="attach-add-btn" onclick="attachSaveLink(\''+lid+'\')">+ Agregar</button>';
-  h+='</div>';
-  h+='<textarea id="al-desc-'+lid+'" class="attach-desc" placeholder="Que queres mostrar con este link? (opcional)"></textarea>';
   h+='</div></div>';
   // Files
   h+='<div class="attach-group"><div class="attach-group-label">Archivos</div>';
@@ -994,7 +1089,7 @@ function generateMyFullPDF(){
   var seen={};subs.forEach(function(e){var k=e.lid||e.ejercicio;if(!seen[k]||(e.ts||0)>(seen[k].ts||0))seen[k]=e;});
   var unique=Object.values(seen);
   if(!unique.length){showToast('No hay ejercicios completados todavia');return;}
-  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8','Unidad 9'];
   function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
   var byUnit={};unique.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
   var sortedUnits=Object.keys(byUnit).sort(function(a,b){return unitIdx(a)-unitIdx(b);});
@@ -1003,6 +1098,114 @@ function generateMyFullPDF(){
   sortedUnits.forEach(function(unit){h+='<div class="sec-title">'+unit+'</div>';byUnit[unit].forEach(function(ej){h+=buildExPDF(ej);});});
   h+='<div class="footer">Psicopoker · '+new Date().toLocaleString('es-AR')+'</div></div>';
   openPDF('Programa Completo — '+user.name,h);
+}
+
+function dashNav(section) {
+  var panels = ['unidades','ejercicios','informe'];
+  panels.forEach(function(p) {
+    var panel = document.getElementById('dash-panel-'+p);
+    var btn = document.getElementById('sidenav-'+p);
+    if (panel) panel.style.display = p === section ? 'block' : 'none';
+    if (btn && !btn.classList.contains('disabled')) {
+      if (p === section) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  });
+  if (section === 'ejercicios') renderMisEjercicios();
+}
+
+function renderMisEjercicios() {
+  var subs = getLocalSubs().filter(function(s){ return s.usuario === S.user; });
+  var seen = {};
+  subs.forEach(function(e){ var k=e.lid||e.ejercicio; if(!seen[k]||(e.ts||0)>(seen[k].ts||0)) seen[k]=e; });
+  var unique = Object.values(seen);
+  var UNIT_ORDER = ['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8','Unidad 9'];
+  function unitIdx(u){ var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());}); return i===-1?99:i; }
+  var container = document.getElementById('exv-list');
+  if (!container) return;
+  if (!unique.length) {
+    container.innerHTML = '<p style="font-size:.83rem;color:var(--dim);padding:1.5rem 0;font-style:italic;">Todav\u00eda no completaste ning\u00fan ejercicio.</p>';
+    return;
+  }
+  var byUnit = {};
+  unique.forEach(function(e){ var u=e.unidad||'Sin unidad'; if(!byUnit[u]) byUnit[u]=[]; byUnit[u].push(e); });
+  var sortedUnits = Object.keys(byUnit).sort(function(a,b){ return unitIdx(a)-unitIdx(b); });
+  var h = '';
+  var renderQueue = [];
+  sortedUnits.forEach(function(unitName, ui) {
+    var exercises = byUnit[unitName];
+    var unitId = 'exvu_' + ui;
+    h += '<div class="exv-unit">';
+    h += '<div class="exv-unit-hdr" onclick="toggleExvUnit(\'' + unitId + '\')">';
+    h += '<span class="exv-unit-badge done">' + unitName + '</span>';
+    h += '<span class="exv-unit-title">' + exercises.length + ' ejercicio' + (exercises.length!==1?'s':'') + ' completado' + (exercises.length!==1?'s':'') + '</span>';
+    h += '<svg id="chev-' + unitId + '" class="exv-unit-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    h += '</div>';
+    h += '<div class="exv-unit-body" id="body-' + unitId + '" style="display:none;">';
+    exercises.forEach(function(ej, ei) {
+      var eid = 'myex_' + ui + '_' + ei;
+      var isPmt=ej.lid==="u1l3"||ej.lid==="u8l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);
+      var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);
+      var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);
+      var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);
+      var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);
+      var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);
+      var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);
+      var isCaj=ej.lid==="u6l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("4 cajas")!==-1);
+      var isGrid=(ej.respuestas||[]).some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
+      var btnLabel=isPmt||isTeosq||isIped||isCaj?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isCon?'Ver respuestas &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
+      h += '<div class="sub-card">';
+      h += '<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\'' + eid + '\',this)">';
+      h += '<div style="flex:1;"><div class="sub-name">' + (ej.ejercicio||ej.lid||'Ejercicio') + '</div><div class="sub-meta">' + (ej.fecha||'') + '</div></div>';
+      h += '<button class="sub-toggle">' + btnLabel + '</button></div>';
+      h += '<div id="' + eid + '" style="display:none;border-top:1px solid var(--border);"></div>';
+      h += '</div>';
+      renderQueue.push({eid:eid, ej:ej, isPmt:isPmt, isTeosq:isTeosq, isIped:isIped, isGps:isGps, isCl:isCl, isEquip:isEquip, isCon:isCon, isCaj:isCaj, isGrid:isGrid});
+    });
+    h += '<div class="exv-unit-foot">';
+    h += '<button class="exv-dl-btn" onclick="downloadUnitExercisesPDF(\'' + unitName + '\')">';
+    h += '<svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+    h += ' Descargar PDF</button>';
+    h += '</div>';
+    h += '</div></div>';
+  });
+  container.innerHTML = h;
+  // Now render each exercise using the EXACT same admin view functions
+  renderQueue.forEach(function(item) {
+    if(item.isPmt) renderPMTAdminView(item.ej, item.eid);
+    else if(item.isTeosq) renderTEOSQAdminView(item.ej, item.eid);
+    else if(item.isIped) renderIPEDAdminView(item.ej, item.eid);
+    else if(item.isGps) renderGPSAdminView(item.ej, item.eid);
+    else if(item.isCl) renderChecklistAdminView(item.ej, item.eid);
+    else if(item.isEquip) renderEquipAdminView(item.ej, item.eid);
+    else if(item.isCon) renderConcienciaAdminView(item.ej, item.eid);
+    else if(item.isCaj) renderCajas4AdminView(item.ej, item.eid);
+    else if(item.isGrid) renderGridAdminView(item.ej, item.eid);
+    else renderFormAdminView(item.ej, item.eid);
+  });
+}
+
+function toggleExvUnit(id) {
+  var body = document.getElementById('body-'+id);
+  var chev = document.getElementById('chev-'+id);
+  if (!body) return;
+  var open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  if (chev) chev.classList.toggle('open', !open);
+}
+
+function downloadUnitExercisesPDF(unitName) {
+  var subs = getLocalSubs().filter(function(s){ return s.usuario===S.user && s.unidad===unitName; });
+  var seen = {};
+  subs.forEach(function(e){ var k=e.lid||e.ejercicio; if(!seen[k]||(e.ts||0)>(seen[k].ts||0)) seen[k]=e; });
+  var unique = Object.values(seen);
+  var user = USERS[S.user];
+  if (!unique.length) { showToast('No hay ejercicios completados en '+unitName); return; }
+  var h = '<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div><div class="hdr-info"><div class="hdr-lbl">'+unitName+'</div><div class="hdr-val">'+user.name+'</div><div class="hdr-date">'+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
+  h += '<div class="sec-title">'+unitName+' — Ejercicios completados</div>';
+  unique.forEach(function(ej){ h += buildExPDF(ej); });
+  h += '<div class="footer">Psicopoker · '+new Date().toLocaleString('es-AR')+'</div></div>';
+  openPDF(unitName+' — '+user.name, h);
 }
 
 function autoHeight(el){el.style.height='auto';el.style.height=Math.max(30,el.scrollHeight)+'px';}
@@ -1140,6 +1343,16 @@ var C = [
       { id:'u8l4', title:'Ejercicio final: Visualizacion de cierre', driveId:'1gJ4uX4QE4vTLXdRufi3jxLQq9AXyaiio', ex:{ type:'form', unit:'Unidad 8', name:'Registro de la Visualizacion de Cierre' } },
       { id:'u8l5', title:'Octava y ultima sesion 1 a 1', type:'session' }
     ]
+  },
+  { id:'u9', num:9, badge:'Unidad 9', title:'La visualización',
+    desc:'Explorá el poder de la visualización como herramienta de cambio psicológico real.',
+    img:'img/UNIDAD9.jpeg',
+    lessons:[
+      { id:'u9l1', title:'Introducción a la visualización', driveId:'1vo-3PaWEiaSCIfxnGEcxBZfXJxu-GQA4' },
+      { id:'u9l2', title:'¿Cómo se hace?', driveId:'1cjZAPXtWrJdMAD5te1QI1pXwXL2fnCcz' },
+      { id:'u9l3', title:'Su rol en el cambio psicológico', driveId:'1d4bQF7XWBBW8tsuLJqoFCq3VFHO-42Y5' },
+      { id:'u9l4', title:'Ejemplo de visualización', driveId:'1rq4_MppIb9nFsbgV7nSecQGZfmjwEPgW', note:'¡Ponete cómodo sentado o acostado y a vivir la experiencia!' }
+    ]
   }
 ];
 
@@ -1189,12 +1402,33 @@ function updateSaveStatus(msg, color) {
 }
 function triggerAutoSave(lessonId) {
   updateSaveStatus('Guardando...', '#F59E0B');
+  exBtnMarkModified('btn-ex-' + lessonId);
   clearTimeout(saveTimer);
   saveTimer = setTimeout(function() {
     collectAndSave(lessonId);
     updateSaveStatus('Borrador guardado', '#22C55E');
   }, 800);
 }
+
+/* ── BUTTON STATE HELPER ─────────────────────── */
+function exBtnSetState(btn, state) {
+  if (!btn) return;
+  btn.classList.remove('state-sent','state-modified','state-sending');
+  btn.disabled = false;
+  btn.innerHTML = '';
+  var icon = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  var check = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7L5.5 10.5L12 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var spin  = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="animation:spin .8s linear infinite"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="20 14" stroke-linecap="round"/></svg>';
+  if (state === 'idle')     { btn.innerHTML = icon + ' Enviar a Psicopoker'; }
+  if (state === 'sending')  { btn.classList.add('state-sending'); btn.disabled = true; btn.innerHTML = spin + ' Enviando...'; }
+  if (state === 'sent')     { btn.classList.add('state-sent');   btn.innerHTML = check + ' Enviado'; }
+  if (state === 'modified') { btn.classList.add('state-modified'); btn.innerHTML = icon + ' Actualizar envío'; }
+}
+function exBtnMarkModified(btnId) {
+  var btn = document.getElementById(btnId);
+  if (btn && btn.classList.contains('state-sent')) exBtnSetState(btn, 'modified');
+}
+
 function collectAndSave(lid) {
   var data = loadDraft(lid)||{};
   document.querySelectorAll('[data-fid]').forEach(function(el) {
@@ -1694,9 +1928,9 @@ function renderGridExercise(lid, def) {
   });
   h+='</div>';
   var alreadyDone=isDone(lid);
-  h+='<div class="ex-submit-row"><button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="doSubmit(\''+lid+'\')" '+(alreadyDone?'style="background:var(--green);"':'')+'>'+
+  h+='<div class="ex-submit-row"><button class="btn-ex-send'+(alreadyDone?' state-sent':'')+'" id="btn-ex-'+lid+'" onclick="doSubmit(\''+lid+'\')" >'+
   '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'+
-  ' '+(alreadyDone?'Actualizar envio':'Enviar a Mauro')+'</button>'+
+  ' '+(alreadyDone?'Enviado':'Enviar a Psicopoker')+'</button>'+
   '<p class="ex-submit-note">Se guarda automaticamente mientras escribis</p></div></div>';
   return h;
 }
@@ -1758,8 +1992,8 @@ function renderFormExercise(lid, def) {
   h += '<div class="ex-submit-row">';
   h += '<button class="btn-ex-send" id="btn-ex-' + lid + '" onclick="doSubmit(\'' + lid + '\')">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' Enviar a Mauro</button>';
-  h += '<p class="ex-submit-note">Se enviara a la planilla de seguimiento de Mauro</p>';
+  h += ' Enviar a Psicopoker</button>';
+  h += '<p class="ex-submit-note">Se enviara a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   window['_exQ_' + lid] = allQ;
@@ -1811,7 +2045,7 @@ function colorCell(el) {
 function doSubmit(lid){
   var def=EX_DEFS[lid];if(!def)return;
   var btn=document.getElementById('btn-ex-'+lid);
-  if(btn){btn.disabled=true;btn.textContent='Guardando...';}
+  if(btn){exBtnSetState(btn,'sending');}
   collectAndSave(lid);
   var user=USERS[S.user];
   var answers=[];
@@ -1851,10 +2085,10 @@ function doSubmit(lid){
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   markDoneL(lid);
   fbSaveSubmission(S.user,lid,rec);
-  updateSaveStatus('Enviado a Mauro','#22C55E');
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
   var isUpdate=idx>=0;
-  if(btn){btn.textContent=isUpdate?'Actualizar envio':'Enviar a Mauro';btn.style.background='#22C55E';btn.disabled=false;}
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){exBtnSetState(btn, 'sent');}
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
@@ -1917,7 +2151,7 @@ function showDash(){
   document.getElementById('dgreet').textContent='Bienvenido, '+usr.name.split(' ')[0]+' \u{1F44B}';
   var ab=document.getElementById('btn-admin');
   if(ab)ab.style.display=isAdmin()?'inline-flex':'none';
-  renderDash();showView('vdash');
+  renderDash();showView('vdash');dashNav('unidades');
   var dlFull=document.getElementById('btn-dl-full');
   if(dlFull)dlFull.style.display=isAdmin()?'none':'flex';
 }
@@ -1992,6 +2226,9 @@ function siHtml(l) {
    CONTENT RENDERER
    ═══════════════════════════════════════════════ */
 function renderContent(unit, lid) {
+  // Clean up GPS full-width wrap if navigating away
+  var _gw = document.getElementById('gps-fullwidth-wrap');
+  if (_gw) _gw.remove();
   var all = (unit.lessons || []).concat(unit.extra || []);
   var lesson = all.find(function(l) { return l.id === lid; });
   if (!lesson) return;
@@ -2061,6 +2298,7 @@ function renderContent(unit, lid) {
       return;
     } else if (exType === 'gps') {
       document.getElementById('mc-body').innerHTML = body;
+      var _oldGps=document.getElementById('gps-fullwidth-wrap');if(_oldGps)_oldGps.remove();
       renderGPSExercise(lid);
       document.getElementById('mc').scrollTop = 0;
       return;
@@ -2181,7 +2419,7 @@ function isAdmin(){return S.user&&USERS[S.user]&&USERS[S.user].role==='admin';}
 
 function resetAllData() {
   // First confirmation
-  if (!confirm('⚠️ ATENCIÓN\n\nEstás a punto de borrar TODAS las respuestas, progresos y drafts de TODOS los pacientes.\n\nEsta acción no se puede deshacer.\n\n¿Estás seguro?')) return;
+  if (!confirm('⚠️ ATENCIÓN\n\nEstás a punto de borrar TODAS las respuestas, progresos y drafts de TODOS los players.\n\nEsta acción no se puede deshacer.\n\n¿Estás seguro?')) return;
   // Second confirmation with typed phrase
   var phrase = prompt('Para confirmar, escribí exactamente:\n\nBORRAR TODO');
   if (phrase !== 'BORRAR TODO') { alert('Cancelado — el texto no coincide.'); return; }
@@ -2225,11 +2463,11 @@ function clearAirtableAll(cb,done){
 }
 
 function adminTab(tab){
-  var btns={pacientes:'btn-tab-pacientes',usuarios:'btn-tab-usuarios'};
+  var btns={players:'btn-tab-players',usuarios:'btn-tab-usuarios'};
   Object.keys(btns).forEach(function(k){var el=document.getElementById(btns[k]);if(el){el.style.background=k===tab?'var(--red)':'transparent';el.style.color=k===tab?'#fff':'var(--muted)';el.style.border=k===tab?'none':'1px solid var(--border)';}});
-  var vp=document.getElementById('admin-view-pacientes');
+  var vp=document.getElementById('admin-view-players');
   var vu=document.getElementById('admin-view-usuarios');
-  if(vp)vp.style.display=tab==='pacientes'?'flex':'none';
+  if(vp)vp.style.display=tab==='players'?'flex':'none';
   if(vu){vu.style.display=tab==='usuarios'?'flex':'none';if(tab==='usuarios')renderUserTab();}
 }
 
@@ -2237,7 +2475,7 @@ function showAdmin(){
   USERS=getAllUsers();
   var nav=document.getElementById('nav-av3');
   if(nav)nav.textContent=USERS[S.user].name[0].toUpperCase();
-  showView('vadmin');adminTab('pacientes');loadAdminPanel();
+  showView('vadmin');adminTab('players');loadAdminPanel();
 }
 function loadAdminPanel(){
   renderAdminPanel(getLocalSubs());
@@ -2274,7 +2512,7 @@ function renderPatientList(filter){
   var f=(filter||'').toLowerCase().trim();
   var filtered=adminData.filter(function(p){return!f||p.nombre.toLowerCase().includes(f)||p.usuario.toLowerCase().includes(f);});
   var plist=document.getElementById('admin-patient-list');
-  if(!adminData.length){if(plist)plist.innerHTML='<div style="padding:1.25rem 1.1rem;font-size:.78rem;color:var(--dim);">Sin respuestas todavia.</div>';var ac=document.getElementById('admin-content');if(ac)ac.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:4rem 2rem;"><div style="font-size:3rem;opacity:.08;margin-bottom:1rem;">&#128101;</div><p style="font-size:.9rem;font-weight:700;margin-bottom:.4rem;">Sin pacientes todavia</p></div>';return;}
+  if(!adminData.length){if(plist)plist.innerHTML='<div style="padding:1.25rem 1.1rem;font-size:.78rem;color:var(--dim);">Sin respuestas todavia.</div>';var ac=document.getElementById('admin-content');if(ac)ac.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:4rem 2rem;"><div style="font-size:3rem;opacity:.08;margin-bottom:1rem;">&#128101;</div><p style="font-size:.9rem;font-weight:700;margin-bottom:.4rem;">Sin players todavia</p></div>';return;}
   if(!filtered.length){if(plist)plist.innerHTML='<div style="padding:1.1rem;font-size:.75rem;color:var(--dim);">Ningun resultado.</div>';return;}
   var h='';
   filtered.forEach(function(p){var n=p.ejercicios.length,active=p.usuario===activePatient;h+='<div class="admin-ex-item'+(active?' on':'')+'" onclick="showPatient(\''+p.usuario+'\')">';h+='<div style="display:flex;align-items:center;gap:.65rem;"><div style="width:28px;height:28px;border-radius:50%;background:'+(active?'var(--red)':'var(--card2)')+';display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:'+(active?'#fff':'var(--muted)')+';flex-shrink:0;">'+(p.nombre[0]||'?').toUpperCase()+'</div>';h+='<div><div class="aei-name">'+p.nombre+'</div><div class="aei-count">'+n+' ejercicio'+(n!==1?'s':'')+' completado'+(n!==1?'s':'')+'</div></div></div></div>';});
@@ -2286,7 +2524,7 @@ function showPatient(usuario){
   renderPatientList(document.getElementById('admin-search')?document.getElementById('admin-search').value:'');
   var patient=adminData.find(function(p){return p.usuario===usuario;});
   if(!patient)return;
-  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8','Unidad 9'];
   function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
   var byUnit={};
   patient.ejercicios.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
@@ -2489,8 +2727,8 @@ function admTqTab(uid,idx){
 function renderUserTab(){
   var extra=getExtraUsers(),all=Object.assign({},USERS_BASE,extra);
   var h='<div style="padding:1.75rem 2rem;max-width:740px;width:100%;">';
-  h+='<h2 style="font-size:1.1rem;font-weight:800;margin-bottom:.35rem;">Pacientes del Programa</h2>';
-  h+='<p style="font-size:.8rem;color:var(--muted);margin-bottom:1.75rem;">Agrega nuevos pacientes aca.</p>';
+  h+='<h2 style="font-size:1.1rem;font-weight:800;margin-bottom:.35rem;">Players del Programa</h2>';
+  h+='<p style="font-size:.8rem;color:var(--muted);margin-bottom:1.75rem;">Agrega nuevos players aca.</p>';
   h+='<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1.75rem;">';
   h+='<p style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Nuevo Paciente</p>';
   h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:.9rem;">';
@@ -2523,22 +2761,100 @@ function buildExPDF(ej){
   var h='<div class="ex-block"><div class="ex-ttl"><span>'+ej.ejercicio+'</span><span class="ex-dt">'+(ej.fecha||'')+'</span></div>';
 
   if(isTeosq){
-    var ego=null,tar=null,perf=null;
+    var ego=null,tar=null,perf=null,teosqAnsP={};
     resps.forEach(function(r){
-      if(r.fid==='teosq_ego')ego=parseFloat(r.respuesta);
-      if(r.fid==='teosq_tar')tar=parseFloat(r.respuesta);
-      if(r.fid==='teosq_perfil')perf=r.respuesta;
+      if(!r.fid)return;
+      if(r.fid==='teosq_ego'){ego=parseFloat(r.respuesta);return;}
+      if(r.fid==='teosq_tar'){tar=parseFloat(r.respuesta);return;}
+      if(r.fid==='teosq_perfil'){perf=r.respuesta;return;}
+      var m=r.fid.match(/^teosq_(\d+)$/);if(m)teosqAnsP[parseInt(m[1])]=parseInt(r.respuesta)||0;
     });
+    var SCALE_PDF=['Tot. Desacuerdo','En Desacuerdo','Ni / ni','De Acuerdo','Tot. Acuerdo'];
+    function tLvl(s){if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',color:'#2563EB',bg:'#eff6ff'};if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',color:'#D97706',bg:'#fffbeb'};return{lbl:'Alta ('+s.toFixed(2)+')',color:'#16A34A',bg:'#f0fdf4'};}
+    // ── Scores ──
     if(ego!==null&&tar!==null){
-      h+='<div class="tscores">';
-      h+='<div class="tscore-box"><div class="tscore-lbl">Orientacion al Ego</div><div class="tscore-val">'+ego.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(ego)+'">'+pdfLvlLbl(ego)+'</div></div>';
-      h+='<div class="tscore-box"><div class="tscore-lbl">Orientacion a la Tarea</div><div class="tscore-val">'+tar.toFixed(2)+'</div><div class="tscore-lvl '+pdfLvlCls(tar)+'">'+pdfLvlLbl(tar)+'</div></div>';
+      var el=tLvl(ego),tl=tLvl(tar);
+      h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 12px 14px;">';
+      h+='<div style="border:1px solid #e8e8e8;border-top:3px solid #E8312A;border-radius:5px;padding:10px 12px;text-align:center;">';
+      h+='<div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#666;margin-bottom:4px;">Orientación al Ego</div>';
+      h+='<div style="font-size:28px;font-weight:800;color:#E8312A;line-height:1;">'+ego.toFixed(2)+'</div>';
+      h+='<div style="font-size:9px;font-weight:700;background:'+el.bg+';color:'+el.color+';border-radius:3px;padding:2px 8px;display:inline-block;margin-top:5px;">'+el.lbl+'</div>';
+      h+='</div>';
+      h+='<div style="border:1px solid #e8e8e8;border-top:3px solid #16A34A;border-radius:5px;padding:10px 12px;text-align:center;">';
+      h+='<div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#666;margin-bottom:4px;">Orientación a la Tarea</div>';
+      h+='<div style="font-size:28px;font-weight:800;color:#16A34A;line-height:1;">'+tar.toFixed(2)+'</div>';
+      h+='<div style="font-size:9px;font-weight:700;background:'+tl.bg+';color:'+tl.color+';border-radius:3px;padding:2px 8px;display:inline-block;margin-top:5px;">'+tl.lbl+'</div>';
+      h+='</div>';
+      h+='</div>';
+      // ── Gráfico de barras (SVG adaptado a fondo blanco) ──
+      h+='<div style="margin:0 12px 14px;border:1px solid #e8e8e8;border-radius:5px;padding:10px;background:#f8f8f8;">';
+      h+='<div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;margin-bottom:8px;">Gráfico de orientación</div>';
+      var W=400,H=180,ml=50,mr=20,mt=12,mb=55,ch=H-mt-mb,cw=W-ml-mr;
+      function yPx2(v){return mt+ch-(v/5)*ch;}
+      function scColor(v){if(v<=2.9)return'#2563EB';if(v<=4.2)return'#D97706';return'#16A34A';}
+      var cx1=ml+cw/4,cx2=ml+cw*3/4,bw=65,svgS='';
+      for(var gi=0;gi<=5;gi++){var gy=yPx2(gi);svgS+='<line x1="'+ml+'" y1="'+gy+'" x2="'+(W-mr)+'" y2="'+gy+'" stroke="#e5e7eb" stroke-width="1"/>';svgS+='<text x="'+(ml-5)+'" y="'+(gy+4)+'" text-anchor="end" fill="#9ca3af" font-family="Montserrat,sans-serif" font-size="8">'+gi+'.0</text>';}
+      svgS+='<line x1="'+ml+'" y1="'+mt+'" x2="'+ml+'" y2="'+(H-mb)+'" stroke="#d1d5db" stroke-width="1"/>';
+      svgS+='<line x1="'+ml+'" y1="'+(H-mb)+'" x2="'+(W-mr)+'" y2="'+(H-mb)+'" stroke="#d1d5db" stroke-width="1"/>';
+      function pdfBar(cx,val,color,line1,line2){
+        var bh=(val/5)*ch,bx=cx-bw/2,by2=yPx2(val);
+        var r='<rect x="'+bx+'" y="'+by2+'" width="'+bw+'" height="'+bh+'" rx="3" fill="'+color+'" opacity="0.85"/>';
+        r+='<text x="'+cx+'" y="'+(by2-5)+'" text-anchor="middle" fill="'+color+'" font-family="Montserrat,sans-serif" font-size="11" font-weight="700">'+val.toFixed(2)+'</text>';
+        r+='<text x="'+cx+'" y="'+(H-mb+14)+'" text-anchor="middle" fill="#374151" font-family="Montserrat,sans-serif" font-size="8" font-weight="700">'+line1+'</text>';
+        if(line2)r+='<text x="'+cx+'" y="'+(H-mb+24)+'" text-anchor="middle" fill="#374151" font-family="Montserrat,sans-serif" font-size="8" font-weight="700">'+line2+'</text>';
+        return r;
+      }
+      svgS+=pdfBar(cx1,ego,scColor(ego),'ORIENTACION','AL EGO');
+      svgS+=pdfBar(cx2,tar,scColor(tar),'ORIENTACION','A LA TAREA');
+      h+='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;max-width:400px;display:block;margin:0 auto;">'+svgS+'</svg>';
       h+='</div>';
     }
-    if(perf)h+='<div class="profile-box"><div class="profile-name">Perfil: '+perf+'</div></div>';
-    resps.filter(function(r){return r.fid&&/^teosq_\d+$/.test(r.fid);}).forEach(function(r){
-      h+='<div class="qa-row"><div class="qa-q">Item '+r.fid.replace('teosq_','')+': '+r.pregunta+'</div><div class="qa-a">'+r.respuesta+' / 5</div></div>';
+    // ── Perfil ──
+    if(perf){
+      var PROFS_PDF=[{name:'Tarea alta / Ego baja',icon:'🟢',tag:'Perfil favorable',tagColor:'#16A34A',tagBg:'#f0fdf4'},{name:'Ego alta / Tarea baja',icon:'🔥',tag:'Incompatible con Mindset Ganador',tagColor:'#DC2626',tagBg:'#fef2f2'},{name:'Ego alta / Tarea alta',icon:'🧩',tag:'Perfil complejo',tagColor:'#D97706',tagBg:'#fffbeb'},{name:'Ego baja / Tarea baja',icon:'💤',tag:'Requiere atención urgente',tagColor:'#DC2626',tagBg:'#fef2f2'}];
+      h+='<div style="margin:0 12px 14px;border:1px solid #e8e8e8;border-radius:5px;overflow:hidden;">';
+      h+='<div style="background:#f8f8f8;padding:5px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;border-bottom:1px solid #e8e8e8;">Perfil de orientación</div>';
+      h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px;">';
+      PROFS_PDF.forEach(function(p){
+        var isA=perf&&perf.indexOf(p.name)!==-1;
+        h+='<div style="border:1px solid '+(isA?'#d1d5db':'#e8e8e8')+';border-radius:4px;padding:8px;background:'+(isA?'#fff':'#fafafa')+';opacity:'+(isA?'1':'.45')+';font-size:.7rem;">';
+        h+='<div style="font-size:.9rem;margin-bottom:3px;">'+p.icon+'</div>';
+        h+='<div style="font-size:10px;font-weight:800;color:#1a1a2e;margin-bottom:2px;">'+p.name+'</div>';
+        h+='<div style="font-size:8px;font-weight:700;background:'+p.tagBg+';color:'+p.tagColor+';border-radius:3px;padding:2px 5px;display:inline-block;">'+p.tag+'</div>';
+        h+='</div>';
+      });
+      h+='</div></div>';
+    }
+    // ── Tabla con las 13 respuestas ──
+    h+='<div style="margin:0 12px 6px;border:1px solid #e8e8e8;border-radius:5px;overflow:hidden;">';
+    h+='<div style="background:#f8f8f8;padding:5px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#666;border-bottom:1px solid #e8e8e8;">Cuestionario — 13 ítems</div>';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:9px;">';
+    h+='<thead><tr style="background:#f0f0f0;">';
+    h+='<th style="padding:4px 6px;border:1px solid #e0e0e0;text-align:left;width:24px;">#</th>';
+    h+='<th style="padding:4px 6px;border:1px solid #e0e0e0;text-align:left;">Yo me siento con más éxito cuando...</th>';
+    h+='<th style="padding:4px 6px;border:1px solid #e0e0e0;text-align:center;width:14px;">Cat.</th>';
+    SCALE_PDF.forEach(function(l){h+='<th style="padding:4px 3px;border:1px solid #e0e0e0;text-align:center;font-size:7px;min-width:36px;">'+l+'</th>';});
+    h+='</tr></thead><tbody>';
+    TEOSQ_ITEMS.forEach(function(item,i){
+      var v=teosqAnsP[item.n]||0;
+      var catColor=item.cat==='E'?'#E8312A':'#16A34A';
+      var rowBg=i%2===0?'#fff':'#fafafa';
+      h+='<tr style="background:'+rowBg+';">';
+      h+='<td style="padding:4px 6px;border:1px solid #e8e8e8;font-weight:700;color:#666;">'+item.n+'</td>';
+      h+='<td style="padding:4px 6px;border:1px solid #e8e8e8;line-height:1.4;">'+item.t+'</td>';
+      h+='<td style="padding:4px 6px;border:1px solid #e8e8e8;text-align:center;font-weight:800;font-size:8px;color:'+catColor+';">'+item.cat+'</td>';
+      for(var ci=1;ci<=5;ci++){
+        var sel=v===ci;
+        h+='<td style="padding:4px 3px;border:1px solid #e8e8e8;text-align:center;background:'+(sel?'#EFF6FF':'')+';">';
+        h+='<div style="width:12px;height:12px;border-radius:50%;border:2px solid '+(sel?'#E8312A':'#d1d5db')+';background:'+(sel?'#E8312A':'#fff')+';margin:0 auto;display:flex;align-items:center;justify-content:center;">';
+        if(sel)h+='<div style="width:4px;height:4px;border-radius:50%;background:#fff;"></div>';
+        h+='</div></td>';
+      }
+      h+='</tr>';
     });
+    h+='</tbody></table>';
+    h+='<div style="padding:5px 10px;background:#f8f8f8;border-top:1px solid #e8e8e8;font-size:7px;color:#888;">E = Orientación al Ego &nbsp;·&nbsp; R = Orientación a la Tarea</div>';
+    h+='</div>';
 
   }else if(isPmt){
     var pmtData={},pmtCap1=null,pmtCap2=null,pmtGlobal=null;
@@ -2858,7 +3174,7 @@ function pdfPatientHeader(patient,sortedUnits){
 
 function generatePatientPDF(usuario){
   var patient=adminData.find(function(p){return p.usuario===usuario;});if(!patient)return;
-  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8','Unidad 9'];
   function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
   var byUnit={};patient.ejercicios.forEach(function(e){var u=e.unidad||'Sin unidad';if(!byUnit[u])byUnit[u]=[];byUnit[u].push(e);});
   var sortedUnits=Object.keys(byUnit).sort(function(a,b){return unitIdx(a)-unitIdx(b);});
@@ -2882,12 +3198,12 @@ function generateUnitPDF(usuario,unit){
 
 function generateGeneralReport(){
   if(!adminData||!adminData.length){showToast('Sin datos para el informe');return;}
-  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8'];
+  var UNIT_ORDER=['Bienvenida','Unidad 1','Unidad 2','Unidad 3','Unidad 4','Unidad 5','Unidad 6','Unidad 7','Unidad 8','Unidad 9'];
   function unitIdx(u){var i=UNIT_ORDER.findIndex(function(x){return u&&u.toLowerCase().includes(x.toLowerCase());});return i===-1?99:i;}
   var totalEjs=0;adminData.forEach(function(p){totalEjs+=p.ejercicios.length;});
   var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
-  h+='<div class="hdr-info"><div class="hdr-lbl">Informe General</div><div class="hdr-val">Todos los Pacientes</div><div class="hdr-date">'+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
-  h+='<div class="stats-grid"><div class="stat-box"><div class="stat-lbl">Pacientes</div><div class="stat-val">'+adminData.length+'</div></div><div class="stat-box"><div class="stat-lbl">Ejercicios totales</div><div class="stat-val">'+totalEjs+'</div></div><div class="stat-box"><div class="stat-lbl">Promedio</div><div class="stat-val">'+(totalEjs/adminData.length).toFixed(1)+'</div></div></div>';
+  h+='<div class="hdr-info"><div class="hdr-lbl">Informe General</div><div class="hdr-val">Todos los Players</div><div class="hdr-date">'+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
+  h+='<div class="stats-grid"><div class="stat-box"><div class="stat-lbl">Players</div><div class="stat-val">'+adminData.length+'</div></div><div class="stat-box"><div class="stat-lbl">Ejercicios totales</div><div class="stat-val">'+totalEjs+'</div></div><div class="stat-box"><div class="stat-lbl">Promedio</div><div class="stat-val">'+(totalEjs/adminData.length).toFixed(1)+'</div></div></div>';
   h+='<div class="sec-title">Resumen por paciente</div>';
   h+='<table class="sumtable"><thead><tr><th>Paciente</th><th>Usuario</th><th>Ejercicios</th><th>Ultimo envio</th></tr></thead><tbody>';
   var sorted=adminData.slice().sort(function(a,b){return a.nombre.localeCompare(b.nombre,'es');});
@@ -2963,21 +3279,8 @@ function renderTEOSQExercise(lid){
   h+='<div style="margin-top:.5rem;font-size:.78rem;font-style:italic;color:var(--muted);">Respond\u00e9 de la manera m\u00e1s honesta posible</div>';
   h+='</div>';
 
-  /* ── Tabs ── */
-  h+='<div class="teosq-tabs">';
-  h+='<div class="teosq-tab on" id="ttab0" onclick="tqTab(0)">1. Cuestionario</div>';
-  h+='<div class="teosq-tab" id="ttab1" onclick="tqTab(1)">2. Resultados</div>';
-  h+='<div class="teosq-tab" id="ttab2" onclick="tqTab(2)">3. Interpretaci\u00f3n</div>';
-  h+='</div>';
-
   /* ══ PANE 1 — Cuestionario ══ */
   h+='<div class="teosq-pane on" id="tpane0">';
-
-  /* Progreso */
-  h+='<div class="teosq-prog" style="margin:.85rem 1.25rem .75rem;">';
-  h+='<div class="teosq-prog-bar"><div class="teosq-prog-fill" id="tq-prog-fill" style="width:'+(answered/13*100)+'%"></div></div>';
-  h+='<div class="teosq-prog-lbl"><span id="tq-prog-n">'+answered+'</span> / 13 respondidas</div>';
-  h+='</div>';
 
   /* Tabla */
   h+='<div class="tq-table-wrap">';
@@ -3011,8 +3314,10 @@ function renderTEOSQExercise(lid){
 
   /* Botón enviar */
   h+='<div class="ex-submit-row" style="margin-top:.85rem;">';
-  h+='<button class="btn-ex-send" id="tq-send-btn" onclick="tqSubmit()" '+(answered<13?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+(alreadyDone?'Actualizar env\u00edo':'Enviar a Mauro')+'</button>';
-  h+='<p class="ex-submit-note" id="tq-send-note" style="'+(answered>=13?'color:var(--green);':'')+'">'+( answered<13 ? 'Respond\u00e9 las '+(13-answered)+' preguntas restantes' : 'Tus respuestas ser\u00e1n enviadas a Mauro')+'</p>';
+  h+='<button class="btn-ex-send'+(alreadyDone?' state-sent':'')+'" id="tq-send-btn" onclick="tqSubmit()" '+(answered<13&&!alreadyDone?'disabled':'')+'>'+
+  '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+
+  (alreadyDone?'Enviado':'Enviar a Psicopoker')+'</button>';
+  h+='<p class="ex-submit-note" id="tq-send-note" style="'+(answered>=13?'color:var(--green);':'')+'">'+( answered<13 ? 'Respond\u00e9 las '+(13-answered)+' preguntas restantes' : 'Tus respuestas ser\u00e1n enviadas a Psicopoker')+'</p>';
   h+='</div></div>';
 
   /* ══ PANE 2 — Resultados ══ */
@@ -3129,7 +3434,7 @@ function renderTEOSQExercise(lid){
 
   h+='</div></div></div>';
 
-  document.getElementById('mc-body').innerHTML=h;
+  document.getElementById('mc-body').innerHTML += h;
   tqUpdateProgress();
   tqUpdateResults();
   setTimeout(function(){injectAttachmentSection(teosqLid);},150);
@@ -3158,7 +3463,7 @@ function tqSelect(n,val){
   saveDraft(teosqLid,data);
   updateSaveStatus('Borrador guardado','#22C55E');
 }
-function tqUpdateProgress(){var count=Object.keys(teosqAns).length;var pf=document.getElementById('tq-prog-fill');var pn=document.getElementById('tq-prog-n');var btn=document.getElementById('tq-send-btn');var note=document.getElementById('tq-send-note');if(pf)pf.style.width=(count/13*100)+'%';if(pn)pn.textContent=count;if(btn)btn.disabled=(count<13);if(note){note.textContent=count<13?'Responde las '+(13-count)+' preguntas restantes':'Tus respuestas seran enviadas a Mauro';note.style.color=count<13?'var(--dim)':'var(--green)';}}
+function tqUpdateProgress(){var count=Object.keys(teosqAns).length;var btn=document.getElementById('tq-send-btn');if(btn){var alreadySent=btn.classList.contains('state-sent')||btn.classList.contains('state-modified')||btn.classList.contains('state-sending');if(!alreadySent){btn.disabled=(count<13);}else if(btn.classList.contains('state-sent')&&count>=0){exBtnMarkModified('tq-send-btn');}}}
 function tqCalc(){var ei=[1,3,4,6,9,11],ti=[2,5,7,8,10,12,13],eS=0,eC=0,tS=0,tC=0;ei.forEach(function(n){if(teosqAns[n]){eS+=teosqAns[n];eC++;}});ti.forEach(function(n){if(teosqAns[n]){tS+=teosqAns[n];tC++;}});return{ego:eC===6?Math.round(eS/6*100)/100:null,tar:tC===7?Math.round(tS/7*100)/100:null};}
 function tqLevel(s){if(s===null)return{lbl:'—',cls:''};if(s<=2.9)return{lbl:'Baja ('+s.toFixed(2)+')',cls:'tlvl-low'};if(s<=4.2)return{lbl:'Media ('+s.toFixed(2)+')',cls:'tlvl-mid'};return{lbl:'Alta ('+s.toFixed(2)+')',cls:'tlvl-hi'};}
 function tqUpdateResults(){
@@ -3218,22 +3523,24 @@ function tqUpdateResults(){
 }
 function tqSubmit(){
   var s=tqCalc();if(!s.ego||!s.tar)return;
-  var user=USERS[S.user],answers=[];
-  TEOSQ_ITEMS.forEach(function(item){answers.push({fid:'teosq_'+item.n,pregunta:item.t,respuesta:String(teosqAns[item.n]||'')});});
-  answers.push({fid:'teosq_ego',pregunta:'SCORE Orientacion al Ego',respuesta:s.ego.toFixed(2)});
-  answers.push({fid:'teosq_tar',pregunta:'SCORE Orientacion a la Tarea',respuesta:s.tar.toFixed(2)});
-  var eHi=s.ego>=3,tHi=s.tar>=3;
-  answers.push({fid:'teosq_perfil',pregunta:'Perfil',respuesta:!eHi&&tHi?'Tarea alta / Ego baja':eHi&&!tHi?'Ego alta / Tarea baja':eHi&&tHi?'Ego alta / Tarea alta':'Ego baja / Tarea baja'});
-  var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,usuario:S.user,unidad:(EX_DEFS[teosqLid]&&EX_DEFS[teosqLid].unit)||'Unidad 1',ejercicio:'TEOSQ',lid:teosqLid,respuestas:answers};
-  var saved=getLocalSubs();var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});
-  if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
-    getAttachAnswers(tqLid).forEach(function(a){answers.push(a);});
-  localStorage.setItem('pp_submissions',JSON.stringify(saved));
-  markDoneL(teosqLid);
-  var btn=document.getElementById('tq-send-btn');if(btn){btn.textContent='Actualizar envio';btn.style.background='var(--green)';btn.disabled=false;}
-  updateSaveStatus('Enviado a Mauro','#22C55E');showToast('TEOSQ enviado a Mauro!');
-  var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
-  if(rec.airtableId){updateAirtable(rec.airtableId,rec);}else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
+  var _tqBtn=document.getElementById('tq-send-btn');
+  if(_tqBtn)exBtnSetState(_tqBtn,'sending');
+    var user=USERS[S.user],answers=[];
+    TEOSQ_ITEMS.forEach(function(item){answers.push({fid:'teosq_'+item.n,pregunta:item.t,respuesta:String(teosqAns[item.n]||'')});});
+    answers.push({fid:'teosq_ego',pregunta:'SCORE Orientacion al Ego',respuesta:s.ego.toFixed(2)});
+    answers.push({fid:'teosq_tar',pregunta:'SCORE Orientacion a la Tarea',respuesta:s.tar.toFixed(2)});
+    var eHi=s.ego>=3,tHi=s.tar>=3;
+    answers.push({fid:'teosq_perfil',pregunta:'Perfil',respuesta:!eHi&&tHi?'Tarea alta / Ego baja':eHi&&!tHi?'Ego alta / Tarea baja':eHi&&tHi?'Ego alta / Tarea alta':'Ego baja / Tarea baja'});
+    var rec={ts:Date.now(),fecha:new Date().toLocaleString('es-AR'),jugador:user.name,usuario:S.user,unidad:(EX_DEFS[teosqLid]&&EX_DEFS[teosqLid].unit)||'Unidad 1',ejercicio:'TEOSQ',lid:teosqLid,respuestas:answers};
+    getAttachAnswers(teosqLid).forEach(function(a){answers.push(a);});
+    var saved=getLocalSubs();var idx=saved.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});
+    if(idx>=0){rec.airtableId=saved[idx].airtableId;saved[idx]=rec;}else{saved.push(rec);}
+    localStorage.setItem('pp_submissions',JSON.stringify(saved));
+    markDoneL(teosqLid);
+    if(_tqBtn)exBtnSetState(_tqBtn,'sent');
+    updateSaveStatus('Enviado a Psicopoker','#22C55E');showToast('TEOSQ enviado a Psicopoker!');
+    var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
+    if(rec.airtableId){updateAirtable(rec.airtableId,rec);}else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===teosqLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
 
 /* ════ GRID CUSTOMIZABLE ════ */
@@ -3408,8 +3715,9 @@ function pmtSectionHTML(titleNum, titleText, items, draft) {
 function renderPMTExercise(lid) {
   pmtLid = lid;
   var draft = loadDraft(lid) || {};
+  var alreadyDone = isDone(lid);
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
 
   // Header
   h += '<div class="tq-hdr-box">';
@@ -3457,11 +3765,12 @@ function renderPMTExercise(lid) {
   h += '</div>'; // pane 1
 
   // Submit
+  h += '<div id="pmt-alert" class="pmt-alert"><span class="pmt-alert-icon">⚠️</span><div class="pmt-alert-text"><strong>Faltan campos por completar</strong><span id="pmt-alert-detail">Ponele una nota del 1 al 10 a todos los ítems antes de enviar.</span></div></div>';
   h += '<div class="ex-submit-row">';
-  h += '<button class="btn-ex-send" id="btn-ex-' + lid + '" onclick="pmtSubmit()">';
+  h += '<button class="btn-ex-send'+(alreadyDone?' state-sent':'')+'" id="btn-ex-' + lid + '" onclick="pmtSubmit()">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' Enviar a Mauro</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += ' '+(alreadyDone?'Enviado':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML += h;
@@ -3480,9 +3789,27 @@ function pmtAutoSave() {
   });
   saveDraft(pmtLid, data);
   updateSaveStatus('Borrador guardado', 'rgba(238,239,243,.5)');
+  exBtnMarkModified('btn-ex-' + pmtLid);
 }
 
 function pmtSubmit() {
+  // Validation: all 15 items must have a note
+  var allItems = PMT_ITEMS.sec1.concat(PMT_ITEMS.sec2a).concat(PMT_ITEMS.sec2b);
+  var missing = allItems.filter(function(it) { return pmtGetN(it.fid) === null; });
+  var alertEl = document.getElementById('pmt-alert');
+  var detailEl = document.getElementById('pmt-alert-detail');
+  if (missing.length > 0) {
+    if (alertEl) alertEl.classList.add('show');
+    if (detailEl) {
+      var names = missing.map(function(it){ return '«' + it.label + '»'; }).join(', ');
+      detailEl.textContent = 'Todavía faltan ' + missing.length + ' ítem' + (missing.length > 1 ? 's' : '') + ' sin puntuar: ' + names + '.';
+    }
+    // Scroll to alert
+    if (alertEl) alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  if (alertEl) alertEl.classList.remove('show');
+  var _pmtBtn=document.getElementById('btn-ex-'+pmtLid);if(_pmtBtn)exBtnSetState(_pmtBtn,'sending');
   var s = pmtCalcScores();
   var user = USERS[S.user];
   var answers = [];
@@ -3511,9 +3838,9 @@ function pmtSubmit() {
   markDoneL(pmtLid);
   fbSaveSubmission(S.user, pmtLid, rec);
   var btn = document.getElementById('btn-ex-' + pmtLid);
-  if (btn) { btn.textContent = isUpdate ? 'Actualizar envío' : 'Enviar a Mauro'; btn.style.background = 'var(--green)'; btn.disabled = false; }
-  updateSaveStatus('Enviado a Mauro', '#22C55E');
-  showToast(isUpdate ? 'Respuestas actualizadas!' : 'Enviado a Mauro!');
+  if (btn) { exBtnSetState(btn, 'sent'); }
+  updateSaveStatus('Enviado a Psicopoker', '#22C55E');
+  showToast(isUpdate ? 'Respuestas actualizadas!' : 'Enviado a Psicopoker!');
   var unit = C.find(function(u){ return u.id === S.unitId; });
   if (unit) renderSidebar(unit);
   if (isUpdate && rec.airtableId) { updateAirtable(rec.airtableId, rec); }
@@ -3728,8 +4055,10 @@ function renderIPEDExercise(lid){
   });
   h+='</tbody></table></div>';
   h+='<div class="ex-submit-row" style="margin-top:.85rem;">';
-  h+='<button class="btn-ex-send" id="iped-send-btn" onclick="ipedSubmit()" '+(answered<42?'disabled':'')+' style="'+(alreadyDone?'background:var(--green);':'')+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h+='<p class="ex-submit-note" id="iped-send-note" style="'+(answered>=42?'color:var(--green);':'')+'">'+( answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Mauro')+'</p>';
+  h+='<button class="btn-ex-send'+(alreadyDone?' state-sent':'')+'" id="iped-send-btn" onclick="ipedSubmit()" '+(answered<42&&!alreadyDone?'disabled':'')+'>'+
+  '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> '+
+  (alreadyDone?'Enviado':'Enviar a Psicopoker')+'</button>';
+  h+='<p class="ex-submit-note" id="iped-send-note" style="'+(answered>=42?'color:var(--green);':'')+'">'+( answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Psicopoker')+'</p>';
   h+='</div></div>';
 
   // ── PANE 1: resultados ──
@@ -3785,7 +4114,7 @@ function renderIPEDExercise(lid){
   });
   h+='</div></div></div>';
 
-  document.getElementById('mc-body').innerHTML=h;
+  document.getElementById('mc-body').innerHTML += h;
   ipedUpdateResults();
   setTimeout(function(){injectAttachmentSection(lid);},150);
 }
@@ -3810,9 +4139,9 @@ function ipedSelect(n,val){
   var cel=document.getElementById('iped-cell'+n+'_'+val);if(cel)cel.className='tq-cell-sel';
   var row=document.getElementById('iped-row'+n);if(row)row.className='tq-answered';
   var answered=Object.keys(ipedAns).length;
-  var btn=document.getElementById('iped-send-btn');if(btn)btn.disabled=answered<42;
+  var btn=document.getElementById('iped-send-btn');if(btn){var alreadySent=btn.classList.contains('state-sent')||btn.classList.contains('state-modified');if(!alreadySent)btn.disabled=answered<42;else if(answered>=42)exBtnMarkModified('iped-send-btn');}
   var note=document.getElementById('iped-send-note');
-  if(note){note.textContent=answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Mauro';note.style.color=answered>=42?'var(--green)':'';}
+  if(note){note.textContent=answered<42?'Respondé las '+(42-answered)+' preguntas restantes':'Tus respuestas serán enviadas a Psicopoker';note.style.color=answered>=42?'var(--green)':'';}
   var data=loadDraft(ipedLid)||{};IPED_ITEMS.forEach(function(it){data['iped_'+it.n]=ipedAns[it.n]||0;});
   saveDraft(ipedLid,data);
   updateSaveStatus('Borrador guardado','rgba(238,239,243,.5)');
@@ -3855,6 +4184,7 @@ function ipedUpdateResults(){
 }
 
 function ipedSubmit(){
+  var _ipedBtn=document.getElementById('iped-send-btn');if(_ipedBtn)exBtnSetState(_ipedBtn,'sending');
   var scores=ipedCalcScores();
   var user=USERS[S.user];
   var answers=[];
@@ -3870,9 +4200,9 @@ function ipedSubmit(){
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   markDoneL(ipedLid);fbSaveSubmission(S.user,ipedLid,rec);
   var btn=document.getElementById('iped-send-btn');
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';btn.disabled=false;}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){exBtnSetState(btn,'sent');}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===ipedLid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
@@ -4019,21 +4349,21 @@ function renderGPSExercise(lid) {
   var data = gpsGetData(lid);
   var alreadyDone = isDone(lid);
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">Planificación de Objetivos</div>';
   h += '<div class="tq-hdr-title">GPS de Objetivos</div>';
   h += '<div class="tq-hdr-sub" style="margin-top:.2rem;">Definí tu ruta de objetivos: sueño a 5 años, largo plazo, mediano plazo y corto plazo.</div>';
   h += '</div>';
 
-  h += '<div style="overflow-x:auto;">';
-  h += '<table id="gps-table" style="width:100%;border-collapse:collapse;min-width:680px;">';
+  h += '<div style="overflow-x:auto;padding:0 1.25rem;">';
+  h += '<table id="gps-table" style="width:100%;border-collapse:collapse;table-layout:fixed;">';
   h += '<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--border);">';
-  h += '<th style="padding:.65rem .6rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:32px;">#</th>';
+  h += '<th style="padding:.65rem .6rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:28px;">#</th>';
   h += '<th style="padding:.65rem 1rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;border-right:1px solid var(--border);">Objetivo específico y medible</th>';
-  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:110px;">Tipo</th>';
-  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:100px;">Deadline</th>';
-  h += '<th style="padding:.65rem 1rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:28%;">Habré logrado la mitad cuando...</th>';
+  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:120px;">Tipo</th>';
+  h += '<th style="padding:.65rem .5rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;border-right:1px solid var(--border);width:110px;">Deadline</th>';
+  h += '<th style="padding:.65rem 1rem;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;width:35%;">Habré logrado la mitad cuando...</th>';
   h += '</tr></thead><tbody id="gps-body">';
 
   GPS_ROWS.forEach(function(row) {
@@ -4058,13 +4388,19 @@ function renderGPSExercise(lid) {
 
   h += '</tbody></table></div>';
   h += '<div class="ex-submit-row">';
-  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="gpsSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
+  h += '<button class="btn-ex-send'+(alreadyDone?' state-sent':'')+'" id="btn-ex-'+lid+'" onclick="gpsSubmit(\''+lid+'\')">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += ' '+(alreadyDone?'Enviado':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
-  document.getElementById('mc-body').innerHTML += h;
+  // Inject GPS full-width outside mc-body
+  var _mcEl = document.getElementById('mc');
+  var _gpsWrap = document.createElement('div');
+  _gpsWrap.id = 'gps-fullwidth-wrap';
+  _gpsWrap.style.cssText = 'width:100%;flex-shrink:0;padding:0;';
+  _gpsWrap.innerHTML = h;
+  _mcEl.appendChild(_gpsWrap);
   setTimeout(function(){injectAttachmentSection(lid);},150);
 }
 
@@ -4086,6 +4422,7 @@ function gpsAddRow(lid, routeId) {
 }
 
 function gpsDraft(lid) {
+  exBtnMarkModified('btn-ex-' + lid);
   var data = loadDraft(lid)||{};
   document.querySelectorAll('[data-fid^="gps_"]').forEach(function(el) {
     data[el.getAttribute('data-fid')] = el.value;
@@ -4095,6 +4432,7 @@ function gpsDraft(lid) {
 }
 
 function gpsSubmit(lid) {
+  var _gpsBtn=document.getElementById('btn-ex-'+lid);if(_gpsBtn)exBtnSetState(_gpsBtn,'sending');
   var user = USERS[S.user];
   var answers = [];
   GPS_ROWS.forEach(function(row) {
@@ -4119,13 +4457,14 @@ function gpsSubmit(lid) {
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){exBtnSetState(btn,'sent');}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
+
 
 /* ── GPS ADMIN VIEW ─────────────────────────── */
 function renderGPSAdminView(ej, cid) {
@@ -4272,7 +4611,7 @@ function renderChecklistExercise(lid) {
   var data = clGetData(lid);
   var alreadyDone = isDone(lid);
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">Ejercicio 2 · Unidad 4</div>';
   h += '<div class="tq-hdr-title">Diseñá tu Checklist Pre-Sesión Personalizado</div>';
@@ -4344,10 +4683,10 @@ function renderChecklistExercise(lid) {
 
   // Submit
   h += '<div class="ex-submit-row">';
-  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="clSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
-  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '<button class="btn-ex-send'+(alreadyDone?' state-sent':'')+'" id="btn-ex-'+lid+'" onclick="clSubmit(\''+lid+'\')">'+
+  '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'+
+  ' '+(alreadyDone?'Enviado':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML += h;
@@ -4355,6 +4694,7 @@ function renderChecklistExercise(lid) {
 }
 
 function clSubmit(lid) {
+  var _clBtn=document.getElementById('btn-ex-'+lid);if(_clBtn)exBtnSetState(_clBtn,'sending');
   clSaveDraft(lid);
   var user = USERS[S.user];
   var answers = [];
@@ -4388,13 +4728,14 @@ function clSubmit(lid) {
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){exBtnSetState(btn,'sent');}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
+
 
 /* ── CHECKLIST ADMIN VIEW ─────────────────────── */
 function renderChecklistAdminView(ej, cid) {
@@ -4504,7 +4845,7 @@ function renderEquipExercise(lid) {
   var count = Math.max(equipRowCount(data), 14); // min 14 rows like Excel
   var alreadyDone = isDone(lid);
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">Planificación · Unidad 4</div>';
   h += '<div class="tq-hdr-title">Equipamiento Indispensable</div>';
@@ -4538,10 +4879,10 @@ function renderEquipExercise(lid) {
   h += '</div>';
 
   h += '<div class="ex-submit-row">';
-  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="equipSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
-  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '<button class="btn-ex-send'+(alreadyDone?' state-sent':'')+'" id="btn-ex-'+lid+'" onclick="equipSubmit(\''+lid+'\')">'+
+  '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'+
+  ' '+(alreadyDone?'Enviado':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML += h;
@@ -4566,9 +4907,9 @@ function equipSubmit(lid) {
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){exBtnSetState(btn,'sent');}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
@@ -4668,7 +5009,7 @@ function renderConcienciaExercise(lid) {
   var sel8 = [];
   try { sel8 = JSON.parse(data['cc_q8'] || '[]'); } catch(e) {}
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
 
   // Header
   h += '<div class="tq-hdr-box">';
@@ -4721,13 +5062,13 @@ function renderConcienciaExercise(lid) {
 
   // Submit
   h += '<div class="ex-submit-row">';
-  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="conSubmit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
-  h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += '<button class="btn-ex-send'+(alreadyDone?' state-sent':'')+'" id="btn-ex-'+lid+'" onclick="conSubmit(\''+lid+'\')">'+
+  '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'+
+  ' '+(alreadyDone?'Enviado':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
-  document.getElementById('mc-body').innerHTML = h;
+  document.getElementById('mc-body').innerHTML += h;
   setTimeout(function(){ injectAttachmentSection(lid); }, 150);
 }
 
@@ -4754,9 +5095,9 @@ function conSubmit(lid) {
   localStorage.setItem('pp_submissions', JSON.stringify(saved));
   markDoneL(lid); fbSaveSubmission(S.user, lid, rec);
   var btn = document.getElementById('btn-ex-'+lid);
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){exBtnSetState(btn,'sent');}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit = C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
@@ -4838,6 +5179,7 @@ function cajasGetData(lid) {
 }
 
 function cajasSaveDraft(lid) {
+  exBtnMarkModified('btn-ex-' + lid);
   var data = loadDraft(lid)||{};
   document.querySelectorAll('[data-caj]').forEach(function(el){ data[el.getAttribute('data-caj')]=el.value; });
   saveDraft(lid, data);
@@ -4892,7 +5234,7 @@ function renderCajas4Exercise(lid) {
   var alreadyDone = isDone(lid);
   function v(fid){ return data[fid]||''; }
 
-  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);">';
+  var h = '<div class="ex-wrap" style="border-top:2px solid var(--red);border-radius:0;border-left:none;border-right:none;margin:0;">';
   h += '<div class="tq-hdr-box">';
   h += '<div class="ex-badge">💼 Profesionalizando el Mindset · Unidad 6</div>';
   h += '<div class="tq-hdr-title">Las 4 Cajas — Definí y llenÁ tu estructura financiera</div>';
@@ -5055,10 +5397,10 @@ function renderCajas4Exercise(lid) {
 
   // Submit
   h += '<div class="ex-submit-row">';
-  h += '<button class="btn-ex-send" id="btn-ex-'+lid+'" onclick="cajas4Submit(\''+lid+'\')" style="'+(alreadyDone?'background:var(--green);':'')+'">';
+  h += '<button class="btn-ex-send'+(alreadyDone?' state-sent':'')+'" id="btn-ex-'+lid+'" onclick="cajas4Submit(\''+lid+'\')">';
   h += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-  h += ' '+(alreadyDone?'Actualizar envío':'Enviar a Mauro')+'</button>';
-  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Mauro</p>';
+  h += ' '+(alreadyDone?'Enviado':'Enviar a Psicopoker')+'</button>';
+  h += '<p class="ex-submit-note">Se enviará a la planilla de seguimiento de Psicopoker</p>';
   h += '</div></div>';
 
   document.getElementById('mc-body').innerHTML += h;
@@ -5075,6 +5417,7 @@ function cajasPaso(num, icon, title, desc) {
 }
 
 function cajas4Submit(lid) {
+  var _cajBtn=document.getElementById('btn-ex-'+lid);if(_cajBtn)exBtnSetState(_cajBtn,'sending');
   cajasSaveDraft(lid);
   var user = USERS[S.user];
   var answers = [];
@@ -5091,13 +5434,14 @@ function cajas4Submit(lid) {
   localStorage.setItem('pp_submissions',JSON.stringify(saved));
   markDoneL(lid);fbSaveSubmission(S.user,lid,rec);
   var btn=document.getElementById('btn-ex-'+lid);
-  if(btn){btn.textContent=isUpdate?'Actualizar envío':'Enviar a Mauro';btn.style.background='var(--green)';}
-  updateSaveStatus('Enviado a Mauro','#22C55E');
-  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Mauro!');
+  if(btn){exBtnSetState(btn,'sent');}
+  updateSaveStatus('Enviado a Psicopoker','#22C55E');
+  showToast(isUpdate?'Respuestas actualizadas!':'Enviado a Psicopoker!');
   var unit=C.find(function(u){return u.id===S.unitId;});if(unit)renderSidebar(unit);
   if(isUpdate&&rec.airtableId){updateAirtable(rec.airtableId,rec);}
   else{createAirtable(rec,function(id){if(id){var s2=getLocalSubs();var i2=s2.findIndex(function(s){return s.usuario===S.user&&s.lid===lid;});if(i2>=0){s2[i2].airtableId=id;localStorage.setItem('pp_submissions',JSON.stringify(s2));}}});}
 }
+
 
 /* ── CAJAS4 ADMIN VIEW ───────────────────────── */
 function renderCajas4AdminView(ej, cid) {
