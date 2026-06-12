@@ -509,6 +509,77 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .attach-pending-name{font-size:.76rem;font-weight:600;}
 .attach-note{font-size:.65rem;color:var(--dim);margin-top:.3rem;}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── MOBILE RESPONSIVE — LOGIN + GENERAL ─── */
+@media(max-width:640px){
+  /* Login: columna única, formulario primero */
+  /* Desbloquear scroll en TODAS las capas que lo bloquean */
+  body.login-active,
+  body.login-active html{overflow-y:auto!important;height:auto!important;}
+  body.login-active #app{height:auto!important;min-height:100vh;overflow:visible!important;}
+  body.login-active .view.active{overflow:visible!important;flex:none;}
+  body.login-active #vlogin{overflow-y:auto!important;min-height:100vh;height:auto!important;}
+  body.login-active .l-inner{overflow:visible!important;}
+  body.login-active .l-wrap{height:auto!important;}
+  .l-wrap{align-items:flex-start;padding:1.5rem 1rem 2rem;}
+  .l-inner{
+    flex-direction:column-reverse;
+    border-radius:14px;
+    min-height:unset;
+    max-width:100%;
+  }
+  .l-left{
+    width:100%;
+    border-right:none;
+    border-top:1px solid rgba(255,255,255,.06);
+    padding:1.25rem 1.25rem 1.5rem;
+    background:rgba(10,9,13,.6);
+  }
+  .l-logo{height:18px;}
+  .l-body{padding:.75rem 0 .5rem;}
+  .l-headline{font-size:1.2rem;}
+  .l-desc{max-width:100%;}
+  .l-stats{gap:1.25rem;padding-top:1rem;}
+  .l-stat-num{font-size:1.2rem;}
+  .l-right{
+    width:100%;
+    padding:1.5rem 1.25rem 1.25rem;
+  }
+  .lbox{
+    border-radius:12px;
+    padding:1.5rem 1.25rem;
+  }
+  .ltitle{font-size:.95rem;}
+  .finput{
+    font-size:16px; /* evita zoom automático en iOS */
+    padding:.75rem .9rem;
+  }
+  .btn-login{
+    padding:.85rem;
+    font-size:.7rem;
+  }
+  /* Blobs decorativos más discretos en mobile */
+  .l-blob-a{width:300px;height:300px;top:-80px;right:-60px;opacity:.7;}
+  .l-blob-b{width:180px;height:180px;bottom:-50px;right:60px;opacity:.45;}
+
+  /* Dashboard nav top */
+  .tnav{padding:0 1rem;}
+  .btn-sm{font-size:.6rem;padding:.28rem .55rem;}
+
+  /* Ejercicios view */
+  .exv-wrap{padding:1.25rem 1rem 2.5rem;}
+  .exv-unit-hdr{padding:.75rem 1rem;}
+  .exv-unit-title{font-size:.82rem;}
+  .exv-exercise{padding:.7rem 1rem;}
+}
+
+@media(max-width:400px){
+  .l-wrap{padding:1rem .75rem 1.5rem;}
+  .l-right{padding:1.25rem 1rem 1rem;}
+  .lbox{padding:1.25rem 1rem;}
+  .l-stats{gap:.85rem;}
+  .l-stat-num{font-size:1rem;}
+}
 </style>
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -2195,6 +2266,20 @@ function autoLogin() {
 function showView(id) {
   document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
+  // Mobile: habilitar scroll solo en login, bloquearlo en el resto
+  if(id === 'vlogin'){
+    document.body.classList.add('login-active');
+    document.documentElement.style.overflow = 'auto';
+    document.documentElement.style.height = 'auto';
+    document.body.style.overflow = 'auto';
+    document.body.style.height = 'auto';
+  } else {
+    document.body.classList.remove('login-active');
+    document.documentElement.style.overflow = '';
+    document.documentElement.style.height = '';
+    document.body.style.overflow = '';
+    document.body.style.height = '';
+  }
 }
 function isAdmin(){return S.user&&USERS[S.user]&&USERS[S.user].role==='admin';}
 function showDash(){
@@ -5613,6 +5698,12 @@ function renderCajas4AdminView(ej, cid) {
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('ip').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
   document.getElementById('iu').addEventListener('keydown', function(e) { if (e.key === 'Enter') document.getElementById('ip').focus(); });
+  // Mobile: login es la vista inicial, habilitar scroll desde el arranque
+  document.body.classList.add('login-active');
+  document.documentElement.style.overflow = 'auto';
+  document.documentElement.style.height = 'auto';
+  document.body.style.overflow = 'auto';
+  document.body.style.height = 'auto';
   fbLoadExtraUsers(function(){ autoLogin(); });
 });
 </script>
