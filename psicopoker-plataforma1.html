@@ -13,20 +13,6 @@
   --text:#EEEFF3;--muted:rgba(238,239,243,.56);--dim:rgba(238,239,243,.28);
   --green:#22C55E;--sw:282px;
 }
-/* TEMA CLARO */
-[data-theme="light"] {
-  --bg:#F4F4F6;--bg2:#FFFFFF;--bg3:#EAEAEC;--card:#FFFFFF;--card2:#F0F0F2;
-  --border:rgba(0,0,0,.1);--border-r:rgba(232,49,42,.3);
-  --text:#1A1A1F;--muted:rgba(26,26,31,.55);--dim:rgba(26,26,31,.3);
-  --red-dim:rgba(232,49,42,.1);
-}
-/* TEMA MEDIO (gris) */
-[data-theme="mid"] {
-  --bg:#2E3038;--bg2:#363840;--bg3:#3D3F49;--card:#3D3F49;--card2:#44464F;
-  --border:rgba(255,255,255,.1);--border-r:rgba(232,49,42,.3);
-  --text:#E8E9EE;--muted:rgba(232,233,238,.55);--dim:rgba(232,233,238,.28);
-  --red-dim:rgba(232,49,42,.14);
-}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
 body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;font-size:14px;line-height:1.6;}
@@ -669,7 +655,6 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
       <div class="uav" id="nav-av"></div>
       <span class="uname" id="nav-nm"></span>
       <button class="btn-sm" id="btn-admin" onclick="showAdmin()" style="display:none;">Panel Psicopoker</button>
-      <button class="btn-sm" id="btn-theme" onclick="openThemePicker()" title="Cambiar tema" style="padding:.3rem .55rem;font-size:.75rem;">&#9680;</button>
       <button id="btn-dl-full" onclick="generateMyFullPDF()" style="display:none;align-items:center;gap:.4rem;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:Montserrat,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .85rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><svg width="11" height="11" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Mi programa</button>
       <button class="btn-sm" onclick="doLogout()">Salir</button>
     </div>
@@ -796,7 +781,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     <div id="admin-sidebar" style="width:260px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;">
       <div style="padding:.85rem 1rem .6rem;">
         <div style="position:relative;">
-          <input id="admin-search" type="text" placeholder="Buscar player..." oninput="renderPatientList(this.value)"
+          <input id="admin-search" type="text" placeholder="Buscar paciente..." oninput="renderPatientList(this.value)"
             style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.55rem .85rem .55rem 2.1rem;border-radius:4px;outline:none;"
             onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
           <svg style="position:absolute;left:.65rem;top:50%;transform:translateY(-50%);opacity:.35;" width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M9 9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -815,31 +800,6 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 </div>
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 <div class="toast" id="toast"></div>
-<div id="theme-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;">
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.75rem 2rem;width:min(340px,90vw);box-shadow:0 8px 40px rgba(0,0,0,.4);">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
-      <span style="font-size:.72rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);">Tema de la plataforma</span>
-      <button onclick="closeThemePicker()" style="background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;line-height:1;">&#10005;</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:.65rem;">
-      <button onclick="applyTheme('dark')" id="theme-opt-dark" style="display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;border-radius:8px;border:2px solid transparent;background:#18191F;cursor:pointer;transition:all .2s;text-align:left;">
-        <span style="width:28px;height:28px;border-radius:50%;background:#18191F;border:2px solid rgba(255,255,255,.15);flex-shrink:0;"></span>
-        <div><div style="font-size:.82rem;font-weight:700;color:#EEEFF3;">Oscuro</div><div style="font-size:.68rem;color:rgba(238,239,243,.45);">Por defecto</div></div>
-        <svg id="theme-chk-dark" width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-left:auto;display:none;"><circle cx="8" cy="8" r="7" fill="#E8312A"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button onclick="applyTheme('mid')" id="theme-opt-mid" style="display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;border-radius:8px;border:2px solid transparent;background:#2E3038;cursor:pointer;transition:all .2s;text-align:left;">
-        <span style="width:28px;height:28px;border-radius:50%;background:#2E3038;border:2px solid rgba(255,255,255,.15);flex-shrink:0;"></span>
-        <div><div style="font-size:.82rem;font-weight:700;color:#E8E9EE;">Medio</div><div style="font-size:.68rem;color:rgba(232,233,238,.45);">Gris oscuro</div></div>
-        <svg id="theme-chk-mid" width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-left:auto;display:none;"><circle cx="8" cy="8" r="7" fill="#E8312A"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button onclick="applyTheme('light')" id="theme-opt-light" style="display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;border-radius:8px;border:2px solid transparent;background:#F4F4F6;cursor:pointer;transition:all .2s;text-align:left;">
-        <span style="width:28px;height:28px;border-radius:50%;background:#F4F4F6;border:2px solid rgba(0,0,0,.12);flex-shrink:0;"></span>
-        <div><div style="font-size:.82rem;font-weight:700;color:#1A1A1F;">Claro</div><div style="font-size:.68rem;color:rgba(26,26,31,.45);">Fondo blanco</div></div>
-        <svg id="theme-chk-light" width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-left:auto;display:none;"><circle cx="8" cy="8" r="7" fill="#E8312A"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
 <script>
 /* ATTACHMENTS */
 // Links use their own dedicated storage key — completely separate from exercise drafts
@@ -2368,7 +2328,7 @@ function showDash(){
   document.getElementById('dgreet').textContent='Bienvenido, '+usr.name.split(' ')[0]+' \u{1F44B}';
   var ab=document.getElementById('btn-admin');
   if(ab)ab.style.display=isAdmin()?'inline-flex':'none';
-  loadTheme();renderDash();showView('vdash');dashNav('unidades');
+  renderDash();showView('vdash');dashNav('unidades');
   var dlFull=document.getElementById('btn-dl-full');
   if(dlFull)dlFull.style.display=isAdmin()?'none':'flex';
 }
@@ -2376,7 +2336,7 @@ function renderDash() {
   var pct = totalPct();
   document.getElementById('op-fill').style.width = pct + '%';
   document.getElementById('op-lbl').textContent = pct + '% del programa completado';
-  getUnlockedUnits(function(unlocked) {
+  getUnlockedUnits(function(unlocked){
     var html = '';
     C.forEach(function(u) {
       var locked = !isUnitUnlocked(u.id, unlocked);
@@ -2384,34 +2344,34 @@ function renderDash() {
       if (locked) {
         html += '<div class="ucard ucard-locked">';
         html += '<div class="ucard-cover" style="position:relative;">';
-        html += '<div class="cover-img" style="background-image:url(' + u.img + ');filter:grayscale(1) brightness(.25);"></div>';
+        html += '<div class="cover-img" style="background-image:url('+u.img+');filter:grayscale(1) brightness(.25);"></div>';
         html += '<div class="cover-overlay"></div>';
-        html += '<div class="cover-top"><span class="ubadge ' + (u.num ? 'ubadge-n' : 'ubadge-w') + '" style="opacity:.35;">' + u.badge + '</span></div>';
+        html += '<div class="cover-top"><span class="ubadge '+(u.num?'ubadge-n':'ubadge-w')+'" style="opacity:.35;">'+u.badge+'</span></div>';
         html += '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">';
         html += '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="opacity:.55;"><rect x="3" y="11" width="18" height="11" rx="2" stroke="#fff" stroke-width="1.8"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>';
         html += '</div></div>';
         html += '<div class="ucard-body" style="opacity:.4;">';
-        html += '<div class="uctitle">' + u.title + '</div>';
-        html += '<div class="ucdesc">' + u.desc + '</div>';
+        html += '<div class="uctitle">'+u.title+'</div>';
+        html += '<div class="ucdesc">'+u.desc+'</div>';
         html += '<div class="ucfoot"><div class="upwrap"><div class="upbar"><div class="upfill" style="width:0"></div></div>';
         html += '<div class="uppct m">Bloqueada</div></div>';
         html += '<button class="btn-uc btn-uc-s" style="opacity:.35;cursor:not-allowed;">&#128274; Bloqueada</button>';
         html += '</div></div></div>';
       } else {
-        var bc = p.pct === 0 ? 'btn-uc-s' : p.pct === 100 ? 'btn-uc-d' : 'btn-uc-c';
-        var bt = p.pct === 0 ? 'Empezar' : p.pct === 100 ? '&#10003; Completada' : 'Continuar &rarr;';
-        html += '<div class="ucard" onclick="openUnit(\'' + u.id + '\')">';
+        var bc = p.pct===0?'btn-uc-s':p.pct===100?'btn-uc-d':'btn-uc-c';
+        var bt = p.pct===0?'Empezar':p.pct===100?'&#10003; Completada':'Continuar &rarr;';
+        html += '<div class="ucard" onclick="openUnit(''+u.id+'')">';
         html += '<div class="ucard-cover">';
-        html += '<div class="cover-img" style="background-image:url(' + u.img + ')"></div>';
+        html += '<div class="cover-img" style="background-image:url('+u.img+')"></div>';
         html += '<div class="cover-overlay"></div>';
-        html += '<div class="cover-top"><span class="ubadge ' + (u.num ? 'ubadge-n' : 'ubadge-w') + '">' + u.badge + '</span></div>';
+        html += '<div class="cover-top"><span class="ubadge '+(u.num?'ubadge-n':'ubadge-w')+'">'+u.badge+'</span></div>';
         html += '</div>';
         html += '<div class="ucard-body">';
-        html += '<div class="uctitle">' + u.title + '</div>';
-        html += '<div class="ucdesc">' + u.desc + '</div>';
-        html += '<div class="ucfoot"><div class="upwrap"><div class="upbar"><div class="upfill" style="width:' + p.pct + '%"></div></div>';
-        html += '<div class="uppct ' + (p.pct === 100 ? 'g' : 'm') + '">' + p.pct + '% completado</div></div>';
-        html += '<button class="btn-uc ' + bc + '">' + bt + '</button>';
+        html += '<div class="uctitle">'+u.title+'</div>';
+        html += '<div class="ucdesc">'+u.desc+'</div>';
+        html += '<div class="ucfoot"><div class="upwrap"><div class="upbar"><div class="upfill" style="width:'+p.pct+'%"></div></div>';
+        html += '<div class="uppct '+(p.pct===100?'g':'m')+'">'+p.pct+'% completado</div></div>';
+        html += '<button class="btn-uc '+bc+'">'+bt+'</button>';
         html += '</div></div></div>';
       }
     });
@@ -2419,15 +2379,23 @@ function renderDash() {
   });
 }
 function openUnit(uid) {
-  var unit = C.find(function(u) { return u.id === uid; });
+  var unit = C.find(function(u){ return u.id===uid; });
   if (!unit) return;
-  getUnlockedUnits(function(unlocked) {
-    if (!isUnitUnlocked(uid, unlocked)) { showToast('Esta unidad todav\u00eda no est\u00e1 habilitada'); return; }
+  getUnlockedUnits(function(unlocked){
+    if(!isUnitUnlocked(uid,unlocked)){ showToast('Esta unidad todav\u00eda no est\u00e1 habilitada'); return; }
     S.unitId = uid;
-    var all = (unit.lessons || []).concat(unit.extra || []);
-    var first = all.find(function(l) { return !isDone(l.id); }) || all[0];
+    var all=(unit.lessons||[]).concat(unit.extra||[]);
+    var first=all.find(function(l){return !isDone(l.id);})||all[0];
     openLesson(uid, first.id);
   });
+}
+
+  var unit = C.find(function(u) { return u.id === uid; });
+  if (!unit) return;
+  S.unitId = uid;
+  var all = (unit.lessons || []).concat(unit.extra || []);
+  var first = all.find(function(l) { return !isDone(l.id); }) || all[0];
+  openLesson(uid, first.id);
 }
 function openLesson(uid, lid) {
   S.unitId = uid; S.lessonId = lid;
@@ -2793,33 +2761,34 @@ function showPatient(usuario){
   h+='</div>';
   h+='<div id="unlock-chips-'+usuario+'" style="display:flex;flex-wrap:wrap;gap:.45rem;"><span style="font-size:.72rem;color:var(--dim);">Cargando...</span></div>';
   h+='</div>';
-  // Content — unidades como banners desplegables
+  // Content — unidades como banners desplegables con IA
   h+='<div style="padding:1.5rem 1.75rem;">';
   var teosqQueue=[];
   sortedUnits.forEach(function(unit,ui){
     var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
     var nEx=exs.length;
     var uid='admu_'+(usuario+'_'+ui).replace(/[^a-z0-9]/gi,'_');
-    // Banner de unidad (desplegable)
+    // Banner desplegable de unidad
     h+='<div style="border:1px solid var(--border-r);border-radius:8px;overflow:hidden;margin-bottom:.85rem;">';
-    h+='<div id="hdr-'+uid+'" onclick="toggleAdminUnit(\''+uid+'\')" style="display:flex;align-items:center;gap:.85rem;padding:.85rem 1.25rem;background:rgba(232,49,42,.07);cursor:pointer;user-select:none;">';
+    // Header del banner
+    h+='<div onclick="toggleAdminUnit(\''+uid+'\')" style="display:flex;align-items:center;gap:.75rem;padding:.85rem 1.25rem;background:rgba(232,49,42,.07);cursor:pointer;user-select:none;">';
     h+='<span style="font-size:.6rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.2rem .65rem;border-radius:3px;flex-shrink:0;">'+unit+'</span>';
     h+='<span style="font-size:.78rem;font-weight:600;color:var(--muted);flex:1;">'+nEx+' ejercicio'+(nEx!==1?'s':'')+' completado'+(nEx!==1?'s':'')+'</span>';
     h+='<button onclick="event.stopPropagation();generateUnitPDF(\''+usuario+'\',\''+unit+'\')" style="display:flex;align-items:center;gap:.35rem;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;flex-shrink:0;">';
     h+='<svg width="10" height="10" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>PDF</button>';
-    h+='<button onclick="event.stopPropagation();var w=document.getElementById(\'ai-unit-wrap-\'+uid);if(w.style.display===\'none\'){w.style.display=\'block\';aiAnalyzeUnit(uid,unit,window[\'_byUnit_\'+activePatient]||{});}else{w.style.display=\'none\';}" style="display:flex;align-items:center;gap:.35rem;background:rgba(232,49,42,.12);border:1px solid rgba(232,49,42,.3);color:var(--red);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;flex-shrink:0;">';
-    h+='<svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>IA</button>';
+    h+='<button onclick="event.stopPropagation();adminShowUnitAI(\''+uid+'\',\''+unit+'\',\''+usuario+'\')" style="display:flex;align-items:center;gap:.35rem;background:rgba(232,49,42,.13);border:1px solid rgba(232,49,42,.35);color:var(--red);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;flex-shrink:0;">';
+    h+='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>An\u00e1lisis IA</button>';
     h+='<svg id="chev-'+uid+'" width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;color:var(--red);transition:transform .25s;"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     h+='</div>';
-    // Bloque AI de unidad
-    h+='<div id="ai-unit-wrap-'+uid+'" style="display:none;border-bottom:1px solid var(--border);background:rgba(232,49,42,.03);">';
-    h+='<div style="padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;">';
-    h+='<span style="font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);">Análisis IA &middot; '+unit+'</span>';
-    h+='<button onclick="document.getElementById(\'ai-unit-wrap-\'+uid).style.display=\'none\'" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:.9rem;">&#10005;</button>';
+    // Panel IA de unidad (oculto por defecto)
+    h+='<div id="ai-unit-panel-'+uid+'" style="display:none;border-bottom:1px solid var(--border);background:rgba(232,49,42,.03);">';
+    h+='<div style="padding:.65rem 1.25rem;display:flex;align-items:center;justify-content:space-between;">';
+    h+='<span style="font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);">An\u00e1lisis IA \u00b7 '+unit+'</span>';
+    h+='<button onclick="document.getElementById(\'ai-unit-panel-'+uid+'\').style.display=\'none\'" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:.85rem;line-height:1;">&#10005;</button>';
     h+='</div>';
-    h+='<div id="ai-unit-'+uid+'" style="padding:0 1rem .75rem;"></div>';
+    h+='<div id="ai-unit-'+uid+'" style="padding:0 1.25rem .85rem;min-height:2rem;"></div>';
     h+='</div>';
-    // Cuerpo de la unidad (colapsado por defecto)
+    // Cuerpo desplegable de la unidad
     h+='<div id="'+uid+'" style="display:none;">';
     h+='<div style="padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.75rem;">';
     exs.forEach(function(ej,idx){
@@ -2875,22 +2844,20 @@ function toggleEj(eid,hdr){
   body.style.display=open?'none':'block';
   var btn=hdr.querySelector('.sub-toggle');
   if(btn)btn.innerHTML=open?btn.innerHTML.replace('&#9650;','&#9660;').replace('Ocultar','Ver'):btn.innerHTML.replace('&#9660;','&#9650;').replace('Ver','Ocultar');
-  // Inject AI button when opening, if admin and not yet injected
-  if(!open && isAdmin()){
-    var aiWrap = document.getElementById('ai-wrap-'+eid);
-    if(!aiWrap){
-      var aiDiv = document.createElement('div');
-      aiDiv.id = 'ai-wrap-'+eid;
-      aiDiv.style.cssText = 'border-top:1px solid var(--border);background:rgba(232,49,42,.03);';
-      aiDiv.innerHTML = '<div style="padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">' +
-        '<span style="font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);opacity:.8;">Análisis IA</span>' +
-        '<button onclick="var c=document.getElementById('ai-ex-'+eid+'');if(c&&c.style.display!=='none'&&c.innerHTML!==''){c.style.display='none';}else{aiAnalyzeExercise(''+eid+'',window._ejData_'+eid+');}" style="display:flex;align-items:center;gap:.35rem;background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.3rem .8rem;border-radius:3px;cursor:pointer;">'+
-        '<svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>' +
-        'Generar análisis</button>' +
-        '</div>' +
-        '<div id="ai-ex-'+eid+'" style="display:none;"></div>';
-      body.appendChild(aiDiv);
-    }
+  if(!open&&isAdmin()&&!document.getElementById('ai-ex-wrap-'+eid)){
+    var ejData=window['_ejData_'+eid];
+    if(!ejData)return;
+    var wrap=document.createElement('div');
+    wrap.id='ai-ex-wrap-'+eid;
+    wrap.style.cssText='border-top:1px solid rgba(232,49,42,.2);background:rgba(232,49,42,.03);';
+    wrap.innerHTML='<div style="padding:.55rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">'
+      +'<span style="font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);opacity:.85;">An\u00e1lisis IA</span>'
+      +'<button id="ai-ex-btn-'+eid+'" onclick="adminShowExAI(''+eid+'')" style="display:flex;align-items:center;gap:.35rem;background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.3rem .85rem;border-radius:3px;cursor:pointer;">'
+      +'<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'
+      +'Generar an\u00e1lisis</button>'
+      +'</div>'
+      +'<div id="ai-ex-'+eid+'" style="display:none;"></div>';
+    body.appendChild(wrap);
   }
 }
 
@@ -2918,7 +2885,7 @@ function renderUnlockChips(usuario){
       } else {
         var onSty='display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .7rem;border-radius:20px;background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.35);font-size:.68rem;font-weight:700;color:#22C55E;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;';
         var offSty='display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .7rem;border-radius:20px;background:var(--bg3);border:1px solid var(--border);font-size:.68rem;font-weight:700;color:var(--dim);cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;';
-        h+='<button id="uc-'+usuario+'-'+u.id+'" data-u="'+usuario+'" data-uid="'+u.id+'" onclick="adminToggleUnlock(this.dataset.u,this.dataset.uid)" style="'+(on?onSty:offSty)+'">';
+        h+='<button id="uc-'+usuario+'-'+u.id+'" onclick="adminToggleUnlock(''+usuario+'',''+u.id+'')" style="'+(on?onSty:offSty)+'">';
         if(on) h+='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>';
         else   h+='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
         h+=u.badge+'</button>';
@@ -3076,7 +3043,7 @@ function renderUserTab(){
   h+='<h2 style="font-size:1.1rem;font-weight:800;margin-bottom:.35rem;">Players del Programa</h2>';
   h+='<p style="font-size:.8rem;color:var(--muted);margin-bottom:1.75rem;">Agrega nuevos players aca.</p>';
   h+='<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1.75rem;">';
-  h+='<p style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Nuevo Player</p>';
+  h+='<p style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Nuevo Paciente</p>';
   h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:.9rem;">';
   h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Nombre completo</label><input id="nu-name" type="text" placeholder="Carlos Rodriguez" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
   h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Usuario</label><input id="nu-user" type="text" placeholder="carlos_r" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
@@ -3090,7 +3057,7 @@ function renderUserTab(){
   h+='<label style="display:flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border:1px solid var(--border);border-radius:4px;cursor:pointer;font-size:.8rem;font-weight:600;background:var(--bg2);transition:border-color .15s;" id="lbl-psy-arturo">';
   h+='<input type="radio" name="nu-psy" value="arturo" id="nu-psy-arturo" style="accent-color:var(--red);"> Arturo</label>';
   h+='</div></div>';
-  h+='<button onclick="addPatient()" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;cursor:pointer;">+ Agregar Player</button>';
+  h+='<button onclick="addPatient()" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;cursor:pointer;">+ Agregar Paciente</button>';
   h+='<span id="nu-msg" style="font-size:.75rem;margin-left:1rem;color:var(--green);display:none;">Guardado!</span></div>';
   h+='<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;">';
   h+='<div style="padding:.75rem 1.25rem;background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:grid;grid-template-columns:1fr 100px 130px 80px 70px;gap:.5rem;"><span>Nombre</span><span>Usuario</span><span>Contraseña</span><span>Psicólogo</span><span>Acción</span></div>';
@@ -3521,7 +3488,7 @@ function openPDF(title,bodyHtml){
 function pdfPatientHeader(patient,sortedUnits){
   var last=patient.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;}).fecha||'—';
   var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
-  h+='<div class="hdr-info"><div class="hdr-lbl">Informe del player</div><div class="hdr-val">'+patient.nombre+'</div><div class="hdr-date">@'+patient.usuario+' &nbsp;·&nbsp; '+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
+  h+='<div class="hdr-info"><div class="hdr-lbl">Informe del paciente</div><div class="hdr-val">'+patient.nombre+'</div><div class="hdr-date">@'+patient.usuario+' &nbsp;·&nbsp; '+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
   h+='<div class="stats-grid"><div class="stat-box"><div class="stat-lbl">Ejercicios</div><div class="stat-val">'+patient.ejercicios.length+'</div></div><div class="stat-box"><div class="stat-lbl">Unidades</div><div class="stat-val">'+sortedUnits.length+'</div></div><div class="stat-box"><div class="stat-lbl">Ultimo envio</div><div class="stat-val" style="font-size:12px;padding-top:4px;">'+last.substring(0,10)+'</div></div></div>';
   return h;
 }
@@ -3558,8 +3525,8 @@ function generateGeneralReport(){
   var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
   h+='<div class="hdr-info"><div class="hdr-lbl">Informe General</div><div class="hdr-val">Todos los Players</div><div class="hdr-date">'+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
   h+='<div class="stats-grid"><div class="stat-box"><div class="stat-lbl">Players</div><div class="stat-val">'+adminData.length+'</div></div><div class="stat-box"><div class="stat-lbl">Ejercicios totales</div><div class="stat-val">'+totalEjs+'</div></div><div class="stat-box"><div class="stat-lbl">Promedio</div><div class="stat-val">'+(totalEjs/adminData.length).toFixed(1)+'</div></div></div>';
-  h+='<div class="sec-title">Resumen por player</div>';
-  h+='<table class="sumtable"><thead><tr><th>Player</th><th>Usuario</th><th>Ejercicios</th><th>Ultimo envio</th></tr></thead><tbody>';
+  h+='<div class="sec-title">Resumen por paciente</div>';
+  h+='<table class="sumtable"><thead><tr><th>Paciente</th><th>Usuario</th><th>Ejercicios</th><th>Ultimo envio</th></tr></thead><tbody>';
   var sorted=adminData.slice().sort(function(a,b){return a.nombre.localeCompare(b.nombre,'es');});
   sorted.forEach(function(p){var last=p.ejercicios.length?p.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;}).fecha||'—':'—';h+='<tr><td><strong>'+p.nombre+'</strong></td><td>@'+p.usuario+'</td><td>'+p.ejercicios.length+' completados</td><td>'+last.substring(0,10)+'</td></tr>';});
   h+='</tbody></table>';
@@ -5901,142 +5868,89 @@ function renderCajas4AdminView(ej, cid) {
 }
 
 
-
 /* ═══ AI ANALYSIS SYSTEM ═══ */
-var PSICOPOKER_CONTEXT = "Sos un psicólogo clínico especializado en psicología del deporte y rendimiento. Trabajás en Psicopoker, un programa de coaching psicológico para jugadores de póker profesionales y semiprofesionales, dirigido por los Lic. Mauro García Acacio y Lic. Arturo Sánchez Tomaselli. El programa tiene 9 unidades: (1) Diagnóstico - autoevaluación profunda del estado mental, emocional y conductual del jugador; (2) Mindset Ganador e Identidad Profesional - construcción de la identidad del jugador profesional; (3) Metas Alineadas - definición de objetivos realistas y motivación intrínseca; (4) La Sesión - gestión del entorno, rutinas pre y post sesión, disciplina; (5) Proceso, Confianza y Ansiedad - manejo de la ansiedad competitiva y construcción de autoconfianza; (6) Psicología del Dinero - relación sana con el dinero, bankroll management psicológico, separación de cajas; (7) Vida Fuera del Poker - equilibrio vida-juego, reservas personales; (8) Evaluación y Cierre - síntesis del proceso y visualización de cierre. Instrumentos usados: PMT (Poker Mindset Test), IPED (Inventario Psicológico de Ejecución Deportiva), TEOSQ (orientación al ego vs la tarea). El enfoque es psicodinámico-cognitivo conductual, con foco en la brecha entre discurso y comportamiento, identidad, autoengaño, y patrones inconscientes que afectan el rendimiento en el juego y la gestión del dinero.";
+var PSICOPOKER_CTX='Sos un psic\u00f3logo cl\u00ednico especializado en psicolog\u00eda del deporte y rendimiento. Trab\u00e1s en Psicopoker, un programa de coaching psicol\u00f3gico para jugadores de p\u00f3ker profesionales, dirigido por Lic. Mauro Garc\u00eda Acacio y Lic. Arturo S\u00e1nchez Tomaselli. El programa tiene 9 unidades: (1) Diagn\u00f3stico: autoevaluaci\u00f3n del estado mental, emocional y conductual. Instrumentos: PMT (Poker Mindset Test), IPED (Inventario Psicol\u00f3gico de Ejecuci\u00f3n Deportiva), TEOSQ (orientaci\u00f3n al ego vs la tarea). (2) Mindset Ganador e Identidad Profesional: construcci\u00f3n de la identidad del jugador profesional. (3) Metas Alineadas: objetivos realistas y motivaci\u00f3n intr\u00ednseca. (4) La Sesi\u00f3n: gesti\u00f3n del entorno, rutinas pre y post sesi\u00f3n, disciplina. (5) Proceso, Confianza y Ansiedad: manejo de la ansiedad competitiva y construcci\u00f3n de autoconfianza. (6) Psicolog\u00eda del Dinero: relaci\u00f3n sana con el dinero, bankroll management psicol\u00f3gico, separaci\u00f3n de cajas (bankroll, liferoll, patrimonio). (7) Vida Fuera del P\u00f3ker: equilibrio vida-juego. (8) Evaluaci\u00f3n y Cierre: s\u00edntesis del proceso. El enfoque es psicodin\u00e1mico-cognitivo conductual, con foco en la brecha entre discurso y comportamiento, identidad, autoengaN\u00f1o y patrones inconscientes que afectan el rendimiento.';
 
-function buildExercisePrompt(ej) {
-  var resps = (ej.respuestas||[]).filter(function(r){
-    return r.fid && r.fid.indexOf('_link_')!==0 && r.fid.indexOf('_file_')!==0 && r.fid.indexOf('_b64')!==0 && r.respuesta && r.respuesta.trim();
-  });
-  var lines = resps.map(function(r){ return (r.pregunta?r.pregunta+': ':'')+r.respuesta; }).join('\n');
-  return 'Ejercicio: '+ej.ejercicio+'\nUnidad: '+(ej.unidad||'')+'\nPlayer: '+ej.jugador+'\nFecha: '+(ej.fecha||'')+'\n\nRespuestas del player:\n'+lines;
+function buildExPrompt(ej){
+  var resps=(ej.respuestas||[]).filter(function(r){return r.fid&&r.fid.indexOf('_link_')!==0&&r.fid.indexOf('_file_')!==0&&r.fid.indexOf('_b64')!==0&&r.respuesta&&r.respuesta.trim();});
+  var lines=resps.map(function(r){return(r.pregunta?r.pregunta+':\n':'')+r.respuesta;}).join('\n\n');
+  return 'Ejercicio: '+ej.ejercicio+'\nUnidad: '+(ej.unidad||'')+'\nPlayer: '+ej.jugador+'\nFecha: '+(ej.fecha||'')+'\n\n'+lines;
 }
 
-function buildUnitPrompt(unitName, exercises) {
-  var parts = exercises.map(function(ej){ return buildExercisePrompt(ej); });
-  return 'Unidad: '+unitName+'\nPlayer: '+(exercises[0]&&exercises[0].jugador||'')+'\n\n'+parts.join('\n\n---\n\n');
-}
-
-function callAI(prompt, onChunk, onDone, onError) {
-  fetch('https://api.anthropic.com/v1/messages', {
+function callAI(systemPrompt,userPrompt,onChunk,onDone,onError){
+  fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({
-      model:'claude-sonnet-4-6',
-      max_tokens:1000,
-      stream:true,
-      system: PSICOPOKER_CONTEXT,
-      messages:[{role:'user', content: prompt}]
-    })
-  })
-  .then(function(res){
-    if(!res.ok){ onError('Error '+res.status); return; }
-    var reader = res.body.getReader();
-    var decoder = new TextDecoder();
-    var buffer = '';
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,stream:true,
+      system:systemPrompt,messages:[{role:'user',content:userPrompt}]})
+  }).then(function(res){
+    if(!res.ok){onError('Error '+res.status);return;}
+    var reader=res.body.getReader(),decoder=new TextDecoder(),buffer='';
     function read(){
-      reader.read().then(function(result){
-        if(result.done){ onDone(); return; }
-        buffer += decoder.decode(result.value, {stream:true});
-        var lines = buffer.split('\n');
-        buffer = lines.pop();
+      reader.read().then(function(r){
+        if(r.done){onDone();return;}
+        buffer+=decoder.decode(r.value,{stream:true});
+        var lines=buffer.split('\n');buffer=lines.pop();
         lines.forEach(function(line){
-          if(!line.startsWith('data: ')) return;
-          var data = line.slice(6).trim();
-          if(data==='[DONE]') return;
-          try {
-            var j = JSON.parse(data);
-            if(j.type==='content_block_delta' && j.delta && j.delta.text) onChunk(j.delta.text);
-          } catch(e){}
+          if(!line.startsWith('data: '))return;
+          var d=line.slice(6).trim();if(d==='[DONE]')return;
+          try{var j=JSON.parse(d);if(j.type==='content_block_delta'&&j.delta&&j.delta.text)onChunk(j.delta.text);}catch(e){}
         });
         read();
-      }).catch(function(e){ onError(e.message||'Error de red'); });
+      }).catch(function(e){onError(e.message||'Error');});
     }
     read();
-  })
-  .catch(function(e){ onError(e.message||'Error de red'); });
+  }).catch(function(e){onError(e.message||'Error');});
 }
 
-function aiAnalyzeExercise(eid, ej) {
-  var container = document.getElementById('ai-ex-'+eid);
-  if(!container) return;
-  var prompt = 'Analizá las respuestas de este ejercicio de Psicopoker. Escribí un análisis clínico de aproximadamente 15 líneas dirigido al psicólogo (no al player). Identificá patrones psicológicos, brechas discurso-comportamiento, áreas de trabajo prioritarias, y cualquier elemento clínicamente relevante. Sé directo, preciso y profesional. Usá lenguaje técnico pero accesible. No repitas las respuestas, interpretálas.\n\n'+buildExercisePrompt(ej);
-  _streamToContainer(container, prompt);
-}
-
-function aiAnalyzeUnit(uid, unitName, byUnit) {
-  var container = document.getElementById('ai-unit-'+uid);
-  if(!container) return;
-  var exercises = byUnit[unitName] || [];
-  if(!exercises.length){ container.innerHTML='<span style="color:var(--dim);font-size:.78rem;">Sin ejercicios completados en esta unidad.</span>'; return; }
-  var prompt = 'Analizá todos los ejercicios completados en esta unidad de Psicopoker. Escribí un análisis clínico integrador de aproximadamente 15 líneas dirigido al psicólogo (no al player). Identificá los patrones principales que atraviesan los ejercicios, las áreas de fortaleza, las áreas de trabajo, y una síntesis clínica de esta unidad. Sé directo y profesional.\n\n'+buildUnitPrompt(unitName, exercises);
-  _streamToContainer(container, prompt);
-}
-
-function _streamToContainer(container, prompt) {
-  container.style.display = 'block';
-  container.innerHTML = '<div style="display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;font-size:.75rem;color:var(--muted);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/></svg>Generando análisis clínico...</div>';
-  var text = '';
-  callAI(prompt,
+function streamToEl(el,prompt){
+  el.style.display='block';
+  el.innerHTML='<div style="display:flex;align-items:center;gap:.5rem;padding:.65rem .85rem;font-size:.75rem;color:var(--muted);">'
+    +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/></svg>'
+    +'Generando an\u00e1lisis cl\u00ednico...</div>';
+  var text='';
+  var userPrompt='Analizá las respuestas del player. Escribí un análisis clínico de aproximadamente 15 líneas, dirigido al psicólogo (no al player). Identificá patrones psicológicos clave, brechas discurso-comportamiento, áreas de trabajo prioritarias y elementos clínicamente relevantes. Sé directo, preciso y profesional. No repitas las respuestas, interpretálas en el marco de Psicopoker.\n\n'+prompt;
+  callAI(PSICOPOKER_CTX,userPrompt,
     function(chunk){
-      text += chunk;
-      container.innerHTML = '<div style="padding:.85rem 1rem 1rem;font-size:.8rem;line-height:1.75;color:var(--text);white-space:pre-wrap;border-top:1px solid rgba(232,49,42,.2);">'+text+'</div>';
+      text+=chunk;
+      el.innerHTML='<div style="padding:.75rem .85rem 1rem;font-size:.8rem;line-height:1.8;color:var(--text);white-space:pre-wrap;">'+text+'</div>';
     },
     function(){
-      // done - add subtle label
-      container.innerHTML = '<div style="padding:.85rem 1rem 1rem;">' +
-        '<div style="font-size:.55rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);opacity:.7;margin-bottom:.5rem;">Análisis IA · Psicopoker</div>' +
-        '<div style="font-size:.8rem;line-height:1.75;color:var(--text);white-space:pre-wrap;">'+text+'</div>' +
-        '</div>';
+      el.innerHTML='<div style="padding:.75rem .85rem 1rem;">'
+        +'<div style="font-size:.52rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);opacity:.7;margin-bottom:.45rem;">An\u00e1lisis IA \u00b7 Psicopoker</div>'
+        +'<div style="font-size:.8rem;line-height:1.8;color:var(--text);white-space:pre-wrap;">'+text+'</div>'
+        +'</div>';
     },
     function(err){
-      container.innerHTML = '<div style="padding:.75rem 1rem;font-size:.75rem;color:rgba(232,49,42,.8);">Error al generar análisis: '+err+'</div>';
+      el.innerHTML='<div style="padding:.65rem .85rem;font-size:.75rem;color:rgba(232,49,42,.8);">Error: '+err+'</div>';
     }
   );
 }
+
+function adminShowExAI(eid){
+  var el=document.getElementById('ai-ex-'+eid);
+  var ejData=window['_ejData_'+eid];
+  if(!el||!ejData)return;
+  if(el.style.display!=='none'&&el.innerHTML!==''){el.style.display='none';return;}
+  streamToEl(el,buildExPrompt(ejData));
+}
+
+function adminShowUnitAI(uid,unit,usuario){
+  var panel=document.getElementById('ai-unit-panel-'+uid);
+  var el=document.getElementById('ai-unit-'+uid);
+  if(!panel||!el)return;
+  if(panel.style.display!=='none'&&el.innerHTML!==''){panel.style.display='none';return;}
+  panel.style.display='block';
+  var byUnit=window['_byUnit_'+usuario]||{};
+  var exs=byUnit[unit]||[];
+  if(!exs.length){el.innerHTML='<div style="padding:.65rem .85rem;font-size:.78rem;color:var(--dim);">Sin ejercicios completados en esta unidad.</div>';return;}
+  var parts=exs.map(function(ej){return buildExPrompt(ej);}).join('\n\n---\n\n');
+  var unitPrompt='Analizá todos los ejercicios de esta unidad ('+unit+'). Escribí un análisis clínico integrador de aproximadamente 15 líneas dirigido al psicólogo. Identificá los patrones que atraviesan los ejercicios, fortalezas, áreas de trabajo y una síntesis clínica de la unidad.\n\nPlayer: '+(exs[0]&&exs[0].jugador||'')+'\n\n'+parts;
+  streamToEl(el,unitPrompt);
+}
 /* ═══ END AI ANALYSIS SYSTEM ═══ */
 
-/* ═══ THEME SYSTEM ═══ */
-function getThemeKey(){ return S.user ? 'pp_theme_'+S.user : 'pp_theme_guest'; }
-function loadTheme(){
-  var t = S.user ? (localStorage.getItem(getThemeKey())||'dark') : 'dark';
-  document.documentElement.setAttribute('data-theme', t==='dark'?'':t);
-  _currentTheme = t;
-}
-var _currentTheme = 'dark';
-function openThemePicker(){
-  var t = _currentTheme;
-  ['dark','mid','light'].forEach(function(k){
-    var opt = document.getElementById('theme-opt-'+k);
-    var chk = document.getElementById('theme-chk-'+k);
-    if(opt) opt.style.borderColor = k===t ? 'var(--red)' : 'transparent';
-    if(chk) chk.style.display = k===t ? 'block' : 'none';
-  });
-  var m = document.getElementById('theme-modal');
-  if(m){ m.style.display='flex'; }
-}
-function closeThemePicker(){
-  var m = document.getElementById('theme-modal');
-  if(m) m.style.display='none';
-}
-function applyTheme(t){
-  _currentTheme = t;
-  document.documentElement.setAttribute('data-theme', t==='dark'?'':t);
-  if(S.user) localStorage.setItem(getThemeKey(), t);
-  ['dark','mid','light'].forEach(function(k){
-    var opt = document.getElementById('theme-opt-'+k);
-    var chk = document.getElementById('theme-chk-'+k);
-    if(opt) opt.style.borderColor = k===t ? 'var(--red)' : 'transparent';
-    if(chk) chk.style.display = k===t ? 'block' : 'none';
-  });
-  closeThemePicker();
-}
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('theme-modal').addEventListener('click', function(e){
-    if(e.target===this) closeThemePicker();
-  });
-
   document.getElementById('ip').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
   document.getElementById('iu').addEventListener('keydown', function(e) { if (e.key === 'Enter') document.getElementById('ip').focus(); });
   // Mobile: login es la vista inicial, habilitar scroll desde el arranque
