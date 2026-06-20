@@ -2388,14 +2388,6 @@ function openUnit(uid) {
     openLesson(uid, first.id);
   });
 }
-
-  var unit = C.find(function(u) { return u.id === uid; });
-  if (!unit) return;
-  S.unitId = uid;
-  var all = (unit.lessons || []).concat(unit.extra || []);
-  var first = all.find(function(l) { return !isDone(l.id); }) || all[0];
-  openLesson(uid, first.id);
-}
 function openLesson(uid, lid) {
   S.unitId = uid; S.lessonId = lid;
   var unit = C.find(function(u) { return u.id === uid; });
