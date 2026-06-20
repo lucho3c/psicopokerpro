@@ -123,6 +123,8 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .ugrid-wrap{max-width:1160px;margin:0 auto;padding:2rem 2.5rem 3rem;}
 .ugrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
 .ucard{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .25s,transform .25s,box-shadow .25s;}
+.ucard-locked{cursor:not-allowed;pointer-events:none;}
+.ucard-locked .ucard-cover{position:relative;}
 .ucard:hover{border-color:rgba(232,49,42,.4);transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.35);}
 .ucard-cover{height:170px;position:relative;overflow:hidden;background:var(--bg3);}
 .cover-img{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.04);transition:transform .4s ease;}
@@ -1137,6 +1139,42 @@ function fbPushAllLocal(username){
   });
 }
 /* FIN FIREBASE SYNC */
+
+/* ═══ UNIT UNLOCK SYSTEM ═══ */
+var DEFAULT_UNLOCKED = ['bv','u1'];
+
+function fbUnlocksRef(usuario){ return DB ? DB.ref('psicopoker/users/'+usuario+'/unlocks') : null; }
+
+function getUnlockedUnits(cb){
+  if(!S.user||!DB){ cb(DEFAULT_UNLOCKED.slice()); return; }
+  fbUnlocksRef(S.user).once('value')
+    .then(function(snap){
+      var d=snap.val()||{};
+      var ids=Object.keys(d).filter(function(k){return d[k];});
+      DEFAULT_UNLOCKED.forEach(function(id){if(ids.indexOf(id)===-1)ids.push(id);});
+      cb(ids);
+    }).catch(function(){ cb(DEFAULT_UNLOCKED.slice()); });
+}
+
+function isUnitUnlocked(uid, list){ return list.indexOf(uid)!==-1; }
+
+function adminSetUnlock(usuario, uid, enabled, cb){
+  if(!DB){ cb&&cb(); return; }
+  DB.ref('psicopoker/users/'+usuario+'/unlocks/'+uid).set(enabled||null)
+    .then(function(){cb&&cb();}).catch(function(){cb&&cb();});
+}
+
+function adminLoadUnlocks(usuario, cb){
+  if(!DB){ cb(DEFAULT_UNLOCKED.slice()); return; }
+  DB.ref('psicopoker/users/'+usuario+'/unlocks').once('value')
+    .then(function(snap){
+      var d=snap.val()||{};
+      var ids=Object.keys(d).filter(function(k){return d[k];});
+      DEFAULT_UNLOCKED.forEach(function(id){if(ids.indexOf(id)===-1)ids.push(id);});
+      cb(ids);
+    }).catch(function(){ cb(DEFAULT_UNLOCKED.slice()); });
+}
+/* ═══ END UNLOCK SYSTEM ═══ */
 
 function generateMyUnitPDF(){
   var unit=C.find(function(u){return u.id===S.unitId;});if(!unit)return;
@@ -2297,29 +2335,60 @@ function renderDash() {
   var pct = totalPct();
   document.getElementById('op-fill').style.width = pct + '%';
   document.getElementById('op-lbl').textContent = pct + '% del programa completado';
-  var html = '';
-  C.forEach(function(u) {
-    var p = unitProg(u);
-    var bc = p.pct === 0 ? 'btn-uc-s' : p.pct === 100 ? 'btn-uc-d' : 'btn-uc-c';
-    var bt = p.pct === 0 ? 'Empezar' : p.pct === 100 ? '&#10003; Completada' : 'Continuar &rarr;';
-    html += '<div class="ucard" onclick="openUnit(\'' + u.id + '\')">';
-    html += '<div class="ucard-cover">';
-    html += '<div class="cover-img" style="background-image:url(' + u.img + ')"></div>';
-    html += '<div class="cover-overlay"></div>';
-    html += '<div class="cover-top"><span class="ubadge ' + (u.num ? 'ubadge-n' : 'ubadge-w') + '">' + u.badge + '</span></div>';
-    html += '</div>';
-    html += '<div class="ucard-body">';
-    html += '<div class="uctitle">' + u.title + '</div>';
-    html += '<div class="ucdesc">' + u.desc + '</div>';
-    html += '<div class="ucfoot">';
-    html += '<div class="upwrap"><div class="upbar"><div class="upfill" style="width:' + p.pct + '%"></div></div>';
-    html += '<div class="uppct ' + (p.pct === 100 ? 'g' : 'm') + '">' + p.pct + '% completado</div></div>';
-    html += '<button class="btn-uc ' + bc + '">' + bt + '</button>';
-    html += '</div></div></div>';
+  getUnlockedUnits(function(unlocked){
+    var html = '';
+    C.forEach(function(u) {
+      var locked = !isUnitUnlocked(u.id, unlocked);
+      var p = unitProg(u);
+      if (locked) {
+        html += '<div class="ucard ucard-locked">';
+        html += '<div class="ucard-cover" style="position:relative;">';
+        html += '<div class="cover-img" style="background-image:url('+u.img+');filter:grayscale(1) brightness(.25);"></div>';
+        html += '<div class="cover-overlay"></div>';
+        html += '<div class="cover-top"><span class="ubadge '+(u.num?'ubadge-n':'ubadge-w')+'" style="opacity:.35;">'+u.badge+'</span></div>';
+        html += '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">';
+        html += '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="opacity:.55;"><rect x="3" y="11" width="18" height="11" rx="2" stroke="#fff" stroke-width="1.8"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>';
+        html += '</div></div>';
+        html += '<div class="ucard-body" style="opacity:.4;">';
+        html += '<div class="uctitle">'+u.title+'</div>';
+        html += '<div class="ucdesc">'+u.desc+'</div>';
+        html += '<div class="ucfoot"><div class="upwrap"><div class="upbar"><div class="upfill" style="width:0"></div></div>';
+        html += '<div class="uppct m">Bloqueada</div></div>';
+        html += '<button class="btn-uc btn-uc-s" style="opacity:.35;cursor:not-allowed;">&#128274; Bloqueada</button>';
+        html += '</div></div></div>';
+      } else {
+        var bc = p.pct===0?'btn-uc-s':p.pct===100?'btn-uc-d':'btn-uc-c';
+        var bt = p.pct===0?'Empezar':p.pct===100?'&#10003; Completada':'Continuar &rarr;';
+        html += '<div class="ucard" onclick="openUnit(''+u.id+'')">';
+        html += '<div class="ucard-cover">';
+        html += '<div class="cover-img" style="background-image:url('+u.img+')"></div>';
+        html += '<div class="cover-overlay"></div>';
+        html += '<div class="cover-top"><span class="ubadge '+(u.num?'ubadge-n':'ubadge-w')+'">'+u.badge+'</span></div>';
+        html += '</div>';
+        html += '<div class="ucard-body">';
+        html += '<div class="uctitle">'+u.title+'</div>';
+        html += '<div class="ucdesc">'+u.desc+'</div>';
+        html += '<div class="ucfoot"><div class="upwrap"><div class="upbar"><div class="upfill" style="width:'+p.pct+'%"></div></div>';
+        html += '<div class="uppct '+(p.pct===100?'g':'m')+'">'+p.pct+'% completado</div></div>';
+        html += '<button class="btn-uc '+bc+'">'+bt+'</button>';
+        html += '</div></div></div>';
+      }
+    });
+    document.getElementById('ugrid').innerHTML = html;
   });
-  document.getElementById('ugrid').innerHTML = html;
 }
 function openUnit(uid) {
+  var unit = C.find(function(u){ return u.id===uid; });
+  if (!unit) return;
+  getUnlockedUnits(function(unlocked){
+    if(!isUnitUnlocked(uid,unlocked)){ showToast('Esta unidad todav\u00eda no est\u00e1 habilitada'); return; }
+    S.unitId = uid;
+    var all=(unit.lessons||[]).concat(unit.extra||[]);
+    var first=all.find(function(l){return !isDone(l.id);})||all[0];
+    openLesson(uid, first.id);
+  });
+}
+
   var unit = C.find(function(u) { return u.id === uid; });
   if (!unit) return;
   S.unitId = uid;
@@ -2683,30 +2752,31 @@ function showPatient(usuario){
   var last=patient.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;});
   h+=psc('Ultimo envio',(last.fecha||'-').substring(0,10));
   h+='</div>';
+  // Access control panel
+  h+='<div id="ap-'+usuario+'" style="padding:1rem 1.75rem;border-bottom:1px solid var(--border);background:rgba(232,49,42,.04);">';
+  h+='<div style="display:flex;align-items:center;gap:.55rem;margin-bottom:.75rem;">';
+  h+='<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="var(--red)" stroke-width="2"/><path d=\"M7 11V7a5 5 0 0110 0v4\" stroke=\"var(--red)\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>';
+  h+='<span style="font-size:.58rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);">Acceso a unidades</span>';
+  h+='</div>';
+  h+='<div id="unlock-chips-'+usuario+'" style="display:flex;flex-wrap:wrap;gap:.45rem;"><span style="font-size:.72rem;color:var(--dim);">Cargando...</span></div>';
+  h+='</div>';
   // Content
   h+='<div style="padding:1.5rem 1.75rem;">';
   var teosqQueue=[];
-  sortedUnits.forEach(function(unit,ui){
-    var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
-    var uid='admu_'+(usuario+'_'+ui).replace(/[^a-z0-9]/gi,'_');
-    var nEx=exs.length;
-    // Unit collapsible banner
-    h+='<div style="border:1px solid var(--border-r);border-radius:8px;overflow:hidden;margin-bottom:1rem;">';
-    h+='<div onclick="toggleAdminUnit(\''+uid+'\')" style="display:flex;align-items:center;gap:.85rem;padding:.85rem 1.25rem;background:rgba(232,49,42,.07);cursor:pointer;user-select:none;" onmouseover="this.style.background=\'rgba(232,49,42,.12)\'" onmouseout="this.style.background=\'rgba(232,49,42,.07)\'">';
-    h+='<span style="font-size:.6rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.2rem .65rem;border-radius:3px;flex-shrink:0;">'+unit+'</span>';
-    h+='<span style="font-size:.78rem;font-weight:600;color:var(--muted);flex:1;">'+nEx+' ejercicio'+(nEx!==1?'s':'')+' completado'+(nEx!==1?'s':'')+'</span>';
-    h+='<button onclick="event.stopPropagation();generateUnitPDF(\''+usuario+'\',\''+unit+'\')" style="display:flex;align-items:center;gap:.35rem;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;flex-shrink:0;" onmouseover="this.style.borderColor=\'var(--red)\';this.style.color=\'var(--muted)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--dim)\'">';
+  sortedUnits.forEach(function(unit){
+    // Unit download button
+    h+='<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem;">';
+    h+='<div style="font-size:.62rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.2rem .65rem;border-radius:3px;">'+unit+'</div>';
+    h+='<div style="flex:1;height:1px;background:var(--border);"></div>';
+    h+='<button onclick="generateUnitPDF(\''+usuario+'\',\''+unit+'\')" style="display:flex;align-items:center;gap:.35rem;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor=\'var(--red)\';this.style.color=\'var(--muted)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--dim)\'">';
     h+='<svg width="10" height="10" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>PDF</button>';
-    h+='<svg id="admuchev-'+uid+'" width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;color:var(--red);transition:transform .25s;"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     h+='</div>';
-    // Unit body (collapsed by default)
-    h+='<div id="'+uid+'" style="display:none;">';
-    h+='<div style="padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.75rem;">';
+    var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
     exs.forEach(function(ej,idx){
       var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
       var isPmt=ej.lid==="u1l3"||ej.lid==="u8l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);var isCaj=ej.lid==="u6l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("4 cajas")!==-1);
       var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
-      h+='<div class="sub-card" style="margin-bottom:0;">';
+      h+='<div class="sub-card">';
       var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isCon?'Ver respuestas &#9660;':isCaj?'Ver detalle &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
       h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
       h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
@@ -2724,12 +2794,11 @@ function showPatient(usuario){
       else if(isGrid)teosqQueue.push({type:'grid',eid:eid,ej:ej});
       else teosqQueue.push({type:'form',eid:eid,ej:ej});
     });
-    h+='</div>';
-    h+='</div>';
-    h+='</div>';
+    h+='<div style="height:1rem;"></div>';
   });
   h+='</div>';
   document.getElementById('admin-content').innerHTML=h;
+  renderUnlockChips(usuario);
   teosqQueue.forEach(function(item){
     if(item.type==='pmt')renderPMTAdminView(item.ej,item.eid);
     else if(item.type==='teosq')renderTEOSQAdminView(item.ej,item.eid);
@@ -2754,12 +2823,53 @@ function toggleEj(eid,hdr){
   if(btn)btn.innerHTML=open?btn.innerHTML.replace('&#9650;','&#9660;').replace('Ocultar','Ver'):btn.innerHTML.replace('&#9660;','&#9650;').replace('Ver','Ocultar');
 }
 
-function toggleAdminUnit(uid){
-  var body=document.getElementById(uid);if(!body)return;
-  var chev=document.getElementById('admuchev-'+uid);
-  var open=body.style.display!=='none';
-  body.style.display=open?'none':'block';
-  if(chev)chev.style.transform=open?'':'rotate(180deg)';
+function renderUnlockChips(usuario){
+  var container=document.getElementById('unlock-chips-'+usuario);
+  if(!container)return;
+  var FIXED=['bv','u1'];
+  adminLoadUnlocks(usuario,function(unlocked){
+    var h='';
+    C.forEach(function(u){
+      var fixed=FIXED.indexOf(u.id)!==-1;
+      var on=unlocked.indexOf(u.id)!==-1;
+      if(fixed){
+        h+='<span style="display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .7rem;border-radius:20px;background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.35);font-size:.68rem;font-weight:700;color:#22C55E;">';
+        h+='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>';
+        h+=u.badge+'</span>';
+      } else {
+        var onSty='display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .7rem;border-radius:20px;background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.35);font-size:.68rem;font-weight:700;color:#22C55E;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;';
+        var offSty='display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .7rem;border-radius:20px;background:var(--bg3);border:1px solid var(--border);font-size:.68rem;font-weight:700;color:var(--dim);cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;';
+        h+='<button id="uc-'+usuario+'-'+u.id+'" onclick="adminToggleUnlock(''+usuario+'',''+u.id+'')" style="'+(on?onSty:offSty)+'">';
+        if(on) h+='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>';
+        else   h+='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+        h+=u.badge+'</button>';
+      }
+    });
+    container.innerHTML=h;
+  });
+}
+
+function adminToggleUnlock(usuario,uid){
+  var btn=document.getElementById('uc-'+usuario+'-'+uid);
+  if(!btn||btn.disabled)return;
+  btn.disabled=true; btn.style.opacity='.5';
+  adminLoadUnlocks(usuario,function(unlocked){
+    var on=unlocked.indexOf(uid)!==-1;
+    adminSetUnlock(usuario,uid,!on,function(){
+      btn.disabled=false; btn.style.opacity='1';
+      var onSty='display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .7rem;border-radius:20px;background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.35);font-size:.68rem;font-weight:700;color:#22C55E;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;';
+      var offSty='display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .7rem;border-radius:20px;background:var(--bg3);border:1px solid var(--border);font-size:.68rem;font-weight:700;color:var(--dim);cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;';
+      if(!on){
+        btn.style.cssText=onSty;
+        btn.innerHTML='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>'+btn.textContent.trim();
+        showToast(uid+' habilitada ✓');
+      } else {
+        btn.style.cssText=offSty;
+        btn.innerHTML='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'+btn.textContent.trim();
+        showToast(uid+' bloqueada');
+      }
+    });
+  });
 }
 
 function renderFormAdminView(ej,cid){
