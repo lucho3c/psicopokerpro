@@ -2359,7 +2359,7 @@ function renderDash() {
       } else {
         var bc = p.pct===0?'btn-uc-s':p.pct===100?'btn-uc-d':'btn-uc-c';
         var bt = p.pct===0?'Empezar':p.pct===100?'&#10003; Completada':'Continuar &rarr;';
-        html += '<div class="ucard" onclick="openUnit(''+u.id+'')">';
+        html += '<div class="ucard" data-uid="' + u.id + '" onclick="openUnit(this.dataset.uid)">';
         html += '<div class="ucard-cover">';
         html += '<div class="cover-img" style="background-image:url('+u.img+')"></div>';
         html += '<div class="cover-overlay"></div>';
@@ -2832,7 +2832,7 @@ function renderUnlockChips(usuario){
       } else {
         var onSty='display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .7rem;border-radius:20px;background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.35);font-size:.68rem;font-weight:700;color:#22C55E;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;';
         var offSty='display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .7rem;border-radius:20px;background:var(--bg3);border:1px solid var(--border);font-size:.68rem;font-weight:700;color:var(--dim);cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;';
-        h+='<button id="uc-'+usuario+'-'+u.id+'" onclick="adminToggleUnlock(''+usuario+'',''+u.id+'')" style="'+(on?onSty:offSty)+'">';
+        h+='<button id="uc-'+usuario+'-'+u.id+'" data-u="'+usuario+'" data-uid="'+u.id+'" onclick="adminToggleUnlock(this.dataset.u,this.dataset.uid)" style="'+(on?onSty:offSty)+'">';
         if(on) h+='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>';
         else   h+='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
         h+=u.badge+'</button>';
