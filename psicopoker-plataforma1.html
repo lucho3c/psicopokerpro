@@ -124,7 +124,6 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
 .ugrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
 .ucard{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .25s,transform .25s,box-shadow .25s;}
 .ucard-locked{cursor:not-allowed;pointer-events:none;}
-@keyframes spin{to{transform:rotate(360deg);}}
 .ucard-locked .ucard-cover{position:relative;}
 .ucard:hover{border-color:rgba(232,49,42,.4);transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.35);}
 .ucard-cover{height:170px;position:relative;overflow:hidden;background:var(--bg3);}
@@ -2389,14 +2388,6 @@ function openUnit(uid) {
     openLesson(uid, first.id);
   });
 }
-
-  var unit = C.find(function(u) { return u.id === uid; });
-  if (!unit) return;
-  S.unitId = uid;
-  var all = (unit.lessons || []).concat(unit.extra || []);
-  var first = all.find(function(l) { return !isDone(l.id); }) || all[0];
-  openLesson(uid, first.id);
-}
 function openLesson(uid, lid) {
   S.unitId = uid; S.lessonId = lid;
   var unit = C.find(function(u) { return u.id === uid; });
@@ -2761,42 +2752,24 @@ function showPatient(usuario){
   h+='</div>';
   h+='<div id="unlock-chips-'+usuario+'" style="display:flex;flex-wrap:wrap;gap:.45rem;"><span style="font-size:.72rem;color:var(--dim);">Cargando...</span></div>';
   h+='</div>';
-  // Content — unidades como banners desplegables con IA
+  // Content
   h+='<div style="padding:1.5rem 1.75rem;">';
   var teosqQueue=[];
-  sortedUnits.forEach(function(unit,ui){
-    var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
-    var nEx=exs.length;
-    var uid='admu_'+(usuario+'_'+ui).replace(/[^a-z0-9]/gi,'_');
-    // Banner desplegable de unidad
-    h+='<div style="border:1px solid var(--border-r);border-radius:8px;overflow:hidden;margin-bottom:.85rem;">';
-    // Header del banner
-    h+='<div onclick="toggleAdminUnit(\''+uid+'\')" style="display:flex;align-items:center;gap:.75rem;padding:.85rem 1.25rem;background:rgba(232,49,42,.07);cursor:pointer;user-select:none;">';
-    h+='<span style="font-size:.6rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.2rem .65rem;border-radius:3px;flex-shrink:0;">'+unit+'</span>';
-    h+='<span style="font-size:.78rem;font-weight:600;color:var(--muted);flex:1;">'+nEx+' ejercicio'+(nEx!==1?'s':'')+' completado'+(nEx!==1?'s':'')+'</span>';
-    h+='<button onclick="event.stopPropagation();generateUnitPDF(\''+usuario+'\',\''+unit+'\')" style="display:flex;align-items:center;gap:.35rem;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;flex-shrink:0;">';
+  sortedUnits.forEach(function(unit){
+    // Unit download button
+    h+='<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem;">';
+    h+='<div style="font-size:.62rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.2rem .65rem;border-radius:3px;">'+unit+'</div>';
+    h+='<div style="flex:1;height:1px;background:var(--border);"></div>';
+    h+='<button onclick="generateUnitPDF(\''+usuario+'\',\''+unit+'\')" style="display:flex;align-items:center;gap:.35rem;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor=\'var(--red)\';this.style.color=\'var(--muted)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--dim)\'">';
     h+='<svg width="10" height="10" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>PDF</button>';
-    h+='<button onclick="event.stopPropagation();adminShowUnitAI(\''+uid+'\',\''+unit+'\',\''+usuario+'\')" style="display:flex;align-items:center;gap:.35rem;background:rgba(232,49,42,.13);border:1px solid rgba(232,49,42,.35);color:var(--red);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;flex-shrink:0;">';
-    h+='<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>An\u00e1lisis IA</button>';
-    h+='<svg id="chev-'+uid+'" width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;color:var(--red);transition:transform .25s;"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     h+='</div>';
-    // Panel IA de unidad (oculto por defecto)
-    h+='<div id="ai-unit-panel-'+uid+'" style="display:none;border-bottom:1px solid var(--border);background:rgba(232,49,42,.03);">';
-    h+='<div style="padding:.65rem 1.25rem;display:flex;align-items:center;justify-content:space-between;">';
-    h+='<span style="font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);">An\u00e1lisis IA \u00b7 '+unit+'</span>';
-    h+='<button onclick="document.getElementById(\'ai-unit-panel-'+uid+'\').style.display=\'none\'" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:.85rem;line-height:1;">&#10005;</button>';
-    h+='</div>';
-    h+='<div id="ai-unit-'+uid+'" style="padding:0 1.25rem .85rem;min-height:2rem;"></div>';
-    h+='</div>';
-    // Cuerpo desplegable de la unidad
-    h+='<div id="'+uid+'" style="display:none;">';
-    h+='<div style="padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.75rem;">';
+    var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
     exs.forEach(function(ej,idx){
       var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
       var isPmt=ej.lid==="u1l3"||ej.lid==="u8l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);var isCaj=ej.lid==="u6l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("4 cajas")!==-1);
       var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
+      h+='<div class="sub-card">';
       var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isCon?'Ver respuestas &#9660;':isCaj?'Ver detalle &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
-      h+='<div class="sub-card" style="margin-bottom:0;">';
       h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
       h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
       h+='<button class="sub-toggle">'+btnLabel+'</button></div>';
@@ -2813,15 +2786,12 @@ function showPatient(usuario){
       else if(isGrid)teosqQueue.push({type:'grid',eid:eid,ej:ej});
       else teosqQueue.push({type:'form',eid:eid,ej:ej});
     });
-    h+='</div>';
-    h+='</div>';
-    h+='</div>';
+    h+='<div style="height:1rem;"></div>';
   });
   h+='</div>';
   document.getElementById('admin-content').innerHTML=h;
   renderUnlockChips(usuario);
   teosqQueue.forEach(function(item){
-    window['_ejData_'+item.eid]=item.ej;
     if(item.type==='pmt')renderPMTAdminView(item.ej,item.eid);
     else if(item.type==='teosq')renderTEOSQAdminView(item.ej,item.eid);
     else if(item.type==='iped')renderIPEDAdminView(item.ej,item.eid);
@@ -2833,7 +2803,6 @@ function showPatient(usuario){
     else if(item.type==='grid')renderGridAdminView(item.ej,item.eid);
     else renderFormAdminView(item.ej,item.eid);
   });
-  window['_byUnit_'+usuario]=byUnit;
 }
 
 function psc(label,val){return'<div style="text-align:center;background:var(--bg3);border-radius:5px;padding:.75rem 1rem;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem;">'+label+'</div><div style="font-size:1.4rem;font-weight:800;">'+val+'</div></div>';}
@@ -2851,10 +2820,10 @@ function toggleEj(eid,hdr){
     wrap.id='ai-ex-wrap-'+eid;
     wrap.style.cssText='border-top:1px solid rgba(232,49,42,.2);background:rgba(232,49,42,.03);';
     wrap.innerHTML='<div style="padding:.55rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">'
-      +'<span style="font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);opacity:.85;">An\u00e1lisis IA</span>'
-      +'<button id="ai-ex-btn-'+eid+'" onclick="adminShowExAI(''+eid+'')" style="display:flex;align-items:center;gap:.35rem;background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.3rem .85rem;border-radius:3px;cursor:pointer;">'
+      +'<span style="font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);opacity:.85;">Análisis IA</span>'
+      +'<button id="ai-ex-btn-'+eid+'" onclick="adminShowExAI(\''+eid+'\')" style="display:flex;align-items:center;gap:.35rem;background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.3rem .85rem;border-radius:3px;cursor:pointer;">'
       +'<svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'
-      +'Generar an\u00e1lisis</button>'
+      +'Generar análisis</button>'
       +'</div>'
       +'<div id="ai-ex-'+eid+'" style="display:none;"></div>';
     body.appendChild(wrap);
@@ -5869,31 +5838,32 @@ function renderCajas4AdminView(ej, cid) {
 
 
 /* ═══ AI ANALYSIS SYSTEM ═══ */
-var PSICOPOKER_CTX='Sos un psic\u00f3logo cl\u00ednico especializado en psicolog\u00eda del deporte y rendimiento. Trab\u00e1s en Psicopoker, un programa de coaching psicol\u00f3gico para jugadores de p\u00f3ker profesionales, dirigido por Lic. Mauro Garc\u00eda Acacio y Lic. Arturo S\u00e1nchez Tomaselli. El programa tiene 9 unidades: (1) Diagn\u00f3stico: autoevaluaci\u00f3n del estado mental, emocional y conductual. Instrumentos: PMT (Poker Mindset Test), IPED (Inventario Psicol\u00f3gico de Ejecuci\u00f3n Deportiva), TEOSQ (orientaci\u00f3n al ego vs la tarea). (2) Mindset Ganador e Identidad Profesional: construcci\u00f3n de la identidad del jugador profesional. (3) Metas Alineadas: objetivos realistas y motivaci\u00f3n intr\u00ednseca. (4) La Sesi\u00f3n: gesti\u00f3n del entorno, rutinas pre y post sesi\u00f3n, disciplina. (5) Proceso, Confianza y Ansiedad: manejo de la ansiedad competitiva y construcci\u00f3n de autoconfianza. (6) Psicolog\u00eda del Dinero: relaci\u00f3n sana con el dinero, bankroll management psicol\u00f3gico, separaci\u00f3n de cajas (bankroll, liferoll, patrimonio). (7) Vida Fuera del P\u00f3ker: equilibrio vida-juego. (8) Evaluaci\u00f3n y Cierre: s\u00edntesis del proceso. El enfoque es psicodin\u00e1mico-cognitivo conductual, con foco en la brecha entre discurso y comportamiento, identidad, autoengaN\u00f1o y patrones inconscientes que afectan el rendimiento.';
+var PSICOPOKER_CTX='Sos un psicólogo clínico especializado en psicología del deporte y rendimiento. Trabás en Psicopoker, un programa de coaching psicológico para jugadores de póker profesionales, dirigido por Lic. Mauro García Acacio y Lic. Arturo Sánchez Tomaselli. El programa tiene 9 unidades: (1) Diagnóstico: autoevaluación del estado mental, emocional y conductual. Instrumentos: PMT, IPED, TEOSQ. (2) Mindset Ganador e Identidad Profesional. (3) Metas Alineadas. (4) La Sesión: rutinas y disciplina. (5) Proceso, Confianza y Ansiedad. (6) Psicología del Dinero: bankroll, liferoll, patrimonio. (7) Vida Fuera del Póker. (8) Evaluación y Cierre. Enfoque psicodinámico-cognitivo conductual: brecha discurso-comportamiento, identidad, patrones inconscientes.';
 
 function buildExPrompt(ej){
-  var resps=(ej.respuestas||[]).filter(function(r){return r.fid&&r.fid.indexOf('_link_')!==0&&r.fid.indexOf('_file_')!==0&&r.fid.indexOf('_b64')!==0&&r.respuesta&&r.respuesta.trim();});
+  var resps=(ej.respuestas||[]).filter(function(r){
+    return r.fid&&r.fid.indexOf('_link_')!==0&&r.fid.indexOf('_file_')!==0&&r.fid.indexOf('_b64')!==0&&r.respuesta&&r.respuesta.trim();
+  });
   var lines=resps.map(function(r){return(r.pregunta?r.pregunta+':\n':'')+r.respuesta;}).join('\n\n');
   return 'Ejercicio: '+ej.ejercicio+'\nUnidad: '+(ej.unidad||'')+'\nPlayer: '+ej.jugador+'\nFecha: '+(ej.fecha||'')+'\n\n'+lines;
 }
 
-function callAI(systemPrompt,userPrompt,onChunk,onDone,onError){
+function callAI(sys,usr,onChunk,onDone,onError){
   fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
+    method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,stream:true,
-      system:systemPrompt,messages:[{role:'user',content:userPrompt}]})
+      system:sys,messages:[{role:'user',content:usr}]})
   }).then(function(res){
     if(!res.ok){onError('Error '+res.status);return;}
-    var reader=res.body.getReader(),decoder=new TextDecoder(),buffer='';
+    var reader=res.body.getReader(),dec=new TextDecoder(),buf='';
     function read(){
       reader.read().then(function(r){
         if(r.done){onDone();return;}
-        buffer+=decoder.decode(r.value,{stream:true});
-        var lines=buffer.split('\n');buffer=lines.pop();
-        lines.forEach(function(line){
-          if(!line.startsWith('data: '))return;
-          var d=line.slice(6).trim();if(d==='[DONE]')return;
+        buf+=dec.decode(r.value,{stream:true});
+        var parts=buf.split('\n');buf=parts.pop();
+        parts.forEach(function(ln){
+          if(!ln.startsWith('data: '))return;
+          var d=ln.slice(6).trim();if(d==='[DONE]')return;
           try{var j=JSON.parse(d);if(j.type==='content_block_delta'&&j.delta&&j.delta.text)onChunk(j.delta.text);}catch(e){}
         });
         read();
@@ -5907,19 +5877,18 @@ function streamToEl(el,prompt){
   el.style.display='block';
   el.innerHTML='<div style="display:flex;align-items:center;gap:.5rem;padding:.65rem .85rem;font-size:.75rem;color:var(--muted);">'
     +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/></svg>'
-    +'Generando an\u00e1lisis cl\u00ednico...</div>';
+    +'Generando análisis clínico...</div>';
   var text='';
-  var userPrompt='Analizá las respuestas del player. Escribí un análisis clínico de aproximadamente 15 líneas, dirigido al psicólogo (no al player). Identificá patrones psicológicos clave, brechas discurso-comportamiento, áreas de trabajo prioritarias y elementos clínicamente relevantes. Sé directo, preciso y profesional. No repitas las respuestas, interpretálas en el marco de Psicopoker.\n\n'+prompt;
-  callAI(PSICOPOKER_CTX,userPrompt,
+  var instruction='Analizá las respuestas del player. Escribí un análisis clínico de aproximadamente 15 líneas, dirigido al psicólogo (no al player). Identificá patrones psicológicos clave, brechas discurso-comportamiento, áreas de trabajo prioritarias y elementos clínicamente relevantes. Sé directo y profesional. No repitas las respuestas, interpretálas en el marco de Psicopoker.\n\n';
+  callAI(PSICOPOKER_CTX, instruction+prompt,
     function(chunk){
       text+=chunk;
       el.innerHTML='<div style="padding:.75rem .85rem 1rem;font-size:.8rem;line-height:1.8;color:var(--text);white-space:pre-wrap;">'+text+'</div>';
     },
     function(){
       el.innerHTML='<div style="padding:.75rem .85rem 1rem;">'
-        +'<div style="font-size:.52rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);opacity:.7;margin-bottom:.45rem;">An\u00e1lisis IA \u00b7 Psicopoker</div>'
-        +'<div style="font-size:.8rem;line-height:1.8;color:var(--text);white-space:pre-wrap;">'+text+'</div>'
-        +'</div>';
+        +'<div style="font-size:.52rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);opacity:.7;margin-bottom:.45rem;">Análisis IA · Psicopoker</div>'
+        +'<div style="font-size:.8rem;line-height:1.8;color:var(--text);white-space:pre-wrap;">'+text+'</div></div>';
     },
     function(err){
       el.innerHTML='<div style="padding:.65rem .85rem;font-size:.75rem;color:rgba(232,49,42,.8);">Error: '+err+'</div>';
@@ -5945,8 +5914,8 @@ function adminShowUnitAI(uid,unit,usuario){
   var exs=byUnit[unit]||[];
   if(!exs.length){el.innerHTML='<div style="padding:.65rem .85rem;font-size:.78rem;color:var(--dim);">Sin ejercicios completados en esta unidad.</div>';return;}
   var parts=exs.map(function(ej){return buildExPrompt(ej);}).join('\n\n---\n\n');
-  var unitPrompt='Analizá todos los ejercicios de esta unidad ('+unit+'). Escribí un análisis clínico integrador de aproximadamente 15 líneas dirigido al psicólogo. Identificá los patrones que atraviesan los ejercicios, fortalezas, áreas de trabajo y una síntesis clínica de la unidad.\n\nPlayer: '+(exs[0]&&exs[0].jugador||'')+'\n\n'+parts;
-  streamToEl(el,unitPrompt);
+  var unitPr='Analizá todos los ejercicios de esta unidad ('+unit+'). Escribí un análisis clínico integrador de aproximadamente 15 líneas dirigido al psicólogo. Identificá los patrones que atraviesan los ejercicios, fortalezas, áreas de trabajo y una síntesis clínica de la unidad.\n\nPlayer: '+(exs[0]&&exs[0].jugador||'')+'\n\n'+parts;
+  streamToEl(el,unitPr);
 }
 /* ═══ END AI ANALYSIS SYSTEM ═══ */
 
