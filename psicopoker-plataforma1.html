@@ -795,7 +795,7 @@ button{cursor:pointer;}a{color:inherit;text-decoration:none;}
     <div id="admin-sidebar" style="width:260px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;">
       <div style="padding:.85rem 1rem .6rem;">
         <div style="position:relative;">
-          <input id="admin-search" type="text" placeholder="Buscar paciente..." oninput="renderPatientList(this.value)"
+          <input id="admin-search" type="text" placeholder="Buscar player..." oninput="renderPatientList(this.value)"
             style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.75rem;padding:.55rem .85rem .55rem 2.1rem;border-radius:4px;outline:none;"
             onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
           <svg style="position:absolute;left:.65rem;top:50%;transform:translateY(-50%);opacity:.35;" width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M9 9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -3046,7 +3046,7 @@ function renderUserTab(){
   h+='<h2 style="font-size:1.1rem;font-weight:800;margin-bottom:.35rem;">Players del Programa</h2>';
   h+='<p style="font-size:.8rem;color:var(--muted);margin-bottom:1.75rem;">Agrega nuevos players aca.</p>';
   h+='<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1.75rem;">';
-  h+='<p style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Nuevo Paciente</p>';
+  h+='<p style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Nuevo Player</p>';
   h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:.9rem;">';
   h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Nombre completo</label><input id="nu-name" type="text" placeholder="Carlos Rodriguez" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
   h+='<div><label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;">Usuario</label><input id="nu-user" type="text" placeholder="carlos_r" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Montserrat,sans-serif;font-size:.82rem;padding:.6rem .85rem;border-radius:4px;outline:none;"></div>';
@@ -3060,7 +3060,7 @@ function renderUserTab(){
   h+='<label style="display:flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border:1px solid var(--border);border-radius:4px;cursor:pointer;font-size:.8rem;font-weight:600;background:var(--bg2);transition:border-color .15s;" id="lbl-psy-arturo">';
   h+='<input type="radio" name="nu-psy" value="arturo" id="nu-psy-arturo" style="accent-color:var(--red);"> Arturo</label>';
   h+='</div></div>';
-  h+='<button onclick="addPatient()" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;cursor:pointer;">+ Agregar Paciente</button>';
+  h+='<button onclick="addPatient()" style="background:var(--red);border:none;color:#fff;font-family:Montserrat,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.5rem;border-radius:4px;cursor:pointer;">+ Agregar Player</button>';
   h+='<span id="nu-msg" style="font-size:.75rem;margin-left:1rem;color:var(--green);display:none;">Guardado!</span></div>';
   h+='<div style="background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;">';
   h+='<div style="padding:.75rem 1.25rem;background:var(--bg3);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:grid;grid-template-columns:1fr 100px 130px 80px 70px;gap:.5rem;"><span>Nombre</span><span>Usuario</span><span>Contraseña</span><span>Psicólogo</span><span>Acción</span></div>';
@@ -3491,7 +3491,7 @@ function openPDF(title,bodyHtml){
 function pdfPatientHeader(patient,sortedUnits){
   var last=patient.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;}).fecha||'—';
   var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
-  h+='<div class="hdr-info"><div class="hdr-lbl">Informe del paciente</div><div class="hdr-val">'+patient.nombre+'</div><div class="hdr-date">@'+patient.usuario+' &nbsp;·&nbsp; '+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
+  h+='<div class="hdr-info"><div class="hdr-lbl">Informe del player</div><div class="hdr-val">'+patient.nombre+'</div><div class="hdr-date">@'+patient.usuario+' &nbsp;·&nbsp; '+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
   h+='<div class="stats-grid"><div class="stat-box"><div class="stat-lbl">Ejercicios</div><div class="stat-val">'+patient.ejercicios.length+'</div></div><div class="stat-box"><div class="stat-lbl">Unidades</div><div class="stat-val">'+sortedUnits.length+'</div></div><div class="stat-box"><div class="stat-lbl">Ultimo envio</div><div class="stat-val" style="font-size:12px;padding-top:4px;">'+last.substring(0,10)+'</div></div></div>';
   return h;
 }
@@ -3528,8 +3528,8 @@ function generateGeneralReport(){
   var h='<div class="page"><div class="hdr"><div class="brand"><div class="dot"></div><div><div class="brand-name">PsicoPoker</div><div class="brand-sub">Programa de Mentalidad</div></div></div>';
   h+='<div class="hdr-info"><div class="hdr-lbl">Informe General</div><div class="hdr-val">Todos los Players</div><div class="hdr-date">'+new Date().toLocaleDateString('es-AR')+'</div></div></div>';
   h+='<div class="stats-grid"><div class="stat-box"><div class="stat-lbl">Players</div><div class="stat-val">'+adminData.length+'</div></div><div class="stat-box"><div class="stat-lbl">Ejercicios totales</div><div class="stat-val">'+totalEjs+'</div></div><div class="stat-box"><div class="stat-lbl">Promedio</div><div class="stat-val">'+(totalEjs/adminData.length).toFixed(1)+'</div></div></div>';
-  h+='<div class="sec-title">Resumen por paciente</div>';
-  h+='<table class="sumtable"><thead><tr><th>Paciente</th><th>Usuario</th><th>Ejercicios</th><th>Ultimo envio</th></tr></thead><tbody>';
+  h+='<div class="sec-title">Resumen por player</div>';
+  h+='<table class="sumtable"><thead><tr><th>Player</th><th>Usuario</th><th>Ejercicios</th><th>Ultimo envio</th></tr></thead><tbody>';
   var sorted=adminData.slice().sort(function(a,b){return a.nombre.localeCompare(b.nombre,'es');});
   sorted.forEach(function(p){var last=p.ejercicios.length?p.ejercicios.reduce(function(a,b){return(a.ts||0)>(b.ts||0)?a:b;}).fecha||'—':'—';h+='<tr><td><strong>'+p.nombre+'</strong></td><td>@'+p.usuario+'</td><td>'+p.ejercicios.length+' completados</td><td>'+last.substring(0,10)+'</td></tr>';});
   h+='</tbody></table>';
