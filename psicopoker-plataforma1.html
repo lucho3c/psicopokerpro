@@ -2686,20 +2686,27 @@ function showPatient(usuario){
   // Content
   h+='<div style="padding:1.5rem 1.75rem;">';
   var teosqQueue=[];
-  sortedUnits.forEach(function(unit){
-    // Unit download button
-    h+='<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem;">';
-    h+='<div style="font-size:.62rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.2rem .65rem;border-radius:3px;">'+unit+'</div>';
-    h+='<div style="flex:1;height:1px;background:var(--border);"></div>';
-    h+='<button onclick="generateUnitPDF(\''+usuario+'\',\''+unit+'\')" style="display:flex;align-items:center;gap:.35rem;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;" onmouseover="this.style.borderColor=\'var(--red)\';this.style.color=\'var(--muted)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--dim)\'">';
-    h+='<svg width="10" height="10" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>PDF</button>';
-    h+='</div>';
+  sortedUnits.forEach(function(unit,ui){
     var exs=byUnit[unit].sort(function(a,b){return(a.ejercicio||'').localeCompare(b.ejercicio||'','es');});
+    var uid='admu_'+(usuario+'_'+ui).replace(/[^a-z0-9]/gi,'_');
+    var nEx=exs.length;
+    // Unit collapsible banner
+    h+='<div style="border:1px solid var(--border-r);border-radius:8px;overflow:hidden;margin-bottom:1rem;">';
+    h+='<div onclick="toggleAdminUnit(\''+uid+'\')" style="display:flex;align-items:center;gap:.85rem;padding:.85rem 1.25rem;background:rgba(232,49,42,.07);cursor:pointer;user-select:none;" onmouseover="this.style.background=\'rgba(232,49,42,.12)\'" onmouseout="this.style.background=\'rgba(232,49,42,.07)\'">';
+    h+='<span style="font-size:.6rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--red);background:var(--red-dim);border:1px solid var(--border-r);padding:.2rem .65rem;border-radius:3px;flex-shrink:0;">'+unit+'</span>';
+    h+='<span style="font-size:.78rem;font-weight:600;color:var(--muted);flex:1;">'+nEx+' ejercicio'+(nEx!==1?'s':'')+' completado'+(nEx!==1?'s':'')+'</span>';
+    h+='<button onclick="event.stopPropagation();generateUnitPDF(\''+usuario+'\',\''+unit+'\')" style="display:flex;align-items:center;gap:.35rem;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:Montserrat,sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:3px;cursor:pointer;flex-shrink:0;" onmouseover="this.style.borderColor=\'var(--red)\';this.style.color=\'var(--muted)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--dim)\'">';
+    h+='<svg width="10" height="10" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>PDF</button>';
+    h+='<svg id="admuchev-'+uid+'" width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;color:var(--red);transition:transform .25s;"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    h+='</div>';
+    // Unit body (collapsed by default)
+    h+='<div id="'+uid+'" style="display:none;">';
+    h+='<div style="padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.75rem;">';
     exs.forEach(function(ej,idx){
       var eid='ej_'+(usuario+'_'+unit+'_'+idx).replace(/[^a-z0-9]/gi,'_');
       var isPmt=ej.lid==="u1l3"||ej.lid==="u8l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("mindset test")!==-1);var isTeosq=ej.lid==="u1l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("teosq")!==-1);var isIped=ej.lid==="u1l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("iped")!==-1);var isGps=ej.lid==="u3l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("gps de objetivos")!==-1);var isCl=ej.lid==="u4l4"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("checklist pre")!==-1);var isEquip=ej.lid==="u4e1"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("equipamiento")!==-1);var isCon=ej.lid==="u5l3"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("ampliacion de consciencia")!==-1);var isCaj=ej.lid==="u6l5"||(ej.ejercicio&&ej.ejercicio.toLowerCase().indexOf("4 cajas")!==-1);
       var isGrid=ej.respuestas&&ej.respuestas.some(function(r){return r.fid&&/^g_\d+_\d+$/.test(r.fid);});
-      h+='<div class="sub-card">';
+      h+='<div class="sub-card" style="margin-bottom:0;">';
       var btnLabel=isPmt?'Ver detalle &#9660;':isTeosq?'Ver detalle &#9660;':isIped?'Ver detalle &#9660;':isGps?'Ver tabla &#9660;':isCl?'Ver checklist &#9660;':isEquip?'Ver tabla &#9660;':isCon?'Ver respuestas &#9660;':isCaj?'Ver detalle &#9660;':isGrid?'Ver planilla &#9660;':'Ver respuestas &#9660;';
       h+='<div class="sub-card-hdr" style="cursor:pointer;" onclick="toggleEj(\''+eid+'\',this)">';
       h+='<div style="flex:1;"><div class="sub-name">'+ej.ejercicio+'</div><div class="sub-meta">'+(ej.fecha||'')+'</div></div>';
@@ -2717,7 +2724,9 @@ function showPatient(usuario){
       else if(isGrid)teosqQueue.push({type:'grid',eid:eid,ej:ej});
       else teosqQueue.push({type:'form',eid:eid,ej:ej});
     });
-    h+='<div style="height:1rem;"></div>';
+    h+='</div>';
+    h+='</div>';
+    h+='</div>';
   });
   h+='</div>';
   document.getElementById('admin-content').innerHTML=h;
@@ -2743,6 +2752,14 @@ function toggleEj(eid,hdr){
   body.style.display=open?'none':'block';
   var btn=hdr.querySelector('.sub-toggle');
   if(btn)btn.innerHTML=open?btn.innerHTML.replace('&#9650;','&#9660;').replace('Ocultar','Ver'):btn.innerHTML.replace('&#9660;','&#9650;').replace('Ver','Ocultar');
+}
+
+function toggleAdminUnit(uid){
+  var body=document.getElementById(uid);if(!body)return;
+  var chev=document.getElementById('admuchev-'+uid);
+  var open=body.style.display!=='none';
+  body.style.display=open?'none':'block';
+  if(chev)chev.style.transform=open?'':'rotate(180deg)';
 }
 
 function renderFormAdminView(ej,cid){
